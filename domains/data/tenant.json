@@ -1,0 +1,10 @@
+{
+  "name": "XXNAMEXX",
+  "parentId": null,
+  "category": "tenant",
+  "description": [],
+  "domain": "XXDOMAINXX",
+  "attributes": {
+    "color": "FFFFFF"
+  }
+}
