@@ -36,5 +36,14 @@ git push
 You can also use the graphical interface of VS Code. 
 
 ## Merge with the main branch
+First click on the "X branches" button:
 
+![Main Window](/image_readme/avant%20merge.PNG)
 
+Then click on "new pull request":
+
+![Pull Request Window](/image_readme/merge.PNG)
+
+You can then compare and merge the dev branch into the main one:
+
+![Compare Window](/image_readme/compare.PNG)
