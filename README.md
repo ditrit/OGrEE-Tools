@@ -8,7 +8,20 @@ Repository for the tools used in OGrEE.
 ```
 git clone https://github.com/ditrit/OGrEE-Tools.git
 ```
+## Switch to the right branch
 
+Axel
+```
+git checkout -b dev-FBX
+```
+Hervé
+```
+git checkout -b dev-domain
+```
+Vincent
+```
+git checkout -b dev-label
+```
 ## Stage, commit and push when modifications are done
 
 Run the following commands:
@@ -20,6 +33,8 @@ Then you need to push on the right remote branch:
 ```
 git push 
 ```
+You can also use the graphical interface of VS Code or any editor.
+
 ## FOR FIRST TIME PUSH
 
 You need to specify the remote branch you want to push on:
@@ -39,8 +54,6 @@ git push --set-upstream origin dev-label
 Then login with the pop-up window to finalize the push:
 
 ![Login Window](/image_readme/login.PNG)
-
-You can also use the graphical interface of VS Code. 
 
 If you have any issue, please follow the instructions on the following URL : https://unityatscale.com/unity-version-control-guide/how-to-setup-unity-project-on-github/
 ## Merge with the main branch
