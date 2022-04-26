@@ -6,7 +6,7 @@ Repository for the tools used in OGrEE.
 ## Clone the repo
 
 ```
-git clone -b Python --single-branch https://github.com/ditrit/OGrEE-3D.git
+git clone https://github.com:ditrit/OGrEE-Tools.git
 ```
 
 ## Switch to the appropriate dev branch
