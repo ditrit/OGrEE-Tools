@@ -31,7 +31,7 @@ git commit -m "Your commit message"
 ```
 Then you need to push on the right remote branch:
 ```
-git push 
+git push https://<token>@github.com/<repo>
 ```
 You can also use the graphical interface of VS Code or any editor.
 
