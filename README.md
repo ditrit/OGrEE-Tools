@@ -6,7 +6,7 @@ Repository for the tools used in OGrEE.
 ## Clone the repo
 
 ```
-git clone https://github.com/ditrit/OGrEE-Tools.git
+git clone https://<token>github.com/ditrit/OGrEE-Tools.git
 ```
 ## Switch to the right branch
 
