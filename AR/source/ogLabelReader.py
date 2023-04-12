@@ -12,7 +12,7 @@ import mimetypes
 import re
 import numpy
 from AR.source.classes.ARdcTrackToOGrEE import ARdcTrackToOGrEE
-import label_regular.modules.ogLblUtils as Utils
+import common.Utils as Utils
 
 log = logging.getLogger(__name__)
 log.addHandler(logging.StreamHandler())

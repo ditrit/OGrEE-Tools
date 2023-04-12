@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AR.source.ocr namespace &mdash; OGrEE-Tools  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="NonSquareRooms namespace" href="NonSquareRooms.html" />
+    <link rel="prev" title="AR.source.interfaces namespace" href="AR.source.interfaces.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            OGrEE-Tools
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Converter.html">Converter namespace</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="AR.html">AR namespace</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="AR.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="AR.source.html">AR.source namespace</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="AR.source.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.html#module-AR.source.Server">AR.source.Server module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.html#module-AR.source.ogLabelReader">AR.source.ogLabelReader module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="NonSquareRooms.html">NonSquareRooms namespace</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">OGrEE-Tools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="AR.html">AR namespace</a></li>
+          <li class="breadcrumb-item"><a href="AR.source.html">AR.source namespace</a></li>
+      <li class="breadcrumb-item active">AR.source.ocr namespace</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/AR.source.ocr.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-AR.source.ocr">
+<span id="ar-source-ocr-namespace"></span><h1>AR.source.ocr namespace<a class="headerlink" href="#module-AR.source.ocr" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-AR.source.ocr.LabelProcessing">
+<span id="ar-source-ocr-labelprocessing-module"></span><h2>AR.source.ocr.LabelProcessing module<a class="headerlink" href="#module-AR.source.ocr.LabelProcessing" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="AR.source.ocr.LabelProcessing.ReaderCroppedAndFullImage">
+<span class="sig-prename descclassname"><span class="pre">AR.source.ocr.LabelProcessing.</span></span><span class="sig-name descname"><span class="pre">ReaderCroppedAndFullImage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regexp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ocrResults</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AR.source.ocr.LabelProcessing.ReaderCroppedAndFullImage" title="Permalink to this definition"></a></dt>
+<dd><p>Call ogLblShapeDetector to crop the image, call ReaderOneImageRecursive on the cropped image and on the full image if not succesfull to read the label. Returns the site, a list containing all characters in the image satisfying the different part ot the regexp and a list containing all characters that were read on the image to be used if a new regexp is used on the same image.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="AR.source.ocr.LabelProcessing.ReaderOneImageRecursive">
+<span class="sig-prename descclassname"><span class="pre">AR.source.ocr.LabelProcessing.</span></span><span class="sig-name descname"><span class="pre">ReaderOneImageRecursive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regexp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ocrResults</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AR.source.ocr.LabelProcessing.ReaderOneImageRecursive" title="Permalink to this definition"></a></dt>
+<dd><p>Handles regexp by calling ogLblUtils, call ogLblOCR to perform OCR on the image provided</p>
+</dd></dl>
+
+</section>
+<section id="module-AR.source.ocr.OCR">
+<span id="ar-source-ocr-ocr-module"></span><h2>AR.source.ocr.OCR module<a class="headerlink" href="#module-AR.source.ocr.OCR" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="AR.source.ocr.OCR.PerformOCR">
+<span class="sig-prename descclassname"><span class="pre">AR.source.ocr.OCR.</span></span><span class="sig-name descname"><span class="pre">PerformOCR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AR.source.ocr.OCR.PerformOCR" title="Permalink to this definition"></a></dt>
+<dd><p>Use easyOcr module to perform OCR on the provided image. Returns a tuple containing the characters read and their position.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="AR.source.ocr.OCR.ReplaceSymbol">
+<span class="sig-prename descclassname"><span class="pre">AR.source.ocr.OCR.</span></span><span class="sig-name descname"><span class="pre">ReplaceSymbol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AR.source.ocr.OCR.ReplaceSymbol" title="Permalink to this definition"></a></dt>
+<dd><p>Replace the ‘Ø’ charachter with an ‘0’</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="AR.source.ocr.OCR.ReturnMatch">
+<span class="sig-prename descclassname"><span class="pre">AR.source.ocr.OCR.</span></span><span class="sig-name descname"><span class="pre">ReturnMatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labelMatcher</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AR.source.ocr.OCR.ReturnMatch" title="Permalink to this definition"></a></dt>
+<dd><p>Match a text with a regexp. Returns a string containing the match. If none returns None.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="AR.source.ocr.OCR.cleanup_text">
+<span class="sig-prename descclassname"><span class="pre">AR.source.ocr.OCR.</span></span><span class="sig-name descname"><span class="pre">cleanup_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AR.source.ocr.OCR.cleanup_text" title="Permalink to this definition"></a></dt>
+<dd><p>strip out non-ASCII text so we can draw the text on the image using OpenCV</p>
+</dd></dl>
+
+</section>
+<section id="module-AR.source.ocr.ShapeDetector">
+<span id="ar-source-ocr-shapedetector-module"></span><h2>AR.source.ocr.ShapeDetector module<a class="headerlink" href="#module-AR.source.ocr.ShapeDetector" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="AR.source.ocr.ShapeDetector.HexaToRGB">
+<span class="sig-prename descclassname"><span class="pre">AR.source.ocr.ShapeDetector.</span></span><span class="sig-name descname"><span class="pre">HexaToRGB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hexa</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AR.source.ocr.ShapeDetector.HexaToRGB" title="Permalink to this definition"></a></dt>
+<dd><p>Take a hexa color code and convert it to RGB. Returns a tuple with the RGB code.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="AR.source.ocr.ShapeDetector.ShapeAndColorDetector">
+<span class="sig-prename descclassname"><span class="pre">AR.source.ocr.ShapeDetector.</span></span><span class="sig-name descname"><span class="pre">ShapeAndColorDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">range</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AR.source.ocr.ShapeDetector.ShapeAndColorDetector" title="Permalink to this definition"></a></dt>
+<dd><p>Perform HSV mapping on the provided image using a hexa color code or a predefined color. Crop the image according to this mask. Returns the new image.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="AR.source.interfaces.html" class="btn btn-neutral float-left" title="AR.source.interfaces namespace" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="NonSquareRooms.html" class="btn btn-neutral float-right" title="NonSquareRooms namespace" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Timothé Rios, Hervé Chibois, Vincent Taufflieb.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
