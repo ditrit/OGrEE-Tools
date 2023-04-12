@@ -6,7 +6,7 @@ AR.source.interfaces namespace
 Submodules
 ----------
 
-AR.source.interfaces.IARConverter module
+IARConverter module
 ----------------------------------------
 
 .. automodule:: AR.source.interfaces.IARConverter

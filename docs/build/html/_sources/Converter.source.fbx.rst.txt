@@ -6,7 +6,7 @@ Converter.source.fbx namespace
 Submodules
 ----------
 
-Converter.source.fbx.FbxBuilder module
+FbxBuilder module
 --------------------------------------
 
 .. automodule:: Converter.source.fbx.FbxBuilder

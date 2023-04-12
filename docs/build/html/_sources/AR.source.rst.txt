@@ -16,7 +16,7 @@ Subpackages
 Submodules
 ----------
 
-AR.source.Server module
+Server module
 -----------------------
 
 .. automodule:: AR.source.Server
@@ -24,7 +24,7 @@ AR.source.Server module
    :undoc-members:
    :show-inheritance:
 
-AR.source.ogLabelReader module
+ogLabelReader module
 ------------------------------
 
 .. automodule:: AR.source.ogLabelReader

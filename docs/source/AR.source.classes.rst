@@ -6,7 +6,7 @@ AR.source.classes namespace
 Submodules
 ----------
 
-AR.source.classes.ARNetBoxtoOGrEE module
+ARNetBoxtoOGrEE module
 ----------------------------------------
 
 .. automodule:: AR.source.classes.ARNetBoxtoOGrEE
@@ -14,7 +14,7 @@ AR.source.classes.ARNetBoxtoOGrEE module
    :undoc-members:
    :show-inheritance:
 
-AR.source.classes.ARdcTrackToOGrEE module
+ARdcTrackToOGrEE module
 -----------------------------------------
 
 .. automodule:: AR.source.classes.ARdcTrackToOGrEE
