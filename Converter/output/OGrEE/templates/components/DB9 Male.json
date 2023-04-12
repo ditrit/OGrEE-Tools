@@ -1,0 +1,20 @@
+{
+	"location": "vzDB9 Male-template",
+	"type": "Data",
+	"elemOrient": "",
+	"elemPos": [
+		0,
+		0,
+		0
+	],
+	"elemSize": [
+		30.8,
+		17.3,
+		12.6
+	],
+	"labelPos": "front",
+	"color": "000000",
+	"attributes": {
+		"factor": "DB9 Male"
+	}
+}

@@ -1,4 +1,7 @@
 # Default ignored files
-/shelf/
 /workspace.xml
-/*.png
+.venv
+.conf.json
+.env.json
+__pycache__
+#To ignore tool specific files, please use the .gitignore in the tool folder.

@@ -1,0 +1,742 @@
+{
+    "460C9W": {
+        "location": "460C9W-template",
+        "type": "Power (AC)",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            112,
+            286,
+            112
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "460C9W"
+        }
+    },
+    "AU1-10P": {
+        "location": "AU1-10P-template",
+        "type": "Power (AC)",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            39,
+            60,
+            39
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "AU1-10P"
+        }
+    },
+    "BNC": {
+        "location": "BNC-template",
+        "type": "Data",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            14,
+            16,
+            14
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "BNC"
+        }
+    },
+    "BS1363": {
+        "location": "BS1363-template",
+        "type": "Power (AC)",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            52.6,
+            48.23,
+            53
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "BS1363"
+        }
+    },
+    "BS1363A Female": {
+        "location": "BS1363A Female-template",
+        "type": "Power (AC)",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            50,
+            44.8,
+            21
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "BS1363A Female"
+        }
+    },
+    "BS1363A Male": {
+        "location": "BS1363A Male-template",
+        "type": "Power (AC)",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            50,
+            44.8,
+            31
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "BS1363A Male"
+        }
+    },
+    "BS1363A": {
+        "location": "BS1363A-template",
+        "type": "Power (AC)",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            50,
+            44.8,
+            21
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "BS1363A"
+        }
+    },
+    "CEE 7 (Schuko)": {
+        "location": "CEE 7 (Schuko)-template",
+        "type": "Power (AC)",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            36.5,
+            34,
+            36.5
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "CEE 7 (Schuko)"
+        }
+    },
+    "CEE 7/7": {
+        "location": "CEE 7/7-template",
+        "type": "Power (AC)",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            36.5,
+            34,
+            36.5
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "CEE 7/7"
+        }
+    },
+    "Centronics 36-pin Female": {
+        "location": "Centronics 36-pin Female-template",
+        "type": "Data",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            43.9,
+            41.4,
+            11.8
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "Centronics 36-pin Female"
+        }
+    },
+    "CFP2": {
+        "location": "CFP2-template",
+        "type": "Data",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            41.5,
+            107.5,
+            12.4
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "CFP2"
+        }
+    },
+    "CFP4": {
+        "location": "CFP4-template",
+        "type": "Data",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            21.5,
+            92,
+            9.5
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "CFP4"
+        }
+    },
+    "Cisco 22-Pin RPS": {
+        "location": "Cisco 22-Pin RPS-template",
+        "type": "Power (AC)",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            125,
+            30,
+            30
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "Cisco 22-Pin RPS"
+        }
+    },
+    "Cisco RRPS 300 (CAB-RPS-1414)": {
+        "location": "Cisco RRPS 300 (CAB-RPS-1414)-template",
+        "type": "Power (AC)",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            125,
+            30,
+            30
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "Cisco RRPS 300 (CAB-RPS-1414)"
+        }
+    },
+    "Clipsal 439SXHD": {
+        "location": "Clipsal 439SXHD-template",
+        "type": "Power (AC)",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            65,
+            100,
+            45
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "Clipsal 439SXHD"
+        }
+    },
+    "Clipsal 56P315": {
+        "location": "Clipsal 56P315-template",
+        "type": "Power (AC)",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            67,
+            112.5,
+            67
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "Clipsal 56P315"
+        }
+    },
+    "Clipsal 56P320": {
+        "location": "Clipsal 56P320-template",
+        "type": "Power (AC)",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            78,
+            167,
+            78
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "Clipsal 56P320"
+        }
+    },
+    "Clipsal 56P320F": {
+        "location": "Clipsal 56P320F-template",
+        "type": "Power (AC)",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            67,
+            112.5,
+            67
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "Clipsal 56P320F"
+        }
+    },
+    "Clipsal 56P332 Female": {
+        "location": "Clipsal 56P332 Female-template",
+        "type": "Power (AC)",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            79,
+            168,
+            79
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "Clipsal 56P332 Female"
+        }
+    },
+    "Clipsal 56P332": {
+        "location": "Clipsal 56P332-template",
+        "type": "Power (AC)",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            79,
+            168,
+            79
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "Clipsal 56P332"
+        }
+    },
+    "Clipsal 56P532": {
+        "location": "Clipsal 56P532-template",
+        "type": "Power (AC)",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            79,
+            168,
+            79
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "Clipsal 56P532"
+        }
+    },
+    "Clipsal 56P550": {
+        "location": "Clipsal 56P550-template",
+        "type": "Power (AC)",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            79,
+            168,
+            79
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "Clipsal 56P550"
+        }
+    },
+    "Clipsal 56PA320": {
+        "location": "Clipsal 56PA320-template",
+        "type": "Power (AC)",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            126.5,
+            78,
+            158
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "Clipsal 56PA320"
+        }
+    },
+    "Clipsal 56PA332": {
+        "location": "Clipsal 56PA332-template",
+        "type": "Power (AC)",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            130,
+            168,
+            78
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "Clipsal 56PA332"
+        }
+    },
+    "Clipsal 56PA532": {
+        "location": "Clipsal 56PA532-template",
+        "type": "Power (AC)",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            130,
+            168,
+            78
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "Clipsal 56PA532"
+        }
+    },
+    "Clipsal 56PO550": {
+        "location": "Clipsal 56PO550-template",
+        "type": "Power (AC)",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            90,
+            263,
+            90
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "Clipsal 56PO550"
+        }
+    },
+    "Clipsal P56PA332": {
+        "location": "Clipsal P56PA332-template",
+        "type": "Power (AC)",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            130,
+            168,
+            78
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "Clipsal P56PA332"
+        }
+    },
+    "Cord": {
+        "location": "Cord-template",
+        "type": "Power (AC)",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            10,
+            10,
+            40
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "Cord"
+        }
+    },
+    "CPAK": {
+        "location": "CPAK-template",
+        "type": "Data",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            34.8,
+            101.2,
+            11.6
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "CPAK"
+        }
+    },
+    "CS8265C": {
+        "location": "CS8265C-template",
+        "type": "Power (AC)",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            65.8,
+            171.1,
+            65.8
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "CS8265C"
+        }
+    },
+    "DB9 Male": {
+        "location": "vzDB9 Male-template",
+        "type": "Data",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            30.8,
+            17.3,
+            12.6
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "DB9 Male"
+        }
+    },
+    "IEC-320-C14": {
+        "location": "IEC-320-C14-template",
+        "type": "Power (AC)",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            24,
+            17,
+            16
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "IEC-320-C14"
+        }
+    },
+    "qsfp": {
+        "location": "qsfp-template",
+        "type": "port",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            18,
+            11,
+            8
+        ],
+        "labelPos": "front",
+        "color": "ffc0cb",
+        "attributes": {
+            "factor": "qsfp"
+        }
+    },
+    "RJ45": {
+        "location": "RJ45-template",
+        "type": "Data",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            14,
+            11,
+            11
+        ],
+        "labelPos": "front",
+        "color": "000000",
+        "attributes": {
+            "factor": "RJ45"
+        }
+    },
+    "rs232": {
+        "location": "rs232-template",
+        "type": "serial",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            16,
+            11,
+            8
+        ],
+        "labelPos": "front",
+        "color": "ffc0cb",
+        "attributes": {
+            "factor": "rs232"
+        }
+    },
+    "ssfp": {
+        "location": "ssfp-template",
+        "type": "port",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            18,
+            11,
+            8
+        ],
+        "labelPos": "front",
+        "color": "ffc0cb",
+        "attributes": {
+            "factor": "ssfp"
+        }
+    },
+    "vga": {
+        "location": "vga-template",
+        "type": "console",
+        "elemOrient": "",
+        "elemPos": [
+            0,
+            0,
+            0
+        ],
+        "elemSize": [
+            16,
+            11,
+            8
+        ],
+        "labelPos": "front",
+        "color": "ffc0cb",
+        "attributes": {
+            "factor": "vga"
+        }
+    }
+}

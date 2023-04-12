@@ -1,0 +1,120 @@
+{
+    "slug": "storagescaler-7000",
+    "description": "DDN",
+    "category": "device",
+    "sizeWDHmm": [
+        431.8,
+        863.6,
+        177.8
+    ],
+    "fbxModel": "",
+    "attributes": {
+        "vendor": "DDN",
+        "model": "StorageScaler 7000",
+        "type": ""
+    },
+    "colors": [],
+    "components": [
+        {
+            "location": "PS1",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                0,
+                845.6,
+                0
+            ],
+            "elemSize": [
+                24,
+                17,
+                16
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "IEC-320-C14"
+            }
+        },
+        {
+            "location": "PS2",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                24,
+                845.6,
+                0
+            ],
+            "elemSize": [
+                24,
+                17,
+                16
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "IEC-320-C14"
+            }
+        },
+        {
+            "location": "Eth01",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                48,
+                851.6,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Eth02",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                62,
+                851.6,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Serial01",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                76.0,
+                845.3000000000001,
+                0
+            ],
+            "elemSize": [
+                30.8,
+                17.3,
+                12.6
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "DB9 Male"
+            }
+        }
+    ],
+    "slots": []
+}

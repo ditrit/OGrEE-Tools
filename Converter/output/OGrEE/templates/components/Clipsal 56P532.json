@@ -1,0 +1,20 @@
+{
+	"location": "Clipsal 56P532-template",
+	"type": "Power (AC)",
+	"elemOrient": "",
+	"elemPos": [
+		0,
+		0,
+		0
+	],
+	"elemSize": [
+		79,
+		168,
+		79
+	],
+	"labelPos": "front",
+	"color": "000000",
+	"attributes": {
+		"factor": "Clipsal 56P532"
+	}
+}

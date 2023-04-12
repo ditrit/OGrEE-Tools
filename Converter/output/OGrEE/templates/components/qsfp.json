@@ -1,0 +1,20 @@
+{
+	"location": "qsfp-template",
+	"type": "port",
+	"elemOrient": "",
+	"elemPos": [
+		0,
+		0,
+		0
+	],
+	"elemSize": [
+		18,
+		11,
+		8
+	],
+	"labelPos": "front",
+	"color": "ffc0cb",
+	"attributes": {
+		"factor": "qsfp"
+	}
+}

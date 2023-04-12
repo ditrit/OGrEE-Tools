@@ -1,0 +1,20 @@
+{
+	"location": "RJ45-template",
+	"type": "Data",
+	"elemOrient": "",
+	"elemPos": [
+		0,
+		0,
+		0
+	],
+	"elemSize": [
+		14,
+		11,
+		11
+	],
+	"labelPos": "front",
+	"color": "000000",
+	"attributes": {
+		"factor": "RJ45"
+	}
+}

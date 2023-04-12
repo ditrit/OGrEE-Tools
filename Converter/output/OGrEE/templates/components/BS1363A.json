@@ -1,0 +1,20 @@
+{
+	"location": "BS1363A-template",
+	"type": "Power (AC)",
+	"elemOrient": "",
+	"elemPos": [
+		0,
+		0,
+		0
+	],
+	"elemSize": [
+		50,
+		44.8,
+		21
+	],
+	"labelPos": "front",
+	"color": "000000",
+	"attributes": {
+		"factor": "BS1363A"
+	}
+}

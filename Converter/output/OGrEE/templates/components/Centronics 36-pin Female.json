@@ -1,0 +1,20 @@
+{
+	"location": "Centronics 36-pin Female-template",
+	"type": "Data",
+	"elemOrient": "",
+	"elemPos": [
+		0,
+		0,
+		0
+	],
+	"elemSize": [
+		43.9,
+		41.4,
+		11.8
+	],
+	"labelPos": "front",
+	"color": "000000",
+	"attributes": {
+		"factor": "Centronics 36-pin Female"
+	}
+}

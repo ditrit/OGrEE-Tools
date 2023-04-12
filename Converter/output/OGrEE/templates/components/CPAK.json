@@ -1,0 +1,20 @@
+{
+	"location": "CPAK-template",
+	"type": "Data",
+	"elemOrient": "",
+	"elemPos": [
+		0,
+		0,
+		0
+	],
+	"elemSize": [
+		34.8,
+		101.2,
+		11.6
+	],
+	"labelPos": "front",
+	"color": "000000",
+	"attributes": {
+		"factor": "CPAK"
+	}
+}

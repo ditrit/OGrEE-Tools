@@ -1,0 +1,4 @@
+output/*/*
+!output/dcTrack/models
+!output/OGrEE/templates
+!output/OGrEE/pictures

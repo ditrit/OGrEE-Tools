@@ -1,0 +1,20 @@
+{
+	"location": "BNC-template",
+	"type": "Data",
+	"elemOrient": "",
+	"elemPos": [
+		0,
+		0,
+		0
+	],
+	"elemSize": [
+		14,
+		16,
+		14
+	],
+	"labelPos": "front",
+	"color": "000000",
+	"attributes": {
+		"factor": "BNC"
+	}
+}

@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Converter &mdash; OGrEE-CONVERTER 1.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/max_width.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="DcTrackConverter" href="DcTrackConverter.html" />
+    <link rel="prev" title="Welcome to OGrEE-CONVERTER’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            OGrEE-CONVERTER
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Converter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#label_regular.Converter.Converter"><code class="docutils literal notranslate"><span class="pre">Converter</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#label_regular.Converter.Converter.Get"><code class="docutils literal notranslate"><span class="pre">Converter.Get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#label_regular.Converter.Converter.GetBuildingAndRoom"><code class="docutils literal notranslate"><span class="pre">Converter.GetBuildingAndRoom()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#label_regular.Converter.Converter.GetFile"><code class="docutils literal notranslate"><span class="pre">Converter.GetFile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#label_regular.Converter.Converter.GetRack"><code class="docutils literal notranslate"><span class="pre">Converter.GetRack()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#label_regular.Converter.Converter.GetSite"><code class="docutils literal notranslate"><span class="pre">Converter.GetSite()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#label_regular.Converter.Converter.GetTemplates"><code class="docutils literal notranslate"><span class="pre">Converter.GetTemplates()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#label_regular.Converter.Converter.GetTenant"><code class="docutils literal notranslate"><span class="pre">Converter.GetTenant()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#label_regular.Converter.Converter.Post"><code class="docutils literal notranslate"><span class="pre">Converter.Post()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#label_regular.Converter.Converter.RackSearch"><code class="docutils literal notranslate"><span class="pre">Converter.RackSearch()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#label_regular.Converter.IncorrectResponseError"><code class="docutils literal notranslate"><span class="pre">IncorrectResponseError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#label_regular.Converter.OgreeData"><code class="docutils literal notranslate"><span class="pre">OgreeData</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#label_regular.Converter.OgreeData.FromDict"><code class="docutils literal notranslate"><span class="pre">OgreeData.FromDict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#label_regular.Converter.OgreeData.ToMessage"><code class="docutils literal notranslate"><span class="pre">OgreeData.ToMessage()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#label_regular.Converter.OgreeData.attributes"><code class="docutils literal notranslate"><span class="pre">OgreeData.attributes</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#label_regular.Converter.OgreeData.category"><code class="docutils literal notranslate"><span class="pre">OgreeData.category</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#label_regular.Converter.OgreeData.children"><code class="docutils literal notranslate"><span class="pre">OgreeData.children</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#label_regular.Converter.OgreeData.description"><code class="docutils literal notranslate"><span class="pre">OgreeData.description</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#label_regular.Converter.OgreeData.domain"><code class="docutils literal notranslate"><span class="pre">OgreeData.domain</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#label_regular.Converter.OgreeData.id"><code class="docutils literal notranslate"><span class="pre">OgreeData.id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#label_regular.Converter.OgreeData.name"><code class="docutils literal notranslate"><span class="pre">OgreeData.name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#label_regular.Converter.OgreeData.parentId"><code class="docutils literal notranslate"><span class="pre">OgreeData.parentId</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#label_regular.Converter.OgreeMessage"><code class="docutils literal notranslate"><span class="pre">OgreeMessage</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#label_regular.Converter.OgreeMessage.data"><code class="docutils literal notranslate"><span class="pre">OgreeMessage.data</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#label_regular.Converter.OgreeMessage.message"><code class="docutils literal notranslate"><span class="pre">OgreeMessage.message</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#label_regular.Converter.OgreeMessage.status"><code class="docutils literal notranslate"><span class="pre">OgreeMessage.status</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="DcTrackConverter.html">DcTrackConverter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ogLabelReader.html">ogLabelReader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ogLabelServer.html">ogLabelServer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OgreeConverter.html">OgreeConverter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ogLblUtils.html">ogLblUtils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FbxGen.html">FbxGen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Api.html">Api</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">OGrEE-CONVERTER</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Converter</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Converter.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-label_regular.Converter">
+<span id="converter"></span><h1>Converter<a class="headerlink" href="#module-label_regular.Converter" title="Permalink to this heading"></a></h1>
+<p><strong>Common bases of converters</strong></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="label_regular.Converter.Converter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">label_regular.Converter.</span></span><span class="sig-name descname"><span class="pre">Converter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headersGET</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headersPOST</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#label_regular.Converter.Converter" title="Permalink to this definition"></a></dt>
+<dd><p>Abtract class, do not instantiate</p>
+<p>This is the base class to build converters from log system to OGrEE</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<em>str</em>) – the API url</p></li>
+<li><p><strong>headersGET</strong> (<em>dict</em><em>[</em><em>str</em><em>,</em><em>Any</em><em>]</em>) – the default headers used for a GET request, can be manually overriden</p></li>
+<li><p><strong>headersPOST</strong> (<em>dict</em><em>[</em><em>str</em><em>,</em><em>Any</em><em>]</em>) – the default headers used for a POST request, can be manually overriden</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="label_regular.Converter.Converter.Get">
+<span class="sig-name descname"><span class="pre">Get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#label_regular.Converter.Converter.Get" title="Permalink to this definition"></a></dt>
+<dd><p>send a GET request to the API</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>endpoint</strong> (<em>str</em>) – the API’s endpoint</p></li>
+<li><p><strong>headers</strong> (<em>dict</em><em>[</em><em>str</em><em>,</em><em>Any</em><em>]</em><em>|</em><em>None</em>) – optionnal headers if you want to override the GET headers set when creating the Converter instance</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a json containing the API’s response</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str,Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="label_regular.Converter.Converter.GetBuildingAndRoom">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetBuildingAndRoom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tenantData</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><span class="pre">OgreeData</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">siteData</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><span class="pre">OgreeData</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">roomIdentifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><span class="pre">label_regular.Converter.OgreeData</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><span class="pre">label_regular.Converter.OgreeData</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#label_regular.Converter.Converter.GetBuildingAndRoom" title="Permalink to this definition"></a></dt>
+<dd><p>returns the building containing the room identified by roomIdentifier and the room if they exist</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tenantData</strong> (<a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><em>OgreeData</em></a>) – the data of the building and room’s tenant, may not be used in the implementation depending of the database accessed</p></li>
+<li><p><strong>siteData</strong> (<a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><em>OgreeData</em></a>) – the data of the building and room’s site, may not be used in the implementation depending of the database accessed</p></li>
+<li><p><strong>roomIdentifier</strong> (<em>str</em>) – a string used to get the site from the API</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a tuple of two OgreeData instances containing the building and room’s data</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[<a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData">OgreeData</a>,<a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData">OgreeData</a>]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#label_regular.Converter.IncorrectResponseError" title="label_regular.Converter.IncorrectResponseError"><strong>IncorrectResponseError</strong></a> – if the building or the room isn’t found in the API or if its data can not be interpreted</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="label_regular.Converter.Converter.GetFile">
+<span class="sig-name descname"><span class="pre">GetFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="headerlink" href="#label_regular.Converter.Converter.GetFile" title="Permalink to this definition"></a></dt>
+<dd><p>send a GET request to the API for a file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>endpoint</strong> (<em>str</em>) – the API’s endpoint</p></li>
+<li><p><strong>headers</strong> (<em>dict</em><em>[</em><em>str</em><em>,</em><em>Any</em><em>]</em><em>|</em><em>None</em>) – optionnal headers if you want to override the GET headers set when creating the Converter instance</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a bytes containing the API’s response</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bytes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="label_regular.Converter.Converter.GetRack">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetRack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tenantData</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><span class="pre">OgreeData</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">siteData</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><span class="pre">OgreeData</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">buildingData</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><span class="pre">OgreeData</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">roomData</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><span class="pre">OgreeData</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rackIdentifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><span class="pre">OgreeData</span></a></span></span><a class="headerlink" href="#label_regular.Converter.Converter.GetRack" title="Permalink to this definition"></a></dt>
+<dd><p>returns the rack identified by siteIdentifier and all of its children if it exists</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tenantData</strong> (<a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><em>OgreeData</em></a>) – the data of the rack’s tenant, may not be used in the implementation depending of the database accessed</p></li>
+<li><p><strong>siteData</strong> (<a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><em>OgreeData</em></a>) – the data of the rack’s site, may not be used in the implementation depending of the database accessed</p></li>
+<li><p><strong>buildibgData</strong> (<a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><em>OgreeData</em></a>) – the data of the rack’s building, may not be used in the implementation depending of the database accessed</p></li>
+<li><p><strong>roomData</strong> (<a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><em>OgreeData</em></a>) – the data of the rack’s room, may not be used in the implementation depending of the database accessed</p></li>
+<li><p><strong>siteIdentifier</strong> (<em>str</em>) – a string used to get the rack from the API</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>an OgreeData instance containing the tenant’s data. Its children will be stored in the children array of the OgreeData instance if it has any</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData">OgreeData</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#label_regular.Converter.IncorrectResponseError" title="label_regular.Converter.IncorrectResponseError"><strong>IncorrectResponseError</strong></a> – if the rack isn’t found in the API or if its data can not be interpreted</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="label_regular.Converter.Converter.GetSite">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetSite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tenantData</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><span class="pre">OgreeData</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">siteIdentifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><span class="pre">OgreeData</span></a></span></span><a class="headerlink" href="#label_regular.Converter.Converter.GetSite" title="Permalink to this definition"></a></dt>
+<dd><p>returns the site identified by siteIdentifier if it exists</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tenantData</strong> (<a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><em>OgreeData</em></a>) – the data of the site’s tenant, may not be used in the implementation depending of the database accessed</p></li>
+<li><p><strong>siteIdentifier</strong> (<em>str</em>) – a string used to get the site from the API</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>an OgreeData instance containing the tenant’s data</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData">OgreeData</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#label_regular.Converter.IncorrectResponseError" title="label_regular.Converter.IncorrectResponseError"><strong>IncorrectResponseError</strong></a> – if the site isn’t found in the API or if its data can not be interpreted</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="label_regular.Converter.Converter.GetTemplates">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetTemplates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rackData</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><span class="pre">OgreeData</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">roomData</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><span class="pre">OgreeData</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#label_regular.Converter.Converter.GetTemplates" title="Permalink to this definition"></a></dt>
+<dd><p>returns the OGrEE templates used by the room, the rack and their children</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rackdata</strong> (<a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><em>OgreeData</em></a>) – the data of the requested rack</p></li>
+<li><p><strong>roomdata</strong> (<a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><em>OgreeData</em></a>) – the data of the requested room, may not be used in the implementation depending of the database accessed</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>an list of dictionnaries representing the templates</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[dict[str,Any]]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#label_regular.Converter.IncorrectResponseError" title="label_regular.Converter.IncorrectResponseError"><strong>IncorrectResponseError</strong></a> – if a template isn’t found in the API or if its data can not be interpreted</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="label_regular.Converter.Converter.GetTenant">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetTenant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tenantIdentifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><span class="pre">OgreeData</span></a></span></span><a class="headerlink" href="#label_regular.Converter.Converter.GetTenant" title="Permalink to this definition"></a></dt>
+<dd><p>returns the tenant identifed by tenantIdentifier if it exists</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tenantIdentifier</strong> (<em>str</em>) – a string used to get the tenant from the API</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>an OgreeData instance containing the tenant’s data</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData">OgreeData</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#label_regular.Converter.IncorrectResponseError" title="label_regular.Converter.IncorrectResponseError"><strong>IncorrectResponseError</strong></a> – if the tenant isn’t found in the API or if its data can not be interpreted</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="label_regular.Converter.Converter.Post">
+<span class="sig-name descname"><span class="pre">Post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#label_regular.Converter.Converter.Post" title="Permalink to this definition"></a></dt>
+<dd><p>send a POST request to the API</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>endpoint</strong> (<em>str</em>) – the API’s endpoin</p></li>
+<li><p><strong>payload</strong> (<em>dict</em><em>[</em><em>str</em><em>,</em><em>Any</em><em>]</em>) – a JSON containing the payload of the POST request</p></li>
+<li><p><strong>headers</strong> (<em>dict</em><em>[</em><em>str</em><em>,</em><em>Any</em><em>]</em><em>|</em><em>None</em>) – optionnal headers if you want to override the POST headers set when creating the Converter instance</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a json containing the API’s response</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str,Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="label_regular.Converter.Converter.RackSearch">
+<span class="sig-name descname"><span class="pre">RackSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">customerAndSite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deviceType</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#label_regular.Converter.Converter.RackSearch" title="Permalink to this definition"></a></dt>
+<dd><p>Reads a rack’s label on the input image and sends back all the data of the tenant,site,building,room
+of the rack and the rack itself as well as all the templates in use. If a step fails, catch the error and sends back its message</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> (<em>numpy.ndarray</em>) – a numpy array containing an image in bytes</p></li>
+<li><p><strong>customerAndSite</strong> (<em>str</em>) – the name of the customer/tenant and the site where the rack is in the format {customer}.{site}</p></li>
+<li><p><strong>deviceType</strong> (<em>str</em>) – either “rack” or “mdi”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a serialised dictionnary of serialised OgreeMessage’s instances if no Exception were raised, otherwise returns the exception’s message</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="label_regular.Converter.IncorrectResponseError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">label_regular.Converter.</span></span><span class="sig-name descname"><span class="pre">IncorrectResponseError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#label_regular.Converter.IncorrectResponseError" title="Permalink to this definition"></a></dt>
+<dd><p>Custom error class used when the API do not send back expected data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<em>str</em>) – the API’s url</p></li>
+<li><p><strong>endpoint</strong> (<em>str</em>) – the API’s endpoint</p></li>
+<li><p><strong>payload</strong> (<em>dict</em><em>[</em><em>str</em><em>,</em><em>Any</em><em>]</em><em>|</em><em>None</em>) – the request’s payload. If None, the request will categorised as GET and as POST otherwise</p></li>
+<li><p><strong>message</strong> (<em>str</em>) – a custom error message. If precised, it will be printed instead of the default “GET/POST request to API {url} with endpoint {endpoint} returned incorrect data [payload :{payload}]”</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="label_regular.Converter.OgreeData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">label_regular.Converter.</span></span><span class="sig-name descname"><span class="pre">OgreeData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parentId</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">children</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><span class="pre">label_regular.Converter.OgreeData</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#label_regular.Converter.OgreeData" title="Permalink to this definition"></a></dt>
+<dd><p>Represents an object in the OGrEE database</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="label_regular.Converter.OgreeData.FromDict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FromDict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><span class="pre">OgreeData</span></a></span></span><a class="headerlink" href="#label_regular.Converter.OgreeData.FromDict" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dict</strong> (<em>dict</em><em>[</em><em>str</em><em>,</em><em>Any</em><em>]</em>) – a dictionary containing all the fields of OgreeData</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>return an OgreeData instance initialised with the dictionnary’s fields</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData">OgreeData</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="label_regular.Converter.OgreeData.ToMessage">
+<span class="sig-name descname"><span class="pre">ToMessage</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#label_regular.Converter.OgreeData.ToMessage" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a serialized JSON in the format accepted by OGrEE software containing the information of the OgreeData</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="label_regular.Converter.OgreeData.attributes">
+<span class="sig-name descname"><span class="pre">attributes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#label_regular.Converter.OgreeData.attributes" title="Permalink to this definition"></a></dt>
+<dd><p>non-standard attributes, check the <a class="reference external" href="https://github.com/ditrit/OGrEE-3D/wiki/How-it-works#non-standard-attributes">OGrEE-3D wiki</a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="label_regular.Converter.OgreeData.category">
+<span class="sig-name descname"><span class="pre">category</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#label_regular.Converter.OgreeData.category" title="Permalink to this definition"></a></dt>
+<dd><p>tenant, site, building, room, rack, device, group or corridor</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="label_regular.Converter.OgreeData.children">
+<span class="sig-name descname"><span class="pre">children</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><span class="pre">label_regular.Converter.OgreeData</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#label_regular.Converter.OgreeData.children" title="Permalink to this definition"></a></dt>
+<dd><p>direct children of the object</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="label_regular.Converter.OgreeData.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#label_regular.Converter.OgreeData.description" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="label_regular.Converter.OgreeData.domain">
+<span class="sig-name descname"><span class="pre">domain</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#label_regular.Converter.OgreeData.domain" title="Permalink to this definition"></a></dt>
+<dd><p>owner of the object</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="label_regular.Converter.OgreeData.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#label_regular.Converter.OgreeData.id" title="Permalink to this definition"></a></dt>
+<dd><p>unique identifier, use {parentid}.{name} or {name} if no parent</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="label_regular.Converter.OgreeData.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#label_regular.Converter.OgreeData.name" title="Permalink to this definition"></a></dt>
+<dd><p>The “short” name of the object</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="label_regular.Converter.OgreeData.parentId">
+<span class="sig-name descname"><span class="pre">parentId</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#label_regular.Converter.OgreeData.parentId" title="Permalink to this definition"></a></dt>
+<dd><p>id of the parent OgreeData, this is no checked</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="label_regular.Converter.OgreeMessage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">label_regular.Converter.</span></span><span class="sig-name descname"><span class="pre">OgreeMessage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><span class="pre">OgreeData</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'successfully</span> <span class="pre">got</span> <span class="pre">object'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#label_regular.Converter.OgreeMessage" title="Permalink to this definition"></a></dt>
+<dd><p>Represents a message be sent and received by OGrEE software</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="label_regular.Converter.OgreeMessage.data">
+<span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#label_regular.Converter.OgreeData" title="label_regular.Converter.OgreeData"><span class="pre">OgreeData</span></a></em><a class="headerlink" href="#label_regular.Converter.OgreeMessage.data" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="label_regular.Converter.OgreeMessage.message">
+<span class="sig-name descname"><span class="pre">message</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'successfully</span> <span class="pre">got</span> <span class="pre">object'</span></em><a class="headerlink" href="#label_regular.Converter.OgreeMessage.message" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="label_regular.Converter.OgreeMessage.status">
+<span class="sig-name descname"><span class="pre">status</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#label_regular.Converter.OgreeMessage.status" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to OGrEE-CONVERTER’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="DcTrackConverter.html" class="btn btn-neutral float-right" title="DcTrackConverter" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Timothé Rios.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

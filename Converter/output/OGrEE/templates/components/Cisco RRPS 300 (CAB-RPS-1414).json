@@ -1,0 +1,20 @@
+{
+	"location": "Cisco RRPS 300 (CAB-RPS-1414)-template",
+	"type": "Power (AC)",
+	"elemOrient": "",
+	"elemPos": [
+		0,
+		0,
+		0
+	],
+	"elemSize": [
+		125,
+		30,
+		30
+	],
+	"labelPos": "front",
+	"color": "000000",
+	"attributes": {
+		"factor": "Cisco RRPS 300 (CAB-RPS-1414)"
+	}
+}

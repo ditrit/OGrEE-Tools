@@ -1,0 +1,20 @@
+{
+	"location": "CFP4-template",
+	"type": "Data",
+	"elemOrient": "",
+	"elemPos": [
+		0,
+		0,
+		0
+	],
+	"elemSize": [
+		21.5,
+		92,
+		9.5
+	],
+	"labelPos": "front",
+	"color": "000000",
+	"attributes": {
+		"factor": "CFP4"
+	}
+}

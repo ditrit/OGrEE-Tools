@@ -1,0 +1,6 @@
+ogLabelServer
+================
+
+.. automodule:: label_regular.ogLabelServer
+    :members:
+    :undoc-members:
