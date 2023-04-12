@@ -1,6 +1,0 @@
-Converter
-=========
-
-.. automodule:: label_regular.Converter
-    :members:
-    :undoc-members:

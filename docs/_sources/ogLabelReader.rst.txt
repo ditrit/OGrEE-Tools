@@ -1,6 +1,0 @@
-ogLabelReader
-================
-
-.. automodule:: label_regular.ogLabelReader
-    :members:
-    :undoc-members:

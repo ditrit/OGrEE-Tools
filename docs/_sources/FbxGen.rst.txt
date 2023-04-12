@@ -1,6 +1,0 @@
-FbxGen
-================
-
-.. automodule:: label_regular.modules.FbxGen
-    :members:
-    :undoc-members:
