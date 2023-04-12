@@ -1,47 +1,33 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+name: Your github action
 
 on:
-  # Runs on pushes targeting the default branch
   push:
-    branches: 
-      - main
-      - gh-pages
+    branches:
+      # NOTE: You may want to limit the trigger branch to be "main" or "master" etc.
+      - 'main'
+      - 'gh-pages'
     paths:
-      - "/docs"
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+      - '/docs/'
 
 jobs:
-  # Single deploy job since we're just deploying
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Check out
         uses: actions/checkout@v3
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        
+      - name: Publish current workdir (which contains generated content) to GitHub Pages
+        uses: rayluo/github-pages-overwriter@v1.3
+
         with:
-          # Upload entire repository
-          path: './docs/'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+
+          # Optional. Default value "." means the root directory of your project will be published.
+          # You can use whatever directory your project uses, for example "wwwroot".
+          # Such a directory does *not* have to already exist in your repo,
+          # it could be an output directory created dynamically by your static website builder.
+          source-directory: './docs'
+
+          # Optional. Default value "gh_pages".
+          # It specifies the temporary branch which hosts the static website.
+          # Each build will OVERWRITE this branch.
+          target-branch: 'gh-pages'
