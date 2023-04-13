@@ -348,60 +348,62 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
             )
             if "Missing" not in label:
                 break
+        if label is None or len(label) == 0 or "Missing" in label:
+            return "Rack label could not be read"
         
         #label = ["C8", "B11"]  # debug
         if len(label[0]) > 3:
             label[0] = label[0][3::]
 
-        # try:
-        data = {"name": customer, "id": customer}
-        tenantData = self.BuildTenant(data)
-        data = {
-            "name": site,
-        }
-        siteData = self.GetSite(tenantData, site)
-        buildingData, roomData = self.GetBuildingAndRoom(siteData, label[0])
-        rackData, templates, fbx = self.GetRack(roomData, label[1])
-        # Setting the data to send to Unity App
-        dictionary = {
-            "tenant": OgreeMessage.FormatDict(tenantData),
-            "tenantName": customer,
-            "site": OgreeMessage.FormatDict(siteData),
-            "siteName": site,
-            "building": OgreeMessage.FormatDict(buildingData),
-            "buildingName": buildingData["name"],
-            "room": OgreeMessage.FormatDict(roomData),
-            "roomName": roomData["name"],
-            "rack": OgreeMessage.FormatDict(rackData),
-            "rackName": rackData["name"],
-            "templates": json.dumps([json.dumps(t) for t in templates]),
-            "fbx": json.dumps(fbx),
-        }
-        # Serializing json
-        json_object = json.dumps(dictionary, indent=4)
+        try:
+            data = {"name": customer, "id": customer}
+            tenantData = self.BuildTenant(data)
+            data = {
+                "name": site,
+            }
+            siteData = self.GetSite(tenantData, site)
+            buildingData, roomData = self.GetBuildingAndRoom(siteData, label[0])
+            rackData, templates, fbx = self.GetRack(roomData, label[1])
+            # Setting the data to send to Unity App
+            dictionary = {
+                "tenant": OgreeMessage.FormatDict(tenantData),
+                "tenantName": customer,
+                "site": OgreeMessage.FormatDict(siteData),
+                "siteName": site,
+                "building": OgreeMessage.FormatDict(buildingData),
+                "buildingName": buildingData["name"],
+                "room": OgreeMessage.FormatDict(roomData),
+                "roomName": roomData["name"],
+                "rack": OgreeMessage.FormatDict(rackData),
+                "rackName": rackData["name"],
+                "templates": json.dumps([json.dumps(t) for t in templates]),
+                "fbx": json.dumps(fbx),
+            }
+            # Serializing json
+            json_object = json.dumps(dictionary, indent=4)
 
-        # Debug
-        dictionary = {
-            "tenant": tenantData,
-            "tenantName": customer,
-            "site": siteData,
-            "siteName": site,
-            "building": buildingData,
-            "buildingName": buildingData["name"],
-            "room": roomData,
-            "roomName": roomData["name"],
-            "rack": rackData,
-            "rackName": rackData["name"],
-            "templates": templates,
-            "fbx": {name: "bits" for name in fbx},
-        }
-        with open(f"{self.AROutputPath}/output.json", "w") as output:
-            output.write(json.dumps(dictionary, indent=4))
-        log.info(f"the json returned is in {self.AROutputPath}/output.json")
-        log.info(f"Total time: {time() - start} s ")
-        log.info("End of the processing.")
-        return json_object
-        """
+            # Debug
+            dictionary = {
+                "tenant": tenantData,
+                "tenantName": customer,
+                "site": siteData,
+                "siteName": site,
+                "building": buildingData,
+                "buildingName": buildingData["name"],
+                "room": roomData,
+                "roomName": roomData["name"],
+                "rack": rackData,
+                "rackName": rackData["name"],
+                "templates": templates,
+                "fbx": {name: "bits" for name in fbx},
+            }
+            with open(f"{self.AROutputPath}/output.json", "w") as output:
+                output.write(json.dumps(dictionary, indent=4))
+            log.info(f"the json returned is in {self.AROutputPath}/output.json")
+            log.info(f"Total time: {time() - start} s ")
+            log.info("End of the processing.")
+            return json_object
+    
         except IncorrectResponseError as e:
             log.error(e)
             log.error(f"Required data may be missing on {e.url}")
@@ -412,7 +414,6 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
             log.error(e)
             log.debug(traceback.format_exc())
             return e.__str__()
-        """
 
     def MakeFBX(self, data: dict[str, Any]) -> str:
         endpointBack = f"/gdcitdz/images/devices/rearpngimages/{data['modelId']}_R.png"
