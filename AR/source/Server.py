@@ -54,6 +54,7 @@ def ReadPicture()->str:
             return converter.RackSearch(img, customerAndSite, deviceType)
     except Exception:
         traceback.print_exc()
+        return traceback.format_exc()
 
 #####################################################################################################################
 #####################################################################################################################
@@ -68,10 +69,7 @@ def GetList()->str:
     :returns: a serialised JSON containing the requested data
     :rtype: str
     """
-    try:
-        pass
-    except Exception:
-        traceback.print_exc()
+    return ""
 
 
 #####################################################################################################################
@@ -92,6 +90,7 @@ def GetTest()->str:
 #####################################################################################################################
 #####################################################################################################################
 if __name__ == "__main__":
+    print("test")
     parser = argparse.ArgumentParser(
         description="Perform OCR from data (image + tenant) sent from Hololens"
     )

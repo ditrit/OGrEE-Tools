@@ -48,7 +48,7 @@ class IncorrectResponseError(Exception):
 
     def __str__(self) -> str:
         if self.message != "":
-            return super.__str__(self)
+            return super(IncorrectResponseError,self).__str__()
         if self.payload is None:
             return f"GET request to API {self.url} with endpoint {self.endpoint} returned incorrect data"
         else:

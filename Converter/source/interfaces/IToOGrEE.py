@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from os.path import dirname, realpath
 from typing import Any
 
-defaultOutputPath = f"{dirname(realpath(__file__))}/../../output/OGrEE"
+defaultOutputPath = realpath(f"{dirname(realpath(__file__))}/../../output/OGrEE")
 
 
 class IToOGrEE(ABC):
@@ -11,12 +11,12 @@ class IToOGrEE(ABC):
         url: str,
         headersGET: dict[str, Any],
         headersPOST: dict[str, Any],
-        outputPath: str = None,
+        outputPath: str|None = None,
     ) -> None:
         self.url = url
         self.headersGET = headersGET
         self.headersPOST = headersPOST
-        self.outputPath = outputPath if outputPath is not None else defaultOutputPath
+        self.outputPath = realpath(outputPath) if outputPath is not None else defaultOutputPath
 
     @abstractmethod
     def BuildTenant(self, data: dict[str, Any]) -> dict[str, Any]:
