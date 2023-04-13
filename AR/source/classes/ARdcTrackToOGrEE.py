@@ -177,7 +177,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         
         #Check if we know the positions of the rack in the room
         try:
-            with open(self.templatePath + "/positions.json", "r") as positionFile:
+            with open(self.AROutputPath + "/positions.json", "r") as positionFile:
                 positions = json.loads(positionFile.read())
                 if rackData["name"] in positions:
                     log.debug(f"position found for {rackData['name']}")
