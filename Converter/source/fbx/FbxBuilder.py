@@ -158,7 +158,7 @@ def makeCube(manager):
     return cubeMesh
 
 
-def addCube(manager,pScene, cubeName, cubeScale: tuple[float, float, float] = [1, 1, 1]):
+def addCube(manager,pScene, cubeName, cubeScale: tuple[float, float, float] = (1.0, 1.0, 1.0)):
     """Adds a cubic mesh to the scene."""
     # Create a new mesh node attribute in the scene, and set it as the new node's attribute
     newMesh = makeCube(manager)
@@ -255,7 +255,7 @@ def CreateFBX(
 
 
     manager,scene = FbxCommon.InitializeSdkObjects()
-    cubeMesh = addCube(manager,scene, "cube", cubeScale=[width/2, height/2, depth/2])
+    cubeMesh = addCube(manager,scene, "cube", cubeScale=(width/2, height/2, depth/2))
     cubeNode = cubeMesh.GetNode()
 
     cubeNode.AddMaterial(CreateMaterial(manager,"",front))

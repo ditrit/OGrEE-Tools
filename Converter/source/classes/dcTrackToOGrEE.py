@@ -15,7 +15,7 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
         url: str,
         headersGET: dict[str, Any],
         headersPOST: dict[str, Any],
-        outputPath: str = None,
+        outputPath: str|None = None,
     ) -> None:
         super().__init__(url, headersGET, headersPOST, outputPath)
         self.templatePath = f"{self.outputPath}/templates"
@@ -106,7 +106,7 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
             "attributes": {
                 "orientation": "front",  # ???
                 "posXY": json.dumps({"x": 0.0, "y": 0.0}),  # ???
-                "posXYUnit": "m",
+                "posXYUnit": "t",
                 "size": json.dumps(
                     {
                         "x": float(data["sizeWDHmm"][0]) / 10,
@@ -186,7 +186,7 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
 
         return result
 
-    def BuildTemplate(self, data: dict[str, Any]) -> list[dict[str, Any]]:
+    def BuildTemplate(self, data: dict[str, Any]) -> dict[str, Any]:
         uSize = 44.45
         files = [
             f.split(".")[0]

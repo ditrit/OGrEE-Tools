@@ -35,7 +35,7 @@ def RackSearch(img: numpy.ndarray, customerAndSite: str, deviceType: str) -> str
     :returns: a serialised dictionnary of serialised OgreeMessage's instances
     :rtype: str
     """
-    pathToEnvFile = f"{os.path.dirname(__file__)}/.env.json"
+    pathToEnvFile = f"{os.path.dirname(__file__)}/../.env.json"
     url, headers, database = Utils.ReadEnv(pathToEnvFile)
     converter = ARdcTrackToOGrEE(url, headers, {"Content-Type": "application/json"})
     return converter.RackSearch(img, customerAndSite, deviceType)

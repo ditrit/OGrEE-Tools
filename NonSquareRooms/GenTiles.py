@@ -221,7 +221,7 @@ def processJSON(
     angle: str | float | None,
     offset: str | tuple[float, float] | None,
     draw: bool = False,
-    outname: str = None,
+    outname: str|None = None,
     opti: bool = False,
 ) -> None:
 

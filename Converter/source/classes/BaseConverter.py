@@ -81,13 +81,13 @@ class BaseConverter:
         """
         if headers is None:
             return Api.PostFile(self.url, self.headersPOST, endpoint, payload)
-        return Api.Postfile(self.url, headers, endpoint, payload)
+        return Api.PostFile(self.url, headers, endpoint, payload)
 
-    def PutData():
+    def PutData(self):
         pass
 
-    def PostData():
+    def PostData(self):
         pass
 
-    def SaveToFile():
+    def SaveToFile(self):
         pass

@@ -22,7 +22,7 @@ log = logging.getLogger(__name__)
 log.addHandler(logging.StreamHandler())
 
 
-defaultAROutputPath = f"{dirname(realpath(__file__))}/../../output"
+defaultAROutputPath = realpath(f"{dirname(realpath(__file__))}/../../output")
 
 
 class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
@@ -31,12 +31,12 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         url: str,
         headersGET: dict[str, Any],
         headersPOST: dict[str, Any],
-        outputPath: str = None,
-        AROutputPath: str = None,
+        outputPath: str|None = None,
+        AROutputPath: str|None = None,
     ) -> None:
         super().__init__(url, headersGET, headersPOST, outputPath)
         self.AROutputPath = (
-            AROutputPath if AROutputPath is not None else defaultAROutputPath
+            realpath(AROutputPath) if AROutputPath is not None else defaultAROutputPath
         )
 
     def GetTenant(self, tenantName: str) -> dict[str, Any]:
@@ -117,11 +117,12 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
                     "orientation": "+N+W",  # ???
                     "posXY": json.dumps({"x": 0.0, "y": 0.0}),  # ???
                     "posXYUnit": "m",
-                    "size": json.dumps({"x": 100.0, "y": 100.0}),  # ???
+                    "size": json.dumps({"x": 21, "y": 39}),  # ???
                     "sizeUnit": "m",
                     "height": "4",  # ???
                     "heightUnit": "m",
                     "template": "",
+                    "technical": '{"left":5,"right":5,"top":0,"bottom":0}',
                     "floorUnit": "t",
                 },
             }
@@ -132,7 +133,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         self,
         roomData: dict[str, Any],
         rackName: str,
-    ) -> tuple[dict[str, Any], list[dict[str, Any]], list[str]]:
+    ) -> tuple[dict[str, Any], list[dict[str, Any]], dict[str,str]]:
         payload = {
             "columns": [
                 {"name": "tiName", "filter": {"contains": rackName}},
@@ -173,6 +174,22 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         rackDataJson["parentId"] = roomData["id"]
         rackDataJson["template"] = rackTemplate["slug"]
         rackData = self.BuildRack(rackDataJson)
+        
+        #Check if we know the positions of the rack in the room
+        try:
+            with open(self.templatePath + "/positions.json", "r") as positionFile:
+                positions = json.loads(positionFile.read())
+                if rackData["name"] in positions:
+                    log.debug(f"position found for {rackData['name']}")
+                    rackData["attributes"]["posXY"] = json.dumps(
+                        {
+                            "x": positions[rackData["name"]][0],
+                            "y": positions[rackData["name"]][1],
+                        }
+                    )
+        except:
+            log.debug(f"No position found for racks ({self.templatePath}/positions.json is missing)")
+
         rackDataJson["id"] = rackData["id"]
         templates = [rackTemplate]
         fbxPaths = [rackFBX] if rackFBX != "" else []
@@ -301,7 +318,6 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
             else:
                 childOgree["attributes"]["posU"] = "0"
 
-
             childJson["id"] = childOgree["id"]
             templatesChildChildren, childChildren, fbxChildChildren = self.GetChildren(
                 childJson
@@ -321,8 +337,8 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         customer, site = CustomerAndSiteSpliter(customerAndSite)
 
         # Read RegexFile to have all infos
-        pathToConfFile = f"{dirname(__file__)}/.conf.json"
-        """
+        pathToConfFile = f"{dirname(__file__)}/../../.conf.json"
+        
         regexp, roomList, type, background, colorRange = ReadConf(
             pathToConfFile, customer, site, deviceType
         )
@@ -332,13 +348,12 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
             )
             if "Missing" not in label:
                 break
-        """
-        label = ["C8", "B11"]  # debug
+        
+        #label = ["C8", "B11"]  # debug
         if len(label[0]) > 3:
             label[0] = label[0][3::]
 
-        
-        #try:
+        # try:
         data = {"name": customer, "id": customer}
         tenantData = self.BuildTenant(data)
         data = {
@@ -398,6 +413,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
             log.debug(traceback.format_exc())
             return e.__str__()
         """
+
     def MakeFBX(self, data: dict[str, Any]) -> str:
         endpointBack = f"/gdcitdz/images/devices/rearpngimages/{data['modelId']}_R.png"
         endpointFront = (

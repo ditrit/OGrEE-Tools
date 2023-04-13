@@ -165,7 +165,6 @@ def PostFile(
     :rtype: bytes
     """
     apiURL = f"{url}/{endpoint}"
-    payload = ""
     try:
         response = requests.post(apiURL, headers=headers, data=payload)
         log.debug("API is up and running")
