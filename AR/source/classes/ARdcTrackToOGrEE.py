@@ -26,6 +26,13 @@ defaultAROutputPath = realpath(f"{dirname(realpath(__file__))}/../../output")
 
 
 class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
+    """Convert data from dcTrack to OGrEE-AR
+
+    :param dcTrackToOGrEE: Base class of dcTrack-to-OGrEE converters
+    :type dcTrackToOGrEE: dcTrackToOGrEE
+    :param IARConverter:  Interface of AR converters
+    :type IARConverter: IARConverter
+    """
     def __init__(
         self,
         url: str,
