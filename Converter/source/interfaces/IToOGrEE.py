@@ -9,10 +9,10 @@ class IToOGrEE(ABC):
     @abstractmethod
     def BuildTenant(self, data: dict[str, Any]) -> dict[str, Any]:
         """
-        returns the tenant identifed by tenantData if it exists
+        Build a tenant from another base's data
 
-        :param dict[str, Any] tenantData: a JSON used to get the tenant from the API
-        :returns: a JSON containing the tenant's data
+        :param dict[str, Any] tenantData: a JSON used to build the tenant
+        :returns: a dict describing an OGrEE tenant
         :rtype: dict[str, Any]
         """
         pass
@@ -20,10 +20,10 @@ class IToOGrEE(ABC):
     @abstractmethod
     def BuildSite(self, data: dict[str, Any]) -> dict[str, Any]:
         """
-        returns the site identified by siteData if it exists
+        Build a site from another base's data
 
-        :param dict[str, Any] siteData: a JSON used to get the site from the API
-        :returns: a JSON containing the site's data
+        :param dict[str, Any] siteData: a JSON used to build the site
+        :returns: a dict describing an OGrEE site
         :rtype: dict[str, Any]
         """
         pass
@@ -31,10 +31,10 @@ class IToOGrEE(ABC):
     @abstractmethod
     def BuildBuilding(self, data: dict[str, Any]) -> dict[str, Any]:
         """
-        returns the building identified by buildingData if it exists
+        Build a building from another base's data
 
-        :param dict[str, Any] buildingData: a JSON used to get the site from the API
-        :returns: a JSON containing the building's data
+        :param dict[str, Any] buildingData: a JSON used to build the site
+        :returns: a dict describing an OGrEE building
         :rtype: dict[str, Any]
         """
         pass
@@ -42,10 +42,10 @@ class IToOGrEE(ABC):
     @abstractmethod
     def BuildRoom(self, data: dict[str, Any]) -> dict[str, Any]:
         """
-        returns the room identified by roomData if it exists
+        Build a room from another base's data
 
-        :param dict[str, Any] roomData: a JSON used to get the site from the API
-        :returns: a JSON containing the room's data
+        :param dict[str, Any] roomData: a JSON used to build the site
+        :returns: a dict describing an OGrEE room
         :rtype: dict[str, Any]
         """
         pass
@@ -53,10 +53,10 @@ class IToOGrEE(ABC):
     @abstractmethod
     def BuildRack(self, data: dict[str, Any]) -> dict[str, Any]:
         """
-        returns the rack identified by rackData if it exists
+        Build a rack from another base's data
 
-        :param dict[str, Any] rackData: a JSON used to get the rack from the API
-        :returns: a JSON containing the rack's data
+        :param dict[str, Any] rackData: a JSON used to build the rack
+        :returns: a dict describing an OGrEE rack
         :rtype: dict[str, Any]
         """
         pass
@@ -64,10 +64,10 @@ class IToOGrEE(ABC):
     @abstractmethod
     def BuildDevice(self, data: dict[str, Any]) -> dict[str, Any]:
         """
-        returns the device identified by deviceData if it exists
+        Build a device from another base's data
 
-        :param dict[str, Any] deviceData: a JSON used to get the device from the API
-        :returns: a JSON containing the device's data
+        :param dict[str, Any] deviceData: a JSON used to build the device
+        :returns: a dict describing an OGrEE device
         :rtype: dict[str, Any]
         """
         pass
@@ -75,10 +75,10 @@ class IToOGrEE(ABC):
     @abstractmethod
     def BuildTemplate(self, data: dict[str, Any]) -> list[dict[str, Any]]:
         """
-        returns the OGrEE template identified by templateData if it exists
+        Build a template from another base's data
 
-        :param dict[str, Any] templateData: a JSON used to get the template from the API
-        :returns: a JSON containing the template's data
+        :param dict[str, Any] templateData: a JSON used to build the template
+        :returns: a dict describing an OGrEE template
         :rtype: dict[str, Any]
         """
         pass

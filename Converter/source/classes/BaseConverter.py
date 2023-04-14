@@ -10,9 +10,20 @@ log.addHandler(logging.StreamHandler())
 
 
 class BaseConverter:
+    """Base class for all converters
+    """
     def __init__(
         self, url: str, headersGET: dict[str, Any], headersPOST: dict[str, Any], **kw
     ) -> None:
+        """
+
+        :param url: API url of the source
+        :type url: str
+        :param headersGET: headers of the GET requests
+        :type headersGET: dict[str, Any]
+        :param headersPOST: headers of the POST requests
+        :type headersPOST: dict[str, Any]
+        """
         self.url = url
         self.headersGET = headersGET
         self.headersPOST = headersPOST
@@ -85,10 +96,16 @@ class BaseConverter:
         return Api.PostFile(self.url, headers, endpoint, payload)
 
     def PutData(self):
+        """Not implemented yet
+        """
         pass
 
     def PostData(self):
+        """Not implemented yet
+        """
         pass
 
     def SaveToFile(self):
+        """Not implemented yet
+        """
         pass
