@@ -26,24 +26,62 @@ defaultAROutputPath = realpath(f"{dirname(realpath(__file__))}/../../output")
 
 
 class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
+    """Convert data from dcTrack to OGrEE-AR
+
+    :param dcTrackToOGrEE: Base class of dcTrack-to-OGrEE converters
+    :type dcTrackToOGrEE: dcTrackToOGrEE
+    :param IARConverter:  Interface of AR converters
+    :type IARConverter: IARConverter
+    """
     def __init__(
         self,
         url: str,
         headersGET: dict[str, Any],
         headersPOST: dict[str, Any],
-        outputPath: str|None = None,
-        AROutputPath: str|None = None,
+        outputPath: str | None = None,
+        AROutputPath: str | None = None,
+        **kw,
     ) -> None:
-        super().__init__(url, headersGET, headersPOST, outputPath)
+        """_summary_
+
+        :param url: dcTrack
+        :type url: str
+        :param headersGET: _description_
+        :type headersGET: dict[str, Any]
+        :param headersPOST: _description_
+        :type headersPOST: dict[str, Any]
+        :param outputPath: _description_, defaults to None
+        :type outputPath: str | None, optional
+        :param AROutputPath: _description_, defaults to None
+        :type AROutputPath: str | None, optional
+        """
         self.AROutputPath = (
             realpath(AROutputPath) if AROutputPath is not None else defaultAROutputPath
         )
+        super().__init__(url, headersGET, headersPOST, outputPath, **kw)
 
     def GetTenant(self, tenantName: str) -> dict[str, Any]:
+        """Create a tenant for dcTrack
+
+        :param tenantName: name of the tenant
+        :type tenantName: str
+        :return: dict describing an OgrEE tenant
+        :rtype: dict[str, Any]
+        """
         data = {"name": tenantName, "id": tenantName}
         return self.BuildTenant(data)
 
     def GetSite(self, tenantData: dict[str, Any], locationName: str) -> dict[str, Any]:
+        """Get site informations from dcTrack
+
+        :param tenantData: must contains "name"
+        :type tenantData: dict[str, Any]
+        :param locationName: name of the location of the site in dcTrack
+        :type locationName: str
+        :raises IncorrectResponseError: if the site was not found in dcTrack
+        :return: dict describing an OGrEE site
+        :rtype: dict[str, Any]
+        """
         payload = {
             "columns": [
                 {
@@ -75,6 +113,16 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
     def GetBuildingAndRoom(
         self, siteData: dict[str, Any], roomIdentifier: str
     ) -> tuple[dict[str, Any], dict[str, Any]]:
+        """Get building and room informations from dcTrack
+
+        :param siteData: must contains "name", "id" and "domain"
+        :type siteData: dict[str, Any]
+        :param roomIdentifier: name of the room in dcTrack
+        :type roomIdentifier: str
+        :raises IncorrectResponseError: if the room was not found in dcTrack
+        :return: two dicts describing an OGrEE building and room
+        :rtype: tuple[dict[str, Any], dict[str, Any]]
+        """
         buildingData = self.BuildBuilding(
             {
                 "name": "building",  # ???
@@ -133,7 +181,17 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         self,
         roomData: dict[str, Any],
         rackName: str,
-    ) -> tuple[dict[str, Any], list[dict[str, Any]], dict[str,str]]:
+    ) -> tuple[dict[str, Any], list[dict[str, Any]], dict[str, str]]:
+        """Get rack informations from dcTrack
+
+        :param roomData: must contains "name", "id" and "domain"
+        :type roomData: dict[str, Any]
+        :param rackName: name of the rack in dcTrack
+        :type rackName: str
+        :raises IncorrectResponseError: if the rack was not found in dcTracck
+        :return: dict describing the rack and its children, a list of dict describing the templates needed and a dict of fbx models
+        :rtype: tuple[dict[str, Any], list[dict[str, Any]], dict[str, str]]
+        """
         payload = {
             "columns": [
                 {"name": "tiName", "filter": {"contains": rackName}},
@@ -172,12 +230,13 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         rackTemplate["fbxModel"] = "true" if rackFBX != "" else ""
         rackDataJson["sizeWDHmm"] = rackTemplate["sizeWDHmm"]
         rackDataJson["parentId"] = roomData["id"]
+        rackDataJson["domain"] = roomData["domain"]
         rackDataJson["template"] = rackTemplate["slug"]
         rackData = self.BuildRack(rackDataJson)
-        
-        #Check if we know the positions of the rack in the room
+
+        # Check if we know the positions of the rack in the room
         try:
-            with open(self.templatePath + "/positions.json", "r") as positionFile:
+            with open(self.AROutputPath + "/positions.json", "r") as positionFile:
                 positions = json.loads(positionFile.read())
                 if rackData["name"] in positions:
                     log.debug(f"position found for {rackData['name']}")
@@ -188,7 +247,9 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
                         }
                     )
         except:
-            log.debug(f"No position found for racks ({self.templatePath}/positions.json is missing)")
+            log.debug(
+                f"No position found for racks ({self.templatePath}/positions.json is missing)"
+            )
 
         rackDataJson["id"] = rackData["id"]
         templates = [rackTemplate]
@@ -211,9 +272,8 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         Recursively returns all children of the parent object and their templates
 
         :param dict[str,Any] parent_dctrack: parent object's data from dctrack
-        :param OgreeData parent_ogree: parent object's data, converted to OgreeData
-        :returns: a tuple of a list of the children and a list of their templates
-        :rtype: tuple[list[dict[str, Any]], list[OgreeData]]
+        :returns: a list of the children, a list of their templates and a list of paths to their fbx models
+        :rtype: tuple[list[dict[str, Any]], list[dict[str, Any]], list[str]]
         """
         templates = []
         childrenOgree = []
@@ -329,6 +389,17 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         return templates, childrenOgree, fbx
 
     def RackSearch(self, img: ndarray, customerAndSite: str, deviceType: str) -> str:
+        """Perform OCR on a picture for a rack label, gets its info from dcTrack and convert it to OGrEE format
+
+        :param img: the picture where the rack label is
+        :type img: ndarray
+        :param customerAndSite: [CUSTOMER].[SITE]
+        :type customerAndSite: str
+        :param deviceType: "rack" or "mdi"
+        :type deviceType: str
+        :return: a serialised message of OGrEE format containing all the data required to load the rack on OGrEE-3D-AR
+        :rtype: str
+        """
         ocrResults = []
         label = None
 
@@ -338,7 +409,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
 
         # Read RegexFile to have all infos
         pathToConfFile = f"{dirname(__file__)}/../../.conf.json"
-        
+
         regexp, roomList, type, background, colorRange = ReadConf(
             pathToConfFile, customer, site, deviceType
         )
@@ -348,60 +419,62 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
             )
             if "Missing" not in label:
                 break
-        
-        #label = ["C8", "B11"]  # debug
+        if label is None or len(label) == 0 or "Missing" in label:
+            return "Rack label could not be read"
+
+        # label = ["C8", "B11"]  # debug
         if len(label[0]) > 3:
             label[0] = label[0][3::]
 
-        # try:
-        data = {"name": customer, "id": customer}
-        tenantData = self.BuildTenant(data)
-        data = {
-            "name": site,
-        }
-        siteData = self.GetSite(tenantData, site)
-        buildingData, roomData = self.GetBuildingAndRoom(siteData, label[0])
-        rackData, templates, fbx = self.GetRack(roomData, label[1])
-        # Setting the data to send to Unity App
-        dictionary = {
-            "tenant": OgreeMessage.FormatDict(tenantData),
-            "tenantName": customer,
-            "site": OgreeMessage.FormatDict(siteData),
-            "siteName": site,
-            "building": OgreeMessage.FormatDict(buildingData),
-            "buildingName": buildingData["name"],
-            "room": OgreeMessage.FormatDict(roomData),
-            "roomName": roomData["name"],
-            "rack": OgreeMessage.FormatDict(rackData),
-            "rackName": rackData["name"],
-            "templates": json.dumps([json.dumps(t) for t in templates]),
-            "fbx": json.dumps(fbx),
-        }
-        # Serializing json
-        json_object = json.dumps(dictionary, indent=4)
+        try:
+            data = {"name": customer, "id": customer}
+            tenantData = self.BuildTenant(data)
+            data = {
+                "name": site,
+            }
+            siteData = self.GetSite(tenantData, site)
+            buildingData, roomData = self.GetBuildingAndRoom(siteData, label[0])
+            rackData, templates, fbx = self.GetRack(roomData, label[1])
+            # Setting the data to send to Unity App
+            dictionary = {
+                "tenant": OgreeMessage.FormatDict(tenantData),
+                "tenantName": customer,
+                "site": OgreeMessage.FormatDict(siteData),
+                "siteName": site,
+                "building": OgreeMessage.FormatDict(buildingData),
+                "buildingName": buildingData["name"],
+                "room": OgreeMessage.FormatDict(roomData),
+                "roomName": roomData["name"],
+                "rack": OgreeMessage.FormatDict(rackData),
+                "rackName": rackData["name"],
+                "templates": json.dumps([json.dumps(t) for t in templates]),
+                "fbx": json.dumps(fbx),
+            }
+            # Serializing json
+            json_object = json.dumps(dictionary, indent=4)
 
-        # Debug
-        dictionary = {
-            "tenant": tenantData,
-            "tenantName": customer,
-            "site": siteData,
-            "siteName": site,
-            "building": buildingData,
-            "buildingName": buildingData["name"],
-            "room": roomData,
-            "roomName": roomData["name"],
-            "rack": rackData,
-            "rackName": rackData["name"],
-            "templates": templates,
-            "fbx": {name: "bits" for name in fbx},
-        }
-        with open(f"{self.AROutputPath}/output.json", "w") as output:
-            output.write(json.dumps(dictionary, indent=4))
-        log.info(f"the json returned is in {self.AROutputPath}/output.json")
-        log.info(f"Total time: {time() - start} s ")
-        log.info("End of the processing.")
-        return json_object
-        """
+            # Debug
+            dictionary = {
+                "tenant": tenantData,
+                "tenantName": customer,
+                "site": siteData,
+                "siteName": site,
+                "building": buildingData,
+                "buildingName": buildingData["name"],
+                "room": roomData,
+                "roomName": roomData["name"],
+                "rack": rackData,
+                "rackName": rackData["name"],
+                "templates": templates,
+                "fbx": {name: "bits" for name in fbx},
+            }
+            with open(f"{self.AROutputPath}/output.json", "w") as output:
+                output.write(json.dumps(dictionary, indent=4))
+            log.info(f"the json returned is in {self.AROutputPath}/output.json")
+            log.info(f"Total time: {time() - start} s ")
+            log.info("End of the processing.")
+            return json_object
+
         except IncorrectResponseError as e:
             log.error(e)
             log.error(f"Required data may be missing on {e.url}")
@@ -412,9 +485,15 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
             log.error(e)
             log.debug(traceback.format_exc())
             return e.__str__()
-        """
 
     def MakeFBX(self, data: dict[str, Any]) -> str:
+        """Get pictures of a model from dcTrack then build a fbx model with them
+
+        :param data: dcTrack model
+        :type data: dict[str, Any]
+        :return: the path to an fbx model or "" if no picture were found in dcTrack
+        :rtype: str
+        """
         endpointBack = f"/gdcitdz/images/devices/rearpngimages/{data['modelId']}_R.png"
         endpointFront = (
             f"/gdcitdz/images/devices/frontpngimages/{data['modelId']}_F.png"
@@ -441,4 +520,6 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         )
 
     def GetList(self):
-        return super().GetList()
+        """Not implemented
+        """
+        pass
