@@ -6,7 +6,7 @@ AR.source.ocr namespace
 Submodules
 ----------
 
-LabelProcessing module
+AR.source.ocr.LabelProcessing module
 ------------------------------------
 
 .. automodule:: AR.source.ocr.LabelProcessing
@@ -14,7 +14,7 @@ LabelProcessing module
    :undoc-members:
    :show-inheritance:
 
-OCR module
+AR.source.ocr.OCR module
 ------------------------
 
 .. automodule:: AR.source.ocr.OCR
@@ -22,7 +22,7 @@ OCR module
    :undoc-members:
    :show-inheritance:
 
-ShapeDetector module
+AR.source.ocr.ShapeDetector module
 ----------------------------------
 
 .. automodule:: AR.source.ocr.ShapeDetector

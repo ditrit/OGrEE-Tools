@@ -45,12 +45,23 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Converter.html">Converter namespace</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="AR.html">AR namespace</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="AR.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">AR.source namespace</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#subpackages">Subpackages</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-AR.source.Server">Server module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-AR.source.ogLabelReader">ogLabelReader module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">AR.source namespace</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.classes.html">AR.source.classes namespace</a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.interfaces.html">AR.source.interfaces namespace</a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.ocr.html">AR.source.ocr namespace</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-AR.source.Server">AR.source.Server module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#AR.source.Server.GetList"><code class="docutils literal notranslate"><span class="pre">GetList()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#AR.source.Server.GetTest"><code class="docutils literal notranslate"><span class="pre">GetTest()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#AR.source.Server.ReadPicture"><code class="docutils literal notranslate"><span class="pre">ReadPicture()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-AR.source.ogLabelReader">AR.source.ogLabelReader module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#AR.source.ogLabelReader.ObjectList"><code class="docutils literal notranslate"><span class="pre">ObjectList()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#AR.source.ogLabelReader.RackSearch"><code class="docutils literal notranslate"><span class="pre">RackSearch()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -93,8 +104,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="AR.source.classes.html">AR.source.classes namespace</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="AR.source.classes.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AR.source.classes.html#module-AR.source.classes.ARNetBoxtoOGrEE">ARNetBoxtoOGrEE module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AR.source.classes.html#module-AR.source.classes.ARdcTrackToOGrEE">ARdcTrackToOGrEE module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="AR.source.classes.html#module-AR.source.classes.ARNetBoxtoOGrEE">AR.source.classes.ARNetBoxtoOGrEE module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AR.source.classes.html#module-AR.source.classes.ARdcTrackToOGrEE">AR.source.classes.ARdcTrackToOGrEE module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="AR.source.classes.html#AR.source.classes.ARdcTrackToOGrEE.ARdcTrackToOGrEE"><code class="docutils literal notranslate"><span class="pre">ARdcTrackToOGrEE</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="AR.source.classes.html#AR.source.classes.ARdcTrackToOGrEE.ARdcTrackToOGrEE.GetBuildingAndRoom"><code class="docutils literal notranslate"><span class="pre">ARdcTrackToOGrEE.GetBuildingAndRoom()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="AR.source.classes.html#AR.source.classes.ARdcTrackToOGrEE.ARdcTrackToOGrEE.GetChildren"><code class="docutils literal notranslate"><span class="pre">ARdcTrackToOGrEE.GetChildren()</span></code></a></li>
@@ -112,7 +123,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="AR.source.interfaces.html">AR.source.interfaces namespace</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="AR.source.interfaces.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AR.source.interfaces.html#module-AR.source.interfaces.IARConverter">IARConverter module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="AR.source.interfaces.html#module-AR.source.interfaces.IARConverter">AR.source.interfaces.IARConverter module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="AR.source.interfaces.html#AR.source.interfaces.IARConverter.IARConverter"><code class="docutils literal notranslate"><span class="pre">IARConverter</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="AR.source.interfaces.html#AR.source.interfaces.IARConverter.IARConverter.GetList"><code class="docutils literal notranslate"><span class="pre">IARConverter.GetList()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="AR.source.interfaces.html#AR.source.interfaces.IARConverter.IARConverter.MakeFBX"><code class="docutils literal notranslate"><span class="pre">IARConverter.MakeFBX()</span></code></a></li>
@@ -133,19 +144,19 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="AR.source.ocr.html">AR.source.ocr namespace</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="AR.source.ocr.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AR.source.ocr.html#module-AR.source.ocr.LabelProcessing">LabelProcessing module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="AR.source.ocr.html#module-AR.source.ocr.LabelProcessing">AR.source.ocr.LabelProcessing module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="AR.source.ocr.html#AR.source.ocr.LabelProcessing.ReaderCroppedAndFullImage"><code class="docutils literal notranslate"><span class="pre">ReaderCroppedAndFullImage()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="AR.source.ocr.html#AR.source.ocr.LabelProcessing.ReaderOneImageRecursive"><code class="docutils literal notranslate"><span class="pre">ReaderOneImageRecursive()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="AR.source.ocr.html#module-AR.source.ocr.OCR">OCR module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="AR.source.ocr.html#module-AR.source.ocr.OCR">AR.source.ocr.OCR module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="AR.source.ocr.html#AR.source.ocr.OCR.PerformOCR"><code class="docutils literal notranslate"><span class="pre">PerformOCR()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="AR.source.ocr.html#AR.source.ocr.OCR.ReplaceSymbol"><code class="docutils literal notranslate"><span class="pre">ReplaceSymbol()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="AR.source.ocr.html#AR.source.ocr.OCR.ReturnMatch"><code class="docutils literal notranslate"><span class="pre">ReturnMatch()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="AR.source.ocr.html#AR.source.ocr.OCR.cleanup_text"><code class="docutils literal notranslate"><span class="pre">cleanup_text()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="AR.source.ocr.html#module-AR.source.ocr.ShapeDetector">ShapeDetector module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="AR.source.ocr.html#module-AR.source.ocr.ShapeDetector">AR.source.ocr.ShapeDetector module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="AR.source.ocr.html#AR.source.ocr.ShapeDetector.HexaToRGB"><code class="docutils literal notranslate"><span class="pre">HexaToRGB()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="AR.source.ocr.html#AR.source.ocr.ShapeDetector.ShapeAndColorDetector"><code class="docutils literal notranslate"><span class="pre">ShapeAndColorDetector()</span></code></a></li>
 </ul>
@@ -159,7 +170,7 @@
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 </section>
 <section id="module-AR.source.Server">
-<span id="server-module"></span><h2>Server module<a class="headerlink" href="#module-AR.source.Server" title="Permalink to this heading"></a></h2>
+<span id="ar-source-server-module"></span><h2>AR.source.Server module<a class="headerlink" href="#module-AR.source.Server" title="Permalink to this heading"></a></h2>
 <p><strong>Start an http server on localhost:5002</strong></p>
 <dl class="py function">
 <dt class="sig sig-object py" id="AR.source.Server.GetList">
@@ -207,7 +218,7 @@ Returns a json containing tenant,site,building,room and rack if the request was 
 
 </section>
 <section id="module-AR.source.ogLabelReader">
-<span id="oglabelreader-module"></span><h2>ogLabelReader module<a class="headerlink" href="#module-AR.source.ogLabelReader" title="Permalink to this heading"></a></h2>
+<span id="ar-source-oglabelreader-module"></span><h2>AR.source.ogLabelReader module<a class="headerlink" href="#module-AR.source.ogLabelReader" title="Permalink to this heading"></a></h2>
 <p><strong>Can be run independently with args to read a label in a photo</strong></p>
 <dl class="py function">
 <dt class="sig sig-object py" id="AR.source.ogLabelReader.ObjectList">
