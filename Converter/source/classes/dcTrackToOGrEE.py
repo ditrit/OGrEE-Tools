@@ -1,12 +1,14 @@
 import json
 from copy import deepcopy
 from os import listdir
-from os.path import isfile, join
+from os.path import dirname, isfile, join, realpath
 from typing import Any
 
 from common.Utils import GetAllComponents
 from Converter.source.classes.BaseConverter import BaseConverter
 from Converter.source.interfaces.IToOGrEE import IToOGrEE
+
+defaultOutputPath = realpath(f"{dirname(realpath(__file__))}/../../output/OGrEE")
 
 
 class dcTrackToOGrEE(IToOGrEE, BaseConverter):
@@ -15,10 +17,14 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
         url: str,
         headersGET: dict[str, Any],
         headersPOST: dict[str, Any],
-        outputPath: str|None = None,
+        outputPath: str | None = None,
+        **kw,
     ) -> None:
-        super().__init__(url, headersGET, headersPOST, outputPath)
-        self.templatePath = f"{self.outputPath}/templates"
+        self.outputPath = (
+            realpath(outputPath) if outputPath is not None else defaultOutputPath
+        )
+        self.templatePath = realpath(f"{self.outputPath}/templates")
+        super().__init__(url=url, headersGET=headersGET, headersPOST=headersPOST, **kw)
 
     def BuildTenant(self, data: dict[str, Any]) -> dict[str, Any]:
         return {
@@ -202,13 +208,9 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
             "description": data["make"],
             "category": data["category"],
             "sizeWDHmm": [
-                data["dimHeight"]
-                if "Rack PDU" in data["class"]
-                else data["dimWidth"],
+                data["dimHeight"] if "Rack PDU" in data["class"] else data["dimWidth"],
                 data["dimDepth"],
-                data["dimWidth"]
-                if "Rack PDU" in data["class"]
-                else data["dimHeight"],
+                data["dimWidth"] if "Rack PDU" in data["class"] else data["dimHeight"],
             ],
             "fbxModel": "",
             "attributes": {

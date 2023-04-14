@@ -11,11 +11,12 @@ log.addHandler(logging.StreamHandler())
 
 class BaseConverter:
     def __init__(
-        self, url: str, headersGET: dict[str, Any], headersPOST: dict[str, Any]
+        self, url: str, headersGET: dict[str, Any], headersPOST: dict[str, Any], **kw
     ) -> None:
         self.url = url
         self.headersGET = headersGET
         self.headersPOST = headersPOST
+        super().__init__(**kw)
 
     def GetJSON(
         self, endpoint: str, headers: dict[str, Any] | None = None
