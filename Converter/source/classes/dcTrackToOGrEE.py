@@ -1,29 +1,64 @@
 import json
 from copy import deepcopy
 from os import listdir
-from os.path import isfile, join
+from os.path import dirname, isfile, join, realpath
 from typing import Any
 
 from common.Utils import GetAllComponents
 from Converter.source.classes.BaseConverter import BaseConverter
 from Converter.source.interfaces.IToOGrEE import IToOGrEE
 
+defaultOutputPath = realpath(f"{dirname(realpath(__file__))}/../../output/OGrEE")
+
 
 class dcTrackToOGrEE(IToOGrEE, BaseConverter):
+    """Convert data from dcTrack to OGrEE
+
+    :param IToOGrEE: Interface of to-OGrEE converters
+    :type IToOGrEE: ItoOGrEE
+    :param BaseConverter: Base class of all converters
+    :type BaseConverter: BaseConverter
+    """
+
     def __init__(
         self,
         url: str,
         headersGET: dict[str, Any],
         headersPOST: dict[str, Any],
-        outputPath: str|None = None,
+        outputPath: str | None = None,
+        **kw,
     ) -> None:
-        super().__init__(url, headersGET, headersPOST, outputPath)
-        self.templatePath = f"{self.outputPath}/templates"
+        """
+
+        :param url: API url of the source
+        :type url: str
+        :param headersGET: headers of the GET requests
+        :type headersGET: dict[str, Any]
+        :param headersPOST: headers of the POST requests
+        :type headersPOST: dict[str, Any]
+        :param outputPath: where the data will be saved, defaults to Converter/output/OGrEE
+        :type outputPath: str | None, optional
+        """
+        self.outputPath = (
+            realpath(outputPath) if outputPath is not None else defaultOutputPath
+        )
+        self.templatePath = realpath(f"{self.outputPath}/templates")
+        super().__init__(url=url, headersGET=headersGET, headersPOST=headersPOST, **kw)
 
     def BuildTenant(self, data: dict[str, Any]) -> dict[str, Any]:
+        """Build a tenant from dcTrack data
+
+        :param data: dcTrack data,
+            - must contains "name"
+            - can contains "description", "id", "attributes" and "children" keys
+            - all other keys will be ignored
+        :type data: dict[str, Any]
+        :return: a dict describing an OGrEE tenant
+        :rtype: dict[str, Any]
+        """
         return {
             "name": data["name"],
-            "id": data["id"],
+            "id": data["id"] if "id" in data else data["name"],
             "parentId": None,
             "category": "tenant",
             "description": data["description"] if "description" in data else [],
@@ -35,12 +70,26 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
         }
 
     def BuildSite(self, data: dict[str, Any]) -> dict[str, Any]:
+        """Build a site from dcTrack data
+
+        :param data: dcTrack data,
+            - must contains "name"
+            - can contains "description", "parentId", "domain", "attributes" and "children" keys
+            - all other keys will be ignored
+        :type data: dict[str, Any]
+        :return: a dict describing an OGrEE site
+        :rtype: dict[str, Any]
+        """
         result = {
             "name": data["name"],
             "parentId": data["parentId"] if "parentId" in data else None,
             "category": "site",
             "description": data["description"] if "description" in data else [],
-            "domain": data["parentId"],
+            "domain": data["domain"]
+            if "domain" in data
+            else data["parentId"]
+            if "parentId" in data
+            else None,
             "attributes": data["attributes"] if "attributes" in data else {},
             "children": data["children"] if "children" in data else [],
         }
@@ -48,6 +97,16 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
         return result
 
     def BuildBuilding(self, data: dict[str, Any]) -> dict[str, Any]:
+        """Build a building from dcTrack data
+
+        :param data: dcTrack data,
+            - must contains "name"
+            - can contains "description", "parentId", "domain", "attributes" and "children" keys
+            - all other keys will be ignored
+        :type data: dict[str, Any]
+        :return: a dict describing an OGrEE building
+        :rtype: dict[str, Any]
+        """
         result = {
             "name": data["name"],
             "parentId": data["parentId"] if "parentId" in data else None,
@@ -71,6 +130,16 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
         return result
 
     def BuildRoom(self, data: dict[str, Any]) -> dict[str, Any]:
+        """Build a room from dcTrack data
+
+        :param data: dcTrack data,
+            - must contains "name"
+            - can contains "description", "parentId", "domain", "attributes" and "children" keys
+            - all other keys will be ignored
+        :type data: dict[str, Any]
+        :return: a dict describing an OGrEE room
+        :rtype: dict[str, Any]
+        """
         result = {
             "name": data["name"],
             "parentId": data["parentId"] if "parentId" in data else None,
@@ -97,6 +166,16 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
         return result
 
     def BuildRack(self, data: dict[str, Any]) -> dict[str, Any]:
+        """Build a rack from dcTrack data
+
+        :param data: dcTrack data,
+            - must contains "tiName" and "sizeWDHmm"
+            - can contains "description", "parentId", "domain", "attributes","template" and "children" keys
+            - all other keys will be ignored
+        :type data: dict[str, Any]
+        :return: a dict describing an OGrEE rack
+        :rtype: dict[str, Any]
+        """
         result = {
             "name": data["tiName"],
             "parentId": data["parentId"] if "parentId" in data else None,
@@ -124,6 +203,16 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
         return result
 
     def BuildDevice(self, data: dict[str, Any]) -> dict[str, Any]:
+        """Build a device from dcTdevice data
+
+        :param data: dcTrack data,
+            - must contains "tiName", "tiMounting", "cmbUPosition" (if "tiMounting"'s value is "Rackable"), "radioCabinetSide" and "radioDepthPosition" (if "tiMounting"'s value is "ZeroU") and "sizeWDHmm"
+            - can contains "description", "parentId", "domain", "attributes","template", and "children" keys
+            - all other keys will be ignored
+        :type data: dict[str, Any]
+        :return: a dict describing an OGrEE rack
+        :rtype: dict[str, Any]
+        """
         result = {
             "name": data["tiName"],
             "parentId": data["parentId"] if "parentId" in data else None,
@@ -187,6 +276,15 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
         return result
 
     def BuildTemplate(self, data: dict[str, Any]) -> dict[str, Any]:
+        """Build a template from dcTrack data
+
+        :param data: dcTrack data,
+            - must contains "model", "dimHeight", "dimDepth", "dimWidth", "make", "category", "class", "powerPorts", "dataPorsts", "ruHeight" (if "category"'s value  is "rack")
+            - all other keys will be ignored
+        :type data: dict[str, Any]
+        :return: a dict describing an OGrEE template
+        :rtype: dict[str, Any]
+        """
         uSize = 44.45
         files = [
             f.split(".")[0]
@@ -202,13 +300,9 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
             "description": data["make"],
             "category": data["category"],
             "sizeWDHmm": [
-                data["dimHeight"]
-                if "Rack PDU" in data["class"]
-                else data["dimWidth"],
+                data["dimHeight"] if "Rack PDU" in data["class"] else data["dimWidth"],
                 data["dimDepth"],
-                data["dimWidth"]
-                if "Rack PDU" in data["class"]
-                else data["dimHeight"],
+                data["dimWidth"] if "Rack PDU" in data["class"] else data["dimHeight"],
             ],
             "fbxModel": "",
             "attributes": {
