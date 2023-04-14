@@ -42,16 +42,46 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         AROutputPath: str | None = None,
         **kw,
     ) -> None:
+        """_summary_
+
+        :param url: dcTrack
+        :type url: str
+        :param headersGET: _description_
+        :type headersGET: dict[str, Any]
+        :param headersPOST: _description_
+        :type headersPOST: dict[str, Any]
+        :param outputPath: _description_, defaults to None
+        :type outputPath: str | None, optional
+        :param AROutputPath: _description_, defaults to None
+        :type AROutputPath: str | None, optional
+        """
         self.AROutputPath = (
             realpath(AROutputPath) if AROutputPath is not None else defaultAROutputPath
         )
         super().__init__(url, headersGET, headersPOST, outputPath, **kw)
 
     def GetTenant(self, tenantName: str) -> dict[str, Any]:
+        """Create a tenant for dcTrack
+
+        :param tenantName: name of the tenant
+        :type tenantName: str
+        :return: dict describing an OgrEE tenant
+        :rtype: dict[str, Any]
+        """
         data = {"name": tenantName, "id": tenantName}
         return self.BuildTenant(data)
 
     def GetSite(self, tenantData: dict[str, Any], locationName: str) -> dict[str, Any]:
+        """Get site informations from dcTrack
+
+        :param tenantData: must contains "name"
+        :type tenantData: dict[str, Any]
+        :param locationName: name of the location of the site in dcTrack
+        :type locationName: str
+        :raises IncorrectResponseError: if the site was not found in dcTrack
+        :return: dict describing an OGrEE site
+        :rtype: dict[str, Any]
+        """
         payload = {
             "columns": [
                 {
@@ -83,6 +113,16 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
     def GetBuildingAndRoom(
         self, siteData: dict[str, Any], roomIdentifier: str
     ) -> tuple[dict[str, Any], dict[str, Any]]:
+        """Get building and room informations from dcTrack
+
+        :param siteData: must contains "name", "id" and "domain"
+        :type siteData: dict[str, Any]
+        :param roomIdentifier: name of the room in dcTrack
+        :type roomIdentifier: str
+        :raises IncorrectResponseError: if the room was not found in dcTrack
+        :return: two dicts describing an OGrEE building and room
+        :rtype: tuple[dict[str, Any], dict[str, Any]]
+        """
         buildingData = self.BuildBuilding(
             {
                 "name": "building",  # ???
@@ -142,6 +182,16 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         roomData: dict[str, Any],
         rackName: str,
     ) -> tuple[dict[str, Any], list[dict[str, Any]], dict[str, str]]:
+        """Get rack informations from dcTrack
+
+        :param roomData: must contains "name", "id" and "domain"
+        :type roomData: dict[str, Any]
+        :param rackName: name of the rack in dcTrack
+        :type rackName: str
+        :raises IncorrectResponseError: if the rack was not found in dcTracck
+        :return: dict describing the rack and its children, a list of dict describing the templates needed and a dict of fbx models
+        :rtype: tuple[dict[str, Any], list[dict[str, Any]], dict[str, str]]
+        """
         payload = {
             "columns": [
                 {"name": "tiName", "filter": {"contains": rackName}},
@@ -180,6 +230,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         rackTemplate["fbxModel"] = "true" if rackFBX != "" else ""
         rackDataJson["sizeWDHmm"] = rackTemplate["sizeWDHmm"]
         rackDataJson["parentId"] = roomData["id"]
+        rackDataJson["domain"] = roomData["domain"]
         rackDataJson["template"] = rackTemplate["slug"]
         rackData = self.BuildRack(rackDataJson)
 
@@ -221,9 +272,8 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         Recursively returns all children of the parent object and their templates
 
         :param dict[str,Any] parent_dctrack: parent object's data from dctrack
-        :param OgreeData parent_ogree: parent object's data, converted to OgreeData
-        :returns: a tuple of a list of the children and a list of their templates
-        :rtype: tuple[list[dict[str, Any]], list[OgreeData]]
+        :returns: a list of the children, a list of their templates and a list of paths to their fbx models
+        :rtype: tuple[list[dict[str, Any]], list[dict[str, Any]], list[str]]
         """
         templates = []
         childrenOgree = []
@@ -339,6 +389,17 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         return templates, childrenOgree, fbx
 
     def RackSearch(self, img: ndarray, customerAndSite: str, deviceType: str) -> str:
+        """Perform OCR on a picture for a rack label, gets its info from dcTrack and convert it to OGrEE format
+
+        :param img: the picture where the rack label is
+        :type img: ndarray
+        :param customerAndSite: [CUSTOMER].[SITE]
+        :type customerAndSite: str
+        :param deviceType: "rack" or "mdi"
+        :type deviceType: str
+        :return: a serialised message of OGrEE format containing all the data required to load the rack on OGrEE-3D-AR
+        :rtype: str
+        """
         ocrResults = []
         label = None
 
@@ -426,6 +487,13 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
             return e.__str__()
 
     def MakeFBX(self, data: dict[str, Any]) -> str:
+        """Get pictures of a model from dcTrack then build a fbx model with them
+
+        :param data: dcTrack model
+        :type data: dict[str, Any]
+        :return: the path to an fbx model or "" if no picture were found in dcTrack
+        :rtype: str
+        """
         endpointBack = f"/gdcitdz/images/devices/rearpngimages/{data['modelId']}_R.png"
         endpointFront = (
             f"/gdcitdz/images/devices/frontpngimages/{data['modelId']}_F.png"
@@ -452,4 +520,6 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         )
 
     def GetList(self):
-        return super().GetList()
+        """Not implemented
+        """
+        pass
