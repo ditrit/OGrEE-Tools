@@ -31,13 +31,14 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         url: str,
         headersGET: dict[str, Any],
         headersPOST: dict[str, Any],
-        outputPath: str|None = None,
-        AROutputPath: str|None = None,
+        outputPath: str | None = None,
+        AROutputPath: str | None = None,
+        **kw,
     ) -> None:
-        super().__init__(url, headersGET, headersPOST, outputPath)
         self.AROutputPath = (
             realpath(AROutputPath) if AROutputPath is not None else defaultAROutputPath
         )
+        super().__init__(url, headersGET, headersPOST, outputPath, **kw)
 
     def GetTenant(self, tenantName: str) -> dict[str, Any]:
         data = {"name": tenantName, "id": tenantName}
@@ -133,7 +134,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         self,
         roomData: dict[str, Any],
         rackName: str,
-    ) -> tuple[dict[str, Any], list[dict[str, Any]], dict[str,str]]:
+    ) -> tuple[dict[str, Any], list[dict[str, Any]], dict[str, str]]:
         payload = {
             "columns": [
                 {"name": "tiName", "filter": {"contains": rackName}},
@@ -174,8 +175,8 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         rackDataJson["parentId"] = roomData["id"]
         rackDataJson["template"] = rackTemplate["slug"]
         rackData = self.BuildRack(rackDataJson)
-        
-        #Check if we know the positions of the rack in the room
+
+        # Check if we know the positions of the rack in the room
         try:
             with open(self.AROutputPath + "/positions.json", "r") as positionFile:
                 positions = json.loads(positionFile.read())
@@ -188,7 +189,9 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
                         }
                     )
         except:
-            log.debug(f"No position found for racks ({self.templatePath}/positions.json is missing)")
+            log.debug(
+                f"No position found for racks ({self.templatePath}/positions.json is missing)"
+            )
 
         rackDataJson["id"] = rackData["id"]
         templates = [rackTemplate]
@@ -338,7 +341,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
 
         # Read RegexFile to have all infos
         pathToConfFile = f"{dirname(__file__)}/../../.conf.json"
-        
+
         regexp, roomList, type, background, colorRange = ReadConf(
             pathToConfFile, customer, site, deviceType
         )
@@ -350,8 +353,8 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
                 break
         if label is None or len(label) == 0 or "Missing" in label:
             return "Rack label could not be read"
-        
-        #label = ["C8", "B11"]  # debug
+
+        # label = ["C8", "B11"]  # debug
         if len(label[0]) > 3:
             label[0] = label[0][3::]
 
@@ -403,7 +406,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
             log.info(f"Total time: {time() - start} s ")
             log.info("End of the processing.")
             return json_object
-    
+
         except IncorrectResponseError as e:
             log.error(e)
             log.error(f"Required data may be missing on {e.url}")
