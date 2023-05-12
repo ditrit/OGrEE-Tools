@@ -4,11 +4,10 @@ from PIL import Image
 import numpy as np
 from skimage.io import imshow, imread
 from mpl_toolkits.mplot3d import Axes3D
-from skimage.feature import match_template
-from skimage.feature import peak_local_max
+from skimage.feature import match_template,peak_local_max,match_descriptors
 from skimage import filters
 from skimage import exposure
-from skimage.transform import rescale
+from skimage.transform import rescale,rotate
 
 
 
@@ -23,9 +22,10 @@ def imageload(f,flag="color"):
     if flag == 1:
         img = imread(fn, 1)  # (H x W x C), [0, 255], RGB
     else:
-        tmp = rgba2rgb(imread(fn))    # (H x W x C), [0, 255], RGB
+        tmp = imread(fn)    # (H x W x C), [0, 255], RGB
         if tmp.shape[-1] == 4:
             img = rgba2rgb(tmp)
+            print("4 channels picture  ",f)
         else:
             pass
 
@@ -104,30 +104,45 @@ def hsvview(image):
         ax[1].set_title('Grayscale Image', fontsize=15)
         plt.show()
 
+def normaliseimage(image, x,y):
+    ratio = 781/85.4  # pixel/mm
+    image = rescale(image,x*ratio/image.shape[0])
+    return image
 
-def templateMatch(image,template):
-    scmeasure = (0.90,0.95,1,1.05,1.1)    #measure of scale/zoom
-    templist = [rescale(template, i)for i in scmeasure]
-    sample_mt = np.zeros([len(scmeasure)]+list(image.shape))
-    for i in range(len(templist)):
-        sample_mt[i,:,:] = match_template(image, templist[i],pad_input=True,mode='constant', constant_values=0)
-#####
-#    for _ in range(4):
-#        template = transform.rotate(template, 90, resize=True)
-#        sample_mt = match_template(image, template)
-#        template_width, template_height = template.shape
-#####
+def imfeature(image,detector):
+    img_vag = filters.gaussian(image, sigma=1)
+    img_inv = -img_vag + 1
+
+    detector.detect(img_vag)
+    f_dark = detector.keypoints if len(detector.keypoints) > 0 else np.array([[0,0]])  # à améliorer
+    detector.detect(img_inv)
+    f_light = detector.keypoints if len(detector.keypoints) > 0 else np.array([[0,0]])
+    return f_dark,f_light
+
+def patchsimilarity(pfeature,std_pattern):
+    match = match_descriptors(pfeature, std_pattern, metric=None, p=2, cross_check=False)
+    distance = -10*(std_pattern.shape[0]-match.shape[0])
+    for i,j in match:
+        distance += -np.linalg.norm(pfeature[i]-std_pattern[j])
+
+    return distance
+
+def imedge(image):
+    return filters.sobel(image)
+
+def templateMatch(image,template,threshold,mindis):
+    image_e = filters.sobel(image)
     fig, ax = plt.subplots(2, 1, figsize=(10, 8))
     ax[0].imshow(image, cmap='gray')
-    suspect_list = peak_local_max(sample_mt, threshold_rel=0.9)
-    for i, x, y in suspect_list:
-        template_width, template_height = templist[i].shape
-        x = x - int(template_width/2)
-        y = y - int(template_height/2)
-        rect = plt.Rectangle((y, x), template_height, template_width, color='r',
-                             fc='none')
-        ax[0].add_patch(rect)
-    ax[1].imshow(sample_mt[2], cmap='magma')
+    for _ in range(4):
+        template = rotate(template, 90, resize=True)
+        sample_mt = match_template(image_e, template)
+        template_width, template_height = template.shape
+        for x, y in peak_local_max(np.squeeze(sample_mt), threshold_abs=threshold,min_distance=mindis):
+            rect = plt.Rectangle((y, x), template_height, template_width, color='r',
+                                 fc='none')
+            ax[0].add_patch(rect)
+    ax[1].imshow(sample_mt, cmap='magma')
     ax[0].set_title('Grayscale', fontsize=15)
     ax[1].set_title('Template Matching', fontsize=15)
     plt.show()
