@@ -44,9 +44,11 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="Converter.html">Converter namespace</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="Converter.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="Converter.source.html">Converter.source namespace</a><ul class="current">
-<li class="toctree-l4 current"><a class="reference internal" href="Converter.source.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Converter.source.html">Converter.source namespace</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="Converter.source.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="Converter.source.classes.html">Converter.source.classes namespace</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Converter.source.fbx namespace</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Converter.source.interfaces.html">Converter.source.interfaces namespace</a></li>
 </ul>
 </li>
 </ul>
@@ -89,7 +91,7 @@
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 </section>
 <section id="module-Converter.source.fbx.FbxBuilder">
-<span id="fbxbuilder-module"></span><h2>FbxBuilder module<a class="headerlink" href="#module-Converter.source.fbx.FbxBuilder" title="Permalink to this heading"></a></h2>
+<span id="converter-source-fbx-fbxbuilder-module"></span><h2>Converter.source.fbx.FbxBuilder module<a class="headerlink" href="#module-Converter.source.fbx.FbxBuilder" title="Permalink to this heading"></a></h2>
 <p><strong>Build FBX files</strong></p>
 <dl class="py function">
 <dt class="sig sig-object py" id="Converter.source.fbx.FbxBuilder.CreateFBX">
@@ -121,29 +123,82 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Converter.source.fbx.FbxBuilder.CreateMaterial">
-<span class="sig-prename descclassname"><span class="pre">Converter.source.fbx.FbxBuilder.</span></span><span class="sig-name descname"><span class="pre">CreateMaterial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">manager</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">texturePath</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Converter.source.fbx.FbxBuilder.CreateMaterial" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">Converter.source.fbx.FbxBuilder.</span></span><span class="sig-name descname"><span class="pre">CreateMaterial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FbxManager</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">texturePath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">FbxSurfacePhong</span></span></span><a class="headerlink" href="#Converter.source.fbx.FbxBuilder.CreateMaterial" title="Permalink to this definition"></a></dt>
+<dd><p>Create a SurfacePhong material from a picture</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>manager</strong> (<em>fbx.FbxManager</em>) – the manager of the scene</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – name of the material (can be empty)</p></li>
+<li><p><strong>texturePath</strong> (<em>str</em>) – path to the picture</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a SurfacePhong material with correct emissive, diffuse, ambient and specular colors, transpacy factor, shininess and shading model</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>fbx.FbxSurfacePhong</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Converter.source.fbx.FbxBuilder.CreateTexture">
-<span class="sig-prename descclassname"><span class="pre">Converter.source.fbx.FbxBuilder.</span></span><span class="sig-name descname"><span class="pre">CreateTexture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">manager</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pFilename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Converter.source.fbx.FbxBuilder.CreateTexture" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">Converter.source.fbx.FbxBuilder.</span></span><span class="sig-name descname"><span class="pre">CreateTexture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FbxManager</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">texturePath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">FbxFileTexture</span></span></span><a class="headerlink" href="#Converter.source.fbx.FbxBuilder.CreateTexture" title="Permalink to this definition"></a></dt>
+<dd><p>Create a texture from a picture</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>manager</strong> (<em>fbx.FbxManager</em>) – the manager of the scene</p></li>
+<li><p><strong>texturePath</strong> (<em>str</em>) – path to the picture</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the texture with correct mapping, texture and UV</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>fbx.FbxFileTexture</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Converter.source.fbx.FbxBuilder.addCube">
-<span class="sig-prename descclassname"><span class="pre">Converter.source.fbx.FbxBuilder.</span></span><span class="sig-name descname"><span class="pre">addCube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">manager</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pScene</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cubeName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cubeScale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[1,</span> <span class="pre">1,</span> <span class="pre">1]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Converter.source.fbx.FbxBuilder.addCube" title="Permalink to this definition"></a></dt>
-<dd><p>Adds a cubic mesh to the scene.</p>
+<span class="sig-prename descclassname"><span class="pre">Converter.source.fbx.FbxBuilder.</span></span><span class="sig-name descname"><span class="pre">addCube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FbxManager</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scene</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FbxScene</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cubeName</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cubeScale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(1.0,</span> <span class="pre">1.0,</span> <span class="pre">1.0)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">FbxMesh</span></span></span><a class="headerlink" href="#Converter.source.fbx.FbxBuilder.addCube" title="Permalink to this definition"></a></dt>
+<dd><p>Add a cube to a scene</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>manager</strong> (<em>fbx.FbxManager</em>) – the manager of the scene</p></li>
+<li><p><strong>scene</strong> (<em>fbx.FbxScene</em>) – the scene containing the cube</p></li>
+<li><p><strong>cubeName</strong> (<em>str</em>) – the name of the cubemesh</p></li>
+<li><p><strong>cubeScale</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – the dimensions of the cube, defaults to (1.0, 1.0, 1.0)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the mesh containing the cube</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>fbx.FbxMesh</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Converter.source.fbx.FbxBuilder.makeCube">
-<span class="sig-prename descclassname"><span class="pre">Converter.source.fbx.FbxBuilder.</span></span><span class="sig-name descname"><span class="pre">makeCube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">manager</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Converter.source.fbx.FbxBuilder.makeCube" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="Converter.source.fbx.FbxBuilder.saveScene">
-<span class="sig-prename descclassname"><span class="pre">Converter.source.fbx.FbxBuilder.</span></span><span class="sig-name descname"><span class="pre">saveScene</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pFilename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pFbxManager</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pFbxScene</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Converter.source.fbx.FbxBuilder.saveScene" title="Permalink to this definition"></a></dt>
-<dd><p>Save the scene using the Python FBX API</p>
+<span class="sig-prename descclassname"><span class="pre">Converter.source.fbx.FbxBuilder.</span></span><span class="sig-name descname"><span class="pre">makeCube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FbxManager</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">FbxMesh</span></span></span><a class="headerlink" href="#Converter.source.fbx.FbxBuilder.makeCube" title="Permalink to this definition"></a></dt>
+<dd><p>Make a simple cube</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>manager</strong> (<em>fbx.FbxManager</em>) – Manager containing the cube</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the cubemesh with correct control points, vertices and normals</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>fbx.FbxMesh</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>

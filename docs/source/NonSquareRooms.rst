@@ -6,7 +6,7 @@ NonSquareRooms namespace
 Submodules
 ----------
 
-GenTiles module
+NonSquareRooms.GenTiles module
 ------------------------------
 
 .. automodule:: NonSquareRooms.GenTiles

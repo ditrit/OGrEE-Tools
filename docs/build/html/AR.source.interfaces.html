@@ -45,14 +45,16 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Converter.html">Converter namespace</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="AR.html">AR namespace</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="AR.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="AR.source.html">AR.source namespace</a><ul class="current">
-<li class="toctree-l4 current"><a class="reference internal" href="AR.source.html#subpackages">Subpackages</a></li>
-<li class="toctree-l4"><a class="reference internal" href="AR.source.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="AR.source.html#module-AR.source.Server">Server module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="AR.source.html#module-AR.source.ogLabelReader">ogLabelReader module</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="AR.source.html">AR.source namespace</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="AR.source.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="AR.source.classes.html">AR.source.classes namespace</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">AR.source.interfaces namespace</a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.ocr.html">AR.source.ocr namespace</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="AR.source.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="AR.source.html#module-AR.source.Server">AR.source.Server module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="AR.source.html#module-AR.source.ogLabelReader">AR.source.ogLabelReader module</a></li>
 </ul>
 </li>
 </ul>
@@ -92,7 +94,7 @@
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 </section>
 <section id="module-AR.source.interfaces.IARConverter">
-<span id="iarconverter-module"></span><h2>IARConverter module<a class="headerlink" href="#module-AR.source.interfaces.IARConverter" title="Permalink to this heading"></a></h2>
+<span id="ar-source-interfaces-iarconverter-module"></span><h2>AR.source.interfaces.IARConverter module<a class="headerlink" href="#module-AR.source.interfaces.IARConverter" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="AR.source.interfaces.IARConverter.IARConverter">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">AR.source.interfaces.IARConverter.</span></span><span class="sig-name descname"><span class="pre">IARConverter</span></span><a class="headerlink" href="#AR.source.interfaces.IARConverter.IARConverter" title="Permalink to this definition"></a></dt>
@@ -100,17 +102,46 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="AR.source.interfaces.IARConverter.IARConverter.GetList">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetList</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AR.source.interfaces.IARConverter.IARConverter.GetList" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Not implemented</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="AR.source.interfaces.IARConverter.IARConverter.MakeFBX">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MakeFBX</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#AR.source.interfaces.IARConverter.IARConverter.MakeFBX" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Create an Fbx file from data describing an object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – data used to get the dimensions and textures of an object</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the path to the created Fbx</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="AR.source.interfaces.IARConverter.IARConverter.RackSearch">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RackSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">customerAndSite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deviceType</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#AR.source.interfaces.IARConverter.IARConverter.RackSearch" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Perform OCR on a picture to get a rack name, then build the data describing him</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> (<em>ndarray</em>) – the image with a rack name in it</p></li>
+<li><p><strong>customerAndSite</strong> (<em>str</em>) – customer and site names : [CUSTOMER].[SITE]</p></li>
+<li><p><strong>deviceType</strong> (<em>str</em>) – “rack” or “mdi”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the data describing a rack</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -119,16 +150,6 @@
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">AR.source.interfaces.IARConverter.</span></span><span class="sig-name descname"><span class="pre">IncorrectResponseError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AR.source.interfaces.IARConverter.IncorrectResponseError" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 <p>Custom error class used when the API do not send back expected data</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>url</strong> (<em>str</em>) – the API’s url</p></li>
-<li><p><strong>endpoint</strong> (<em>str</em>) – the API’s endpoint</p></li>
-<li><p><strong>payload</strong> (<em>dict</em><em>[</em><em>str</em><em>,</em><em>Any</em><em>]</em><em>|</em><em>None</em>) – the request’s payload. If None, the request will categorised as GET and as POST otherwise</p></li>
-<li><p><strong>message</strong> (<em>str</em>) – a custom error message. If precised, it will be printed instead of the default “GET/POST request to API {url} with endpoint {endpoint} returned incorrect data [payload :{payload}]”</p></li>
-</ul>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py class">
@@ -139,7 +160,19 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="AR.source.interfaces.IARConverter.OgreeMessage.FormatDict">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FormatDict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#AR.source.interfaces.IARConverter.OgreeMessage.FormatDict" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Take a dict representing an OGrEE object and returns a message to be sent to OGrEE-3D</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – OGrEE data</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a string containing the OGrEE data and formatted as a message sent to OGrEE-3D</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="AR.source.interfaces.IARConverter.OgreeMessage.data">

@@ -6,7 +6,7 @@ Converter.source.interfaces namespace
 Submodules
 ----------
 
-IToNetBox module
+Converter.source.interfaces.IToNetBox module
 --------------------------------------------
 
 .. automodule:: Converter.source.interfaces.IToNetBox
@@ -14,7 +14,7 @@ IToNetBox module
    :undoc-members:
    :show-inheritance:
 
-IToOGrEE module
+Converter.source.interfaces.IToOGrEE module
 -------------------------------------------
 
 .. automodule:: Converter.source.interfaces.IToOGrEE
@@ -22,7 +22,7 @@ IToOGrEE module
    :undoc-members:
    :show-inheritance:
 
-ITodcTrack module
+Converter.source.interfaces.ITodcTrack module
 ---------------------------------------------
 
 .. automodule:: Converter.source.interfaces.ITodcTrack

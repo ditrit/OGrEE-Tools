@@ -6,7 +6,7 @@ Converter.source.classes namespace
 Submodules
 ----------
 
-BaseConverter module
+Converter.source.classes.BaseConverter module
 ---------------------------------------------
 
 .. automodule:: Converter.source.classes.BaseConverter
@@ -14,7 +14,7 @@ BaseConverter module
    :undoc-members:
    :show-inheritance:
 
-NetBoxToOGrEE module
+Converter.source.classes.NetBoxToOGrEE module
 ---------------------------------------------
 
 .. automodule:: Converter.source.classes.NetBoxToOGrEE
@@ -22,7 +22,7 @@ NetBoxToOGrEE module
    :undoc-members:
    :show-inheritance:
 
-NetBoxTodcTrack module
+Converter.source.classes.NetBoxTodcTrack module
 -----------------------------------------------
 
 .. automodule:: Converter.source.classes.NetBoxTodcTrack
@@ -30,7 +30,7 @@ NetBoxTodcTrack module
    :undoc-members:
    :show-inheritance:
 
-OGrEEToNetBox module
+Converter.source.classes.OGrEEToNetBox module
 ---------------------------------------------
 
 .. automodule:: Converter.source.classes.OGrEEToNetBox
