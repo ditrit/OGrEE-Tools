@@ -3,17 +3,14 @@
 """
 import argparse
 import glob
-import os
 from pathlib import Path
-
+from os.path import dirname, realpath
 import fbx
 import FbxCommon
 
-outputPathDefault = (
-    f"{os.path.dirname(os.path.realpath(__file__))}/../../output/OGrEE/fbx/"
-)
-defaultPicture = f"{os.path.dirname(os.path.realpath(__file__))}/white.png"
 
+outputPathDefault = realpath(f"{dirname(realpath(__file__))}/../../output/OGrEE/fbx/")
+defaultPicture = f"{dirname(realpath(__file__))}/white.png"
 
 def makeCube(manager: fbx.FbxManager) -> fbx.FbxMesh:
     """Make a simple cube
@@ -23,7 +20,6 @@ def makeCube(manager: fbx.FbxManager) -> fbx.FbxMesh:
     :return: the cubemesh with correct control points, vertices and normals
     :rtype: fbx.FbxMesh
     """
-
     cubeMesh = fbx.FbxMesh.Create(manager, "")
     # A set of vertices which we will use to create a cube in the scene.
     cubeVertices = [
@@ -299,9 +295,8 @@ def CreateFBX(
     cubeNode.AddMaterial(CreateMaterial(manager, "", top))
     cubeNode.AddMaterial(CreateMaterial(manager, "", bottom))
 
-    FbxCommon.SaveScene(manager, scene, outputPath + name + ".fbx", pEmbedMedia=True)
-
-    return outputPath + name + ".fbx"
+    FbxCommon.SaveScene(manager, scene, f"{realpath(outputPath)}/{name}.fbx", pEmbedMedia=True)
+    return f"{realpath(outputPath)}/{name}.fbx"
 
 
 if __name__ == "__main__":
