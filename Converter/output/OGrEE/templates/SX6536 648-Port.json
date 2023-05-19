@@ -1,0 +1,180 @@
+{
+    "slug": "sx6536-648-port",
+    "description": "Mellanox",
+    "category": "device",
+    "sizeWDHmm": [
+        482.6,
+        685.8,
+        1285.24
+    ],
+    "fbxModel": "",
+    "attributes": {
+        "vendor": "Mellanox",
+        "model": "SX6536 648-Port",
+        "type": ""
+    },
+    "colors": [],
+    "components": [
+        {
+            "location": "AC01",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                0,
+                667.8,
+                0
+            ],
+            "elemSize": [
+                24,
+                17,
+                16
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "IEC-320-C14"
+            }
+        },
+        {
+            "location": "AC02",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                24,
+                667.8,
+                0
+            ],
+            "elemSize": [
+                24,
+                17,
+                16
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "IEC-320-C14"
+            }
+        },
+        {
+            "location": "AC03",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                48,
+                667.8,
+                0
+            ],
+            "elemSize": [
+                24,
+                17,
+                16
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "IEC-320-C14"
+            }
+        },
+        {
+            "location": "AC04",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                72,
+                667.8,
+                0
+            ],
+            "elemSize": [
+                24,
+                17,
+                16
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "IEC-320-C14"
+            }
+        },
+        {
+            "location": "AC05",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                96,
+                667.8,
+                0
+            ],
+            "elemSize": [
+                24,
+                17,
+                16
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "IEC-320-C14"
+            }
+        },
+        {
+            "location": "AC06",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                120,
+                667.8,
+                0
+            ],
+            "elemSize": [
+                24,
+                17,
+                16
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "IEC-320-C14"
+            }
+        },
+        {
+            "location": "AC07",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                144,
+                667.8,
+                0
+            ],
+            "elemSize": [
+                24,
+                17,
+                16
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "IEC-320-C14"
+            }
+        },
+        {
+            "location": "AC08",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                168,
+                667.8,
+                0
+            ],
+            "elemSize": [
+                24,
+                17,
+                16
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "IEC-320-C14"
+            }
+        }
+    ],
+    "slots": []
+}
