@@ -86,7 +86,9 @@ class IARConverter(ABC):
         pass
 
     @abstractmethod
-    def RackSearch(self, img: ndarray, customerAndSite: str, deviceType: str) -> str:
+    def RackSearch(
+        self, img: ndarray, customerAndSite: str, deviceType: str, debug: bool
+    ) -> str:
         """Perform OCR on a picture to get a rack name, then build the data describing him
 
         :param img: the image with a rack name in it
@@ -102,6 +104,5 @@ class IARConverter(ABC):
 
     @abstractmethod
     def GetList(self):
-        """Not implemented
-        """
+        """Not implemented"""
         pass

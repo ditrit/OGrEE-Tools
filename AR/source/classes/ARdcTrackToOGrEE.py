@@ -14,6 +14,7 @@ from AR.source.interfaces.IARConverter import (
     OgreeMessage,
 )
 from AR.source.ocr.LabelProcessing import ReaderCroppedAndFullImage
+from AR.source.ODBC import GetPosition
 from common.Utils import CustomerAndSiteSpliter, ReadConf
 from Converter.source.classes.dcTrackToOGrEE import dcTrackToOGrEE
 from Converter.source.fbx.FbxBuilder import CreateFBX
@@ -33,6 +34,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
     :param IARConverter:  Interface of AR converters
     :type IARConverter: IARConverter
     """
+
     def __init__(
         self,
         url: str,
@@ -171,7 +173,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
                     "heightUnit": "m",
                     "template": "",
                     "technical": '{"left":5,"right":5,"top":0,"bottom":0}',
-                    "floorUnit": "t",
+                    "floorUnit": "m",
                 },
             }
         )
@@ -234,22 +236,15 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         rackDataJson["template"] = rackTemplate["slug"]
         rackData = self.BuildRack(rackDataJson)
 
-        # Check if we know the positions of the rack in the room
-        try:
-            with open(self.AROutputPath + "/positions.json", "r") as positionFile:
-                positions = json.loads(positionFile.read())
-                if rackData["name"] in positions:
-                    log.debug(f"position found for {rackData['name']}")
-                    rackData["attributes"]["posXY"] = json.dumps(
-                        {
-                            "x": positions[rackData["name"]][0],
-                            "y": positions[rackData["name"]][1],
-                        }
-                    )
-        except:
-            log.debug(
-                f"No position found for racks ({self.templatePath}/positions.json is missing)"
+        position = GetPosition(rackName=rackDataJson["tiName"])
+        if position is not None:
+            rackData["attributes"]["posXY"] = json.dumps(
+                {
+                    "x": position[0] / 1000,
+                    "y": position[1] / 1000,
+                }
             )
+            rackData["attributes"]["posXYUnit"] = "m"
 
         rackDataJson["id"] = rackData["id"]
         templates = [rackTemplate]
@@ -388,7 +383,9 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
             childrenOgree.append(childOgree)
         return templates, childrenOgree, fbx
 
-    def RackSearch(self, img: ndarray, customerAndSite: str, deviceType: str) -> str:
+    def RackSearch(
+        self, img: ndarray, customerAndSite: str, deviceType: str, debug: bool = False
+    ) -> str:
         """Perform OCR on a picture for a rack label, gets its info from dcTrack and convert it to OGrEE format
 
         :param img: the picture where the rack label is
@@ -413,16 +410,26 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         regexp, roomList, type, background, colorRange = ReadConf(
             pathToConfFile, customer, site, deviceType
         )
-        for i in range(len(regexp)):
-            site, label, ocrResults = ReaderCroppedAndFullImage(
-                img, site, regexp[i], deviceType, background[i], colorRange, ocrResults
-            )
-            if "Missing" not in label:
-                break
+        if debug:
+            label = ["C8", "B11"]  # debug
+
+        else:
+            for i in range(len(regexp)):
+                site, label, ocrResults = ReaderCroppedAndFullImage(
+                    img,
+                    site,
+                    regexp[i],
+                    deviceType,
+                    background[i],
+                    colorRange,
+                    ocrResults,
+                )
+                if "Missing" not in label:
+                    break
+
         if label is None or len(label) == 0 or "Missing" in label:
             return "Rack label could not be read"
 
-        # label = ["C8", "B11"]  # debug
         if len(label[0]) > 3:
             label[0] = label[0][3::]
 
@@ -520,6 +527,5 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         )
 
     def GetList(self):
-        """Not implemented
-        """
+        """Not implemented"""
         pass

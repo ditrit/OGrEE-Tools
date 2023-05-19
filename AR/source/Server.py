@@ -51,7 +51,7 @@ def ReadPicture()->str:
             pathToEnvFile = f"{os.path.dirname(__file__)}/../.env.json"
             url, headers, database = Utils.ReadEnv(pathToEnvFile)
             converter = ARdcTrackToOGrEE(url, headers, {"Content-Type": "application/json"})
-            return converter.RackSearch(img, customerAndSite, deviceType)
+            return converter.RackSearch(img, customerAndSite, deviceType,args["debug"])
     except Exception:
         traceback.print_exc()
         return traceback.format_exc()
@@ -98,6 +98,11 @@ if __name__ == "__main__":
         choices=["INFO", "WARNING", "ERROR", "DEBUG"],
         help="""Specify the verbose level""",
         default="INFO",
+    )
+    parser.add_argument(
+        "--debug",
+        help="""debugging""",
+        action="store_true",
     )
     args = vars(parser.parse_args())
     numeric_level = getattr(logging, args["verbose"].upper())
