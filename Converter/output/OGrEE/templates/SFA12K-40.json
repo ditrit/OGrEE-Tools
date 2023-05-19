@@ -1,0 +1,60 @@
+{
+    "slug": "sfa12k-40",
+    "description": "DDN",
+    "category": "device",
+    "sizeWDHmm": [
+        438.15,
+        730.25,
+        177.8
+    ],
+    "fbxModel": "",
+    "attributes": {
+        "vendor": "DDN",
+        "model": "SFA12K-40",
+        "type": ""
+    },
+    "colors": [],
+    "components": [
+        {
+            "location": "PS1",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                0,
+                712.25,
+                0
+            ],
+            "elemSize": [
+                24,
+                17,
+                16
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "IEC-320-C14"
+            }
+        },
+        {
+            "location": "PS2",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                24,
+                712.25,
+                0
+            ],
+            "elemSize": [
+                24,
+                17,
+                16
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "IEC-320-C14"
+            }
+        }
+    ],
+    "slots": []
+}

@@ -3,9 +3,6 @@ Converter namespace
 
 .. py:module:: Converter
 
-Subpackages
------------
-
 .. toctree::
    :maxdepth: 4
 

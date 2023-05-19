@@ -3,17 +3,23 @@
 """
 import argparse
 import glob
-import os
 from pathlib import Path
-
+from os.path import dirname, realpath
 import fbx
 import FbxCommon
 
-outputPathDefault = f"{os.path.dirname(os.path.realpath(__file__))}/../../output/OGrEE/fbx/"
-defaultPicture = f"{os.path.dirname(os.path.realpath(__file__))}/white.png"
 
-def makeCube(manager):
+outputPathDefault = realpath(f"{dirname(realpath(__file__))}/../../output/OGrEE/fbx/")
+defaultPicture = f"{dirname(realpath(__file__))}/white.png"
 
+def makeCube(manager: fbx.FbxManager) -> fbx.FbxMesh:
+    """Make a simple cube
+
+    :param manager: Manager containing the cube
+    :type manager: fbx.FbxManager
+    :return: the cubemesh with correct control points, vertices and normals
+    :rtype: fbx.FbxMesh
+    """
     cubeMesh = fbx.FbxMesh.Create(manager, "")
     # A set of vertices which we will use to create a cube in the scene.
     cubeVertices = [
@@ -158,8 +164,25 @@ def makeCube(manager):
     return cubeMesh
 
 
-def addCube(manager,pScene, cubeName, cubeScale: tuple[float, float, float] = (1.0, 1.0, 1.0)):
-    """Adds a cubic mesh to the scene."""
+def addCube(
+    manager: fbx.FbxManager,
+    scene: fbx.FbxScene,
+    cubeName: str,
+    cubeScale: tuple[float, float, float] = (1.0, 1.0, 1.0),
+) -> fbx.FbxMesh:
+    """Add a cube to a scene
+
+    :param manager: the manager of the scene
+    :type manager: fbx.FbxManager
+    :param scene: the scene containing the cube
+    :type scene: fbx.FbxScene
+    :param cubeName: the name of the cubemesh
+    :type cubeName: str
+    :param cubeScale: the dimensions of the cube, defaults to (1.0, 1.0, 1.0)
+    :type cubeScale: tuple[float, float, float], optional
+    :return: the mesh containing the cube
+    :rtype: fbx.FbxMesh
+    """
     # Create a new mesh node attribute in the scene, and set it as the new node's attribute
     newMesh = makeCube(manager)
     # create the node containing the mesh
@@ -167,16 +190,25 @@ def addCube(manager,pScene, cubeName, cubeScale: tuple[float, float, float] = (1
     newNode.SetNodeAttribute(newMesh)
     newNode.SetShadingMode(fbx.FbxNode.eTextureShading)
     newNode.LclScaling.Set(fbx.FbxDouble3(cubeScale[0], cubeScale[1], cubeScale[2]))
-    newNode.LclTranslation.Set(fbx.FbxDouble3(0,0,0))
-    
-    rootNode = pScene.GetRootNode()
+    newNode.LclTranslation.Set(fbx.FbxDouble3(0, 0, 0))
+
+    rootNode = scene.GetRootNode()
     rootNode.AddChild(newNode)
     return newMesh
 
 
-def CreateTexture(manager, pFilename):
-    lTexture = fbx.FbxFileTexture.Create(manager,"")
-    lTexture.SetFileName(pFilename)
+def CreateTexture(manager: fbx.FbxManager, texturePath: str) -> fbx.FbxFileTexture:
+    """Create a texture from a picture
+
+    :param manager: the manager of the scene
+    :type manager: fbx.FbxManager
+    :param texturePath: path to the picture
+    :type texturePath: str
+    :return: the texture with correct mapping, texture and UV
+    :rtype: fbx.FbxFileTexture
+    """
+    lTexture = fbx.FbxFileTexture.Create(manager, "")
+    lTexture.SetFileName(texturePath)
     lTexture.SetTextureUse(fbx.FbxTexture.eStandard)
     lTexture.SetMappingType(fbx.FbxTexture.eUV)
     lTexture.SetMaterialUse(fbx.FbxFileTexture.eModelMaterial)
@@ -187,8 +219,21 @@ def CreateTexture(manager, pFilename):
     return lTexture
 
 
-def CreateMaterial(manager, name, texturePath):
-    texture = CreateTexture(manager,texturePath)
+def CreateMaterial(
+    manager: fbx.FbxManager, name: str, texturePath: str
+) -> fbx.FbxSurfacePhong:
+    """Create a SurfacePhong material from a picture
+
+    :param manager: the manager of the scene
+    :type manager: fbx.FbxManager
+    :param name: name of the material (can be empty)
+    :type name: str
+    :param texturePath: path to the picture
+    :type texturePath: str
+    :return: a SurfacePhong material with correct emissive, diffuse, ambient and specular colors, transpacy factor, shininess and shading model
+    :rtype: fbx.FbxSurfacePhong
+    """
+    texture = CreateTexture(manager, texturePath)
     material = fbx.FbxSurfacePhong.Create(manager, name)
     material.Emissive.Set(fbx.FbxDouble3(0.0, 0.0, 0.0))
     material.Diffuse.Set(fbx.FbxDouble3(1.0, 1.0, 1.0))
@@ -199,22 +244,6 @@ def CreateMaterial(manager, name, texturePath):
     material.ShadingModel.Set(fbx.FbxString("phong"))
     material.Diffuse.ConnectSrcObject(texture)
     return material
-
-
-def saveScene(pFilename, pFbxManager, pFbxScene):
-    """Save the scene using the Python FBX API"""
-    exporter = fbx.FbxExporter.Create(pFbxManager, "")
-
-    isInitialized = exporter.Initialize(pFilename)
-    if isInitialized == False:
-        raise Exception(
-            "Exporter failed to initialize. Error returned: "
-            + str(exporter.GetLastErrorString())
-        )
-
-    exporter.Export(pFbxScene)
-
-    exporter.Destroy()
 
 def CreateFBX(
     width: float,
@@ -253,21 +282,21 @@ def CreateFBX(
     top = defaultPicture if top == "" else top
     bottom = defaultPicture if bottom == "" else bottom
 
-
-    manager,scene = FbxCommon.InitializeSdkObjects()
-    cubeMesh = addCube(manager,scene, "cube", cubeScale=(width/2, height/2, depth/2))
+    manager, scene = FbxCommon.InitializeSdkObjects()
+    cubeMesh = addCube(
+        manager, scene, "cube", cubeScale=(width / 2, height / 2, depth / 2)
+    )
     cubeNode = cubeMesh.GetNode()
 
-    cubeNode.AddMaterial(CreateMaterial(manager,"",front))
-    cubeNode.AddMaterial(CreateMaterial(manager,"",right))
-    cubeNode.AddMaterial(CreateMaterial(manager,"",back))
-    cubeNode.AddMaterial(CreateMaterial(manager,"",left))
-    cubeNode.AddMaterial(CreateMaterial(manager,"",top))
-    cubeNode.AddMaterial(CreateMaterial(manager,"",bottom))
+    cubeNode.AddMaterial(CreateMaterial(manager, "", front))
+    cubeNode.AddMaterial(CreateMaterial(manager, "", right))
+    cubeNode.AddMaterial(CreateMaterial(manager, "", back))
+    cubeNode.AddMaterial(CreateMaterial(manager, "", left))
+    cubeNode.AddMaterial(CreateMaterial(manager, "", top))
+    cubeNode.AddMaterial(CreateMaterial(manager, "", bottom))
 
-    FbxCommon.SaveScene(manager, scene, outputPath + name + ".fbx", pEmbedMedia=True)
-
-    return outputPath + name + ".fbx"
+    FbxCommon.SaveScene(manager, scene, f"{realpath(outputPath)}/{name}.fbx", pEmbedMedia=True)
+    return f"{realpath(outputPath)}/{name}.fbx"
 
 
 if __name__ == "__main__":
@@ -290,7 +319,7 @@ if __name__ == "__main__":
         "--picFolder",
         help="""path to a folder containing pictures ending in -front,-back,...""",
     )
-    parser.add_argument("-o", help="""output path""",default=outputPathDefault)
+    parser.add_argument("-o", help="""output path""", default=outputPathDefault)
 
     args = vars(parser.parse_args())
     wdh = [float(s) for s in args["WDH"].split(",")]
