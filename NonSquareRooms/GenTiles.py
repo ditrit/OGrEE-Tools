@@ -291,10 +291,11 @@ def processJSON(
             }
         )
 
-    room["tiles"] = new_tiles
-    room["tileAngle"] = angle
-    room["center"] = [round(roomPoly.centroid.x, 2), round(roomPoly.centroid.y, 2)]
     room["area"] = round(roomPoly.area, 2)
+    room["center"] = [round(roomPoly.centroid.x, 2), round(roomPoly.centroid.y, 2)]
+    room["tilesArea"] = round(tiles[0].area * len(tiles),2)
+    room["tileAngle"] = angle
+    room["tiles"] = new_tiles
     if outname is None:
         with open(
             f"{os.path.dirname(path)}/{os.path.splitext(os.path.basename(path))[0]}-tiles.json",
