@@ -1,15 +1,21 @@
 import argparse
 import json
 import os
-from shapely.geometry import Polygon, box, Point
-from shapely import affinity
 import turtle
+
+import matplotlib.pyplot as plt
+import numpy
+from matplotlib.collections import PatchCollection
+from matplotlib.patches import PathPatch
+from matplotlib.path import Path
+from shapely import affinity
+from shapely.geometry import Point, Polygon, box
+
 
 # Generates the coordinates of the squares rotated by angle that can fit into the room. Starts From the first corner in the room's corner list
 def GenTilesFromFirstCorner(
     room: Polygon, tileSize: float, angle: float, offset: tuple[float, float]
 ) -> list[Polygon]:
-
     # Rotated Bounding Box of the room but realigned to the original axis
     b = RotatedBBox(room, angle)
 
@@ -61,7 +67,6 @@ def GenTilesFromFirstCorner(
 
     # Until we reach the left side
     while x > b.bounds[0]:
-
         x -= tileSize
         # We do the same thing vertically
         y = origin.y + offset[1]
@@ -90,7 +95,6 @@ def GenTilesFromFirstCorner(
 # Returns a rectangle Polygon which is the bounding box of polygon aligned with an axis set rotated by theta from the orignal axis x and y.
 # However, the bounding box is rotated back (by -theta) to be aligned with the orignal axis. So, in most cases, it is not a bounding box of polygon
 def RotatedBBox(polygon: Polygon, theta: float) -> Polygon:
-
     # First, we compute the bounding box of the polygon without rotation
     rectangle = box(
         polygon.bounds[0],
@@ -174,44 +178,71 @@ def Move(pos: tuple[float, float], t: turtle.Turtle) -> None:
     t.pendown()
 
 
+# https://stackoverflow.com/a/70533052
+def plot_polygon(ax, poly, **kwargs):
+    path = Path.make_compound_path(
+        Path(numpy.asarray(poly.exterior.coords)[:, :2]),
+        *[Path(numpy.asarray(ring.coords)[:, :2]) for ring in poly.interiors],
+    )
+
+    patch = PathPatch(path, **kwargs)
+    collection = PatchCollection([patch], **kwargs)
+
+    ax.add_collection(collection, autolim=True)
+    ax.autoscale_view()
+    return collection
+
+
+# https://stackoverflow.com/a/44797574
+class TextResizer:
+    def __init__(self, texts, fig=None, minimal=4):
+        if not fig:
+            fig = plt.gcf()
+        self.fig = fig
+        self.texts = texts
+        self.fontsizes = [t.get_fontsize() for t in self.texts]
+        _, self.windowheight = fig.get_size_inches() * fig.dpi
+        self.minimal = minimal
+
+    def __call__(self, event=None):
+        scale = event.height / self.windowheight
+        for i in range(len(self.texts)):
+            newsize = numpy.max([int(self.fontsizes[i] * scale), self.minimal])
+            self.texts[i].set_fontsize(newsize)
+
+
 # Draw the room with its tiles
-def Draw(room: Polygon, squares: list[Polygon]) -> None:
+def Draw(room: Polygon, tiles: list[Polygon], tileCoords: list[str]) -> None:
+    fig, ax = plt.subplots()
+    ax.set_aspect("equal")
+    fig.tight_layout()
+    plot_polygon(ax, room, facecolor="white", edgecolor="black")
 
-    # Setup turtle
-    turtle.TurtleScreen._RUNNING = True
-    canvas = turtle.Screen()
-    canvas.screensize(20000, 20000)
-    t = turtle.Turtle(visible=False)
-
-    # No delay when drawing
-    turtle.tracer(0, 0)
-
-    # Coloring tiles in green
-    t.fillcolor((0, 0.3, 0))
-    for square in squares:
-        coord = [
-            (square.exterior.coords.xy[0][i] *50, square.exterior.coords.xy[1][i] *50)
-            for i in range(len(square.exterior.coords.xy[0]) - 1)
-        ]
-        Move(coord[0], t)
-        t.begin_fill()
-        for dot in coord[1:]:
-            t.setposition(dot)
-        t.setposition(coord[0])
-        t.end_fill()
-    coord = [
-        (room.exterior.coords.xy[0][i] *50, room.exterior.coords.xy[1][i] *50)
-        for i in range(len(room.exterior.coords.xy[0]) - 1)
+    first_tile = tiles.pop(0)
+    first_coord = tileCoords.pop(0)
+    plot_polygon(ax, first_tile, facecolor="red", edgecolor="gray")
+    texts = [
+        plt.text(
+            first_tile.centroid.x,
+            first_tile.centroid.y,
+            first_coord,
+            ha="center",
+            size=4,
+        )
     ]
-    Move(coord[0], t)
-
-    # Drawing room walls in bold black
-    t.width(3)
-    for dot in coord[1:]:
-        t.setposition(dot)
-    t.setposition(coord[0])
-    t.width(1)
-    canvas.exitonclick()
+    for i in range(len(tiles)):
+        plot_polygon(ax, tiles[i], facecolor="lightgreen", edgecolor="gray")
+        texts.append(
+            plt.text(
+                tiles[i].centroid.x,
+                tiles[i].centroid.y,
+                tileCoords[i],
+                ha="center",
+                size=4,
+            )
+        )
+    plt.gcf().canvas.mpl_connect("resize_event", TextResizer(texts))
+    plt.show()
 
 
 # Write a JSON template of a OGrEE room with its tiles, generated according to the parameters
@@ -224,7 +255,6 @@ def processJSON(
     outname: str = None,
     opti: bool = False,
 ) -> None:
-
     # Convert parameters to correct types
     tileSize = float(tileSize) if tileSize is not None else 0.6
     angle = float(angle) if angle is not None else 0
@@ -243,7 +273,7 @@ def processJSON(
         tiles = GenTilesFromFirstCorner(roomPoly, tileSize, angle, offset)
     new_tiles = []
 
-    correction = (round(tiles[0].centroid.x,2), round(tiles[0].centroid.y,2))
+    correction = (round(tiles[0].centroid.x, 2), round(tiles[0].centroid.y, 2))
 
     orientX, orientY = (
         -1 if "-x" in room["axisOrientation"] else 1,
@@ -263,7 +293,8 @@ def processJSON(
 
     room["tiles"] = new_tiles
     room["tileAngle"] = angle
-    room["center"] = [round(roomPoly.centroid.x,2), round(roomPoly.centroid.y,2)]
+    room["center"] = [round(roomPoly.centroid.x, 2), round(roomPoly.centroid.y, 2)]
+    room["area"] = round(roomPoly.area, 2)
     if outname is None:
         with open(
             f"{os.path.dirname(path)}/{os.path.splitext(os.path.basename(path))[0]}-tiles.json",
@@ -275,13 +306,17 @@ def processJSON(
             file.write(json.dumps(room, indent=4))
 
     if draw:
-        Draw(Polygon([(corner[0], corner[1]) for corner in room["vertices"]]), tiles)
+        tilesText = [new_tiles[i]["label"] for i in range(len(new_tiles))]
+        Draw(
+            Polygon([(corner[0], corner[1]) for corner in room["vertices"]]),
+            tiles,
+            tilesText,
+        )
 
 
 #########################################################################################################
 
 if __name__ == "__main__":
-
     # COMMAND OPTIONS
     parser = argparse.ArgumentParser(
         description="Generate the tiles of a non convex room for OGrEE  (all unit are in meter)"
