@@ -62,22 +62,9 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         )
         super().__init__(url, headersGET, headersPOST, outputPath, **kw)
 
-    def GetTenant(self, tenantName: str) -> dict[str, Any]:
-        """Create a tenant for dcTrack
-
-        :param tenantName: name of the tenant
-        :type tenantName: str
-        :return: dict describing an OgrEE tenant
-        :rtype: dict[str, Any]
-        """
-        data = {"name": tenantName, "id": tenantName}
-        return self.BuildTenant(data)
-
-    def GetSite(self, tenantData: dict[str, Any], locationName: str) -> dict[str, Any]:
+    def GetSite(self, locationName: str) -> dict[str, Any]:
         """Get site informations from dcTrack
 
-        :param tenantData: must contains "name"
-        :type tenantData: dict[str, Any]
         :param locationName: name of the location of the site in dcTrack
         :type locationName: str
         :raises IncorrectResponseError: if the site was not found in dcTrack
@@ -100,12 +87,12 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
             raise IncorrectResponseError(
                 self.url,
                 "/api/v2/quicksearch/locations",
-                message=f"Site {locationName} was not found in tenant {tenantData['name']} on api {self.url}",
+                message=f"Site {locationName} was not found on api {self.url}",
             )
 
         if len(searchResults) > 1:
             log.warning(
-                f"Multiple locations found with the name {locationName} in tenant {tenantData['name']}, taking the first one"
+                f"Multiple locations found with the name {locationName}, taking the first one"
             )
         siteData = searchResults[0]
         siteData["parentId"] = "EDF"
@@ -154,7 +141,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
 
         if len(searchResults) > 1:
             log.warning(
-                f"Multiple rooms found with the name {roomIdentifier} in tenant {siteData['name']}, taking the first one"
+                f"Multiple rooms found with the name {roomIdentifier} in site {siteData['name']}, taking the first one"
             )
         roomDataJson = searchResults[0]
 
@@ -434,18 +421,11 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
             label[0] = label[0][3::]
 
         try:
-            data = {"name": customer, "id": customer}
-            tenantData = self.BuildTenant(data)
-            data = {
-                "name": site,
-            }
-            siteData = self.GetSite(tenantData, site)
+            siteData = self.GetSite(site)
             buildingData, roomData = self.GetBuildingAndRoom(siteData, label[0])
             rackData, templates, fbx = self.GetRack(roomData, label[1])
             # Setting the data to send to Unity App
             dictionary = {
-                "tenant": OgreeMessage.FormatDict(tenantData),
-                "tenantName": customer,
                 "site": OgreeMessage.FormatDict(siteData),
                 "siteName": site,
                 "building": OgreeMessage.FormatDict(buildingData),
@@ -462,8 +442,6 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
 
             # Debug
             dictionary = {
-                "tenant": tenantData,
-                "tenantName": customer,
                 "site": siteData,
                 "siteName": site,
                 "building": buildingData,

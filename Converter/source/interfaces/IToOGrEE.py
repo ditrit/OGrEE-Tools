@@ -7,17 +7,6 @@ class IToOGrEE(ABC):
         super().__init__(**kw)
 
     @abstractmethod
-    def BuildTenant(self, data: dict[str, Any]) -> dict[str, Any]:
-        """
-        Build a tenant from another base's data
-
-        :param dict[str, Any] tenantData: a JSON used to build the tenant
-        :returns: a dict describing an OGrEE tenant
-        :rtype: dict[str, Any]
-        """
-        pass
-
-    @abstractmethod
     def BuildSite(self, data: dict[str, Any]) -> dict[str, Any]:
         """
         Build a site from another base's data
