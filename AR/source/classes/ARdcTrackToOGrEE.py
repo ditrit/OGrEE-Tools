@@ -62,6 +62,16 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         )
         super().__init__(url, headersGET, headersPOST, outputPath, **kw)
 
+    def GetDomain(self, domainName: str) -> dict[str, Any]:
+        """Create a domain for dcTrack
+        :param domainName: name of the domain
+        :type domainName: str
+        :return: dict describing an OgrEE domain
+        :rtype: dict[str, Any]
+        """
+        data = {"name": domainName, "id": domainName}
+        return self.BuildDomain(data)
+
     def GetSite(self, locationName: str) -> dict[str, Any]:
         """Get site informations from dcTrack
 
@@ -158,6 +168,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
                     "sizeUnit": "m",
                     "height": "4",  # ???
                     "heightUnit": "m",
+                    "rotation": "0",
                     "template": "",
                     "technical": '{"left":5,"right":5,"top":0,"bottom":0}',
                     "floorUnit": "m",
@@ -421,11 +432,14 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
             label[0] = label[0][3::]
 
         try:
+            domainData = self.GetDomain(customer)
             siteData = self.GetSite(site)
             buildingData, roomData = self.GetBuildingAndRoom(siteData, label[0])
             rackData, templates, fbx = self.GetRack(roomData, label[1])
             # Setting the data to send to Unity App
             dictionary = {
+                "domain" : OgreeMessage.FormatDict(domainData),
+                "domainName" : customer,
                 "site": OgreeMessage.FormatDict(siteData),
                 "siteName": site,
                 "building": OgreeMessage.FormatDict(buildingData),
@@ -442,6 +456,8 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
 
             # Debug
             dictionary = {
+                "domain" : domainData,
+                "domainName" : customer,
                 "site": siteData,
                 "siteName": site,
                 "building": buildingData,
