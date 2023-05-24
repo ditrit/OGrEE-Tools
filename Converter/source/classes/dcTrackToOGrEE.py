@@ -70,6 +70,7 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
             "children": data["children"] if "children" in data else [],
         }
         result["id"] = f"{result['parentId']}.{result['name']}"
+        result["hierarchyName"] = f"{result['parentId']}.{result['name']}"
         return result
 
     def BuildBuilding(self, data: dict[str, Any]) -> dict[str, Any]:
@@ -103,6 +104,7 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
             "children": data["children"] if "children" in data else None,
         }
         result["id"] = f"{result['parentId']}.{result['name']}"
+        result["hierarchyName"] = f"{result['parentId']}.{result['name']}"
         return result
 
     def BuildRoom(self, data: dict[str, Any]) -> dict[str, Any]:
@@ -139,6 +141,7 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
             "children": data["children"] if "children" in data else [],
         }
         result["id"] = f"{result['parentId']}.{result['name']}"
+        result["hierarchyName"] = f"{result['parentId']}.{result['name']}"
         return result
 
     def BuildRack(self, data: dict[str, Any]) -> dict[str, Any]:
@@ -176,6 +179,7 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
             "children": data["children"] if "children" in data else [],
         }
         result["id"] = f"{result['parentId']}.{result['name']}"
+        result["hierarchyName"] = f"{result['parentId']}.{result['name']}"
         return result
 
     def BuildDevice(self, data: dict[str, Any]) -> dict[str, Any]:
@@ -213,6 +217,7 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
             "children": data["children"] if "children" in data else [],
         }
         result["id"] = f"{result['parentId']}.{result['name']}"
+        result["hierarchyName"] = f"{result['parentId']}.{result['name']}"
 
         # Check if child is mounted on U pos
         if "Rackable" in data["tiMounting"]:
