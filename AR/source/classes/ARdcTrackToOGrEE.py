@@ -398,7 +398,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
             pathToConfFile, customer, site, deviceType
         )
         if debug:
-            label = ["C8", "C11"]  # debug
+            label = ["C8", "B11"]  # debug
 
         else:
             for i in range(len(regexp)):
