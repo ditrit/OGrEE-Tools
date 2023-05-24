@@ -45,22 +45,22 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
         self.templatePath = realpath(f"{self.outputPath}/templates")
         super().__init__(url=url, headersGET=headersGET, headersPOST=headersPOST, **kw)
 
-    def BuildTenant(self, data: dict[str, Any]) -> dict[str, Any]:
-        """Build a tenant from dcTrack data
+    def BuildDomain(self, data: dict[str, Any]) -> dict[str, Any]:
+        """Build a domain from dcTrack data
 
         :param data: dcTrack data,
             - must contains "name"
             - can contains "description", "id", "attributes" and "children" keys
             - all other keys will be ignored
         :type data: dict[str, Any]
-        :return: a dict describing an OGrEE tenant
+        :return: a dict describing an OGrEE domain
         :rtype: dict[str, Any]
         """
         return {
             "name": data["name"],
             "id": data["id"] if "id" in data else data["name"],
             "parentId": None,
-            "category": "tenant",
+            "category": "domain",
             "description": data["description"] if "description" in data else [],
             "domain": data["name"],
             "attributes": data["attributes"]
