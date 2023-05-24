@@ -14,6 +14,7 @@ from AR.source.interfaces.IARConverter import (
     OgreeMessage,
 )
 from AR.source.ocr.LabelProcessing import ReaderCroppedAndFullImage
+from AR.source.ODBC import GetPosition
 from common.Utils import CustomerAndSiteSpliter, ReadConf
 from Converter.source.classes.dcTrackToOGrEE import dcTrackToOGrEE
 from Converter.source.fbx.FbxBuilder import CreateFBX
@@ -33,6 +34,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
     :param IARConverter:  Interface of AR converters
     :type IARConverter: IARConverter
     """
+
     def __init__(
         self,
         url: str,
@@ -60,22 +62,9 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         )
         super().__init__(url, headersGET, headersPOST, outputPath, **kw)
 
-    def GetTenant(self, tenantName: str) -> dict[str, Any]:
-        """Create a tenant for dcTrack
-
-        :param tenantName: name of the tenant
-        :type tenantName: str
-        :return: dict describing an OgrEE tenant
-        :rtype: dict[str, Any]
-        """
-        data = {"name": tenantName, "id": tenantName}
-        return self.BuildTenant(data)
-
-    def GetSite(self, tenantData: dict[str, Any], locationName: str) -> dict[str, Any]:
+    def GetSite(self, locationName: str) -> dict[str, Any]:
         """Get site informations from dcTrack
 
-        :param tenantData: must contains "name"
-        :type tenantData: dict[str, Any]
         :param locationName: name of the location of the site in dcTrack
         :type locationName: str
         :raises IncorrectResponseError: if the site was not found in dcTrack
@@ -98,12 +87,12 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
             raise IncorrectResponseError(
                 self.url,
                 "/api/v2/quicksearch/locations",
-                message=f"Site {locationName} was not found in tenant {tenantData['name']} on api {self.url}",
+                message=f"Site {locationName} was not found on api {self.url}",
             )
 
         if len(searchResults) > 1:
             log.warning(
-                f"Multiple locations found with the name {locationName} in tenant {tenantData['name']}, taking the first one"
+                f"Multiple locations found with the name {locationName}, taking the first one"
             )
         siteData = searchResults[0]
         siteData["parentId"] = "EDF"
@@ -152,7 +141,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
 
         if len(searchResults) > 1:
             log.warning(
-                f"Multiple rooms found with the name {roomIdentifier} in tenant {siteData['name']}, taking the first one"
+                f"Multiple rooms found with the name {roomIdentifier} in site {siteData['name']}, taking the first one"
             )
         roomDataJson = searchResults[0]
 
@@ -171,7 +160,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
                     "heightUnit": "m",
                     "template": "",
                     "technical": '{"left":5,"right":5,"top":0,"bottom":0}',
-                    "floorUnit": "t",
+                    "floorUnit": "m",
                 },
             }
         )
@@ -234,22 +223,15 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         rackDataJson["template"] = rackTemplate["slug"]
         rackData = self.BuildRack(rackDataJson)
 
-        # Check if we know the positions of the rack in the room
-        try:
-            with open(self.AROutputPath + "/positions.json", "r") as positionFile:
-                positions = json.loads(positionFile.read())
-                if rackData["name"] in positions:
-                    log.debug(f"position found for {rackData['name']}")
-                    rackData["attributes"]["posXY"] = json.dumps(
-                        {
-                            "x": positions[rackData["name"]][0],
-                            "y": positions[rackData["name"]][1],
-                        }
-                    )
-        except:
-            log.debug(
-                f"No position found for racks ({self.templatePath}/positions.json is missing)"
+        position = GetPosition(rackName=rackDataJson["tiName"])
+        if position is not None:
+            rackData["attributes"]["posXY"] = json.dumps(
+                {
+                    "x": position[0] / 1000,
+                    "y": position[1] / 1000,
+                }
             )
+            rackData["attributes"]["posXYUnit"] = "m"
 
         rackDataJson["id"] = rackData["id"]
         templates = [rackTemplate]
@@ -388,7 +370,9 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
             childrenOgree.append(childOgree)
         return templates, childrenOgree, fbx
 
-    def RackSearch(self, img: ndarray, customerAndSite: str, deviceType: str) -> str:
+    def RackSearch(
+        self, img: ndarray, customerAndSite: str, deviceType: str, debug: bool = False
+    ) -> str:
         """Perform OCR on a picture for a rack label, gets its info from dcTrack and convert it to OGrEE format
 
         :param img: the picture where the rack label is
@@ -413,32 +397,35 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         regexp, roomList, type, background, colorRange = ReadConf(
             pathToConfFile, customer, site, deviceType
         )
-        for i in range(len(regexp)):
-            site, label, ocrResults = ReaderCroppedAndFullImage(
-                img, site, regexp[i], deviceType, background[i], colorRange, ocrResults
-            )
-            if "Missing" not in label:
-                break
+        if debug:
+            label = ["C8", "C11"]  # debug
+
+        else:
+            for i in range(len(regexp)):
+                site, label, ocrResults = ReaderCroppedAndFullImage(
+                    img,
+                    site,
+                    regexp[i],
+                    deviceType,
+                    background[i],
+                    colorRange,
+                    ocrResults,
+                )
+                if "Missing" not in label:
+                    break
+
         if label is None or len(label) == 0 or "Missing" in label:
             return "Rack label could not be read"
 
-        # label = ["C8", "B11"]  # debug
         if len(label[0]) > 3:
             label[0] = label[0][3::]
 
         try:
-            data = {"name": customer, "id": customer}
-            tenantData = self.BuildTenant(data)
-            data = {
-                "name": site,
-            }
-            siteData = self.GetSite(tenantData, site)
+            siteData = self.GetSite(site)
             buildingData, roomData = self.GetBuildingAndRoom(siteData, label[0])
             rackData, templates, fbx = self.GetRack(roomData, label[1])
             # Setting the data to send to Unity App
             dictionary = {
-                "tenant": OgreeMessage.FormatDict(tenantData),
-                "tenantName": customer,
                 "site": OgreeMessage.FormatDict(siteData),
                 "siteName": site,
                 "building": OgreeMessage.FormatDict(buildingData),
@@ -455,8 +442,6 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
 
             # Debug
             dictionary = {
-                "tenant": tenantData,
-                "tenantName": customer,
                 "site": siteData,
                 "siteName": site,
                 "building": buildingData,
@@ -520,6 +505,5 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         )
 
     def GetList(self):
-        """Not implemented
-        """
+        """Not implemented"""
         pass
