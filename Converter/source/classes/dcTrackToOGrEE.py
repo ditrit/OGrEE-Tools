@@ -123,6 +123,7 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
                 "sizeUnit": "m",
                 "height": "5",  # ???
                 "heightUnit": "m",
+                "template": "",
                 "rotation": "0",
             },
             "children": data["children"] if "children" in data else None,
@@ -160,6 +161,7 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
                 "height": "4",  # ???
                 "heightUnit": "m",
                 "template": "",
+                "rotation": "0",
                 "floorUnit": "t",
             },
             "children": data["children"] if "children" in data else [],
