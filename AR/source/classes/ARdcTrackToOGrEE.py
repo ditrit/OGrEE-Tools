@@ -161,7 +161,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
                 "parentId": buildingData["id"],
                 "domain": siteData["domain"],
                 "attributes": {
-                    "orientation": "+N+W",  # ???
+                    "axisOrientation": "+x+y",  # ???
                     "posXY": json.dumps({"x": 0.0, "y": 0.0}),  # ???
                     "posXYUnit": "m",
                     "size": json.dumps({"x": 21, "y": 39}),  # ???
