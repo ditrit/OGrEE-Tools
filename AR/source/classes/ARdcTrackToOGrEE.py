@@ -14,7 +14,7 @@ from AR.source.interfaces.IARConverter import (
     OgreeMessage,
 )
 from AR.source.ocr.LabelProcessing import ReaderCroppedAndFullImage
-from AR.source.ODBC import GetPosition
+from AR.source.ODBC import GetPosition, GetRoomOrientation
 from common.Utils import CustomerAndSiteSpliter, ReadConf
 from Converter.source.classes.dcTrackToOGrEE import dcTrackToOGrEE
 from Converter.source.fbx.FbxBuilder import CreateFBX
@@ -137,7 +137,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
                     "filter": {"contains": f'"{roomIdentifier}"'},
                 }
             ],
-            "selectedColumns": ["name"],
+            "selectedColumns": ["name","id"],
         }
         searchResults = self.PostJSON("/api/v2/quicksearch/locations", payload)[
             "searchResults"
@@ -154,6 +154,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
                 f"Multiple rooms found with the name {roomIdentifier} in site {siteData['name']}, taking the first one"
             )
         roomDataJson = searchResults[0]
+        roomOrientation = GetRoomOrientation(roomID=roomDataJson["id"])
 
         roomData = self.BuildRoom(
             {
@@ -161,7 +162,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
                 "parentId": buildingData["id"],
                 "domain": siteData["domain"],
                 "attributes": {
-                    "axisOrientation": "+x+y",  # ???
+                    "axisOrientation": ("+x" if roomOrientation[0] else "-x") + ("-y" if roomOrientation[0] else "+y"), 
                     "posXY": json.dumps({"x": 0.0, "y": 0.0}),  # ???
                     "posXYUnit": "m",
                     "size": json.dumps({"x": 21, "y": 39}),  # ???
@@ -243,6 +244,10 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
                 }
             )
             rackData["attributes"]["posXYUnit"] = "m"
+            if ((position[2] == "East" and roomData["attributes"]["axisOrientation"] == "-x+y") or (position[2] == "West" and roomData["attributes"]["axisOrientation"] == "+x+y")):
+                rackData["attributes"]["orientation"] = "rear"
+            else :
+                rackData["attributes"]["orientation"] = "front"
 
         rackDataJson["id"] = rackData["id"]
         templates = [rackTemplate]
@@ -409,7 +414,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
             pathToConfFile, customer, site, deviceType
         )
         if debug:
-            label = ["C8", "B11"]  # debug
+            label = ["C8", "B12"]  # debug
 
         else:
             for i in range(len(regexp)):
