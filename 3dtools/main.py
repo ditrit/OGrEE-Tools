@@ -2,19 +2,20 @@ import tools
 from classifiers import Classifiers
 
 
-SLOTNAME = "serveur/ibm-x3850x6.rear.png"
-HEIGHT = 172.8
-LENGTH = 482.0
-#SLOTNAME = "serveur/ibm-x3650m4.rear.png"
-#HEIGHT = 281.9
+#SLOTNAME = "serveur/ibm-x3850x6.rear.png"
+#HEIGHT = 172.8
 #LENGTH = 482.0
+SLOTNAME = "serveur/ibm-x3650m4.rear.png"
+HEIGHT = 86.5
+LENGTH = 445.0
 
 image = tools.imageload(SLOTNAME,"grey")
 #image = tools.impreprocess(image)
 ogreeTools = Classifiers(image,HEIGHT,LENGTH)
-#ogreeTools.clvga_rs232()
-ogreeTools.clrj45()
-#ogreeTools.clc14()
+ogreeTools.clvga_rs232()
+#ogreeTools.clrj45()
+#ogreeTools.clsource()
+
 '''
 #rgbview(image)
 image_hsv = rgb2hsv(image)

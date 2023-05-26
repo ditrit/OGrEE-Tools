@@ -8,10 +8,9 @@ from skimage import exposure
 from skimage.transform import resize
 import tools
 import matplotlib.pyplot as plt
-'''
-mask = tools.imageload('mask.png','grey')
-mask = mask>0.5
 
+mask = tools.imageload('standard/mask.png','grey')
+mask = mask>0.5
 
 #FILEHANDEL = "rs232/d9"
 FILEHANDEL = "vga/vga"
@@ -19,12 +18,13 @@ SAVEHANDEL = "image/result/"
 QUANTITY = 12
 detector = CENSURE(min_scale=1, max_scale=7, mode='DoB', non_max_threshold=0.15, line_threshold=10)
 #(min_scale=1, max_scale=7, mode='DoB', non_max_threshold=0.15, line_threshold=10)
-
+std = tools.imageload("standard/standard-vga.png",'grey')
+detector.detect(std)
+stdfeature = detector.keypoints
 for i in range(1,QUANTITY+1):
-
     path = FILEHANDEL + '{}'.format(str(i).zfill(3)) + '.png'
     img_orig = tools.imageload(path,'grey')
-    img_orig = resize(img_orig, (109,289))
+    img_orig = resize(img_orig, (105,290))
     #img_orig = exposure.equalize_hist(img_orig)
     img_vag = filters.gaussian(img_orig * mask,sigma=1)
     img_inv = -img_vag + 1
@@ -34,6 +34,13 @@ for i in range(1,QUANTITY+1):
 
     #dst = (dst * 255.0).astype('uint8')
     #imsave(SAVEHANDEL + '{}'.format(str(i).zfill(3)) + '.png', img_orig)
+    pfeature = detector.keypoints
+    idx = []
+    for j in range(pfeature.shape[0]):
+        if not mask[pfeature[j,0],pfeature[j,1]]:
+            idx.append(j)
+    pfeature = np.delete(pfeature, idx, 0)
+    print(i," picture similarity is  :",tools.patchsimilarity(detector.keypoints,stdfeature))
     plt.figure(linewidth=4)
     ax = plt.gca()
     ax.imshow(img_vag, cmap=plt.cm.gray)
@@ -88,5 +95,5 @@ plot_matches(ax, img, img_std, keypoints_img, keypoints_std,matches,only_matches
 ax.axis("off")
 ax.set_title("Inlier correspondences")
 plt.show()
-
+'''
 
