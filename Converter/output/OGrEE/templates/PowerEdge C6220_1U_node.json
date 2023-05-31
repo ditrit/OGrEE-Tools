@@ -1,0 +1,80 @@
+{
+    "slug": "poweredge-c6220_1u_node",
+    "description": "Dell",
+    "category": "device",
+    "sizeWDHmm": [
+        203.2,
+        508.0,
+        38.1
+    ],
+    "fbxModel": "",
+    "attributes": {
+        "vendor": "Dell",
+        "model": "PowerEdge C6220_1U_node",
+        "type": ""
+    },
+    "colors": [],
+    "components": [
+        {
+            "location": "Eth01",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                0,
+                496.0,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Eth02",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                14,
+                496.0,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Mngmt01",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                28,
+                496.0,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        }
+    ],
+    "slots": []
+}
