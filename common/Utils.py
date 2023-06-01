@@ -89,7 +89,7 @@ def ReadConf(
         )
         sys.exit()
     else:
-        log.warning("Cannot find .conf.json File in root (ReadConf in Utils.py)")
+        log.warning("Cannot find .conf.json File in root (ReadConf in Utils.py) : "+pathToRegexFile)
         sys.exit()
 
 
