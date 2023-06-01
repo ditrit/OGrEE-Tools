@@ -1,27 +1,42 @@
-import json
-from copy import deepcopy
-from os import listdir
-from os.path import isfile, join
+from os.path import dirname,realpath
 from typing import Any
 
-from common.Utils import GetAllComponents
 from Converter.source.classes.BaseConverter import BaseConverter
 from Converter.source.interfaces.IToOGrEE import IToOGrEE
 
+defaultOutputPath = realpath(f"{dirname(realpath(__file__))}/../../output/OGrEE")
+
 
 class OGrEEToOGrEE(IToOGrEE, BaseConverter):
+
     def __init__(
         self,
         url: str,
         headersGET: dict[str, Any],
         headersPOST: dict[str, Any],
-        outputPath: str = None,
+        outputPath: str | None = None,
+        **kw,
     ) -> None:
-        super().__init__(url, headersGET, headersPOST, outputPath)
-        self.templatePath = f"{self.outputPath}/templates"
+        """
 
-    def BuildTenant(self, data: dict[str, Any]) -> dict[str, Any]:
+        :param url: API url of the source
+        :type url: str
+        :param headersGET: headers of the GET requests
+        :type headersGET: dict[str, Any]
+        :param headersPOST: headers of the POST requests
+        :type headersPOST: dict[str, Any]
+        :param outputPath: where the data will be saved, defaults to Converter/output/OGrEE
+        :type outputPath: str | None, optional
+        """
+        self.outputPath = (
+            realpath(outputPath) if outputPath is not None else defaultOutputPath
+        )
+        self.templatePath = realpath(f"{self.outputPath}/templates")
+        super().__init__(url=url, headersGET=headersGET, headersPOST=headersPOST, **kw)
+
+    def BuildDomain(self, data: dict[str, Any]) -> dict[str, Any]:
         return data
+
     def BuildSite(self, data: dict[str, Any]) -> dict[str, Any]:
         return data
 
