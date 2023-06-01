@@ -163,7 +163,6 @@ class AROGrEEToOGrEE(OGrEEToOGrEE, IARConverter):
         """
         templates = []
 
-        print(objectData)
         if objectData["attributes"]["template"] != "":
             templates.append(
                 self.GetJSON(
