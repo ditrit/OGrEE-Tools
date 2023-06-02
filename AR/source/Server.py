@@ -15,6 +15,7 @@ from gevent.pywsgi import WSGIServer
 
 import common.Utils as Utils
 from AR.source.classes.ARdcTrackToOGrEE import ARdcTrackToOGrEE
+from AR.source.classes.AROGrEEToOGrEE import AROGrEEToOGrEE
 
 IP = "0.0.0.0"
 PORT = 5002
@@ -50,7 +51,10 @@ def ReadPicture()->str:
 
             pathToEnvFile = f"{os.path.dirname(__file__)}/../.env.json"
             url, headers, database = Utils.ReadEnv(pathToEnvFile)
-            converter = ARdcTrackToOGrEE(url, headers, {"Content-Type": "application/json"})
+            if database.lower() == "dctrack":
+                converter = ARdcTrackToOGrEE(url, headers, {"Content-Type": "application/json"})
+            else :
+                converter = AROGrEEToOGrEE(url, headers, {"Content-Type": "application/json"})
             return converter.RackSearch(img, customerAndSite, deviceType,args["debug"])
     except Exception:
         traceback.print_exc()
