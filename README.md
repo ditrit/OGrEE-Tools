@@ -1,4 +1,10 @@
+# Set up
+
+For each tool, there is a `setup` folder. Run `windowsPS.ps1` with PowerShell or `linux.sh` depending on your OS. Each setup script will create or modify a [virtual environment](https://docs.python.org/3/library/venv.html), located in `/.venv/`. The setup script will also activate the virtual environment after completion. To deactivate it, type `deactivate`. To reactivate it after, type `./.venv.Script/activate` in the root of the repository.
+
 # Converter
+
+Converter between dcTrack, Netbox and OGrEE
 
 ## Architecture (with [AR](#ar))
 
