@@ -1,21 +1,34 @@
 from skimage.color.colorconv import rgba2rgb, rgb2hsv, rgb2gray, hsv2rgb
 import matplotlib.pyplot as plt
-from PIL import Image
+from matplotlib import cm
 import numpy as np
 from skimage.io import imshow, imread
-from mpl_toolkits.mplot3d import Axes3D
-from skimage.feature import match_template,peak_local_max,match_descriptors
+from skimage.feature import match_template, peak_local_max
 from skimage.feature import canny
 from skimage import filters
 from skimage import exposure
-from skimage.transform import rescale,rotate
+from skimage.transform import rescale, rotate
 from skimage.transform import probabilistic_hough_line
 from itertools import combinations
-import math
+import json
 
+
+# special constant for all the function
 RATIO = 781/85.4  # pixel/mm = 9.145
 
-def imageload(f,flag="color"):
+
+def imageload(f, flag="color"):
+    """
+    Compute the value of a 2D Gaussian distribution at given x, y coordinates.
+
+    Args:
+        f: file path under file "image"
+        flag: "color" or grey
+
+    Returns:
+        image in ndarray(x,y)   when flag is 'grey'
+        image in ndarray(x,y,3) when flag is 'color'
+    """
     if flag == "color":
         flag = 0
     elif flag == "grey":
@@ -24,41 +37,43 @@ def imageload(f,flag="color"):
         flag = 0
     fn = "image/" + f
     if flag == 1:
-        img = imread(fn, 1)  # (H x W x C), [0, 255], RGB
+        img = imread(fn, 1)  # (H x W), [0, 255]
     else:
-        tmp = imread(fn)    # (H x W x C), [0, 255], RGB
-        if tmp.shape[-1] == 4:
-            img = rgba2rgb(tmp)
-            print("4 channels picture  ",f)
+        img = imread(fn)    # (H x W x C), [0, 255], RGB
+        if img.shape[-1] == 4:
+            img = rgba2rgb(img)
+            print("4 channels picture  ", f)
         else:
             pass
-
-
-    '''
-    plt.figure("hist", figsize=(8, 8))
-    arr = img.flatten()
-    plt.subplot(411)
-    plt.imshow(img, plt.cm.gray)  # 原始图像
-    plt.subplot(412)
-    plt.hist(arr, bins=256, edgecolor='None', facecolor='red')  # 原始图像直方图
-
-    arr1 = img1.flatten()
-    plt.subplot(413)
-    plt.imshow(img1, plt.cm.gray)  # 均衡化图像
-    plt.subplot(414)
-    plt.hist(arr1, bins=256, edgecolor='None', facecolor='red')  # 均衡化直方图
-
-    plt.show()
-    '''
     return img
 
-def impreprocess(image):
+
+def preprocess(image: np.ndarray):
+    """
+    Compute the value of a 2D Gaussian distribution at given x, y coordinates.
+
+    Args:
+        image: x-coordinate(s) as a numpy array or scalar.
+
+    Returns:
+        Value(s) of the 2D Gaussian distribution at the given coordinates.
+    """
     image[:, :, 0] = exposure.equalize_hist(image[:, :, 0])
     image[:, :, 1] = exposure.equalize_hist(image[:, :, 1])
     image[:, :, 2] = exposure.equalize_hist(image[:, :, 2])
     return image
 
-def rgbview(image):
+
+def rgbview(image: np.ndarray):
+    """
+    Show a rgb image on the screen, grey or color
+
+    Args:
+        image: a 2d ndarray(x,y) grey image, or 3d  ndarray(x,y,3) grey image
+
+    Returns:
+        plot objet displaying the image on the screen
+    """
     if image.shape[-1] == 3:
         image_g = rgb2gray(image)
         image_e = filters.sobel(image_g)
@@ -80,14 +95,24 @@ def rgbview(image):
         ax[1].set_title('Grayscale Image', fontsize=15)
         plt.show()
 
+
 def hsvview(image):
+    """
+    Show a hsv image on the screen, grey or color
+
+    Args:
+        image: a 2d ndarray(x,y) grey image, or 3d  ndarray(x,y,3) color image
+
+    Returns:
+        plot objet displaying the image on the screen
+    """
     if image.shape[-1] == 3:
         image_rgb = hsv2rgb(image)
-        image_e = filters.sobel(image[:,:,2])
+        image_e = filters.sobel(image[:, :, 2])
         fig, ax = plt.subplots(5, 1, figsize=(20, 8))
-        ax[0].imshow(image[:,:,0],cmap='gray')
-        ax[1].imshow(image[:,:,1],cmap='gray')
-        ax[2].imshow(image[:,:,2],cmap='gray')
+        ax[0].imshow(image[:, :, 0], cmap='gray')
+        ax[1].imshow(image[:, :, 1], cmap='gray')
+        ax[2].imshow(image[:, :, 2], cmap='gray')
         ax[3].imshow(image_rgb)
         ax[4].imshow(image_e, cmap='gray')
         ax[0].set_title('Colored Image', fontsize=15)
@@ -103,85 +128,192 @@ def hsvview(image):
         ax[1].set_title('Grayscale Image', fontsize=15)
         plt.show()
 
-def normaliseimage(image, x,y):
-    image = rescale(image,x*RATIO/image.shape[0])
+
+def normaliseimage(image, shapemm):
+    """
+    Transform the size of the image under the same ratio
+
+    Args:
+        image: a 2d ndarray(x,y) grey image
+        shapemm: the shape of the server in realty. Unit is measured in mm
+
+    Returns:
+        grey image in ndarray(x',y') with new and standard shape
+    """
+    # ------------  y
+    # |          |
+    # ------------
+    # x
+    # (x,y)
+    image = rescale(image, shapemm[0]*RATIO/image.shape[0])
     return image
 
-def imfeature(image,detector):
+
+def imfeature(image, mask, detector):
+    """
+    Compute the value of a 2D Gaussian distribution at given x, y coordinates.
+
+    Args:
+        image: image of the server, back or face.
+        mask: a black coverage that cover the extraneous images in view (e.g. screws, labels)
+        detector: CENSURE class object predefined
+
+    Returns:
+        [n,2] ndarray of features' coordinates
+    """
+    def deloutfeature(feature, m):
+        # delete features appeared in mask
+        idx = []
+        for k in range(feature.shape[0]):
+            if not m[feature[k, 0], feature[k, 1]]:
+                idx.append(k)
+        return np.delete(feature, idx, 0)
+    image = image * mask
     img_vag = filters.gaussian(image, sigma=1)
     img_inv = -img_vag + 1
     detector.detect(img_vag)
-    f_dark = detector.keypoints if len(detector.keypoints) > 0 else np.array([[0,0]])  # à améliorer
+    f_dark = detector.keypoints if len(detector.keypoints) > 0 else np.array([[0, 0]])  # à améliorer
+    f_dark = deloutfeature(f_dark, mask)
     detector.detect(img_inv)
-    f_light = detector.keypoints if len(detector.keypoints) > 0 else np.array([[0,0]])
-    return f_dark,f_light
+    f_light = detector.keypoints if len(detector.keypoints) > 0 else np.array([[0, 0]])
+    f_light = deloutfeature(f_light, mask)
+    return f_dark, f_light
 
-def patchsimilarity(pfeature,std):
-    if pfeature[0,0]==0 or pfeature[0,1]==0:
-        pfeature = np.ones(std.shape)
-    elif pfeature.shape[0] < std.shape[0]:
-        penalty = std.shape[0]-pfeature.shape[0]
-        pfeature = np.vstack((pfeature,np.ones([penalty,2])))
-    elif pfeature.shape[0] > std.shape[0]:
-        penalty = pfeature.shape[0]-std.shape[0]
-        pfeature = pfeature[:std.shape[0],:]
-    px = pfeature / np.array([np.sum(pfeature[:,0]),np.sum(pfeature[:,1])])
+
+def patchsimilarity(pfeatures, std):
+    """
+    Compare the similarity between patch and standard model by their features.
+
+    Args:
+        pfeatures: features of the patch.
+        std: features of the standard patch model.
+
+    Returns:
+        Return a value of similarity (>0, but not strictly <1) .
+    """
+    penalty = 0
+    if pfeatures[0, 0] == 0 or pfeatures[0, 1] == 0:
+        pfeatures = np.ones(std.shape)
+    elif pfeatures.shape[0] < std.shape[0]:
+        penalty = std.shape[0] - pfeatures.shape[0]
+        pfeatures = np.vstack((pfeatures, np.ones([penalty, 2])))
+    elif pfeatures.shape[0] > std.shape[0]:
+        penalty = pfeatures.shape[0] - std.shape[0]
+        pfeatures = pfeatures[:std.shape[0], :]
+    px = pfeatures / np.array([np.sum(pfeatures[:, 0]), np.sum(pfeatures[:, 1])])
     pstd = std / np.array([np.sum(std[:, 0]), np.sum(std[:, 1])])
-    re = -np.sum(px * np.log(px / pstd))
+    re = -np.sum(px * np.log(px / pstd)) + 0.1 * penalty
     return re
+
 
 # Pour Gaussian similarity
 class Pin:
-    def proba(self,x,y):
-        return self.pin_simi(x,y)
-    def __init__(self,x_center,y_center):
-        SIGMA = 10.0
+    def proba(self, x, y):
+        """
+        Compute the value of a 2D Gaussian distribution at given x, y coordinates.
+
+        Args:
+            x: coordinate on x axis.
+            y: coordinate on y axis.
+
+        Returns:
+            a float similarity value, the bigger, the more similar
+        """
+        return self.pin_simi(x, y)
+
+    def __init__(self, x_center, y_center):
+        SIGMA = 40.0
+
         self.x_center = x_center
         self.y_center = y_center
-        coeff = 1 / (2 * np.pi * np.square(SIGMA))
-        self.pin_simi = lambda x,y: coeff * np.exp(-0.5*(np.square(x-x_center)/SIGMA**2+np.square(y-y_center)/SIGMA**2))
+        coeff = 1 / (2 * np.pi * np.square(SIGMA))*100
+        self.pin_simi = lambda x, y: \
+            coeff * np.exp(-0.5*(np.square(x-x_center)/SIGMA**2+np.square(y-y_center)/SIGMA**2))
 
-def gaussiansimilarity(pfeature,std):
-    re = 0
-    for i in range(pfeature.shape[0]):  # à améliorer l'efficacité
-        re += sum([p.proba(pfeature[i,0], pfeature[i,1]) for p in std])
-    return re
-'''
-match = match_descriptors(pfeature, std_pattern, metric=None, p=2, cross_check=False)
-distance = -10*(std_pattern.shape[0]-match.shape[0])
-for i,j in match:
-    distance += -np.linalg.norm(pfeature[i]-std_pattern[j])
-distance = distance- 10 * abs(pfeature.shape[0] - std_pattern.shape[0])
-return distance
-'''
 
-def imedge(image):  #####################################################
-    return filters.sobel(image)
+def gaussiansimilarity(pfeatures, std):
+    """
+    Compare the similarity between patch and standard model by their features using 2D Gaussian pins model.
+
+    Args:
+        pfeatures: features of the patch.
+        std: features of the standard patch model.
+
+    Returns:
+        Return a value of similarity (>0, but not strictly <1) .
+    """
+    sim = 0
+    penality = 0.1*abs(pfeatures.shape[0] - len(std))
+    for i in range(pfeatures.shape[0]):  # à améliorer l'efficacité
+        sim += sum([p.proba(pfeatures[i, 0], pfeatures[i, 1]) for p in std])
+    '''
+    match = match_descriptors(pfeature, std_pattern, metric=None, p=2, cross_check=False)
+    distance = -10*(std_pattern.shape[0]-match.shape[0])
+    for i,j in match:
+        distance += -np.linalg.norm(pfeature[i]-std_pattern[j])
+    distance = distance- 10 * abs(pfeature.shape[0] - std_pattern.shape[0])
+    return distance
+    '''
+    return sim - penality
+
+
+def imedge(image):
+    """
+    Compute the image edge.
+
+    Args:
+        image: 2d grey scale nd.array image
+
+    Returns:
+        image edge nd.array in the same size
+    """
+    return filters.sobel(image) > 0.05
+
 
 # K-L entropy
-def klentropy(x,std):
+def klentropy(x, std):
+    # calcul similarity by l-l entropy
+    penalty = 0
     if x.shape[0] < std.shape[0]:
         penalty = std.shape[0]-x.shape[0]
-        x = np.vstack(x,x[:penalty,:])
+        x = np.vstack(x, x[:penalty, :])
     elif x.shape[0] > std.shape[0]:
         penalty = x.shape[0]-std.shape[0]
-        x = x[:std.shape[0],:]
-    px = x / np.array([np.sum(x[:,0]),np.sum(x[:,1])])
+        x = x[:std.shape[0], :]
+    px = x / np.array([np.sum(x[:, 0]), np.sum(x[:, 1])])
     pstd = std / np.array([np.sum(std[:, 0]), np.sum(std[:, 1])])
-    return -np.sum(px * np.log(px / pstd))
+    return -np.sum(px * np.log(px / pstd)) + 0.1 * penalty
+
 
 # for power block
-def findRectangle(image_g, length, height, line_gap=10):
+def find_rectangle(image_g, length, height, line_gap=10):
+    """
+    Compute the value of a 2D Gaussian distribution at given x, y coordinates.
+
+    Args:
+        image_g: 2d grey scale nd.array image.
+        length: length of the power block.
+        height: height of the power block.
+        line_gap: parameter in probabilistic_hough_line function. the bigger, the function combine thin lines together
+
+    Returns:
+        A list of tuples of coordinates of the four points of rectangle
+    """
     rectangles = []
     edge = canny(image_g, 1)
     # find straight vertical lines that in the image
     angle = np.array([0.0])
-    ###image, threshold=10, line_length=50, line_gap=10, theta=None, seed=None
-    lines = {a:abs(a[0][1] - a[1][1]) for a in probabilistic_hough_line(
-                edge, threshold=10, line_length=int(height * 0.9),line_gap=line_gap, theta=angle) if abs(a[0][1] - a[1][1]) < int(height * 1.1)}
+    # probabilistic_hough_line(image, threshold=10, line_length=50, line_gap=10, theta=None, seed=None)
+    lines = {a: abs(a[0][1] - a[1][1]) for a in probabilistic_hough_line(
+                edge, threshold=10, line_length=int(height * 0.9), line_gap=line_gap, theta=angle
+                ) if abs(a[0][1] - a[1][1]) < int(height * 1.1)}
+    # N.B.: It is strange that the order of (height,width) changed to (width, height) after probabilistic_hough_line,
+    # but matplot lib can give the true output.
+
+    linedisplay(image_g, lines)
     # compare each pairs to find out rectangle
     # Parallelogram
-    DEVIATION = 45.3  # pixels. i.e.5mm
+    DEVIATION = 27  # Unit measured in pixel. i.e.3mm
     for (p1, p2), (p3, p4) in combinations(lines, 2):
         # p1--------p4  x
         # |          |
@@ -204,11 +336,23 @@ def findRectangle(image_g, length, height, line_gap=10):
             # rectangle within length
             if abs(p4[0] - p3[0]) < DEVIATION:
                 if abs(abs(p3[0] - p2[0]) - length) < DEVIATION:
-                    rectangles.append((p1,p2,p3,p4))
+                    rectangles.append((p1, p2, p3, p4))
     return rectangles
 
-def inRectangle(point, p):
-    p1,p2,p3,p4 = p[0],p[1],p[2],p[3]
+
+def in_rectangle(point, p):
+    """
+    Compute the value of a 2D Gaussian distribution at given x, y coordinates.
+
+    Args:
+        point: the position of C14 interface.
+        p: a tuple of four points of a rectangle.
+
+    Returns:
+        1 or 0 whether the point is in this rectangle
+    """
+    point = (point[1], point[0])  # to make the coordinate into (wigth,height)
+    p1, p2, p3, p4 = p[0], p[1], p[2], p[3]
     rectvect = np.array([(p2[0] - p1[0], p2[1] - p1[1]),
                          (p3[0] - p2[0], p3[1] - p2[1]),
                          (p4[0] - p3[0], p4[1] - p3[1]),
@@ -223,25 +367,144 @@ def inRectangle(point, p):
     return 0
 
 
-def templateMatch(image,template,threshold,mindis):
-    image_e = filters.sobel(image)
-    fig, ax = plt.subplots(2, 1, figsize=(10, 8))
-    ax[0].imshow(image, cmap='gray')
+def linedisplay(image, lines):
+    """
+    Display lines detected in the image.
+
+    Args:
+        image: 2d grey scale nd.array image.
+        lines: a list of tuple of two points of lines.
+
+    Returns:
+        matplot UI on the screen.
+    """
+
+    # Generating figure 2
+    fig, axes = plt.subplots(2, 1, figsize=(15, 8), sharex=True, sharey=True)
+    ax = axes.ravel()
+
+    ax[0].imshow(image, cmap=cm.gray)
+    ax[0].set_title('Input image')
+
+    ax[1].imshow(image * 0)
+    for line in lines:
+        p0, p1 = line
+        ax[1].plot((p0[0], p1[0]), (p0[1], p1[1]))
+    ax[1].set_xlim((0, image.shape[1]))
+    ax[1].set_ylim((image.shape[0], 0))
+    ax[1].set_title('Probabilistic Hough')
+
+    for a in ax:
+        a.set_axis_off()
+
+    plt.tight_layout()
+    plt.show()
+
+
+def template_match(image, template, threshold, mindis):
+    """
+    Compute the value of a 2D Gaussian distribution at given x, y coordinates.
+
+    Args:
+        image: 2d nd.array image.
+        template: 2d nd.array patch image.
+        threshold: absolute threshold in peak_localmax that only peaks higher than this can be kept.
+        mindis: the distance minimum between peaks. But it not perform like the real distance in pixels,
+                maybe just a parameter.
+
+    Returns:
+        Points of the upper left corner.
+    """
+    image = filters.gaussian(image, sigma=1.5)
     positions = []
+    template_width, template_height = template.shape
     for _ in range(4):
         template = rotate(template, 90, resize=True)
-        sample_mt = match_template(image_e, template)
-        template_width, template_height = template.shape
-        positions.append(peak_local_max(np.squeeze(sample_mt), threshold_abs=threshold,min_distance=mindis) ) ######### to be complete for angles
-    for x, y in positions[1]:   ######### to be complet
-        rect = plt.Rectangle((y, x), template_height, template_width, color='r',
-                             fc='none')
-        ax[0].add_patch(rect)
-    ax[1].imshow(sample_mt, cmap='magma')
-    ax[0].set_title('Grayscale', fontsize=15)
-    ax[1].set_title('Template Matching', fontsize=15)
-    plt.show()
-    return positions[1]   ##### tobe complet
+        sample_mt = match_template(image, template)
+        tmp = peak_local_max(np.squeeze(sample_mt), threshold_abs=threshold, min_distance=mindis).tolist()
+        if tmp:
+            positions += [(x, y, 270-90*_) for x, y in tmp]
+    drawcomponents(image, positions, template_height, template_width)
+    return positions
 
-def pixel2mm(coordonne):
-    return coordonne/
+
+def drawcomponents(image, positions, template_height, template_width, sample_mt=0):
+    """
+    Compute the value of a 2D Gaussian distribution at given x, y coordinates.
+
+    Args:
+        image: 2d nd.array grey scale image.
+        positions: positions of components.
+        template_height: template height
+        template_width: template width
+        sample_mt: similarity matrix for drawing heat map
+
+    Returns:
+        matplot UI on the screen.
+    """
+    if sample_mt is 0:
+        fig = plt.figure(figsize=(10, 8))
+        ax = fig.add_subplot(111)
+        ax.imshow(image, cmap='gray')
+        for x, y in positions:
+            rect = plt.Rectangle((y, x), template_height, template_width, color='r',
+                                 fc='none')
+            ax.add_patch(rect)
+        ax.set_title('Grayscale', fontsize=15)
+    else:
+        fig, ax = plt.subplots(2, 1, figsize=(10, 8))
+        ax[0].imshow(image, cmap='gray')
+        for x, y, _ in positions:
+            rect = plt.Rectangle((y, x), template_height, template_width, color='r',
+                                 fc='none')
+            ax[0].add_patch(rect)
+        ax[0].set_title('Grayscale', fontsize=15)
+        ax[1].imshow(sample_mt, cmap='magma')
+        ax[1].set_title('Template Matching', fontsize=15)
+    plt.show()
+
+
+def calibrateear(components, shapepix, shapemm):
+    """
+        Determing is there a pair of ears in the image.
+        If so, the components' position will be recalculated if they are posed in a non-ear server.
+
+    Args:
+        components: x-coordinate(s) as a numpy array or scalar.
+        shapepix: image's shape in pixel.
+        shapemm: server's shape in reality(without ears) in mm.
+
+    Returns:
+        The coordinates without ears.
+    """
+    ear = 0.5*(shapepix[1]-shapepix[0]*shapemm[1]/shapemm[0])
+    if ear < 0:
+        return components
+    else:
+        newpos = dict()
+        for i in components:
+            value = components[i]
+            key = (i[0], int(i[1]-ear))
+            newpos[key] = value
+        return newpos
+
+
+def jsonwrite(coordinate, path):
+    """
+    Generate the JSON text about one component.
+
+    Args:
+        coordinate: Coordinate of a component.
+        path: path of the model component json file
+
+    Returns:
+        json text
+    """
+    with open(path, 'r+') as file:
+        depth = 0  # en pixel
+        p = json.load(file)
+        posWDH = [int(coordinate[0]/RATIO), int(depth/RATIO), int(coordinate[1]/RATIO)]
+        p.update({"elemPos": posWDH})
+        file.close()
+        print(p)
+        return p
