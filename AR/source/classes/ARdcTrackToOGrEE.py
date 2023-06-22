@@ -105,7 +105,6 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
                 f"Multiple locations found with the name {locationName}, taking the first one"
             )
         siteData = searchResults[0]
-        siteData["parentId"] = "EDF"
         siteData["attributes"] = {"orientation": "NW"}
         return self.BuildSite(siteData)
 
