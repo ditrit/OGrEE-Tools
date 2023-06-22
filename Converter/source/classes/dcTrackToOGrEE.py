@@ -58,8 +58,8 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
         """
         return {
             "name": data["name"],
-            "id": data["id"] if "id" in data else data["name"],
-            "parentId": None,
+            "id": data["name"],
+            "parentId": "",
             "category": "domain",
             "description": data["description"] if "description" in data else [],
             "domain": data["name"],
@@ -82,18 +82,18 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
         """
         result = {
             "name": data["name"],
-            "parentId": data["parentId"] if "parentId" in data else None,
+            "id": data["name"],
+            "parentId": data["parentId"] if "parentId" in data else "",
             "category": "site",
             "description": data["description"] if "description" in data else [],
             "domain": data["domain"]
             if "domain" in data
             else data["parentId"]
             if "parentId" in data
-            else None,
+            else "",
             "attributes": data["attributes"] if "attributes" in data else {},
             "children": data["children"] if "children" in data else [],
         }
-        result["id"] = f"{result['parentId']}.{result['name']}"
         result["hierarchyName"] = f"{result['parentId']}.{result['name']}"
         return result
 
@@ -110,10 +110,10 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
         """
         result = {
             "name": data["name"],
-            "parentId": data["parentId"] if "parentId" in data else None,
+            "parentId": data["parentId"] if "parentId" in data else "",
             "category": "building",
             "description": data["description"] if "description" in data else [],
-            "domain": data["domain"] if "domain" in data else None,
+            "domain": data["domain"] if "domain" in data else "",
             "attributes": data["attributes"]
             if "attributes" in data
             else {
@@ -126,7 +126,7 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
                 "template": "",
                 "rotation": "0",
             },
-            "children": data["children"] if "children" in data else None,
+            "children": data["children"] if "children" in data else [],
         }
         result["id"] = f"{result['parentId']}.{result['name']}"
         result["hierarchyName"] = f"{result['parentId']}.{result['name']}"
@@ -145,10 +145,10 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
         """
         result = {
             "name": data["name"],
-            "parentId": data["parentId"] if "parentId" in data else None,
+            "parentId": data["parentId"] if "parentId" in data else "",
             "category": "room",
             "description": data["description"] if "description" in data else [],
-            "domain": data["domain"] if "domain" in data else None,
+            "domain": data["domain"] if "domain" in data else "",
             "attributes": data["attributes"]
             if "attributes" in data
             else {
@@ -183,10 +183,10 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
         """
         result = {
             "name": data["tiName"],
-            "parentId": data["parentId"] if "parentId" in data else None,
+            "parentId": data["parentId"] if "parentId" in data else "",
             "category": "rack",
             "description": data["description"] if "description" in data else [],
-            "domain": data["domain"] if "domain" in data else None,
+            "domain": data["domain"] if "domain" in data else "",
             "attributes": {
                 "orientation": "front",  # ???
                 "posXY": json.dumps({"x": 0.0, "y": 0.0}),  # ???
@@ -221,10 +221,10 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
         """
         result = {
             "name": data["tiName"],
-            "parentId": data["parentId"] if "parentId" in data else None,
+            "parentId": data["parentId"] if "parentId" in data else "",
             "category": "device",
             "description": [],
-            "domain": data["domain"] if "domain" in data else None,
+            "domain": data["domain"] if "domain" in data else "",
             "attributes": {
                 "orientation": "front",  # Needs more precision
                 "size": json.dumps(
