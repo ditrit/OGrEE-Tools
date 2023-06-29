@@ -5,11 +5,11 @@ CYAN='\e[0;96m'
 RED='\033[0;91m'
 NC='\033[0m' # No Color
 
-Print() {
+Print() { 
 	echo -e "${CYAN}$1${NC}"
 }
 
-PrintError() {
+PrintError() { 
 	echo -e "${RED}$1${NC}"
 }
 
