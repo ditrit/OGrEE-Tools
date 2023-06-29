@@ -24,5 +24,5 @@ We are using Python **3.10**.
 ### Windows (using PowerShell)
 
 ```
-Converter\setup\windows\setup.sh.ps1
+Converter\setup\windows\setup.ps1
 ```
