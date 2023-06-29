@@ -83,8 +83,8 @@ def makeCube(manager: fbx.FbxManager) -> fbx.FbxMesh:
 
     # Each polygon face will be assigned a unique material.
     matLayer = fbx.FbxLayerElementMaterial.Create(cubeMesh, "")
-    matLayer.SetMappingMode(fbx.FbxLayerElement.eByPolygon)
-    matLayer.SetReferenceMode(fbx.FbxLayerElement.eIndexToDirect)
+    matLayer.SetMappingMode(fbx.FbxLayerElement.EMappingMode.eByPolygon)
+    matLayer.SetReferenceMode(fbx.FbxLayerElement.EReferenceMode.eIndexToDirect)
     layer.SetMaterials(matLayer)
 
     # Create UV for Diffuse channel.
@@ -92,8 +92,8 @@ def makeCube(manager: fbx.FbxManager) -> fbx.FbxMesh:
 
     # Now we have set the UVs as eINDEX_TO_DIRECT reference
     # and in eBY_POLYGON_VERTEX mapping mode.
-    UVDiffuseLayer.SetMappingMode(fbx.FbxLayerElement.eByPolygonVertex)
-    UVDiffuseLayer.SetReferenceMode(fbx.FbxLayerElement.eIndexToDirect)
+    UVDiffuseLayer.SetMappingMode(fbx.FbxLayerElement.EMappingMode.eByPolygonVertex)
+    UVDiffuseLayer.SetReferenceMode(fbx.FbxLayerElement.EReferenceMode.eIndexToDirect)
     vectors0 = fbx.FbxVector2(0, 0)
     vectors1 = fbx.FbxVector2(1, 0)
     vectors2 = fbx.FbxVector2(1, 1)
@@ -107,7 +107,7 @@ def makeCube(manager: fbx.FbxManager) -> fbx.FbxMesh:
     # We must update the size of the index array.
     UVDiffuseLayer.GetIndexArray().SetCount(24)
 
-    layer.SetUVs(UVDiffuseLayer, fbx.FbxLayerElement.eTextureDiffuse)
+    layer.SetUVs(UVDiffuseLayer, fbx.FbxLayerElement.EType.eTextureDiffuse)
 
     # Now that the control points per polygon have been defined, we can create
     # the actual polygons within the mesh.
@@ -126,8 +126,8 @@ def makeCube(manager: fbx.FbxManager) -> fbx.FbxMesh:
     normalZNeg = fbx.FbxVector4(0, 0, -1, 1)
 
     normLayer = fbx.FbxLayerElementNormal.Create(cubeMesh, "")
-    normLayer.SetMappingMode(fbx.FbxLayerElement.eByControlPoint)
-    normLayer.SetReferenceMode(fbx.FbxLayerElement.eDirect)
+    normLayer.SetMappingMode(fbx.FbxLayerElement.EMappingMode.eByControlPoint)
+    normLayer.SetReferenceMode(fbx.FbxLayerElement.EReferenceMode.eDirect)
 
     normLayer.GetDirectArray().Add(normalZPos)
     normLayer.GetDirectArray().Add(normalZPos)
@@ -188,7 +188,7 @@ def addCube(
     # create the node containing the mesh
     newNode = fbx.FbxNode.Create(manager, cubeName)
     newNode.SetNodeAttribute(newMesh)
-    newNode.SetShadingMode(fbx.FbxNode.eTextureShading)
+    newNode.SetShadingMode(fbx.FbxNode.EShadingMode.eTextureShading)
     newNode.LclScaling.Set(fbx.FbxDouble3(cubeScale[0], cubeScale[1], cubeScale[2]))
     newNode.LclTranslation.Set(fbx.FbxDouble3(0, 0, 0))
 
@@ -209,9 +209,9 @@ def CreateTexture(manager: fbx.FbxManager, texturePath: str) -> fbx.FbxFileTextu
     """
     lTexture = fbx.FbxFileTexture.Create(manager, "")
     lTexture.SetFileName(texturePath)
-    lTexture.SetTextureUse(fbx.FbxTexture.eStandard)
-    lTexture.SetMappingType(fbx.FbxTexture.eUV)
-    lTexture.SetMaterialUse(fbx.FbxFileTexture.eModelMaterial)
+    lTexture.SetTextureUse(fbx.FbxTexture.ETextureUse.eStandard)
+    lTexture.SetMappingType(fbx.FbxTexture.EMappingType.eUV)
+    lTexture.SetMaterialUse(fbx.FbxFileTexture.EMaterialUse.eModelMaterial)
     lTexture.SetSwapUV(False)
     lTexture.SetTranslation(0.0, 0.0)
     lTexture.SetScale(1.0, 1.0)

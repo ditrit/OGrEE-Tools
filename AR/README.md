@@ -65,13 +65,13 @@ The function takes all images in a folder and performs color detection, cropping
 First, clone the branch with the command below:
 
 ```
-git clone -b dev-label --single-branch https://github.com/ditrit/OGrEE-Tools.git
+git clone https://github.com/ditrit/OGrEE-Tools.git
 ```
 ## Move into the directory
 Go into the directory created.
 
 ```
-cd OGrEE-Tools/label_regular
+cd OGrEE-Tools/
 ```
 
 ## Set up the virtual environment
@@ -80,13 +80,13 @@ We are using Python **3.10**.
 ### Linux
 
 ```
-. setup/linux.sh
+. AR/setup/linux/setup.sh
 ```
 
 ### Windows (using PowerShell)
 
 ```
-.\setup\windowsPS.ps1
+.\AR\setup\windows\setup.ps1
 ```
 
 ## Add the .env file and the .conf file to /label_regular directory
