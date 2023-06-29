@@ -7,6 +7,17 @@ class IToOGrEE(ABC):
         super().__init__(**kw)
 
     @abstractmethod
+    def BuildDomain(self, data: dict[str, Any]) -> dict[str, Any]:
+        """
+        Build a domain from another base's data
+
+        :param dict[str, Any] data: a JSON used to build the domain
+        :returns: a dict describing an OGrEE domain
+        :rtype: dict[str, Any]
+        """
+        pass
+
+    @abstractmethod
     def BuildSite(self, data: dict[str, Any]) -> dict[str, Any]:
         """
         Build a site from another base's data

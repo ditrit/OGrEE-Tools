@@ -14,7 +14,7 @@ from AR.source.interfaces.IARConverter import (
     OgreeMessage,
 )
 from AR.source.ocr.LabelProcessing import ReaderCroppedAndFullImage
-from AR.source.ODBC import GetPosition
+from AR.source.ODBC import GetPosition, GetRoomOrientation
 from common.Utils import CustomerAndSiteSpliter, ReadConf
 from Converter.source.classes.dcTrackToOGrEE import dcTrackToOGrEE
 from Converter.source.fbx.FbxBuilder import CreateFBX
@@ -61,6 +61,16 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
             realpath(AROutputPath) if AROutputPath is not None else defaultAROutputPath
         )
         super().__init__(url, headersGET, headersPOST, outputPath, **kw)
+
+    def GetDomain(self, domainName: str) -> dict[str, Any]:
+        """Create a domain for dcTrack
+        :param domainName: name of the domain
+        :type domainName: str
+        :return: dict describing an OgrEE domain
+        :rtype: dict[str, Any]
+        """
+        data = {"name": domainName, "id": domainName}
+        return self.BuildDomain(data)
 
     def GetSite(self, locationName: str) -> dict[str, Any]:
         """Get site informations from dcTrack
@@ -127,7 +137,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
                     "filter": {"contains": f'"{roomIdentifier}"'},
                 }
             ],
-            "selectedColumns": ["name"],
+            "selectedColumns": ["name","id"],
         }
         searchResults = self.PostJSON("/api/v2/quicksearch/locations", payload)[
             "searchResults"
@@ -144,6 +154,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
                 f"Multiple rooms found with the name {roomIdentifier} in site {siteData['name']}, taking the first one"
             )
         roomDataJson = searchResults[0]
+        roomOrientation = GetRoomOrientation(roomID=roomDataJson["id"])
 
         roomData = self.BuildRoom(
             {
@@ -151,13 +162,14 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
                 "parentId": buildingData["id"],
                 "domain": siteData["domain"],
                 "attributes": {
-                    "orientation": "+N+W",  # ???
+                    "axisOrientation": ("+x" if roomOrientation[0] else "-x") + ("-y" if roomOrientation[0] else "+y"), 
                     "posXY": json.dumps({"x": 0.0, "y": 0.0}),  # ???
                     "posXYUnit": "m",
                     "size": json.dumps({"x": 21, "y": 39}),  # ???
                     "sizeUnit": "m",
                     "height": "4",  # ???
                     "heightUnit": "m",
+                    "rotation": "0",
                     "template": "",
                     "technical": '{"left":5,"right":5,"top":0,"bottom":0}',
                     "floorUnit": "m",
@@ -232,6 +244,10 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
                 }
             )
             rackData["attributes"]["posXYUnit"] = "m"
+            if ((position[2] == "East" and roomData["attributes"]["axisOrientation"] == "-x+y") or (position[2] == "West" and roomData["attributes"]["axisOrientation"] == "+x+y")):
+                rackData["attributes"]["orientation"] = "rear"
+            else :
+                rackData["attributes"]["orientation"] = "front"
 
         rackDataJson["id"] = rackData["id"]
         templates = [rackTemplate]
@@ -398,7 +414,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
             pathToConfFile, customer, site, deviceType
         )
         if debug:
-            label = ["C8", "B11"]  # debug
+            label = ["C8", "B12"]  # debug
 
         else:
             for i in range(len(regexp)):
@@ -421,11 +437,14 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
             label[0] = label[0][3::]
 
         try:
+            domainData = self.GetDomain(customer)
             siteData = self.GetSite(site)
             buildingData, roomData = self.GetBuildingAndRoom(siteData, label[0])
             rackData, templates, fbx = self.GetRack(roomData, label[1])
             # Setting the data to send to Unity App
             dictionary = {
+                "domain" : OgreeMessage.FormatDict(domainData),
+                "domainName" : customer,
                 "site": OgreeMessage.FormatDict(siteData),
                 "siteName": site,
                 "building": OgreeMessage.FormatDict(buildingData),
@@ -442,6 +461,8 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
 
             # Debug
             dictionary = {
+                "domain" : domainData,
+                "domainName" : customer,
                 "site": siteData,
                 "siteName": site,
                 "building": buildingData,

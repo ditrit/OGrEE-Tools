@@ -20,8 +20,8 @@ def GetPosition(rackName=None,rackID=None):
         raise Exception("Must give an id or a rack name")
     cursor = cnxn.cursor()
     if (rackID is not None):
-        return cursor.execute(f'SELECT "MinY","MinX" from "dcFloormapObjects" where "ItemID" = {rackID}').fetchone()
-    return cursor.execute(f'SELECT "MinY","MinX" from "dcFloormapObjects" where "ItemName" =\'{rackName}\'').fetchone()
+        return cursor.execute(f'SELECT "MinY","MinX","FrontFaces" from "dcFloormapObjects" where "ItemID" = {rackID}').fetchone()
+    return cursor.execute(f'SELECT "MinY","MinX","FrontFaces" from "dcFloormapObjects" where "ItemName" =\'{rackName}\'').fetchone()
 
 def GetRoomOrientation(roomName=None,roomID=None):
     if "cnxn" not in globals():
