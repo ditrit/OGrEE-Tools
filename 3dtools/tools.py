@@ -11,7 +11,7 @@ from skimage.transform import rescale, rotate
 from skimage.transform import probabilistic_hough_line
 from itertools import combinations
 import json
-
+import torch
 
 # special constant for all the function
 RATIO = 781/85.4  # pixel/mm = 9.145
@@ -169,6 +169,7 @@ def imfeature(image, mask, detector):
                 idx.append(k)
         return np.delete(feature, idx, 0)
     image = image * mask
+    #image = torch.mm(image, mask)
     img_vag = filters.gaussian(image, sigma=1)
     img_inv = -img_vag + 1
     detector.detect(img_vag)
@@ -207,8 +208,8 @@ def patchsimilarity(pfeatures, std):
 
 
 # Pour Gaussian similarity
-class Pin:
-    def proba(self, x, y):
+class Pins:
+    def proba(self, idx):
         """
         Compute the value of a 2D Gaussian distribution at given x, y coordinates.
 
@@ -219,16 +220,36 @@ class Pin:
         Returns:
             a float similarity value, the bigger, the more similar
         """
-        return self.pin_simi(x, y)
+        return self.z[idx[0], idx[1]]
 
-    def __init__(self, x_center, y_center):
-        SIGMA = 40.0
+    def gaussian_2d(self,x, y, mu):
+        """
+        Compute the value of a 2D Gaussian distribution at given x, y coordinates.
 
-        self.x_center = x_center
-        self.y_center = y_center
-        coeff = 1 / (2 * np.pi * np.square(SIGMA))*100
-        self.pin_simi = lambda x, y: \
-            coeff * np.exp(-0.5*(np.square(x-x_center)/SIGMA**2+np.square(y-y_center)/SIGMA**2))
+        Args:
+            x: x-coordinate(s) as a numpy array or scalar.
+            y: y-coordinate(s) as a numpy array or scalar.
+            mu: Mean of the Gaussian distribution as a 2-element numpy array [mu_x, mu_y].
+            sigma: Covariance matrix of the Gaussian distribution as a 2x2 numpy array.
+
+        Returns:
+            Value(s) of the 2D Gaussian distribution at the given coordinates.
+        """
+        X, Y = np.meshgrid(x, y)
+        pos = np.dstack((X, Y))
+        inv_sigma = np.linalg.inv(self.SIGMA)
+        exponent = np.exp(-0.5 * np.einsum('...k,kl,...l->...', pos - mu, inv_sigma, pos - mu))
+        return 1/self.num * exponent
+
+    def __init__(self, idxs):
+        x = np.linspace(0, 289, 290)
+        y = np.linspace(0, 104, 105)
+        self.SIGMA = np.array([[100, 0], [0, 100]])
+        peaks = [{'mu': np.array([i[0], i[1]])} for i in idxs]
+        self.z = np.zeros((len(y), len(x)))
+        self.num = len(idxs)
+        for peak in peaks:
+            self.z += self.gaussian_2d(x, y, peak['mu'])
 
 
 def gaussiansimilarity(pfeatures, std):
@@ -243,9 +264,10 @@ def gaussiansimilarity(pfeatures, std):
         Return a value of similarity (>0, but not strictly <1) .
     """
     sim = 0
-    penality = 0.1*abs(pfeatures.shape[0] - len(std))
-    for i in range(pfeatures.shape[0]):  # à améliorer l'efficacité
-        sim += sum([p.proba(pfeatures[i, 0], pfeatures[i, 1]) for p in std])
+    penality = 0.9**abs(pfeatures.shape[0] - std.num)
+    sim += sum([std.proba(i) for i in pfeatures.tolist()])
+    #if sim>0.5:
+    #    print(sim)
     '''
     match = match_descriptors(pfeature, std_pattern, metric=None, p=2, cross_check=False)
     distance = -10*(std_pattern.shape[0]-match.shape[0])
@@ -254,7 +276,7 @@ def gaussiansimilarity(pfeatures, std):
     distance = distance- 10 * abs(pfeature.shape[0] - std_pattern.shape[0])
     return distance
     '''
-    return sim - penality
+    return sim * penality
 
 
 def imedge(image):
@@ -268,7 +290,12 @@ def imedge(image):
         image edge nd.array in the same size
     """
     return filters.sobel(image) > 0.05
+    #return canny(image, 1)
 
+
+def test(a):
+    print(a.shape)
+    return torch.max(a)
 
 # K-L entropy
 def klentropy(x, std):
@@ -286,7 +313,7 @@ def klentropy(x, std):
 
 
 # for power block
-def find_rectangle(image_g, length, height, line_gap=10):
+def find_rectangle1(image_g, height, length, line_gap=10):
     """
     Compute the value of a 2D Gaussian distribution at given x, y coordinates.
 
@@ -304,27 +331,90 @@ def find_rectangle(image_g, length, height, line_gap=10):
     # find straight vertical lines that in the image
     angle = np.array([0.0])
     # probabilistic_hough_line(image, threshold=10, line_length=50, line_gap=10, theta=None, seed=None)
-    lines = {a: abs(a[0][1] - a[1][1]) for a in probabilistic_hough_line(
-                edge, threshold=10, line_length=int(height * 0.9), line_gap=line_gap, theta=angle
-                ) if abs(a[0][1] - a[1][1]) < int(height * 1.1)}
+    lines = {a for a in probabilistic_hough_line(edge, threshold=10, line_length=int(height * 0.94), line_gap=line_gap,
+                                                 theta=angle) if abs(a[0][1] - a[1][1]) < int(height * 1.06)}
     # N.B.: It is strange that the order of (height,width) changed to (width, height) after probabilistic_hough_line,
     # but matplot lib can give the true output.
 
     linedisplay(image_g, lines)
     # compare each pairs to find out rectangle
-    # Parallelogram
-    DEVIATION = 27  # Unit measured in pixel. i.e.3mm
-    for (p1, p2), (p3, p4) in combinations(lines, 2):
-        # p1--------p4  x
+    lines_ = {a for a in probabilistic_hough_line(edge, threshold=10, line_length=int(length * 0.8),
+                                                 line_gap=line_gap, theta=np.array([0.5*np.pi])) if
+             abs(a[0][0] - a[1][0]) < int(length * 1.2)}
+    linedisplay(image_g, lines_)
+    DEVIATION = 14  # Unit measured in pixel. i.e.3mm
+    for (p2, p1), (p3, p4) in combinations(lines, 2):
+        # p2--------p4  x
         # |          |
-        # p2--------p3
+        # p1--------p3
         # y
         # (x,y)
 
         # make points in order
-        if p1[1] > p2[1]:
-            p1, p2 = p2, p1
+        if p2[1] > p1[1]:
+            p2, p1 = p1, p2
         if p4[1] > p3[1]:
+            p3, p4 = p4, p3
+        if p4[0] < p2[0]:
+            p2, p4 = p4, p2
+            p1, p3 = p3, p1
+        l1 = p1[1] - p2[1]
+        l2 = p3[1] - p4[1]
+
+        # Parallelogram
+        if abs(l1 - l2) < 0.5*DEVIATION:
+            # rectangle within length
+            if abs(p4[0] - p3[0]) < 0.5*DEVIATION:
+                for ln in lines_:
+                    if hit_inzone(ln, (p2, p1)) and hit_inzone(ln, (p3, p4)):
+                        rectangles.append((p2[0], p2[1], 90))
+                        break
+    return rectangles
+
+
+# for usb
+def find_rectangle_(image_g, length, height, line_gap=10):
+    """
+    Compute the value of a 2D Gaussian distribution at given x, y coordinates.
+
+    Args:
+        image_g: 2d grey scale nd.array image.
+        height: length of the power block.
+        length: height of the power block.
+        line_gap: parameter in probabilistic_hough_line function. the bigger, the function combine thin lines together
+
+    Returns:
+        A list of tuples of coordinates of the four points of rectangle
+    """
+    rectangles = []
+    edge = canny(image_g, 1)
+    # find straight vertical lines that in the image
+    angle = np.array([0.5*np.pi])
+    # probabilistic_hough_line(image, threshold=10, line_length=50, line_gap=10, theta=None, seed=None)
+    lines = {a for a in probabilistic_hough_line(edge, threshold=10, line_length=int(length * 0.9), line_gap=line_gap,
+                                                 theta=angle) if abs(a[0][0] - a[1][0]) < int(length * 1.1)}
+    # N.B.: It is strange that the order of (height,width) changed to (width, height) after probabilistic_hough_line,
+    # but matplot lib can give the true output.
+
+    linedisplay(image_g, lines)
+    # compare each pairs to find out rectangle
+    lines1 = {a for a in probabilistic_hough_line(edge, threshold=10, line_length=int(height * 0.8),
+                                                  line_gap=line_gap, theta=np.array([0.0]))
+              if abs(a[0][1] - a[1][1]) < int(height * 1.2)}
+    linedisplay(image_g, lines1)
+    # Parallelogram
+    DEVIATION = 14  # Unit measured in pixel. i.e.1.8mm
+    for (p1, p2), (p3, p4) in combinations(lines, 2):
+        # p1--------p2  x
+        # |          |
+        # p4--------p3
+        # y
+        # (x,y)
+
+        # make points in order
+        if p1[0] > p2[0]:
+            p1, p2 = p2, p1
+        if p4[0] > p3[0]:
             p3, p4 = p4, p3
         if p4[1] < p1[1]:
             p1, p4 = p4, p1
@@ -332,12 +422,37 @@ def find_rectangle(image_g, length, height, line_gap=10):
         l1 = p2[1] - p1[1]
         l2 = p3[1] - p4[1]
         # Parallelogram
-        if abs(l1 - l2) < DEVIATION:
+        if abs(l1 - l2) < 0.5*DEVIATION:
             # rectangle within length
-            if abs(p4[0] - p3[0]) < DEVIATION:
-                if abs(abs(p3[0] - p2[0]) - length) < DEVIATION:
-                    rectangles.append((p1, p2, p3, p4))
+            if abs(p3[0] - p2[0]) < 0.5*DEVIATION:
+                if abs(abs(p4[1] - p1[1]) - height) < DEVIATION:
+                    for ln in lines1:
+                        if hit_inzone(ln, (p1, p2)) and hit_inzone(ln, (p4, p3)):
+                            rectangles.append((p1[0], p1[1], 0))
+                            break
+
     return rectangles
+
+
+def hit_inzone(l0, l1, r=7):
+    """
+    Compute the value of a 2D Gaussian distribution at given x, y coordinates.
+
+    Args:
+        l0: tuple (a0,b0)
+        l1: tuple (a1,b1)
+        r: radius of zone
+    Returns:
+        1 or 0 whether the p1 is in  zone of p0
+    """
+
+    def distance(p0, p1):
+        return np.sqrt((p0[0] - p1[0]) ** 2 + (p0[1] - p1[1]) ** 2)
+    for i in l0:
+        for j in l1:
+            if distance(i, j) < r:
+                return 1
+    return 0
 
 
 def in_rectangle(point, p):
@@ -417,26 +532,27 @@ def template_match(image, template, threshold, mindis):
     """
     image = filters.gaussian(image, sigma=1.5)
     positions = []
-    template_width, template_height = template.shape
+    template_height, template_weight = template.shape
     for _ in range(4):
         template = rotate(template, 90, resize=True)
         sample_mt = match_template(image, template)
         tmp = peak_local_max(np.squeeze(sample_mt), threshold_abs=threshold, min_distance=mindis).tolist()
         if tmp:
             positions += [(x, y, 270-90*_) for x, y in tmp]
-    drawcomponents(image, positions, template_height, template_width)
+    drawcomponents(image, positions, template_weight, template_height)
     return positions
 
 
-def drawcomponents(image, positions, template_height, template_width, sample_mt=0):
+
+def drawcomponents(image, positions, template_width, template_height, sample_mt=0):
     """
     Compute the value of a 2D Gaussian distribution at given x, y coordinates.
 
     Args:
         image: 2d nd.array grey scale image.
         positions: positions of components.
-        template_height: template height
         template_width: template width
+        template_height: template height
         sample_mt: similarity matrix for drawing heat map
 
     Returns:
@@ -446,16 +562,22 @@ def drawcomponents(image, positions, template_height, template_width, sample_mt=
         fig = plt.figure(figsize=(10, 8))
         ax = fig.add_subplot(111)
         ax.imshow(image, cmap='gray')
-        for x, y in positions:
-            rect = plt.Rectangle((y, x), template_height, template_width, color='r',
+        for x, y, n in positions:
+            w, h = template_width, template_height
+            for _ in range(n//90):
+                w, h = h, w
+            rect = plt.Rectangle((x, y), w, h, color='r',
                                  fc='none')
             ax.add_patch(rect)
         ax.set_title('Grayscale', fontsize=15)
     else:
         fig, ax = plt.subplots(2, 1, figsize=(10, 8))
         ax[0].imshow(image, cmap='gray')
-        for x, y, _ in positions:
-            rect = plt.Rectangle((y, x), template_height, template_width, color='r',
+        for x, y, n in positions:
+            w, h = template_width, template_height
+            for _ in range(n//90):
+                w, h = h, w
+            rect = plt.Rectangle((x, y), w, h, color='r',
                                  fc='none')
             ax[0].add_patch(rect)
         ax[0].set_title('Grayscale', fontsize=15)

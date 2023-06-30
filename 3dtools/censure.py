@@ -15,7 +15,7 @@ mask = mask>0.5
 #FILEHANDEL = "rs232/d9"
 FILEHANDEL = "vga/vga"
 SAVEHANDEL = "image/result/"
-QUANTITY = 12
+QUANTITY = 13
 detector = CENSURE(min_scale=1, max_scale=7, mode='DoB', non_max_threshold=0.15, line_threshold=10)
 #(min_scale=1, max_scale=7, mode='DoB', non_max_threshold=0.15, line_threshold=10)
 std = tools.imageload("standard/standard-vga.png",'grey')
