@@ -13,16 +13,8 @@ cd OGrEE-Tools/
 ```
 
 ## Set up the virtual environment
-We are using Python **3.10**.
-
-### Linux
+We are using Python **3.10 or newer**.
 
 ```
-. Converter/setup/linux/setup.sh
-```
-
-### Windows (using PowerShell)
-
-```
-Converter\setup\windows\setup.ps1
+python Converter/setup/setup.py
 ```
