@@ -24,6 +24,7 @@ Write-Host "Activating virtual env..."
 try {
     . "$rootDir/.venv/Scripts/Activate.ps1"
 } catch {
+    Write-Error $_
     Write-Error "Error while activating virtual env."
     exit
 }
@@ -32,6 +33,7 @@ Write-Host "Installing requirements..."
 try {
     python -m pip install -r $PSScriptRoot/../requirements.txt
 } catch {
+    Write-Error $_
     Write-Error "Error while installing requirements, check if $((Resolve-Path $PSScriptRoot/../requirements.txt).Path) exists and is correctly configured."
     deactivate
     exit
@@ -40,6 +42,7 @@ try {
 try {
     python -m pip install $PSScriptRoot/fbx-2020.3.4-cp310-none-win_amd64.whl
 } catch {
+    Write-Error $_
     Write-Error "Error while installing requirements, check if $((Resolve-Path $PSScriptRoot/fbx-2020.3.4-cp310-none-win_amd64.whl).Path) exists and is for python 3.10."
     deactivate
     exit
@@ -51,6 +54,7 @@ Write-Host "Adding $((Resolve-Path $PSScriptRoot/../FbxCommon.py).Path) to $pack
 try {
     Copy-Item -Path $PSScriptRoot/../FbxCommon.py -Destination $packageDir
 } catch {
+    Write-Error $_
     Write-Error "Error while moving FbxCommon.py, check if the file is present at $((Resolve-Path $PSScriptRoot/../).Path)"
     deactivate
     exit
@@ -60,6 +64,7 @@ Write-Host "Adding $rootDir to python path..."
 try {
     Set-Content $packageDir/OGrEE-Tools.pth $rootDir
 } catch {
+    Write-Error $_
     Write-Error "Error while writing $packageDir/OGrEE-Tools.pth"
     deactivate
     exit

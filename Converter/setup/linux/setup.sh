@@ -40,12 +40,14 @@ Print "Installing requirements..."
 python -m pip install -r $scriptPath/../requirements.txt
 if [ $? -ne 0 ]; then
 	PrintError "Error while installing requirements, check if $(realpath $scriptPath/../requirements.txt) exists and is correctly configured."
+	deactivate
 	return 1
 fi
 
 python -m pip install $scriptPath/fbx-2020.3.4-cp310-cp310-manylinux1_x86_64.whl
 if [ $? -ne 0 ]; then
 	PrintError "Error while installing requirements, check if $(realpath $scriptPath/fbx-2020.3.4-cp310-cp310-manylinux1_x86_64.whl) exists and is for python 3.10."
+	deactivate
 	return 1
 fi
 
@@ -55,6 +57,7 @@ Print "Adding $(realpath $scriptPath/../FbxCommon.py) to $packageDir..."
 cp $scriptPath/../FbxCommon.py $packageDir
 if [ $? -ne 0 ]; then
 	PrintError "Error while moving FbxCommon.py, check if the file is present at $(realpath $scriptPath/..)"
+	deactivate
 	return 1
 fi
 
@@ -62,6 +65,7 @@ Print "Adding $rootDir to python path..."
 echo $rootDir >$packageDir/OGrEE-Tools.pth
 if [ $? -ne 0 ]; then
 	PrintError "Error while writing $packageDir/OGrEE-Tools.pth"
+	deactivate
 	return 1
 fi
 
