@@ -2,8 +2,6 @@ from logging import root
 import sys
 import platform
 
-from cv2 import RETR_FLOODFILL
-
 def Print(str):
     print(f'\033[96m{str}\033[0m')
 
