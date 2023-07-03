@@ -1,9 +1,18 @@
+from logging import root
 import sys
 import platform
 
+from cv2 import RETR_FLOODFILL
+
+def Print(str):
+    print(f'\033[96m{str}\033[0m')
+
+def PrintError(str):
+    print(f'\033[91m{str}\033[0m')
+
 required_version = (3,10) # Or higher
 if tuple(map(int,platform.python_version_tuple())) <= required_version:
-    print("Please use python 3.10 or higher, aborting.")
+    PrintError("Please use python 3.10 or higher, aborting.")
     sys.exit(1)
 
 import os
@@ -14,17 +23,10 @@ import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 import distutils.sysconfig
 
-def Print(str):
-    print(f'\033[96m{str}\033[0m')
-
-def PrintError(str):
-    print(f'\033[91m{str}\033[0m')
-
 setupDir = os.path.dirname(__file__)
 rootDir = os.path.realpath(f"{setupDir}/../../")
-envDir = f"{rootDir}/.venv"
+envDir = os.path.realpath(f"{rootDir}/.venv")
 
-# Activate the virtual environment
 if sys.platform.startswith('win'):  # Windows
     os.system("color") #To output pretty colors
     pythonExe = f"{envDir}\\Scripts\\python.exe"
@@ -33,17 +35,37 @@ else:  # Unix/Linux/Mac
     pythonExe = f"{envDir}/bin/python"
     wheel = "fbx-2020.3.4-cp310-cp310-manylinux1_x86_64.whl"
 
-# Create a virtual environment
 Print("Creating virtual environment...")
 venv.create(envDir, with_pip=True)
 
 # Install the modules in the virtual environment
 Print("Installing required packages...")
-subprocess.run([pythonExe , '-m', 'pip', 'install', '-r', f'{setupDir}/requirements.txt',])
-subprocess.run([pythonExe , '-m', 'pip', 'install', f'{setupDir}/{wheel}'])
+try:
+    subprocess.run([pythonExe , '-m', 'pip', 'install', '-r', f'{setupDir}/requirements.txt',])
+except Exception as e:
+    PrintError(f"Error while installing requirements, check if {setupDir}/requirements.txt exists and is correctly configured.")
+    raise e
+
+try :
+    subprocess.run([pythonExe , '-m', 'pip', 'install', f'{setupDir}/{wheel}'])
+except Exception as e:
+    PrintError(f"Error while installing requirements, check if {setupDir}/{wheel} exists and is for python 3.10.")
+    raise e
 
 packageDir = os.path.realpath(distutils.sysconfig.get_python_lib(prefix=envDir))
 Print(f"Copying {setupDir}/FbxCommon.py to {packageDir}...")
-shutil.copy2(f"{setupDir}/FbxCommon.py",packageDir)
+try:
+    shutil.copy2(f"{setupDir}/FbxCommon.py",packageDir)
+except Exception as e:
+    PrintError(f"Error while moving FbxCommon.py, check if the file is present at {setupDir})")
+
+Print(f"Adding {rootDir} to python path...")
+try:
+    pth = open(f"{packageDir}/OGrEE-Tools.pth","w")
+    pth.write(rootDir)
+    pth.close()
+except Exception as e:
+    PrintError(f"Error while writing {packageDir}/OGrEE-Tools.pth")
+    raise e
 
 print('\033[92mDone !\033[0m')
