@@ -281,6 +281,12 @@ def CreateFBX(
     right = defaultPicture if right == "" else right
     top = defaultPicture if top == "" else top
     bottom = defaultPicture if bottom == "" else bottom
+    print(f"picture front : {front}")
+    print(f"picture back : {back}")
+    print(f"picture left : {left}")
+    print(f"picture right : {right}")
+    print(f"picture top : {top}")
+    print(f"picture bottom : {bottom}")
 
     manager, scene = FbxCommon.InitializeSdkObjects()
     cubeMesh = addCube(
@@ -296,6 +302,7 @@ def CreateFBX(
     cubeNode.AddMaterial(CreateMaterial(manager, "", bottom))
 
     FbxCommon.SaveScene(manager, scene, f"{realpath(outputPath)}/{name}.fbx", pEmbedMedia=True)
+    print(f"FBX saved at {realpath(outputPath)}/{name}.fbx")
     return f"{realpath(outputPath)}/{name}.fbx"
 
 
