@@ -36,8 +36,8 @@ def RackSearch(img: numpy.ndarray, customerAndSite: str, deviceType: str) -> str
     :rtype: str
     """
     pathToEnvFile = f"{os.path.dirname(__file__)}/../.env.json"
-    url, headers, database = Utils.ReadEnv(pathToEnvFile)
-    converter = ARdcTrackToOGrEE(url, headers, {"Content-Type": "application/json"})
+    env = Utils.ReadEnv(pathToEnvFile)
+    converter = ARdcTrackToOGrEE(env["url"], env["headers"], {"Content-Type": "application/json"})
     return converter.RackSearch(img, customerAndSite, deviceType)
 
 
