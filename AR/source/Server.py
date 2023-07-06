@@ -98,13 +98,13 @@ if __name__ == "__main__":
     parser.add_argument(
         "--verbose",
         choices=["INFO", "WARNING", "ERROR", "DEBUG"],
-        help="""Specify the verbose level""",
+        help="""Specify the verbosity level""",
         default="INFO",
     )
     parser.add_argument(
         "--debug",
-        help="""debugging""",
-        action="store_true",
+        help="""Specify a room and rack name with [ROOM].[RACK] format""",
+        default=""
     )
     args = vars(parser.parse_args())
     numeric_level = getattr(logging, args["verbose"].upper())
