@@ -88,7 +88,7 @@ A file named .env.json.example is provided :
 ## Start the server
 
 ```
-python AR/source/Server.py [-h] [--verbose {INFO,WARNING,ERROR,DEBUG}] [--debug]
+python AR/source/Server.py [-h] [--verbose {INFO,WARNING,ERROR,DEBUG}] [--debug DEBUG]
 ```
 
 The server has two optionnal parameters to specify the verbosity level and to toggle the debug mode :
@@ -98,4 +98,4 @@ The server has two optionnal parameters to specify the verbosity level and to to
   --------------------------------------|---------------------------    
   `-h`, `--help`                        | show this help message and exit
   `--verbose {INFO,WARNING,ERROR,DEBUG}`| Specify the verbosity level
-  `--debug`                             | Specify a room and rack name with [ROOM].[RACK] format
+  `--debug DEBUG`                             | Specify a room and rack name with [ROOM].[RACK] format. If this argument is provided, the server won't try to read any picture for a label and will use this instead
