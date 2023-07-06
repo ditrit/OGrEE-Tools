@@ -1,6 +1,3 @@
-# Contact
-For any information about the project, please contact [Hervé Chibois](mailto:herve.chibois@orness.com) or [Timothé Rios](mailto:rios.timothe@gmail.com).
-
 # OGREE-Tools: AR server
 This tool is to be connected to the AR version of OGrEE-3D, to do character recognition on the label by doing several operations :
 - Color Detection
@@ -27,6 +24,20 @@ We are using Python **${\color{red}3.10 \space{}only}$**.
 
 ```
 python AR/setup/setup.py
+```
+
+## Activate the virtual environment
+
+### Windows
+
+```
+.venv/Script/activate
+```
+
+### Linux
+
+```
+. .venv/bin/activate
 ```
 
 ## .conf.json file
@@ -85,6 +96,11 @@ A file named .env.json.example is provided :
 }
 ```
 
+## ODBC (dcTrack)
+
+If you are using this server to connect to a dcTrack API, you will need to download and install the latest psqlodbc release [here](https://www.postgresql.org/ftp/odbc/versions/msi/). If you are using this server to connect the AR client to OGrEE, you can skip this step.
+
+
 ## Start the server
 
 ```
@@ -99,3 +115,14 @@ The server has two optionnal parameters to specify the verbosity level and to to
   `-h`, `--help`                        | show this help message and exit
   `--verbose {INFO,WARNING,ERROR,DEBUG}`| Specify the verbosity level
   `--debug DEBUG`                             | Specify a room and rack name with [ROOM].[RACK] format. If this argument is provided, the server won't try to read any picture for a label and will use this instead
+
+## Troubleshooting
+
+On Windows, when attempting to activate the virtual environment, if you get an error saying : `Activate.ps1 cannot be loaded because the execution of scripts is disabled on this system`, you can type
+
+`Set-ExecutionPolicy Unrestricted -Scope Process`
+
+into the terminal you are using. This will allow you tu load PowerShell scripts on this terminal only until it is closed.
+
+# Contact
+For any information about the project, please contact [Hervé Chibois](mailto:herve.chibois@orness.com) or [Timothé Rios](mailto:rios.timothe@gmail.com).
