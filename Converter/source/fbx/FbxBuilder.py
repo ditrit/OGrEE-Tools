@@ -83,8 +83,8 @@ def makeCube(manager: fbx.FbxManager) -> fbx.FbxMesh:
 
     # Each polygon face will be assigned a unique material.
     matLayer = fbx.FbxLayerElementMaterial.Create(cubeMesh, "")
-    matLayer.SetMappingMode(fbx.FbxLayerElement.eByPolygon)
-    matLayer.SetReferenceMode(fbx.FbxLayerElement.eIndexToDirect)
+    matLayer.SetMappingMode(fbx.FbxLayerElement.EMappingMode.eByPolygon)
+    matLayer.SetReferenceMode(fbx.FbxLayerElement.EReferenceMode.eIndexToDirect)
     layer.SetMaterials(matLayer)
 
     # Create UV for Diffuse channel.
@@ -92,8 +92,8 @@ def makeCube(manager: fbx.FbxManager) -> fbx.FbxMesh:
 
     # Now we have set the UVs as eINDEX_TO_DIRECT reference
     # and in eBY_POLYGON_VERTEX mapping mode.
-    UVDiffuseLayer.SetMappingMode(fbx.FbxLayerElement.eByPolygonVertex)
-    UVDiffuseLayer.SetReferenceMode(fbx.FbxLayerElement.eIndexToDirect)
+    UVDiffuseLayer.SetMappingMode(fbx.FbxLayerElement.EMappingMode.eByPolygonVertex)
+    UVDiffuseLayer.SetReferenceMode(fbx.FbxLayerElement.EReferenceMode.eIndexToDirect)
     vectors0 = fbx.FbxVector2(0, 0)
     vectors1 = fbx.FbxVector2(1, 0)
     vectors2 = fbx.FbxVector2(1, 1)
@@ -107,7 +107,7 @@ def makeCube(manager: fbx.FbxManager) -> fbx.FbxMesh:
     # We must update the size of the index array.
     UVDiffuseLayer.GetIndexArray().SetCount(24)
 
-    layer.SetUVs(UVDiffuseLayer, fbx.FbxLayerElement.eTextureDiffuse)
+    layer.SetUVs(UVDiffuseLayer, fbx.FbxLayerElement.EType.eTextureDiffuse)
 
     # Now that the control points per polygon have been defined, we can create
     # the actual polygons within the mesh.
@@ -126,8 +126,8 @@ def makeCube(manager: fbx.FbxManager) -> fbx.FbxMesh:
     normalZNeg = fbx.FbxVector4(0, 0, -1, 1)
 
     normLayer = fbx.FbxLayerElementNormal.Create(cubeMesh, "")
-    normLayer.SetMappingMode(fbx.FbxLayerElement.eByControlPoint)
-    normLayer.SetReferenceMode(fbx.FbxLayerElement.eDirect)
+    normLayer.SetMappingMode(fbx.FbxLayerElement.EMappingMode.eByControlPoint)
+    normLayer.SetReferenceMode(fbx.FbxLayerElement.EReferenceMode.eDirect)
 
     normLayer.GetDirectArray().Add(normalZPos)
     normLayer.GetDirectArray().Add(normalZPos)
@@ -188,7 +188,7 @@ def addCube(
     # create the node containing the mesh
     newNode = fbx.FbxNode.Create(manager, cubeName)
     newNode.SetNodeAttribute(newMesh)
-    newNode.SetShadingMode(fbx.FbxNode.eTextureShading)
+    newNode.SetShadingMode(fbx.FbxNode.EShadingMode.eTextureShading)
     newNode.LclScaling.Set(fbx.FbxDouble3(cubeScale[0], cubeScale[1], cubeScale[2]))
     newNode.LclTranslation.Set(fbx.FbxDouble3(0, 0, 0))
 
@@ -209,9 +209,9 @@ def CreateTexture(manager: fbx.FbxManager, texturePath: str) -> fbx.FbxFileTextu
     """
     lTexture = fbx.FbxFileTexture.Create(manager, "")
     lTexture.SetFileName(texturePath)
-    lTexture.SetTextureUse(fbx.FbxTexture.eStandard)
-    lTexture.SetMappingType(fbx.FbxTexture.eUV)
-    lTexture.SetMaterialUse(fbx.FbxFileTexture.eModelMaterial)
+    lTexture.SetTextureUse(fbx.FbxTexture.ETextureUse.eStandard)
+    lTexture.SetMappingType(fbx.FbxTexture.EMappingType.eUV)
+    lTexture.SetMaterialUse(fbx.FbxFileTexture.EMaterialUse.eModelMaterial)
     lTexture.SetSwapUV(False)
     lTexture.SetTranslation(0.0, 0.0)
     lTexture.SetScale(1.0, 1.0)
@@ -261,9 +261,9 @@ def CreateFBX(
     """
     Build an FBX file containing a box mesh with up to six textured faces
 
-    :param float width: The width of the model
-    :param float height: The height of the model
-    :param float depth: The depth of the model
+    :param float width: The width of the model (cm)
+    :param float height: The height of the model (cm)
+    :param float depth: The depth of the model (cm)
     :param str name: the name given to the FBX file
     :param str front: the path to the picture of the front face
     :param str back: the path to the picture of the back face
@@ -281,6 +281,12 @@ def CreateFBX(
     right = defaultPicture if right == "" else right
     top = defaultPicture if top == "" else top
     bottom = defaultPicture if bottom == "" else bottom
+    print(f"picture front : {front}")
+    print(f"picture back : {back}")
+    print(f"picture left : {left}")
+    print(f"picture right : {right}")
+    print(f"picture top : {top}")
+    print(f"picture bottom : {bottom}")
 
     manager, scene = FbxCommon.InitializeSdkObjects()
     cubeMesh = addCube(
@@ -296,6 +302,7 @@ def CreateFBX(
     cubeNode.AddMaterial(CreateMaterial(manager, "", bottom))
 
     FbxCommon.SaveScene(manager, scene, f"{realpath(outputPath)}/{name}.fbx", pEmbedMedia=True)
+    print(f"FBX saved at {realpath(outputPath)}/{name}.fbx")
     return f"{realpath(outputPath)}/{name}.fbx"
 
 
@@ -305,7 +312,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--WDH",
-        help="""width,depth,height (cm)""",
+        help="""width,depth,height (mm)""",
         required=True,
     )
     parser.add_argument("--name", help="""name of the fbx""", default="FBXmodel")
@@ -346,9 +353,9 @@ if __name__ == "__main__":
                 args["right"] = file
     CreateFBX(
         name=args["name"],
-        width=wdh[0],
-        depth=wdh[1],
-        height=wdh[2],
+        width=wdh[0]/10,
+        depth=wdh[1]/10,
+        height=wdh[2]/10,
         front=args["front"],
         back=args["back"],
         left=args["left"],

@@ -15,7 +15,7 @@ from AR.source.interfaces.IARConverter import (
 )
 from AR.source.ocr.LabelProcessing import ReaderCroppedAndFullImage
 from AR.source.ODBC import GetPosition, GetRoomOrientation
-from common.Utils import CustomerAndSiteSpliter, ReadConf
+from common.Utils import ReadConf
 from Converter.source.classes.dcTrackToOGrEE import dcTrackToOGrEE
 from Converter.source.fbx.FbxBuilder import CreateFBX
 
@@ -105,7 +105,6 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
                 f"Multiple locations found with the name {locationName}, taking the first one"
             )
         siteData = searchResults[0]
-        siteData["parentId"] = "EDF"
         siteData["attributes"] = {"orientation": "NW"}
         return self.BuildSite(siteData)
 
@@ -137,7 +136,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
                     "filter": {"contains": f'"{roomIdentifier}"'},
                 }
             ],
-            "selectedColumns": ["name","id"],
+            "selectedColumns": ["name", "id"],
         }
         searchResults = self.PostJSON("/api/v2/quicksearch/locations", payload)[
             "searchResults"
@@ -162,7 +161,8 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
                 "parentId": buildingData["id"],
                 "domain": siteData["domain"],
                 "attributes": {
-                    "axisOrientation": ("+x" if roomOrientation[0] else "-x") + ("-y" if roomOrientation[0] else "+y"), 
+                    "axisOrientation": ("+x" if roomOrientation[0] else "-x")
+                    + ("-y" if roomOrientation[0] else "+y"),
                     "posXY": json.dumps({"x": 0.0, "y": 0.0}),  # ???
                     "posXYUnit": "m",
                     "size": json.dumps({"x": 21, "y": 39}),  # ???
@@ -244,9 +244,15 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
                 }
             )
             rackData["attributes"]["posXYUnit"] = "m"
-            if ((position[2] == "East" and roomData["attributes"]["axisOrientation"] == "-x+y") or (position[2] == "West" and roomData["attributes"]["axisOrientation"] == "+x+y")):
+            if (
+                position[2] == "East"
+                and roomData["attributes"]["axisOrientation"] == "-x+y"
+            ) or (
+                position[2] == "West"
+                and roomData["attributes"]["axisOrientation"] == "+x+y"
+            ):
                 rackData["attributes"]["orientation"] = "rear"
-            else :
+            else:
                 rackData["attributes"]["orientation"] = "front"
 
         rackDataJson["id"] = rackData["id"]
@@ -387,7 +393,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         return templates, childrenOgree, fbx
 
     def RackSearch(
-        self, img: ndarray, customerAndSite: str, deviceType: str, debug: bool = False
+        self, img: ndarray, domain: str, site: str, deviceType: str, debug: bool = False
     ) -> str:
         """Perform OCR on a picture for a rack label, gets its info from dcTrack and convert it to OGrEE format
 
@@ -402,25 +408,21 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         """
         ocrResults = []
         label = None
-
         start = time()
-        # Split the customer name and the site name
-        customer, site = CustomerAndSiteSpliter(customerAndSite)
 
         # Read RegexFile to have all infos
         pathToConfFile = f"{dirname(__file__)}/../../.conf.json"
 
         regexp, roomList, type, background, colorRange = ReadConf(
-            pathToConfFile, customer, site, deviceType
+            pathToConfFile, domain, site, deviceType
         )
         if debug:
             label = ["C8", "B12"]  # debug
 
         else:
             for i in range(len(regexp)):
-                site, label, ocrResults = ReaderCroppedAndFullImage(
+                label, ocrResults = ReaderCroppedAndFullImage(
                     img,
-                    site,
                     regexp[i],
                     deviceType,
                     background[i],
@@ -437,14 +439,14 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
             label[0] = label[0][3::]
 
         try:
-            domainData = self.GetDomain(customer)
+            domainData = self.GetDomain(domain)
             siteData = self.GetSite(site)
             buildingData, roomData = self.GetBuildingAndRoom(siteData, label[0])
             rackData, templates, fbx = self.GetRack(roomData, label[1])
             # Setting the data to send to Unity App
             dictionary = {
-                "domain" : OgreeMessage.FormatDict(domainData),
-                "domainName" : customer,
+                "domain": OgreeMessage.FormatDict(domainData),
+                "domainName": domain,
                 "site": OgreeMessage.FormatDict(siteData),
                 "siteName": site,
                 "building": OgreeMessage.FormatDict(buildingData),
@@ -461,8 +463,8 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
 
             # Debug
             dictionary = {
-                "domain" : domainData,
-                "domainName" : customer,
+                "domain": domainData,
+                "domainName": domain,
                 "site": siteData,
                 "siteName": site,
                 "building": buildingData,

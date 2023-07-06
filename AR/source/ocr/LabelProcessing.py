@@ -77,8 +77,8 @@ def ReaderOneImageRecursive(img, regexp, type, ocrResults):
 
 #####################################################################################################################
 #####################################################################################################################
-def ReaderCroppedAndFullImage(img, site, regexp, type, background, range, ocrResults):
-    """ Call ogLblShapeDetector to crop the image, call ReaderOneImageRecursive on the cropped image and on the full image if not succesfull to read the label. Returns the site, a list containing all characters in the image satisfying the different part ot the regexp and a list containing all characters that were read on the image to be used if a new regexp is used on the same image. """
+def ReaderCroppedAndFullImage(img, regexp, type, background, range, ocrResults):
+    """ Call ogLblShapeDetector to crop the image, call ReaderOneImageRecursive on the cropped image and on the full image if not succesfull to read the label. Returns a list containing all characters in the image satisfying the different part ot the regexp and a list containing all characters that were read on the image to be used if a new regexp is used on the same image. """
     start = time.time()
     current = start
     logging.debug(f"Try reading with regexp: {regexp} and background color: {background}")
@@ -88,24 +88,24 @@ def ReaderCroppedAndFullImage(img, site, regexp, type, background, range, ocrRes
 
     logging.debug(f"Cropped image in: {time.time() - current} s")
 
-    # Perform OCR + post-processing on the cropped_image to recover the name of the site, room and rack
+    # Perform OCR + post-processing on the cropped_image to recover the name of the room and rack
     if (not ocrResults):
         label, ocrResults = ReaderOneImageRecursive(croppedImage, regexp, type, ocrResults)
     else:
         logging.debug(f"Using the already found text with ocr.")
         # Label was not found on cropped image so we try on whole image
         label, ocrResults = ReaderOneImageRecursive(croppedImage, regexp, type, ocrResults)
-        return site, label, ocrResults
+        return label, ocrResults
 
     # return label if it was found on the cropped image
     if 'Missing' not in label:
-        return site, label, ocrResults
+        return label, ocrResults
     else:
         logging.debug("Could not find rack label on cropped image. Trying on the full image.")
 
         # Label was not found on cropped image so we try on whole image
         label, ocrResults = ReaderOneImageRecursive(img, regexp, type, [])
-    return site, label, ocrResults
+    return label, ocrResults
 
 #####################################################################################################################
 #####################################################################################################################

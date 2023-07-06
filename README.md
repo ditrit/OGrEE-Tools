@@ -1,70 +1,121 @@
-# OGREE-Tools
-Repository for the tools used in OGrEE.
+# Set up
 
+For each tool, there is a `setup` folder. Run `python setup.py` with **python 3.10 or newer** . Each setup script will create or modify a [virtual environment](https://docs.python.org/3/library/venv.html), located in `/.venv/`. The setup script will also activate the virtual environment after completion. To deactivate it, type `deactivate`. To reactivate it after, type `./.venv/Script/activate` for Windows or `./.venv/bin/activate` for Linux in the root of the repository.
+When executing python script in the virtual environment, only use `python`, not `python3` or `python3.10` to be sure to use the environment python.
+# Converter
 
-# How to use with git
-## Clone the repo
+Converter between dcTrack, Netbox and OGrEE
 
-```
-git clone https://<token>github.com/ditrit/OGrEE-Tools.git
-```
-## Switch to the right branch
+## Architecture (with [AR](#ar))
 
-Axel
+```mermaid
+---
+title: Class Diagram
+---
+classDiagram
+    BaseConverter <|-- dcTrackToOGrEE
+    BaseConverter <|-- OGrEEToOGrEE
+    IToOGrEE <|.. dcTrackToOGrEE
+    IToOGrEE <|.. OGrEEToOGrEE
+    dcTrackToOGrEE <|-- ARdcTrackToOGrEE
+    OGrEEToOGrEE <|-- AROGrEEToOGrEE
+    IARConverter <|.. ARdcTrackToOGrEE
+    IARConverter <|.. AROGrEEToOGrEE
+    class BaseConverter{
+      +GetJSON()
+      +PostJSON()
+      +GetFile()
+      +PostFile()
+      +PutData()
+      +PostData()
+      +SaveToFile()
+    }
+    class dcTrackToOGrEE{
+    }
+    class OGrEEToOGrEE{
+    }
+    class IToOGrEE {    
+      +BuildDomain()
+      +BuildSite()
+      +BuildBuilding()
+      +BuildRoom()
+      +BuildRack()
+      +BuildDevice()
+      +BuildTemplate()
+    }
+    <<interface>> IToOGrEE
+  
+    class ARdcTrackToOGrEE{
+      +GetDomain()
+      +GetSite()
+      +GetBuildingAndRoom()
+      +GetRack()
+      +GetChildren()
+    }
+    class AROGrEEToOGrEE{
+      +GetDomain()
+      +GetSite()
+      +GetBuildingAndRoom()
+      +GetRack()
+      +GetTemplatesAndFbxRec()
+      +DownloadFbx()
+      +UpdateDomainRec()
+    }
+    class IARConverter{
+      +MakeFBX()
+      +RackSearch()
+      +GetList()
+    }
+    <<interface>> IARConverter
 ```
-git checkout -b dev-FBX
-```
-Hervé
-```
-git checkout -b dev-domain
-```
-Vincent
-```
-git checkout -b dev-label
-```
-## Stage, commit and push when modifications are done
+## [FbxBuilder](/Converter/source/fbx/FbxBuilder.py)
 
-Run the following commands:
-```
-git add .
-git commit -m "Your commit message"
-```
-Then you need to push on the right remote branch:
-```
-git push https://<token>@github.com/<repo>
-```
-You can also use the graphical interface of VS Code or any editor.
+Build a FBX file containing a box mesh from its dimension and up to six faces
 
-## FOR FIRST TIME PUSH
+### Usage
 
-You need to specify the remote branch you want to push on:
-
-Axel
+```console
+python FbxBuilder.py [-h] --WDH WDH [--name NAME] [--front FRONT] [--back BACK] [--left LEFT] [--right RIGHT] [--top TOP] [--bottom BOTTOM] [--picFolder PICFOLDER] [-o O]
 ```
-git push --set-upstream origin dev-FBX
+
+### Options
+
+   Arguments              | Description
+  ------------------------|---------------------------    
+  `-h`, `--help`          | show this help message and exit
+  `--WDH WDH`             | width,depth,height (cm)
+  `--name NAME`           | name of the fbx
+  `--front FRONT`         | path to the front picture
+  `--back BACK`           | path to the back picture
+  `--left LEFT`           | path to the left picture
+  `--right RIGHT`         | path to the right picture
+  `--top TOP`             | path to the top picture
+  `--bottom BOTTOM`       | path to the bottom picture
+  `--picFolder PICFOLDER` | path to a folder containing pictures ending in -front,-back,...
+  `-o O`                  | output path
+
+# NonSquareRooms
+
+Generate the tiles of a non convex room for OGrEE (all unit are in meter)
+
+## Usage
+
+```console
+python GenTiles.py [-h] --json JSON [--out OUT] [--angle ANGLE] [--offset OFFSET] [--draw] [--opti] [--tileSize TILESIZE]
 ```
-Hervé
-```
-git push --set-upstream origin dev-domain
-```
-Vincent
-```
-git push --set-upstream origin dev-label
-```
-Then login with the pop-up window to finalize the push:
 
-![Login Window](/image_readme/login.PNG)
+### Options
 
-If you have any issue, please follow the instructions on the following URL : https://unityatscale.com/unity-version-control-guide/how-to-setup-unity-project-on-github/
-## Merge with the main branch
-First click on the "X branches" button:
+   Arguments            | Description
+  ----------------------|---------------------------    
+  `-h`, `--help`        | show this help message and exit
+  `--json JSON`         | path of the room JSON
+  `--out OUT`           | name of the returned JSON
+  `--angle ANGLE`       | tiling's angle (0 by default) (degree)
+  `--offset OFFSET`     | first tile's offset from the first vertex : x,y (m)
+  `--draw`              | if you want python to draw the room with numpy
+  `--opti`              | if you want python iterate through multiple angles and start positions to get the best tiling (SLOW)
+  `--tileSize TILESIZE` | size of a tile (60cm by default) (m)
 
-![Main Window](/image_readme/avant%20merge.PNG)
+# AR
 
-Then click on "new pull request":
-
-![Pull Request Window](/image_readme/merge.PNG)
-
-You can then compare and merge the dev branch into the main one:
-
-![Compare Window](/image_readme/compare.PNG)

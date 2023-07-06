@@ -15,6 +15,7 @@ from gevent.pywsgi import WSGIServer
 
 import common.Utils as Utils
 from AR.source.classes.ARdcTrackToOGrEE import ARdcTrackToOGrEE
+from AR.source.classes.AROGrEEToOGrEE import AROGrEEToOGrEE
 
 IP = "0.0.0.0"
 PORT = 5002
@@ -41,17 +42,18 @@ def ReadPicture()->str:
             # content to get form parameter
             log.info("Beginning the processing of the image...")
             img = request.files["labelRack"].read()
-            customerAndSite = request.form["tenantName"]
             deviceType = request.form["deviceType"]
 
             # Convert byte-like image into a numpy array, then into an array usable with opencv
             nparr = np.frombuffer(img, np.ubyte)
             img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
-            pathToEnvFile = f"{os.path.dirname(__file__)}/../.env.json"
-            url, headers, database = Utils.ReadEnv(pathToEnvFile)
-            converter = ARdcTrackToOGrEE(url, headers, {"Content-Type": "application/json"})
-            return converter.RackSearch(img, customerAndSite, deviceType,args["debug"])
+            env = Utils.ReadEnv(os.path.realpath(f"{os.path.dirname(__file__)}/../.env.json"))
+            if env["database"].lower() == "dctrack":
+                converter = ARdcTrackToOGrEE(env["api_url"], env["headers"], {"Content-Type": "application/json"})
+            else :
+                converter = AROGrEEToOGrEE(env["api_url"], env["headers"], {"Content-Type": "application/json"})
+            return converter.RackSearch(img, env["domain"],env["site"], deviceType,args["debug"])
     except Exception:
         traceback.print_exc()
         return traceback.format_exc()

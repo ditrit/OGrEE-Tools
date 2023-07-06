@@ -6,6 +6,7 @@ from os.path import basename, dirname, realpath
 from time import time
 from typing import Any
 
+import requests
 from numpy import ndarray
 
 from AR.source.interfaces.IARConverter import (
@@ -15,7 +16,7 @@ from AR.source.interfaces.IARConverter import (
 )
 from AR.source.ocr.LabelProcessing import ReaderCroppedAndFullImage
 from AR.source.ODBC import GetPosition, GetRoomOrientation
-from common.Utils import CustomerAndSiteSpliter, ReadConf
+from common.Utils import ReadConf
 from Converter.source.classes.OGrEEToOGrEE import OGrEEToOGrEE
 from Converter.source.fbx.FbxBuilder import CreateFBX
 
@@ -69,7 +70,7 @@ class AROGrEEToOGrEE(OGrEEToOGrEE, IARConverter):
         :return: dict describing an OgrEE domain
         :rtype: dict[str, Any]
         """
-        return self.GetJSON(f"/api/domains/{domainName}")["data"]
+        return self.GetJSON(f"api/domains/{domainName}")["data"]
 
     def GetSite(self, siteName: str) -> dict[str, Any]:
         """Get site informations from OGrEE
@@ -80,7 +81,7 @@ class AROGrEEToOGrEE(OGrEEToOGrEE, IARConverter):
         :return: dict describing an OGrEE site
         :rtype: dict[str, Any]
         """
-        return self.GetJSON(f"/api/sites/{siteName}")["data"]
+        return self.GetJSON(f"api/sites/{siteName}")["data"]
 
     def GetBuildingAndRoom(
         self, siteData: dict[str, Any], roomIdentifier: str
@@ -95,19 +96,19 @@ class AROGrEEToOGrEE(OGrEEToOGrEE, IARConverter):
         :return: two dicts describing an OGrEE building and room and a list of dict containing their templates if needed
         :rtype: tuple[dict[str, Any], dict[str, Any], list[dict[str,Any]]]
         """
-        buildings = self.GetJSON(f"/api/sites/{siteData['name']}/buildings")["data"][
+        buildings = self.GetJSON(f"api/sites/{siteData['name']}/buildings")["data"][
             "objects"
         ]
         if len(buildings) == 0:
             raise IncorrectResponseError(
                 self.url,
-                f"/api/sites/{siteData['name']}/buildings",
+                f"api/sites/{siteData['name']}/buildings",
                 message=f"No building found on api {self.url}",
             )
         roomsData = []
         for buildingData in buildings:
             roomsData = self.GetJSON(
-                f"/api/rooms?name={roomIdentifier}&parentId={buildingData['id']}"
+                f"api/rooms?name={roomIdentifier}&parentId={buildingData['id']}"
             )["data"]["objects"]
             if len(roomsData) > 0:
                 break
@@ -115,20 +116,20 @@ class AROGrEEToOGrEE(OGrEEToOGrEE, IARConverter):
         if len(roomsData) == 0:
             raise IncorrectResponseError(
                 self.url,
-                f"/api/sites/{siteData['name']}/buildings",
+                f"api/sites/{siteData['name']}/buildings",
                 message=f"No room with name {roomIdentifier} found in site {siteData['name']} on api {self.url}",
             )
         templates = []
         if buildingData["attributes"]["template"] != "":
             templates.append(
                 self.GetJSON(
-                    f"/api/bldg-templates/{buildingData['attributes']['template']}"
+                    f"api/bldg-templates/{buildingData['attributes']['template']}"
                 )
             )["data"]
         if roomsData[0]["attributes"]["template"] != "":
             templates.append(
                 self.GetJSON(
-                    f"/api/bldg-templates/{roomsData[0]['attributes']['template']}"
+                    f"api/bldg-templates/{roomsData[0]['attributes']['template']}"
                 )
             )["data"]
         return (buildingData, roomsData[0], templates)
@@ -137,7 +138,7 @@ class AROGrEEToOGrEE(OGrEEToOGrEE, IARConverter):
         self,
         roomData: dict[str, Any],
         rackName: str,
-    ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    ) -> tuple[dict[str, Any], list[dict[str, Any]], list[str]]:
         """Get rack informations from OGrEE
 
         :param roomData: must contains "name", "id" and "domain"
@@ -145,39 +146,71 @@ class AROGrEEToOGrEE(OGrEEToOGrEE, IARConverter):
         :param rackName: name of the rack in OGrEE
         :type rackName: str
         :raises IncorrectResponseError: if the rack was not found in dcTracck
-        :return: dict describing the rack and its children, a list of dict describing the templates needed
-        :rtype: tuple[dict[str, Any], list[dict[str, Any]]]
+        :return: dict describing the rack and its children, a list of dict describing the templates needed, a list of fbx paths
+        :rtype: tuple[dict[str, Any], list[dict[str, Any]],list[str]]
         """
-        onlyRack = self.GetJSON(f"/api/rooms/{roomData['id']}/racks/{rackName}")["data"]
-        rackData = self.GetJSON(f"/api/racks/{onlyRack['id']}/all")["data"]
-        templates = self.GetTemplatesRec(rackData)
-        return rackData, templates
+        onlyRack = self.GetJSON(f"api/rooms/{roomData['id']}/racks/{rackName}")["data"]
+        rackData = self.GetJSON(f"api/racks/{onlyRack['id']}/all")["data"]
+        templates, fbx = self.GetTemplatesAndFbxRec(rackData)
+        return rackData, templates, fbx
 
-    def GetTemplatesRec(self, objectData: dict[str, Any]) -> list[dict[str, Any]]:
+    def GetTemplatesAndFbxRec(
+        self, objectData: dict[str, Any]
+    ) -> tuple[list[dict[str, Any]], dict[str, str]]:
         """
         Recursively returns all children of the parent object and their templates
 
         :param dict[str,Any] parent_dctrack: parent object's data from dctrack
-        :returns: a list of the children, a list of their templates
-        :rtype: tuple[list[dict[str, Any]], list[dict[str, Any]]]
+        :returns: a list of the templates, a list of fbx paths
+        :rtype:  tuple[list[dict[str, Any]],dict[str,str]]
         """
         templates = []
-
-        print(objectData)
+        fbx = {}
         if objectData["attributes"]["template"] != "":
-            templates.append(
-                self.GetJSON(
-                    f"/api/obj-templates/{objectData['attributes']['template']}"
-                )
-            )
+            template = self.GetJSON(
+                f"api/obj-templates/{objectData['attributes']['template']}"
+            )["data"]
+            templates.append(template)
+            if template["fbxModel"] != "":
+                fbx[template["slug"] + ".fbx"] = self.DownloadFbx(template["fbxModel"])
         if "children" in objectData:
             for child in objectData["children"]:
-                templates += self.GetTemplatesRec(child)
+                childrenTemplates, childrenFbx = self.GetTemplatesAndFbxRec(child)
+                templates += childrenTemplates
+                for childFbx in childrenFbx:
+                    fbx[childFbx] = childrenFbx[childFbx]
 
-        return templates
+        return templates, fbx
+    
+    def DownloadFbx(self, url: str) -> dict[str, str]:
+        """download fbx from url
+
+        :param url: fbx url
+        :type url: str
+        :return: fbx data in bytes or b"" if the file could not be downloaded
+        :rtype: str
+        """
+        try:
+            response = requests.get(url)
+            response.raise_for_status()  # Check for any errors
+
+            log.debug("File downloaded successfully.")
+            return b64encode(response.content).decode("ascii")
+        except Exception as e:
+            log.error(f"Error downloading fbx from {url} : ", str(e))
+            return ""
+
+    def UpdateDomainRec(self,objectData:dict[str,Any],domain:str) -> dict[str,Any]:
+        
+        objectData["domain"] = domain
+        if "children" in objectData:
+            for i in range(len(objectData["children"])):
+                objectData["children"][i] = self.UpdateDomainRec(objectData["children"][i],domain)
+        return objectData
+
 
     def RackSearch(
-        self, img: ndarray, customerAndSite: str, deviceType: str, debug: bool = False
+        self, img: ndarray, domain : str, site : str, deviceType: str, debug: bool = False
     ) -> str:
         """Perform OCR on a picture for a rack label, gets its info from OGrEE and convert it to OGrEE format
 
@@ -192,10 +225,7 @@ class AROGrEEToOGrEE(OGrEEToOGrEE, IARConverter):
         """
         ocrResults = []
         label = None
-
         start = time()
-        # Split the customer name and the site name
-        customer, site = CustomerAndSiteSpliter(customerAndSite)
 
         # Read RegexFile to have all infos
         pathToConfFile = f"{dirname(__file__)}/../../.conf.json"
@@ -205,12 +235,11 @@ class AROGrEEToOGrEE(OGrEEToOGrEE, IARConverter):
 
         else:
             regexp, roomList, type, background, colorRange = ReadConf(
-                pathToConfFile, customer, site, deviceType
+                pathToConfFile, domain, site, deviceType
             )
             for i in range(len(regexp)):
-                site, label, ocrResults = ReaderCroppedAndFullImage(
+                label, ocrResults = ReaderCroppedAndFullImage(
                     img,
-                    site,
                     regexp[i],
                     deviceType,
                     background[i],
@@ -224,16 +253,20 @@ class AROGrEEToOGrEE(OGrEEToOGrEE, IARConverter):
             return "Rack label could not be read"
 
         try:
-            domainData = self.GetDomain(customer)
+            domainData = self.GetDomain(domain)
             siteData = self.GetSite(site)
             buildingData, roomData, templates1 = self.GetBuildingAndRoom(
                 siteData, label[0]
             )
-            rackData, templates2 = self.GetRack(roomData, label[1])
+            rackData, templates2, fbx = self.GetRack(roomData, label[1])
+            siteData = self.UpdateDomainRec(siteData,domain)
+            buildingData = self.UpdateDomainRec(buildingData,domain)
+            roomData = self.UpdateDomainRec(roomData,domain)
+            rackData = self.UpdateDomainRec(rackData,domain)
             # Setting the data to send to Unity App
             dictionary = {
                 "domain": OgreeMessage.FormatDict(domainData),
-                "domainName": customer,
+                "domainName": domain,
                 "site": OgreeMessage.FormatDict(siteData),
                 "siteName": site,
                 "building": OgreeMessage.FormatDict(buildingData),
@@ -245,7 +278,7 @@ class AROGrEEToOGrEE(OGrEEToOGrEE, IARConverter):
                 "templates": json.dumps(
                     [json.dumps(t) for t in (templates1 + templates2)]
                 ),
-                "fbx": {},
+                "fbx": json.dumps(fbx),
             }
             # Serializing json
             json_object = json.dumps(dictionary, indent=4)
@@ -253,7 +286,7 @@ class AROGrEEToOGrEE(OGrEEToOGrEE, IARConverter):
             # Debug
             dictionary = {
                 "domain": domainData,
-                "domainName": customer,
+                "domainName": domain,
                 "site": siteData,
                 "siteName": site,
                 "building": buildingData,
@@ -263,7 +296,7 @@ class AROGrEEToOGrEE(OGrEEToOGrEE, IARConverter):
                 "rack": rackData,
                 "rackName": rackData["name"],
                 "templates": (templates1 + templates2),
-                "fbx": {},
+                "fbx": {name: fbx[name][10] for name in fbx},
             }
             with open(f"{self.AROutputPath}/output.json", "w") as output:
                 output.write(json.dumps(dictionary, indent=4))
@@ -279,37 +312,8 @@ class AROGrEEToOGrEE(OGrEEToOGrEE, IARConverter):
             raise e
 
     def MakeFBX(self, data: dict[str, Any]) -> str:
-        """Get pictures of a model from OGrEE then build a fbx model with them
-
-        :param data: OGrEE model
-        :type data: dict[str, Any]
-        :return: the path to an fbx model or "" if no picture were found in OGrEE
-        :rtype: str
-        """
-        endpointBack = f"/gdcitdz/images/devices/rearpngimages/{data['modelId']}_R.png"
-        endpointFront = (
-            f"/gdcitdz/images/devices/frontpngimages/{data['modelId']}_F.png"
-        )
-        frontPic = self.GetFile(endpointFront)
-        backPic = self.GetFile(endpointBack)
-        frontPath = f"{self.outputPath}/pictures/{data['model']}-front.png"
-        backPath = f"{self.outputPath}/pictures/{data['model']}-back.png"
-        if frontPic != b"":
-            with open(frontPath, "wb") as newPic:
-                newPic.write(frontPic)
-        if backPic != b"":
-            with open(backPath, "wb") as newPic:
-                newPic.write(backPic)
-        if frontPic == b"" and backPic == b"":
-            return ""
-        return CreateFBX(
-            width=data["dimWidth"] / 10,
-            height=data["dimHeight"] / 10,
-            depth=data["dimDepth"] / 10,
-            front=frontPath if frontPic != b"" else "",
-            back=backPath if backPic != b"" else "",
-            name=data["model"].replace(" ", "-").replace(".", "-").lower(),
-        )
+        """Not needed"""
+        pass
 
     def GetList(self):
         """Not implemented"""
