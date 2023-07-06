@@ -210,7 +210,7 @@ class AROGrEEToOGrEE(OGrEEToOGrEE, IARConverter):
 
 
     def RackSearch(
-        self, img: ndarray, domain : str, site : str, deviceType: str, debug: bool = False
+        self, img: ndarray, domain : str, site : str, deviceType: str, debug: str = ""
     ) -> str:
         """Perform OCR on a picture for a rack label, gets its info from OGrEE and convert it to OGrEE format
 
@@ -231,7 +231,7 @@ class AROGrEEToOGrEE(OGrEEToOGrEE, IARConverter):
         pathToConfFile = f"{dirname(__file__)}/../../.conf.json"
 
         if debug:
-            label = ["A106A", "pinq01"]  # debug
+            label = debug.split(".")  # debug
 
         else:
             regexp, roomList, type, background, colorRange = ReadConf(
