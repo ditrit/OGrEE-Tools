@@ -281,7 +281,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         """
         templates = []
         childrenOgree = []
-
+        fbx = []
         if parent_dctrack["tiClass"] == "Cabinet":
             childrenDctrack = self.PostJSON(
                 "api/v2/quicksearch/items",
