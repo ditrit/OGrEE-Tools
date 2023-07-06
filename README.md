@@ -144,5 +144,5 @@ python AR/source/Server.py [-h] [--verbose {INFO,WARNING,ERROR,DEBUG}] [--debug]
    Arguments                            | Description
   --------------------------------------|---------------------------    
   `-h`, `--help`                        | show this help message and exit
-  `--verbose {INFO,WARNING,ERROR,DEBUG}`| Specify the verbose level
+  `--verbose {INFO,WARNING,ERROR,DEBUG}`| Specify the verbosity level
   `--debug`                             | Specify a room and rack name with [ROOM].[RACK] format
