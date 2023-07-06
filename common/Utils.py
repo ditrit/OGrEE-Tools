@@ -25,12 +25,8 @@ def ReadEnv(pathToEnvFile: str) -> tuple[str, dict[str, str], str]:
     if file_exists:
         f = open(pathToEnvFile, "r")
         data = json.load(f)
-        url = data["api_url"]
-        token = data["api_token"]
-        headers = {"Authorization": token}
-        database = data["database"]
         f.close()
-        return url, headers, database
+        return data
     else:
         log.warning(
             "Cannot find .env.json file in the root (GetUrlAndToken in ogLblUtils.py)"
@@ -91,30 +87,6 @@ def ReadConf(
     else:
         log.warning("Cannot find .conf.json File in root (ReadConf in Utils.py) : "+pathToRegexFile)
         sys.exit()
-
-
-#####################################################################################################################
-#####################################################################################################################
-
-
-def CustomerAndSiteSpliter(customerAndSite: str) -> tuple[str, str]:
-    """
-    Split MYCUST.SITE into MYCUST, SITE
-
-    :param str customerAndSite: customer and site name
-    :returns: customer and site name, separated
-    :rtype: tuple[str,str]
-    """
-    customerSiteList = customerAndSite.split(".")
-    try:
-        customer = customerSiteList[0]
-        site = customerSiteList[1]
-    except BaseException:
-        log.error(
-            "Site not correct. Please provide a site with the following syntax : MYCUST.MYSITE"
-        )
-        sys.exit()
-    return customer, site
 
 
 #####################################################################################################################

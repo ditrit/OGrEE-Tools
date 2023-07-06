@@ -16,7 +16,7 @@ from AR.source.interfaces.IARConverter import (
 )
 from AR.source.ocr.LabelProcessing import ReaderCroppedAndFullImage
 from AR.source.ODBC import GetPosition, GetRoomOrientation
-from common.Utils import CustomerAndSiteSpliter, ReadConf
+from common.Utils import ReadConf
 from Converter.source.classes.OGrEEToOGrEE import OGrEEToOGrEE
 from Converter.source.fbx.FbxBuilder import CreateFBX
 
@@ -210,7 +210,7 @@ class AROGrEEToOGrEE(OGrEEToOGrEE, IARConverter):
 
 
     def RackSearch(
-        self, img: ndarray, customerAndSite: str, deviceType: str, debug: bool = False
+        self, img: ndarray, domain : str, site : str, deviceType: str, debug: bool = False
     ) -> str:
         """Perform OCR on a picture for a rack label, gets its info from OGrEE and convert it to OGrEE format
 
@@ -225,10 +225,7 @@ class AROGrEEToOGrEE(OGrEEToOGrEE, IARConverter):
         """
         ocrResults = []
         label = None
-
         start = time()
-        # Split the customer name and the site name
-        customer, site = CustomerAndSiteSpliter(customerAndSite)
 
         # Read RegexFile to have all infos
         pathToConfFile = f"{dirname(__file__)}/../../.conf.json"
@@ -238,12 +235,11 @@ class AROGrEEToOGrEE(OGrEEToOGrEE, IARConverter):
 
         else:
             regexp, roomList, type, background, colorRange = ReadConf(
-                pathToConfFile, customer, site, deviceType
+                pathToConfFile, domain, site, deviceType
             )
             for i in range(len(regexp)):
-                site, label, ocrResults = ReaderCroppedAndFullImage(
+                label, ocrResults = ReaderCroppedAndFullImage(
                     img,
-                    site,
                     regexp[i],
                     deviceType,
                     background[i],
@@ -257,20 +253,20 @@ class AROGrEEToOGrEE(OGrEEToOGrEE, IARConverter):
             return "Rack label could not be read"
 
         try:
-            domainData = self.GetDomain(customer)
+            domainData = self.GetDomain(domain)
             siteData = self.GetSite(site)
             buildingData, roomData, templates1 = self.GetBuildingAndRoom(
                 siteData, label[0]
             )
             rackData, templates2, fbx = self.GetRack(roomData, label[1])
-            siteData = self.UpdateDomainRec(siteData,customer)
-            buildingData = self.UpdateDomainRec(buildingData,customer)
-            roomData = self.UpdateDomainRec(roomData,customer)
-            rackData = self.UpdateDomainRec(rackData,customer)
+            siteData = self.UpdateDomainRec(siteData,domain)
+            buildingData = self.UpdateDomainRec(buildingData,domain)
+            roomData = self.UpdateDomainRec(roomData,domain)
+            rackData = self.UpdateDomainRec(rackData,domain)
             # Setting the data to send to Unity App
             dictionary = {
                 "domain": OgreeMessage.FormatDict(domainData),
-                "domainName": customer,
+                "domainName": domain,
                 "site": OgreeMessage.FormatDict(siteData),
                 "siteName": site,
                 "building": OgreeMessage.FormatDict(buildingData),
@@ -290,7 +286,7 @@ class AROGrEEToOGrEE(OGrEEToOGrEE, IARConverter):
             # Debug
             dictionary = {
                 "domain": domainData,
-                "domainName": customer,
+                "domainName": domain,
                 "site": siteData,
                 "siteName": site,
                 "building": buildingData,
