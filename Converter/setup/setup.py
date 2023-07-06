@@ -9,7 +9,7 @@ def PrintError(str):
     print(f'\033[91m{str}\033[0m')
 
 required_version = (3,10) # Only
-if tuple(map(int,platform.python_version_tuple()))[:2] == required_version:
+if tuple(map(int,platform.python_version_tuple()))[:2] != required_version:
     PrintError("Please use python 3.10, aborting.")
     sys.exit(1)
 
