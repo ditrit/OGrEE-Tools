@@ -1,6 +1,8 @@
 # Set up
 
-For each tool, there is a `setup` folder. Run `python setup.py` - **${\color{red}Check \space the \space ReadMe \space of \space each \space script \space to \space know \space wich \space python \space version \space to \space use.}$** 
+For each tool, there is a `setup` folder. Run `python setup.py`
+
+:warning: **${\color{red}Check \space the \space ReadMe \space of \space each \space script \space to \space know \space wich \space python \space version \space to \space use.}$** 
 
 Each setup script will create or modify a [virtual environment](https://docs.python.org/3/library/venv.html), located in `/.venv/`. The setup script will also activate the virtual environment after completion. To deactivate it, type `deactivate`. To reactivate it after, type `./.venv/Script/activate` for Windows or `./.venv/bin/activate` for Linux in the root of the repository.
 
@@ -127,3 +129,20 @@ python GenTiles.py [-h] --json JSON [--out OUT] [--angle ANGLE] [--offset OFFSET
 
 # AR
 
+Python server for the AR version of OGrEE-3D, reads a rack label from a picture using OCR, performs requests to an OGrEE or dcTrack database and uses the Converter tool to send the rack data back to the AR client.
+
+[Check the ReadMe for more details.](AR/README.md)
+
+## Usage
+
+```console
+python AR/source/Server.py [-h] [--verbose {INFO,WARNING,ERROR,DEBUG}] [--debug]
+```
+
+### Options
+
+   Arguments                            | Description
+  --------------------------------------|---------------------------    
+  `-h`, `--help`                        | show this help message and exit
+  `--verbose {INFO,WARNING,ERROR,DEBUG}`| Specify the verbose level
+  `--debug`                             | Specify a room and rack name with [ROOM].[RACK] format
