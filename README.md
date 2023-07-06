@@ -1,6 +1,6 @@
 # Set up
 
-For each tool, there is a `setup` folder. Run `windows/setup.ps1` with PowerShell or `linux/setup.sh` depending on your OS. Each setup script will create or modify a [virtual environment](https://docs.python.org/3/library/venv.html), located in `/.venv/`. The setup script will also activate the virtual environment after completion. To deactivate it, type `deactivate`. To reactivate it after, type `./.venv/Script/activate` for Windows or `./.venv/bin/activate` for Linux in the root of the repository.
+For each tool, there is a `setup` folder. Run `python setup.py` with **python 3.10 or newer** . Each setup script will create or modify a [virtual environment](https://docs.python.org/3/library/venv.html), located in `/.venv/`. The setup script will also activate the virtual environment after completion. To deactivate it, type `deactivate`. To reactivate it after, type `./.venv/Script/activate` for Windows or `./.venv/bin/activate` for Linux in the root of the repository.
 When executing python script in the virtual environment, only use `python`, not `python3` or `python3.10` to be sure to use the environment python.
 # Converter
 

@@ -261,9 +261,9 @@ def CreateFBX(
     """
     Build an FBX file containing a box mesh with up to six textured faces
 
-    :param float width: The width of the model
-    :param float height: The height of the model
-    :param float depth: The depth of the model
+    :param float width: The width of the model (cm)
+    :param float height: The height of the model (cm)
+    :param float depth: The depth of the model (cm)
     :param str name: the name given to the FBX file
     :param str front: the path to the picture of the front face
     :param str back: the path to the picture of the back face
@@ -281,6 +281,12 @@ def CreateFBX(
     right = defaultPicture if right == "" else right
     top = defaultPicture if top == "" else top
     bottom = defaultPicture if bottom == "" else bottom
+    print(f"picture front : {front}")
+    print(f"picture back : {back}")
+    print(f"picture left : {left}")
+    print(f"picture right : {right}")
+    print(f"picture top : {top}")
+    print(f"picture bottom : {bottom}")
 
     manager, scene = FbxCommon.InitializeSdkObjects()
     cubeMesh = addCube(
@@ -296,6 +302,7 @@ def CreateFBX(
     cubeNode.AddMaterial(CreateMaterial(manager, "", bottom))
 
     FbxCommon.SaveScene(manager, scene, f"{realpath(outputPath)}/{name}.fbx", pEmbedMedia=True)
+    print(f"FBX saved at {realpath(outputPath)}/{name}.fbx")
     return f"{realpath(outputPath)}/{name}.fbx"
 
 
@@ -305,7 +312,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--WDH",
-        help="""width,depth,height (cm)""",
+        help="""width,depth,height (mm)""",
         required=True,
     )
     parser.add_argument("--name", help="""name of the fbx""", default="FBXmodel")
@@ -346,9 +353,9 @@ if __name__ == "__main__":
                 args["right"] = file
     CreateFBX(
         name=args["name"],
-        width=wdh[0],
-        depth=wdh[1],
-        height=wdh[2],
+        width=wdh[0]/10,
+        depth=wdh[1]/10,
+        height=wdh[2]/10,
         front=args["front"],
         back=args["back"],
         left=args["left"],
