@@ -339,7 +339,8 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
             childTemplate = self.BuildTemplate(childModel)
             childTemplate["fbxModel"] = "true" if childfbx != "" else ""
             templates.append(childTemplate)
-            fbx = [childfbx] if childfbx != "" else []
+            if childfbx != "":
+                fbx.append(childfbx)
 
             childJson["parentId"] = parent_dctrack["id"]
             childJson["sizeWDHmm"] = childTemplate["sizeWDHmm"]
