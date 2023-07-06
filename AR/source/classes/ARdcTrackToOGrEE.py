@@ -264,7 +264,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         rackData["children"] = children
         fbx = {}
 
-        for path in fbxPaths:
+        for path in set(fbxPaths):  # remove duplicates
             with open(path, "rb") as fbxFile:
                 fbx[basename(path)] = b64encode(fbxFile.read()).decode("ascii")
         return rackData, templates, fbx
@@ -281,7 +281,6 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         """
         templates = []
         childrenOgree = []
-        fbx = []
 
         if parent_dctrack["tiClass"] == "Cabinet":
             childrenDctrack = self.PostJSON(
@@ -340,7 +339,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
             childTemplate = self.BuildTemplate(childModel)
             childTemplate["fbxModel"] = "true" if childfbx != "" else ""
             templates.append(childTemplate)
-            fbx.append(childfbx)
+            fbx = [childfbx] if childfbx != "" else []
 
             childJson["parentId"] = parent_dctrack["id"]
             childJson["sizeWDHmm"] = childTemplate["sizeWDHmm"]
