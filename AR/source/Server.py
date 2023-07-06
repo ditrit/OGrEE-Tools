@@ -103,8 +103,8 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--debug",
-        help="""debugging""",
-        action="store_true",
+        help="""Specify a room and rack name with [ROOM].[NAME] format""",
+        default=""
     )
     args = vars(parser.parse_args())
     numeric_level = getattr(logging, args["verbose"].upper())

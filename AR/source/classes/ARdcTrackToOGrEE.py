@@ -393,7 +393,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         return templates, childrenOgree, fbx
 
     def RackSearch(
-        self, img: ndarray, domain: str, site: str, deviceType: str, debug: bool = False
+        self, img: ndarray, domain: str, site: str, deviceType: str, debug: str = ""
     ) -> str:
         """Perform OCR on a picture for a rack label, gets its info from dcTrack and convert it to OGrEE format
 
@@ -417,7 +417,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
             pathToConfFile, domain, site, deviceType
         )
         if debug:
-            label = ["C8", "B12"]  # debug
+            label = debug.split(".")  # debug
 
         else:
             for i in range(len(regexp)):
