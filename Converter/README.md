@@ -13,7 +13,7 @@ cd OGrEE-Tools/
 ```
 
 ## Set up the virtual environment
-We are using Python **3.10 or newer**.
+We are using Python **${\color{red}3.10 \space{}only}$**.
 
 ```
 python Converter/setup/setup.py
