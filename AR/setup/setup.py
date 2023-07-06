@@ -1,4 +1,5 @@
 from logging import root
+from ntpath import realpath
 import sys
 import platform
 
@@ -29,9 +30,11 @@ if sys.platform.startswith('win'):  # Windows
     os.system("color") #To output pretty colors
     pythonExe = f"{envDir}\\Scripts\\python.exe"
     wheel = "fbx-2020.3.4-cp310-none-win_amd64.whl"
+    venvActivationCommand = f".venv\\Script\\activate"
 else:  # Unix/Linux/Mac
     pythonExe = f"{envDir}/bin/python"
     wheel = "fbx-2020.3.4-cp310-cp310-manylinux1_x86_64.whl"
+    venvActivationCommand = f". .venv/bin/activate"
 
 Print("Creating virtual environment...")
 venv.create(envDir, with_pip=True)
@@ -66,4 +69,4 @@ except Exception as e:
     PrintError(f"Error while writing {packageDir}/OGrEE-Tools.pth")
     raise e
 
-print('\033[92mDone !\033[0m')
+print(f'\033[92mDone ! You can start the virtual environment by typing "{venvActivationCommand}" from {rootDir}. To deactivate it, just type "deactivate" from anywhere\033[0m')

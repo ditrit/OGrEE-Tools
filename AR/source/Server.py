@@ -98,7 +98,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--verbose",
         choices=["INFO", "WARNING", "ERROR", "DEBUG"],
-        help="""Specify the verbose level""",
+        help="""Specify the verbosity level""",
         default="INFO",
     )
     parser.add_argument(
