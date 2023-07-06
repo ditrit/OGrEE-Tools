@@ -42,20 +42,18 @@ def ReadPicture()->str:
             # content to get form parameter
             log.info("Beginning the processing of the image...")
             img = request.files["labelRack"].read()
-            customerAndSite = request.form["tenantName"]
             deviceType = request.form["deviceType"]
 
             # Convert byte-like image into a numpy array, then into an array usable with opencv
             nparr = np.frombuffer(img, np.ubyte)
             img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
-            pathToEnvFile = f"{os.path.dirname(__file__)}/../.env.json"
-            url, headers, database = Utils.ReadEnv(pathToEnvFile)
-            if database.lower() == "dctrack":
-                converter = ARdcTrackToOGrEE(url, headers, {"Content-Type": "application/json"})
+            env = Utils.ReadEnv(os.path.realpath(f"{os.path.dirname(__file__)}/../.env.json"))
+            if env["database"].lower() == "dctrack":
+                converter = ARdcTrackToOGrEE(env["api_url"], env["headers"], {"Content-Type": "application/json"})
             else :
-                converter = AROGrEEToOGrEE(url, headers, {"Content-Type": "application/json"})
-            return converter.RackSearch(img, customerAndSite, deviceType,args["debug"])
+                converter = AROGrEEToOGrEE(env["api_url"], env["headers"], {"Content-Type": "application/json"})
+            return converter.RackSearch(img, env["domain"],env["site"], deviceType,args["debug"])
     except Exception:
         traceback.print_exc()
         return traceback.format_exc()

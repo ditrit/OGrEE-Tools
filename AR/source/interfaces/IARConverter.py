@@ -87,7 +87,7 @@ class IARConverter(ABC):
 
     @abstractmethod
     def RackSearch(
-        self, img: ndarray, customerAndSite: str, deviceType: str, debug: bool
+        self, img: ndarray, domain : str, site : str, deviceType: str, debug: bool = False
     ) -> str:
         """Perform OCR on a picture to get a rack name, then build the data describing him
 
