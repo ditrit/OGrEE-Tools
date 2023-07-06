@@ -103,7 +103,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--debug",
-        help="""Specify a room and rack name with [ROOM].[NAME] format""",
+        help="""Specify a room and rack name with [ROOM].[RACK] format""",
         default=""
     )
     args = vars(parser.parse_args())
