@@ -117,7 +117,6 @@ def PostJSON(
     try:
         test = response.json()
     except:
-        print("test")
         raise Exception(
             f"Could not retrieve [status code = {response.status_code}] data from response: {response.content}"
         )
