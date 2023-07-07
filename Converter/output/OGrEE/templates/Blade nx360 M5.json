@@ -1,0 +1,19 @@
+{
+    "slug": "blade-nx360-m5",
+    "description": "IBM",
+    "category": "device",
+    "sizeWDHmm": [
+        215.9,
+        657.86,
+        44.45
+    ],
+    "fbxModel": "",
+    "attributes": {
+        "vendor": "IBM",
+        "model": "Blade nx360 M5",
+        "type": ""
+    },
+    "colors": [],
+    "components": [],
+    "slots": []
+}

@@ -60,6 +60,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         self.AROutputPath = (
             realpath(AROutputPath) if AROutputPath is not None else defaultAROutputPath
         )
+        self.createdFbxPaths = {}
         super().__init__(url, headersGET, headersPOST, outputPath, **kw)
 
     def GetDomain(self, domainName: str) -> dict[str, Any]:
@@ -72,7 +73,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         data = {"name": domainName, "id": domainName}
         return self.BuildDomain(data)
 
-    def GetSite(self, locationName: str) -> dict[str, Any]:
+    def GetSite(self, domainData:dict[str,Any], locationName: str) -> dict[str, Any]:
         """Get site informations from dcTrack
 
         :param locationName: name of the location of the site in dcTrack
@@ -106,6 +107,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
             )
         siteData = searchResults[0]
         siteData["attributes"] = {"orientation": "NW"}
+        siteData["domain"] = domainData["name"]
         return self.BuildSite(siteData)
 
     def GetBuildingAndRoom(
@@ -440,7 +442,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
 
         try:
             domainData = self.GetDomain(domain)
-            siteData = self.GetSite(site)
+            siteData = self.GetSite(domainData,site)
             buildingData, roomData = self.GetBuildingAndRoom(siteData, label[0])
             rackData, templates, fbx = self.GetRack(roomData, label[1])
             # Setting the data to send to Unity App
@@ -502,6 +504,9 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         :return: the path to an fbx model or "" if no picture were found in dcTrack
         :rtype: str
         """
+        fbxName = data["model"].replace(" ", "-").replace(".", "-").lower()
+        if fbxName in self.createdFbxPaths.keys():
+            return self.createdFbxPaths[fbxName]
         endpointBack = f"/gdcitdz/images/devices/rearpngimages/{data['modelId']}_R.png"
         endpointFront = (
             f"/gdcitdz/images/devices/frontpngimages/{data['modelId']}_F.png"
@@ -518,14 +523,17 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
                 newPic.write(backPic)
         if frontPic == b"" and backPic == b"":
             return ""
-        return CreateFBX(
+        
+        fbxPath = CreateFBX(
             width=data["dimWidth"] / 10,
             height=data["dimHeight"] / 10,
             depth=data["dimDepth"] / 10,
             front=frontPath if frontPic != b"" else "",
             back=backPath if backPic != b"" else "",
-            name=data["model"].replace(" ", "-").replace(".", "-").lower(),
+            name=fbxName,
         )
+        self.createdFbxPaths[fbxName] = fbxPath
+        return fbxPath
 
     def GetList(self):
         """Not implemented"""
