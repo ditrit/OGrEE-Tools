@@ -3,9 +3,6 @@ AR.source.ocr namespace
 
 .. py:module:: AR.source.ocr
 
-Submodules
-----------
-
 AR.source.ocr.LabelProcessing module
 ------------------------------------
 

@@ -45,18 +45,20 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Converter.html">Converter namespace</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="AR.html">AR namespace</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="AR.source.html">AR.source namespace</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="AR.source.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="AR.source.classes.html">AR.source.classes namespace</a></li>
-<li class="toctree-l4"><a class="reference internal" href="AR.source.interfaces.html">AR.source.interfaces namespace</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">AR.source.ocr namespace</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="AR.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="AR.source.classes.html">AR.source.classes namespace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="AR.source.interfaces.html">AR.source.interfaces namespace</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">AR.source.ocr namespace</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-AR.source.ocr.LabelProcessing">AR.source.ocr.LabelProcessing module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-AR.source.ocr.OCR">AR.source.ocr.OCR module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-AR.source.ocr.ShapeDetector">AR.source.ocr.ShapeDetector module</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="AR.source.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="AR.source.html#module-AR.source.Server">AR.source.Server module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="AR.source.html#module-AR.source.ogLabelReader">AR.source.ogLabelReader module</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="AR.html#module-AR.source.Server">AR.source.Server module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AR.html#module-AR.source.ogLabelReader">AR.source.ogLabelReader module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AR.html#module-AR.source.ODBC">AR.source.ODBC module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="NonSquareRooms.html">NonSquareRooms namespace</a></li>
@@ -77,7 +79,6 @@
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="AR.html">AR namespace</a></li>
-          <li class="breadcrumb-item"><a href="AR.source.html">AR.source namespace</a></li>
       <li class="breadcrumb-item active">AR.source.ocr namespace</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/AR.source.ocr.rst.txt" rel="nofollow"> View page source</a>
@@ -90,15 +91,12 @@
              
   <section id="module-AR.source.ocr">
 <span id="ar-source-ocr-namespace"></span><h1>AR.source.ocr namespace<a class="headerlink" href="#module-AR.source.ocr" title="Permalink to this heading"></a></h1>
-<section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
-</section>
 <section id="module-AR.source.ocr.LabelProcessing">
 <span id="ar-source-ocr-labelprocessing-module"></span><h2>AR.source.ocr.LabelProcessing module<a class="headerlink" href="#module-AR.source.ocr.LabelProcessing" title="Permalink to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="AR.source.ocr.LabelProcessing.ReaderCroppedAndFullImage">
-<span class="sig-prename descclassname"><span class="pre">AR.source.ocr.LabelProcessing.</span></span><span class="sig-name descname"><span class="pre">ReaderCroppedAndFullImage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regexp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ocrResults</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AR.source.ocr.LabelProcessing.ReaderCroppedAndFullImage" title="Permalink to this definition"></a></dt>
-<dd><p>Call ogLblShapeDetector to crop the image, call ReaderOneImageRecursive on the cropped image and on the full image if not succesfull to read the label. Returns the site, a list containing all characters in the image satisfying the different part ot the regexp and a list containing all characters that were read on the image to be used if a new regexp is used on the same image.</p>
+<span class="sig-prename descclassname"><span class="pre">AR.source.ocr.LabelProcessing.</span></span><span class="sig-name descname"><span class="pre">ReaderCroppedAndFullImage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regexp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ocrResults</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AR.source.ocr.LabelProcessing.ReaderCroppedAndFullImage" title="Permalink to this definition"></a></dt>
+<dd><p>Call ogLblShapeDetector to crop the image, call ReaderOneImageRecursive on the cropped image and on the full image if not succesfull to read the label. Returns a list containing all characters in the image satisfying the different part ot the regexp and a list containing all characters that were read on the image to be used if a new regexp is used on the same image.</p>
 </dd></dl>
 
 <dl class="py function">
