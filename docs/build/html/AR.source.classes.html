@@ -19,7 +19,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="AR.source.interfaces namespace" href="AR.source.interfaces.html" />
-    <link rel="prev" title="AR.source namespace" href="AR.source.html" /> 
+    <link rel="prev" title="AR namespace" href="AR.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -45,17 +45,18 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Converter.html">Converter namespace</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="AR.html">AR namespace</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="AR.source.html">AR.source namespace</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="AR.source.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l4 current"><a class="current reference internal" href="#">AR.source.classes namespace</a></li>
-<li class="toctree-l4"><a class="reference internal" href="AR.source.interfaces.html">AR.source.interfaces namespace</a></li>
-<li class="toctree-l4"><a class="reference internal" href="AR.source.ocr.html">AR.source.ocr namespace</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="AR.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">AR.source.classes namespace</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-AR.source.classes.AROGrEEToOGrEE">AR.source.classes.AROGrEEToOGrEE module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-AR.source.classes.ARdcTrackToOGrEE">AR.source.classes.ARdcTrackToOGrEE module</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="AR.source.html#module-AR.source.Server">AR.source.Server module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="AR.source.html#module-AR.source.ogLabelReader">AR.source.ogLabelReader module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="AR.source.interfaces.html">AR.source.interfaces namespace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="AR.source.ocr.html">AR.source.ocr namespace</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="AR.html#module-AR.source.Server">AR.source.Server module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AR.html#module-AR.source.ogLabelReader">AR.source.ogLabelReader module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="NonSquareRooms.html">NonSquareRooms namespace</a></li>
@@ -76,7 +77,6 @@
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="AR.html">AR namespace</a></li>
-          <li class="breadcrumb-item"><a href="AR.source.html">AR.source namespace</a></li>
       <li class="breadcrumb-item active">AR.source.classes namespace</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/AR.source.classes.rst.txt" rel="nofollow"> View page source</a>
@@ -90,7 +90,7 @@
   <section id="module-AR.source.classes">
 <span id="ar-source-classes-namespace"></span><h1>AR.source.classes namespace<a class="headerlink" href="#module-AR.source.classes" title="Permalink to this heading"></a></h1>
 <section id="module-AR.source.classes.AROGrEEToOGrEE">
-<span id="ar-source-classes-arnetboxtoogree-module"></span><h2>AR.source.classes.ARNetBoxtoOGrEE module<a class="headerlink" href="#module-AR.source.classes.AROGrEEToOGrEE" title="Permalink to this heading"></a></h2>
+<span id="ar-source-classes-arogreetoogree-module"></span><h2>AR.source.classes.AROGrEEToOGrEE module<a class="headerlink" href="#module-AR.source.classes.AROGrEEToOGrEE" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="AR.source.classes.AROGrEEToOGrEE.AROGrEEToOGrEE">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">AR.source.classes.AROGrEEToOGrEE.</span></span><span class="sig-name descname"><span class="pre">AROGrEEToOGrEE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headersGET</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headersPOST</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputPath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">AROutputPath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AR.source.classes.AROGrEEToOGrEE.AROGrEEToOGrEE" title="Permalink to this definition"></a></dt>
@@ -416,7 +416,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="AR.source.html" class="btn btn-neutral float-left" title="AR.source namespace" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="AR.html" class="btn btn-neutral float-left" title="AR namespace" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="AR.source.interfaces.html" class="btn btn-neutral float-right" title="AR.source.interfaces namespace" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

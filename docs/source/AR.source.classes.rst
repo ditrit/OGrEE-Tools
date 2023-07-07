@@ -3,7 +3,7 @@ AR.source.classes namespace
 
 .. py:module:: AR.source.classes
 
-AR.source.classes.ARNetBoxtoOGrEE module
+AR.source.classes.AROGrEEToOGrEE module
 ----------------------------------------
 
 .. automodule:: AR.source.classes.AROGrEEToOGrEE
