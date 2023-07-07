@@ -73,7 +73,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         data = {"name": domainName, "id": domainName}
         return self.BuildDomain(data)
 
-    def GetSite(self, locationName: str) -> dict[str, Any]:
+    def GetSite(self, domainData:dict[str,Any], locationName: str) -> dict[str, Any]:
         """Get site informations from dcTrack
 
         :param locationName: name of the location of the site in dcTrack
@@ -107,6 +107,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
             )
         siteData = searchResults[0]
         siteData["attributes"] = {"orientation": "NW"}
+        siteData["domain"] = domainData["name"]
         return self.BuildSite(siteData)
 
     def GetBuildingAndRoom(
@@ -441,7 +442,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
 
         try:
             domainData = self.GetDomain(domain)
-            siteData = self.GetSite(site)
+            siteData = self.GetSite(domainData,site)
             buildingData, roomData = self.GetBuildingAndRoom(siteData, label[0])
             rackData, templates, fbx = self.GetRack(roomData, label[1])
             # Setting the data to send to Unity App
