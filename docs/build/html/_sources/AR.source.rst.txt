@@ -13,9 +13,6 @@ Subpackages
    AR.source.interfaces
    AR.source.ocr
 
-Submodules
-----------
-
 AR.source.Server module
 -----------------------
 

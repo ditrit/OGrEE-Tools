@@ -3,9 +3,6 @@ Converter.source.interfaces namespace
 
 .. py:module:: Converter.source.interfaces
 
-Submodules
-----------
-
 Converter.source.interfaces.IToNetBox module
 --------------------------------------------
 

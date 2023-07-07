@@ -3,9 +3,6 @@ Converter.source.fbx namespace
 
 .. py:module:: Converter.source.fbx
 
-Submodules
-----------
-
 Converter.source.fbx.FbxBuilder module
 --------------------------------------
 

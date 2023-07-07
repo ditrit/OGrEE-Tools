@@ -3,9 +3,6 @@ NonSquareRooms namespace
 
 .. py:module:: NonSquareRooms
 
-Submodules
-----------
-
 NonSquareRooms.GenTiles module
 ------------------------------
 

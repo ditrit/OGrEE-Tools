@@ -18,7 +18,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="AR.source namespace" href="AR.source.html" />
+    <link rel="next" title="AR.source.classes namespace" href="AR.source.classes.html" />
     <link rel="prev" title="Converter.source.interfaces namespace" href="Converter.source.interfaces.html" /> 
 </head>
 
@@ -45,7 +45,23 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Converter.html">Converter namespace</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">AR namespace</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="AR.source.html">AR.source namespace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="AR.source.classes.html">AR.source.classes namespace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="AR.source.interfaces.html">AR.source.interfaces namespace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="AR.source.ocr.html">AR.source.ocr namespace</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-AR.source.Server">AR.source.Server module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#AR.source.Server.GetList"><code class="docutils literal notranslate"><span class="pre">GetList()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#AR.source.Server.GetTest"><code class="docutils literal notranslate"><span class="pre">GetTest()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#AR.source.Server.ReadPicture"><code class="docutils literal notranslate"><span class="pre">ReadPicture()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-AR.source.ogLabelReader">AR.source.ogLabelReader module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#AR.source.ogLabelReader.ObjectList"><code class="docutils literal notranslate"><span class="pre">ObjectList()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#AR.source.ogLabelReader.RackSearch"><code class="docutils literal notranslate"><span class="pre">RackSearch()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="NonSquareRooms.html">NonSquareRooms namespace</a></li>
@@ -75,42 +91,81 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-AR">
-<span id="ar-namespace"></span><h1>AR namespace<a class="headerlink" href="#module-AR" title="Permalink to this heading"></a></h1>
+  <section id="module-AR.source">
+<span id="ar-namespace"></span><h1>AR namespace<a class="headerlink" href="#module-AR.source" title="Permalink to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="AR.source.html">AR.source namespace</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="AR.source.html#subpackages">Subpackages</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="AR.source.classes.html">AR.source.classes namespace</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="AR.source.classes.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="AR.source.classes.html#module-AR.source.classes.ARNetBoxtoOGrEE">AR.source.classes.ARNetBoxtoOGrEE module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="AR.source.classes.html#module-AR.source.classes.ARdcTrackToOGrEE">AR.source.classes.ARdcTrackToOGrEE module</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="AR.source.interfaces.html">AR.source.interfaces namespace</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="AR.source.interfaces.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="AR.source.interfaces.html#module-AR.source.interfaces.IARConverter">AR.source.interfaces.IARConverter module</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="AR.source.ocr.html">AR.source.ocr namespace</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="AR.source.ocr.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="AR.source.ocr.html#module-AR.source.ocr.LabelProcessing">AR.source.ocr.LabelProcessing module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="AR.source.ocr.html#module-AR.source.ocr.OCR">AR.source.ocr.OCR module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="AR.source.ocr.html#module-AR.source.ocr.ShapeDetector">AR.source.ocr.ShapeDetector module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AR.source.classes.html">AR.source.classes namespace</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="AR.source.classes.html#module-AR.source.classes.AROGrEEToOGrEE">AR.source.classes.ARNetBoxtoOGrEE module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="AR.source.classes.html#AR.source.classes.AROGrEEToOGrEE.AROGrEEToOGrEE"><code class="docutils literal notranslate"><span class="pre">AROGrEEToOGrEE</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.classes.html#AR.source.classes.AROGrEEToOGrEE.AROGrEEToOGrEE.DownloadFbx"><code class="docutils literal notranslate"><span class="pre">AROGrEEToOGrEE.DownloadFbx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.classes.html#AR.source.classes.AROGrEEToOGrEE.AROGrEEToOGrEE.GetBuildingAndRoom"><code class="docutils literal notranslate"><span class="pre">AROGrEEToOGrEE.GetBuildingAndRoom()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.classes.html#AR.source.classes.AROGrEEToOGrEE.AROGrEEToOGrEE.GetDomain"><code class="docutils literal notranslate"><span class="pre">AROGrEEToOGrEE.GetDomain()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.classes.html#AR.source.classes.AROGrEEToOGrEE.AROGrEEToOGrEE.GetList"><code class="docutils literal notranslate"><span class="pre">AROGrEEToOGrEE.GetList()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.classes.html#AR.source.classes.AROGrEEToOGrEE.AROGrEEToOGrEE.GetRack"><code class="docutils literal notranslate"><span class="pre">AROGrEEToOGrEE.GetRack()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.classes.html#AR.source.classes.AROGrEEToOGrEE.AROGrEEToOGrEE.GetSite"><code class="docutils literal notranslate"><span class="pre">AROGrEEToOGrEE.GetSite()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.classes.html#AR.source.classes.AROGrEEToOGrEE.AROGrEEToOGrEE.GetTemplatesAndFbxRec"><code class="docutils literal notranslate"><span class="pre">AROGrEEToOGrEE.GetTemplatesAndFbxRec()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.classes.html#AR.source.classes.AROGrEEToOGrEE.AROGrEEToOGrEE.MakeFBX"><code class="docutils literal notranslate"><span class="pre">AROGrEEToOGrEE.MakeFBX()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.classes.html#AR.source.classes.AROGrEEToOGrEE.AROGrEEToOGrEE.RackSearch"><code class="docutils literal notranslate"><span class="pre">AROGrEEToOGrEE.RackSearch()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.classes.html#AR.source.classes.AROGrEEToOGrEE.AROGrEEToOGrEE.UpdateDomainRec"><code class="docutils literal notranslate"><span class="pre">AROGrEEToOGrEE.UpdateDomainRec()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="AR.source.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AR.source.html#module-AR.source.Server">AR.source.Server module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="AR.source.html#AR.source.Server.GetList"><code class="docutils literal notranslate"><span class="pre">GetList()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="AR.source.html#AR.source.Server.GetTest"><code class="docutils literal notranslate"><span class="pre">GetTest()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="AR.source.html#AR.source.Server.ReadPicture"><code class="docutils literal notranslate"><span class="pre">ReadPicture()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="AR.source.classes.html#module-AR.source.classes.ARdcTrackToOGrEE">AR.source.classes.ARdcTrackToOGrEE module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="AR.source.classes.html#AR.source.classes.ARdcTrackToOGrEE.ARdcTrackToOGrEE"><code class="docutils literal notranslate"><span class="pre">ARdcTrackToOGrEE</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.classes.html#AR.source.classes.ARdcTrackToOGrEE.ARdcTrackToOGrEE.GetBuildingAndRoom"><code class="docutils literal notranslate"><span class="pre">ARdcTrackToOGrEE.GetBuildingAndRoom()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.classes.html#AR.source.classes.ARdcTrackToOGrEE.ARdcTrackToOGrEE.GetChildren"><code class="docutils literal notranslate"><span class="pre">ARdcTrackToOGrEE.GetChildren()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.classes.html#AR.source.classes.ARdcTrackToOGrEE.ARdcTrackToOGrEE.GetDomain"><code class="docutils literal notranslate"><span class="pre">ARdcTrackToOGrEE.GetDomain()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.classes.html#AR.source.classes.ARdcTrackToOGrEE.ARdcTrackToOGrEE.GetList"><code class="docutils literal notranslate"><span class="pre">ARdcTrackToOGrEE.GetList()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.classes.html#AR.source.classes.ARdcTrackToOGrEE.ARdcTrackToOGrEE.GetRack"><code class="docutils literal notranslate"><span class="pre">ARdcTrackToOGrEE.GetRack()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.classes.html#AR.source.classes.ARdcTrackToOGrEE.ARdcTrackToOGrEE.GetSite"><code class="docutils literal notranslate"><span class="pre">ARdcTrackToOGrEE.GetSite()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.classes.html#AR.source.classes.ARdcTrackToOGrEE.ARdcTrackToOGrEE.MakeFBX"><code class="docutils literal notranslate"><span class="pre">ARdcTrackToOGrEE.MakeFBX()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.classes.html#AR.source.classes.ARdcTrackToOGrEE.ARdcTrackToOGrEE.RackSearch"><code class="docutils literal notranslate"><span class="pre">ARdcTrackToOGrEE.RackSearch()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="AR.source.html#module-AR.source.ogLabelReader">AR.source.ogLabelReader module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="AR.source.html#AR.source.ogLabelReader.ObjectList"><code class="docutils literal notranslate"><span class="pre">ObjectList()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="AR.source.html#AR.source.ogLabelReader.RackSearch"><code class="docutils literal notranslate"><span class="pre">RackSearch()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="AR.source.interfaces.html">AR.source.interfaces namespace</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="AR.source.interfaces.html#module-AR.source.interfaces.IARConverter">AR.source.interfaces.IARConverter module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="AR.source.interfaces.html#AR.source.interfaces.IARConverter.IARConverter"><code class="docutils literal notranslate"><span class="pre">IARConverter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.interfaces.html#AR.source.interfaces.IARConverter.IARConverter.GetList"><code class="docutils literal notranslate"><span class="pre">IARConverter.GetList()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.interfaces.html#AR.source.interfaces.IARConverter.IARConverter.MakeFBX"><code class="docutils literal notranslate"><span class="pre">IARConverter.MakeFBX()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.interfaces.html#AR.source.interfaces.IARConverter.IARConverter.RackSearch"><code class="docutils literal notranslate"><span class="pre">IARConverter.RackSearch()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="AR.source.interfaces.html#AR.source.interfaces.IARConverter.IncorrectResponseError"><code class="docutils literal notranslate"><span class="pre">IncorrectResponseError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="AR.source.interfaces.html#AR.source.interfaces.IARConverter.OgreeMessage"><code class="docutils literal notranslate"><span class="pre">OgreeMessage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.interfaces.html#AR.source.interfaces.IARConverter.OgreeMessage.FormatDict"><code class="docutils literal notranslate"><span class="pre">OgreeMessage.FormatDict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.interfaces.html#AR.source.interfaces.IARConverter.OgreeMessage.data"><code class="docutils literal notranslate"><span class="pre">OgreeMessage.data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.interfaces.html#AR.source.interfaces.IARConverter.OgreeMessage.message"><code class="docutils literal notranslate"><span class="pre">OgreeMessage.message</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="AR.source.interfaces.html#AR.source.interfaces.IARConverter.OgreeMessage.status"><code class="docutils literal notranslate"><span class="pre">OgreeMessage.status</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="AR.source.ocr.html">AR.source.ocr namespace</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="AR.source.ocr.html#module-AR.source.ocr.LabelProcessing">AR.source.ocr.LabelProcessing module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="AR.source.ocr.html#AR.source.ocr.LabelProcessing.ReaderCroppedAndFullImage"><code class="docutils literal notranslate"><span class="pre">ReaderCroppedAndFullImage()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="AR.source.ocr.html#AR.source.ocr.LabelProcessing.ReaderOneImageRecursive"><code class="docutils literal notranslate"><span class="pre">ReaderOneImageRecursive()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="AR.source.ocr.html#module-AR.source.ocr.OCR">AR.source.ocr.OCR module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="AR.source.ocr.html#AR.source.ocr.OCR.PerformOCR"><code class="docutils literal notranslate"><span class="pre">PerformOCR()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="AR.source.ocr.html#AR.source.ocr.OCR.ReplaceSymbol"><code class="docutils literal notranslate"><span class="pre">ReplaceSymbol()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="AR.source.ocr.html#AR.source.ocr.OCR.ReturnMatch"><code class="docutils literal notranslate"><span class="pre">ReturnMatch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="AR.source.ocr.html#AR.source.ocr.OCR.cleanup_text"><code class="docutils literal notranslate"><span class="pre">cleanup_text()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="AR.source.ocr.html#module-AR.source.ocr.ShapeDetector">AR.source.ocr.ShapeDetector module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="AR.source.ocr.html#AR.source.ocr.ShapeDetector.HexaToRGB"><code class="docutils literal notranslate"><span class="pre">HexaToRGB()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="AR.source.ocr.html#AR.source.ocr.ShapeDetector.ShapeAndColorDetector"><code class="docutils literal notranslate"><span class="pre">ShapeAndColorDetector()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -118,13 +173,96 @@
 </ul>
 </div>
 </section>
+<section id="module-AR.source.Server">
+<span id="ar-source-server-module"></span><h2>AR.source.Server module<a class="headerlink" href="#module-AR.source.Server" title="Permalink to this heading"></a></h2>
+<p><strong>Start an http server on localhost:5002</strong></p>
+<dl class="py function">
+<dt class="sig sig-object py" id="AR.source.Server.GetList">
+<span class="sig-prename descclassname"><span class="pre">AR.source.Server.</span></span><span class="sig-name descname"><span class="pre">GetList</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#AR.source.Server.GetList" title="Permalink to this definition"></a></dt>
+<dd><p>Reads incoming data from Unity and call ogLabelReader to process it.
+Returns a list of the names of the children of an object if the request was to get them</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a serialised JSON containing the requested data</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="AR.source.Server.GetTest">
+<span class="sig-prename descclassname"><span class="pre">AR.source.Server.</span></span><span class="sig-name descname"><span class="pre">GetTest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#AR.source.Server.GetTest" title="Permalink to this definition"></a></dt>
+<dd><p>Allows to test the connexion</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the message “connected to the OGrEE-CONVERTER”</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="AR.source.Server.ReadPicture">
+<span class="sig-prename descclassname"><span class="pre">AR.source.Server.</span></span><span class="sig-name descname"><span class="pre">ReadPicture</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#AR.source.Server.ReadPicture" title="Permalink to this definition"></a></dt>
+<dd><p>Reads incoming data from Unity and call ogLabelReader to process it.
+Returns a json containing tenant,site,building,room and rack if the request was to read a label</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a serialised JSON containing the requested data</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-AR.source.ogLabelReader">
+<span id="ar-source-oglabelreader-module"></span><h2>AR.source.ogLabelReader module<a class="headerlink" href="#module-AR.source.ogLabelReader" title="Permalink to this heading"></a></h2>
+<p><strong>Can be run independently with args to read a label in a photo</strong></p>
+<dl class="py function">
+<dt class="sig sig-object py" id="AR.source.ogLabelReader.ObjectList">
+<span class="sig-prename descclassname"><span class="pre">AR.source.ogLabelReader.</span></span><span class="sig-name descname"><span class="pre">ObjectList</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AR.source.ogLabelReader.ObjectList" title="Permalink to this definition"></a></dt>
+<dd><section id="not-yet-implemented">
+<h3><strong>Not yet implemented</strong><a class="headerlink" href="#not-yet-implemented" title="Permalink to this heading"></a></h3>
+<p>Get all children of an object in a database (ie all sites of a tenant, all racks of a room,…)</p>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="AR.source.ogLabelReader.RackSearch">
+<span class="sig-prename descclassname"><span class="pre">AR.source.ogLabelReader.</span></span><span class="sig-name descname"><span class="pre">RackSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">customerAndSite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deviceType</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#AR.source.ogLabelReader.RackSearch" title="Permalink to this definition"></a></dt>
+<dd><p>Read the config file, then call the correct Converter to get necessary data from the image</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> (<em>numpy.ndarray</em>) – a numpy array containing an image in bytes</p></li>
+<li><p><strong>customerAndSite</strong> (<em>str</em>) – the name of the customer/tenant and the site where the rack is in the format {customer}.{site}</p></li>
+<li><p><strong>deviceType</strong> (<em>str</em>) – either “rack” or “mdi”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a serialised dictionnary of serialised OgreeMessage’s instances</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="Converter.source.interfaces.html" class="btn btn-neutral float-left" title="Converter.source.interfaces namespace" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="AR.source.html" class="btn btn-neutral float-right" title="AR.source namespace" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="AR.source.classes.html" class="btn btn-neutral float-right" title="AR.source.classes namespace" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

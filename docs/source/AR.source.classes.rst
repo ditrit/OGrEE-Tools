@@ -3,13 +3,10 @@ AR.source.classes namespace
 
 .. py:module:: AR.source.classes
 
-Submodules
-----------
-
 AR.source.classes.ARNetBoxtoOGrEE module
 ----------------------------------------
 
-.. automodule:: AR.source.classes.ARNetBoxtoOGrEE
+.. automodule:: AR.source.classes.AROGrEEToOGrEE
    :members:
    :undoc-members:
    :show-inheritance:

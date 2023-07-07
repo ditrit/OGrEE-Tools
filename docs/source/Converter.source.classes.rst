@@ -3,9 +3,6 @@ Converter.source.classes namespace
 
 .. py:module:: Converter.source.classes
 
-Submodules
-----------
-
 Converter.source.classes.BaseConverter module
 ---------------------------------------------
 
