@@ -87,7 +87,7 @@ class IARConverter(ABC):
 
     @abstractmethod
     def RackSearch(
-        self, img: ndarray, domain : str, site : str, deviceType: str, debug: str = False
+        self, img: ndarray, domain : str, site : str, deviceType: str, debug: str = ""
     ) -> str:
         """Perform OCR on a picture to get a rack name, then build the data describing him
 
@@ -97,6 +97,8 @@ class IARConverter(ABC):
         :type customerAndSite: str
         :param deviceType: "rack" or "mdi"
         :type deviceType: str
+        :param debug: if not empty, the function will skip picture read and will use this argument value as "ROOMNAME.RACKNAME"
+        :type debug: str
         :return: the data describing a rack
         :rtype: str
         """

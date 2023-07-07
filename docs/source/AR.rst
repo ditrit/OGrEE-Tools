@@ -28,3 +28,11 @@ AR.source.ogLabelReader module
    :members:
    :undoc-members:
    :show-inheritance:
+
+AR.source.ODBC module
+------------------------------
+
+.. automodule:: AR.source.ODBC
+   :members:
+   :undoc-members:
+   :show-inheritance:

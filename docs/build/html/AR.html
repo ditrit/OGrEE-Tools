@@ -62,6 +62,12 @@
 <li class="toctree-l3"><a class="reference internal" href="#AR.source.ogLabelReader.RackSearch"><code class="docutils literal notranslate"><span class="pre">RackSearch()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#module-AR.source.ODBC">AR.source.ODBC module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#AR.source.ODBC.GetPosition"><code class="docutils literal notranslate"><span class="pre">GetPosition()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#AR.source.ODBC.GetRoomOrientation"><code class="docutils literal notranslate"><span class="pre">GetRoomOrientation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#AR.source.ODBC.Init"><code class="docutils literal notranslate"><span class="pre">Init()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="NonSquareRooms.html">NonSquareRooms namespace</a></li>
@@ -250,6 +256,74 @@ Returns a json containing tenant,site,building,room and rack if the request was 
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-AR.source.ODBC">
+<span id="ar-source-odbc-module"></span><h2>AR.source.ODBC module<a class="headerlink" href="#module-AR.source.ODBC" title="Permalink to this heading"></a></h2>
+<p>ODBC module for dcTrack</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="AR.source.ODBC.GetPosition">
+<span class="sig-prename descclassname"><span class="pre">AR.source.ODBC.</span></span><span class="sig-name descname"><span class="pre">GetPosition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rackName</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rackID</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#AR.source.ODBC.GetPosition" title="Permalink to this definition"></a></dt>
+<dd><p>Get the position of a rack in its room</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rackName</strong> (<em>str</em><em>, </em><em>optional</em>) – name of the rack, used if rackID is None, defaults to None</p></li>
+<li><p><strong>rackID</strong> (<em>str</em><em>, </em><em>optional</em>) – ID of the rack, used if not None, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If rackName and rackID are None</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list containing the MinY, MinX and Frontfaces lines of the rack</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="AR.source.ODBC.GetRoomOrientation">
+<span class="sig-prename descclassname"><span class="pre">AR.source.ODBC.</span></span><span class="sig-name descname"><span class="pre">GetRoomOrientation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roomName</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">roomID</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#AR.source.ODBC.GetRoomOrientation" title="Permalink to this definition"></a></dt>
+<dd><p>Get the orientation of a room</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>roomName</strong> (<em>str</em><em>, </em><em>optional</em>) – name of the room, used if roomID is None, defaults to None</p></li>
+<li><p><strong>roomID</strong> (<em>str</em><em>, </em><em>optional</em>) – ID of the room, used if not None, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If roomName and roomID are None</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list containing the OrientationNorthSouth and OrientationEastWest lines of the room</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="AR.source.ODBC.Init">
+<span class="sig-prename descclassname"><span class="pre">AR.source.ODBC.</span></span><span class="sig-name descname"><span class="pre">Init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pwd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'raritan'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">driver</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'{PostgreSQL</span> <span class="pre">ANSI}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'2235'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AR.source.ODBC.Init" title="Permalink to this definition"></a></dt>
+<dd><p>Initialise the ODBC connection</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>server</strong> (<em>str</em>) – server address</p></li>
+<li><p><strong>uid</strong> (<em>str</em>) – user ODBC login</p></li>
+<li><p><strong>pwd</strong> (<em>str</em>) – user ODBC password</p></li>
+<li><p><strong>database</strong> (<em>str</em><em>, </em><em>optional</em>) – database name, defaults to “raritan”</p></li>
+<li><p><strong>driver</strong> (<em>str</em><em>, </em><em>optional</em>) – driver name, defaults to “{PostgreSQL ANSI}”</p></li>
+<li><p><strong>port</strong> (<em>str</em><em>, </em><em>optional</em>) – port number, defaults to “2235”</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>

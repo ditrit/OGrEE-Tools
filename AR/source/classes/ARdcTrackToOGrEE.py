@@ -76,6 +76,8 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
     def GetSite(self, domainData:dict[str,Any], locationName: str) -> dict[str, Any]:
         """Get site informations from dcTrack
 
+        :param domainData: data of the site's domain
+        :type domainData: dict[str,Any]
         :param locationName: name of the location of the site in dcTrack
         :type locationName: str
         :raises IncorrectResponseError: if the site was not found in dcTrack
@@ -405,6 +407,8 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         :type customerAndSite: str
         :param deviceType: "rack" or "mdi"
         :type deviceType: str
+        :param debug: if not empty, the function will skip picture read and will use this argument value as "ROOMNAME.RACKNAME"
+        :type debug: str
         :return: a serialised message of OGrEE format containing all the data required to load the rack on OGrEE-3D-AR
         :rtype: str
         """

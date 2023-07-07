@@ -57,6 +57,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="AR.html#module-AR.source.Server">AR.source.Server module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="AR.html#module-AR.source.ogLabelReader">AR.source.ogLabelReader module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AR.html#module-AR.source.ODBC">AR.source.ODBC module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="NonSquareRooms.html">NonSquareRooms namespace</a></li>
@@ -236,6 +237,7 @@
 <li><p><strong>img</strong> (<em>ndarray</em>) – the picture where the rack label is</p></li>
 <li><p><strong>customerAndSite</strong> (<em>str</em>) – [CUSTOMER].[SITE]</p></li>
 <li><p><strong>deviceType</strong> (<em>str</em>) – “rack” or “mdi”</p></li>
+<li><p><strong>debug</strong> (<em>str</em>) – if not empty, the function will skip picture read and will use this argument value as “ROOMNAME.RACKNAME”</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -355,7 +357,10 @@
 <dd><p>Get site informations from dcTrack</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>locationName</strong> (<em>str</em>) – name of the location of the site in dcTrack</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>domainData</strong> (<em>dict</em><em>[</em><em>str</em><em>,</em><em>Any</em><em>]</em>) – data of the site’s domain</p></li>
+<li><p><strong>locationName</strong> (<em>str</em>) – name of the location of the site in dcTrack</p></li>
+</ul>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference internal" href="AR.source.interfaces.html#AR.source.interfaces.IARConverter.IncorrectResponseError" title="AR.source.interfaces.IARConverter.IncorrectResponseError"><strong>IncorrectResponseError</strong></a> – if the site was not found in dcTrack</p>
@@ -396,6 +401,7 @@
 <li><p><strong>img</strong> (<em>ndarray</em>) – the picture where the rack label is</p></li>
 <li><p><strong>customerAndSite</strong> (<em>str</em>) – [CUSTOMER].[SITE]</p></li>
 <li><p><strong>deviceType</strong> (<em>str</em>) – “rack” or “mdi”</p></li>
+<li><p><strong>debug</strong> (<em>str</em>) – if not empty, the function will skip picture read and will use this argument value as “ROOMNAME.RACKNAME”</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
