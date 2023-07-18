@@ -10,7 +10,7 @@ import tools
 #import parallelmethode
 import numpy as np
 from skimage.feature import CENSURE,peak_local_max
-
+import sys
 
 class Classifiers:
     def clvga_rs232(self):
@@ -25,7 +25,7 @@ class Classifiers:
         Returns:
             Coordinates of vga and rs232 in the picture.
         """
-        ACCURACY = 8
+        ACCURACY = 20
 
         detector = CENSURE(min_scale=1, max_scale=7, mode='DoB', non_max_threshold=0.15, line_threshold=10)
         std_fvga, _ = tools.imfeature(self._vga, self._mask, detector)
@@ -38,29 +38,34 @@ class Classifiers:
         matrix_vga = np.zeros([(self._image.shape[0]-104)//ACCURACY, (self._image.shape[1]-289)//ACCURACY])
         matrix_rs232 = np.zeros([(self._image.shape[0]-104)//ACCURACY, (self._image.shape[1]-289)//ACCURACY])
         for i in range(mx):
+            print("\r", end="")
+            print("Searching progress: {}%: ".format(int(i/mx*100)), "▋" * int(i * 50 /mx), end="")
+            sys.stdout.flush()
             for j in range(my):
                 # Take a patch
                 piece = self._image[i*ACCURACY:i*ACCURACY+105, j*ACCURACY:j*ACCURACY+290]
                 feature_dark, feature_light = tools.imfeature(piece, self._mask, detector)
-                # k-l divergence
-                #matrix_vga[i,j] = tools.patchsimilarity(feature_dark,std_fvga)
-                #matrix_rs232[i,j] = tools.patchsimilarity(feature_light,std_frs232)
-
+                pin_dark = tools.Pins(feature_dark)
+                pin_light = tools.Pins(feature_light)
                 # gaussian describe
-                matrix_vga[i, j] = tools.gaussiansimilarity(feature_dark, fvga_des)
-                matrix_rs232[i, j] = tools.gaussiansimilarity(feature_light, frs232_des)
-
-                print("finish ", i*ACCURACY, " ", j*ACCURACY, "  vga: ", matrix_vga[i, j])
-        vga_list = ACCURACY*peak_local_max((matrix_vga-np.min(matrix_vga))/(np.max(matrix_vga)-np.min(matrix_vga))
-                                           , threshold_abs=0.96, min_distance=3)
-        rs232_list = ACCURACY*peak_local_max((matrix_rs232-np.min(
-                matrix_rs232))/(np.max(matrix_rs232)-np.min(matrix_rs232)), threshold_rel=0.97)
-        vga_list = [(i[1],i[0],0) for i in vga_list]
-        rs232_list = [(i[1], i[0], 0) for i in rs232_list]
+                matrix_vga[i, j] = tools.modsimilarity(pin_dark.destribution(), fvga_des.destribution())
+                matrix_rs232[i, j] = tools.modsimilarity(pin_light.destribution(), frs232_des.destribution())
+                #print("finish ", i*ACCURACY, " ", j*ACCURACY, "  vga: ", matrix_vga[i, j])
+        print('\n')
+        vga_list = peak_local_max((matrix_vga-np.min(matrix_vga))/(np.max(matrix_vga)-np.min(matrix_vga))
+                                           , threshold_abs=0.97, min_distance=1)
+        rs232_list = peak_local_max((matrix_rs232-np.min(matrix_rs232))/(np.max(matrix_rs232)-np.min(matrix_rs232))
+                                             , threshold_rel=0.97, min_distance=1)
+        vga_list = [(h*ACCURACY, w*ACCURACY, 0, matrix_vga[h, w]) for h, w in vga_list]
+        rs232_list = [(h*ACCURACY, w*ACCURACY, 0, matrix_rs232[h, w]) for h, w in rs232_list]
         tools.drawcomponents(self._image, vga_list, 290, 105)
         tools.drawcomponents(self._image, rs232_list, 290, 105)
         print("vga in :", vga_list)
         print("rs232 in :", rs232_list)
+        for x, y, ang, sim in vga_list:
+            self.components[(x, y)] = ("vga", ang, sim)
+        for x, y, ang, sim in rs232_list:
+            self.components[(x, y)] = ("rs232", ang, sim)
 
     def clvga_rs232gpu(self):
         import torch
@@ -146,10 +151,11 @@ class Classifiers:
 
         template_e = tools.imedge(self._rj45)
         image_e = tools.imedge(self._image)
-        position = tools.template_match(image_e, template_e, threshold, min_distance)
-        print(position)
-        for x, y, orin in position:
-            self.components[(x, y)] = ("rj45", orin)
+        position_sim = tools.template_match(image_e, template_e, threshold, min_distance)
+        print(position_sim)
+        for x, y, ang, sim in position_sim:
+            self.components[(x, y)] = ("rj45", ang, sim)
+
 
 
     def clusb(self):
@@ -166,12 +172,26 @@ class Classifiers:
         Returns:
             Coordinates of rj45 in the picture.
         """
-        #rectangles = tools.find_rectangle1(self._image, 120, 52, 2)  # usb: width =13.15mm, height = 5.70
+        rectangles = tools.find_rectangle1(self._image, 120, 50, 2)  # usb: width =13.15mm, height = 5.70
+        if rectangles:
+            for i in range(len(rectangles)):
+                x, y = rectangles[i]
+                sim = tools.modsimilarity(self._image[x:x+120, y:y+50], self._usb)
+                rectangles[i] = (x, y, 90, sim)
+                self.components[(x, y)] = ('usb', 90, sim)
+            tools.drawcomponents(self._image, rectangles, 120, 50)
         rectangles = tools.find_rectangle_(self._image, 120, 50, 2)  # usb: width =13.15mm, height = 5.70
+        if rectangles:
+            for i in range(len(rectangles)):
+                x, y = rectangles[i]
+                sim = tools.modsimilarity(self._image[x:x+120, y:y+50], self._usb)
+                rectangles[i] = (x, y, 0, sim)
+                self.components[(x, y)] = ('usb', 0, sim)
+            tools.drawcomponents(self._image, rectangles, 120, 50)
         #for x, y, orin in rectangles:
         #    self.components[(x, y)] = ("usb", orin)
-        print(rectangles)
-        tools.drawcomponents(self._image, rectangles, 120, 52)
+
+
         '''
         min_distance = 40
         threshold = 0.45
@@ -212,6 +232,21 @@ class Classifiers:
                 if tools.in_rectangle(i, j):
                     print("source position is :  ", j)
 
+    def addComponents(self, pred, name=0, angle=0):
+        """
+        Add components by other method, such as yolov. It can also be a coordinate marked by hand.
+
+        Args:
+            compos: a tensor or nd.array of components
+        """
+        # pred: [class, sim,x,y,x,y]
+        class_dic = {0: 'slot_normal', 1: 'slot_lp', 2: 'disk_sff', 3: 'disk_lff', 4: 'source'}
+
+        for i in pred:
+            if name == 0:
+                name = class_dic[int(i[0])]
+            self.components[tuple(np.floor(i[4:6].numpy()*self._image.shape))] = (name, angle, i[1])
+
     def describe(self):
         """
         Generate JSON text of components in dict self.components
@@ -239,5 +274,4 @@ class Classifiers:
         self._usb = tools.imageload('/standard/standard-usb.png', 'grey')
         self._c14 = tools.imageload('/standard/standard-c14.png', 'grey')
         self.components = dict()
-
-
+        tools.rgbview(self._image)

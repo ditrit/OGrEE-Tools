@@ -2,7 +2,7 @@ from skimage.color.colorconv import rgba2rgb, rgb2hsv, rgb2gray, hsv2rgb
 import matplotlib.pyplot as plt
 from matplotlib import cm
 import numpy as np
-from skimage.io import imshow, imread
+from skimage.io import imshow, imread, imsave
 from skimage.feature import match_template, peak_local_max
 from skimage.feature import canny
 from skimage import filters
@@ -15,7 +15,6 @@ import torch
 
 # special constant for all the function
 RATIO = 781/85.4  # pixel/mm = 9.145
-
 
 def imageload(f, flag="color"):
     """
@@ -62,7 +61,11 @@ def preprocess(image: np.ndarray):
     image[:, :, 1] = exposure.equalize_hist(image[:, :, 1])
     image[:, :, 2] = exposure.equalize_hist(image[:, :, 2])
     return image
-
+def scaleim(slotname,height,ratio):
+    image = imageload(slotname, flag="color")
+    image_s = rescale(image, height * ratio / image.shape[0],channel_axis=2)
+    image_s = (image_s * 255.0).astype('uint8')
+    return image_s
 
 def rgbview(image: np.ndarray):
     """
@@ -86,7 +89,7 @@ def rgbview(image: np.ndarray):
         ax[1].set_title('Grayscale Image', fontsize=15)
         ax[2].set_title('Sobel edge', fontsize=15)
         plt.show()
-    elif image.shape[-1] == 1:
+    elif len(image.shape)==2:
         image_e = filters.sobel(image)
         fig, ax = plt.subplots(2, 1, figsize=(20, 8))
         ax[0].imshow(image, cmap='gray')
@@ -209,7 +212,7 @@ def patchsimilarity(pfeatures, std):
 
 # Pour Gaussian similarity
 class Pins:
-    def proba(self, idx):
+    def destribution(self):
         """
         Compute the value of a 2D Gaussian distribution at given x, y coordinates.
 
@@ -220,7 +223,7 @@ class Pins:
         Returns:
             a float similarity value, the bigger, the more similar
         """
-        return self.z[idx[0], idx[1]]
+        return self.z
 
     def gaussian_2d(self,x, y, mu):
         """
@@ -244,15 +247,15 @@ class Pins:
     def __init__(self, idxs):
         x = np.linspace(0, 289, 290)
         y = np.linspace(0, 104, 105)
-        self.SIGMA = np.array([[100, 0], [0, 100]])
-        peaks = [{'mu': np.array([i[0], i[1]])} for i in idxs]
+        self.SIGMA = np.array([[50, 0], [0, 50]])
+        peaks = [{'mu': np.array([i[1], i[0]])} for i in idxs]   #################### warning index inversed
         self.z = np.zeros((len(y), len(x)))
         self.num = len(idxs)
         for peak in peaks:
             self.z += self.gaussian_2d(x, y, peak['mu'])
 
 
-def gaussiansimilarity(pfeatures, std):
+def modsimilarity(x, y):
     """
     Compare the similarity between patch and standard model by their features using 2D Gaussian pins model.
 
@@ -261,22 +264,29 @@ def gaussiansimilarity(pfeatures, std):
         std: features of the standard patch model.
 
     Returns:
-        Return a value of similarity (>0, but not strictly <1) .
+        Return pfeatures value of similarity (>0, but not strictly <1) .
     """
-    sim = 0
-    penality = 0.9**abs(pfeatures.shape[0] - std.num)
-    sim += sum([std.proba(i) for i in pfeatures.tolist()])
-    #if sim>0.5:
-    #    print(sim)
-    '''
-    match = match_descriptors(pfeature, std_pattern, metric=None, p=2, cross_check=False)
-    distance = -10*(std_pattern.shape[0]-match.shape[0])
-    for i,j in match:
-        distance += -np.linalg.norm(pfeature[i]-std_pattern[j])
-    distance = distance- 10 * abs(pfeature.shape[0] - std_pattern.shape[0])
-    return distance
-    '''
-    return sim * penality
+    if np.any(x == 0):
+        return 0.0
+    else:
+        # Flatten the input arrays
+        x = np.ravel(x)
+        y = np.ravel(y)
+
+        # Compute the FFT
+        fft_x = np.fft.fft(x)
+        fft_y = np.fft.fft(y)
+
+        # Compute the correlation coefficient in the frequency domain
+        cross_power_spectrum = np.real(np.conj(fft_x) * fft_y)
+        auto_power_spectrum_x = np.real(np.conj(fft_x) * fft_x)
+        auto_power_spectrum_y = np.real(np.conj(fft_y) * fft_y)
+
+        correlation_coefficient = np.sum(cross_power_spectrum) / np.sqrt(
+            np.sum(auto_power_spectrum_x) * np.sum(auto_power_spectrum_y)
+        )
+
+    return correlation_coefficient
 
 
 def imedge(image):
@@ -367,7 +377,7 @@ def find_rectangle1(image_g, height, length, line_gap=10):
             if abs(p4[0] - p3[0]) < 0.5*DEVIATION:
                 for ln in lines_:
                     if hit_inzone(ln, (p2, p1)) and hit_inzone(ln, (p3, p4)):
-                        rectangles.append((p2[0], p2[1], 90))
+                        rectangles.append(p2)
                         break
     return rectangles
 
@@ -428,9 +438,8 @@ def find_rectangle_(image_g, length, height, line_gap=10):
                 if abs(abs(p4[1] - p1[1]) - height) < DEVIATION:
                     for ln in lines1:
                         if hit_inzone(ln, (p1, p2)) and hit_inzone(ln, (p4, p3)):
-                            rectangles.append((p1[0], p1[1], 0))
+                            rectangles.append(p1)
                             break
-
     return rectangles
 
 
@@ -528,7 +537,7 @@ def template_match(image, template, threshold, mindis):
                 maybe just a parameter.
 
     Returns:
-        Points of the upper left corner.
+        Points of the upper left corner, in(height, length, angle, similarity).
     """
     image = filters.gaussian(image, sigma=1.5)
     positions = []
@@ -538,7 +547,7 @@ def template_match(image, template, threshold, mindis):
         sample_mt = match_template(image, template)
         tmp = peak_local_max(np.squeeze(sample_mt), threshold_abs=threshold, min_distance=mindis).tolist()
         if tmp:
-            positions += [(x, y, 270-90*_) for x, y in tmp]
+            positions += [(x, y, 270-90*_,sample_mt[x,y]) for x, y in tmp]   # (height, width, angle, similarity)
     drawcomponents(image, positions, template_weight, template_height)
     return positions
 
@@ -562,18 +571,19 @@ def drawcomponents(image, positions, template_width, template_height, sample_mt=
         fig = plt.figure(figsize=(10, 8))
         ax = fig.add_subplot(111)
         ax.imshow(image, cmap='gray')
-        for x, y, n in positions:
+        for x, y, n, sim in positions:    #(height, width, angle, similarity)
             w, h = template_width, template_height
             for _ in range(n//90):
                 w, h = h, w
-            rect = plt.Rectangle((x, y), w, h, color='r',
-                                 fc='none')
+            rect = plt.Rectangle((y, x), w, h, color='r', fc='none')
             ax.add_patch(rect)
         ax.set_title('Grayscale', fontsize=15)
+        fig.savefig("D:/Work/OGREE/detect/exp2/gif.png")
+        plt.show()
     else:
         fig, ax = plt.subplots(2, 1, figsize=(10, 8))
         ax[0].imshow(image, cmap='gray')
-        for x, y, n in positions:
+        for x, y, n, sim in positions:
             w, h = template_width, template_height
             for _ in range(n//90):
                 w, h = h, w
@@ -583,8 +593,8 @@ def drawcomponents(image, positions, template_width, template_height, sample_mt=
         ax[0].set_title('Grayscale', fontsize=15)
         ax[1].imshow(sample_mt, cmap='magma')
         ax[1].set_title('Template Matching', fontsize=15)
-    plt.show()
-
+        fig.savefig("D:/Work/OGREE/detect/exp2/gif.png")
+        plt.show()
 
 def calibrateear(components, shapepix, shapemm):
     """
@@ -610,6 +620,8 @@ def calibrateear(components, shapepix, shapemm):
             newpos[key] = value
         return newpos
 
+def imagesave(image,path):
+    imsave(image,path)
 
 def jsonwrite(coordinate, path):
     """
@@ -625,7 +637,7 @@ def jsonwrite(coordinate, path):
     with open(path, 'r+') as file:
         depth = 0  # en pixel
         p = json.load(file)
-        posWDH = [int(coordinate[0]/RATIO), int(depth/RATIO), int(coordinate[1]/RATIO)]
+        posWDH = [int(coordinate[1]/RATIO), int(depth/RATIO), int(coordinate[0]/RATIO)]
         p.update({"elemPos": posWDH})
         file.close()
         print(p)
