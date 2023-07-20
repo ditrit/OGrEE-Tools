@@ -1,17 +1,46 @@
-# 3d tools user guide
+# COMPOS user guide
 
-This is a user guide for 3d tools app, a powerful program which aide the 3d blender to generate the image of server with proper location of componants.   
+This is a user guide for COMPOS api, a powerful program who can locate the components on the board of server, output the coordinate in mm. After all, we can generate the model on the 2d face, then we put this face on the 3d model's front and back face.
 
-# Explaination
-## main.py
+## Requirement
+Infomation in `requirements.txt`
+
+## Introduction
+### main.py
 This is the general pilot of all the functions, and also the user interface.  
-Some parameters should be told before start the program. 
-> SLOTNAME : string  e.g SLOTNAME = "serveur/ibm-x3850x6.rear.png"
-> HEIGHT : float  e.g. HEIGHT = 172.8
-> LENGTH : float  e.g. LENGTH = 482.0
-> other parameters in need, non-exhaustive list
+Here is a minimum tutorial example. 
+```sh
+cd Compos path
+python main.py --slotname serveur/dell-poweredge-r720xd.rear.png --height 86.8 --length 482.4
+```
+Some basic parameters should be told before start the program. 
+> --slotname : string, the file name of image. 
+ --height : float, horizontal dimension, (unit mm).
+ --length : float, vertical dimension, (unit mm).
+>
+User can also just run the *main.py* in python consoler. In this case, a default server "dell-poweredge-r720xd.rear.png" will be shown.
 
-after setting all the parameters for classifier(this step can also be replaced by executing data base automatically in the future), the program will creat a classifier class named ogree, then go on each defined classifier. Use ogree.clxxxx to detect component xxxx. It doesn't need any input at this step.
+There are other parameters that the user can choose, to control algorithm's performance.  
+>    #yolov5 hyparameter
+    --weights, type:str, model path or triton URL, if not want to change the yolov model, don't use it!
+    --conf-thres, type:float, default=0.5, confidence threshold, yolov will filter the result less than it.
+    --iou-thres, type=float, default=0.45, 'NMS IoU threshold'
+    parser.add_argument('--device', default='', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
+    parser.add_argument('--view-img', action='store_true', help='if provided, show results')
+    parser.add_argument('--save-txt', action='store_true', help='if provided, save results to *.txt')
+    parser.add_argument('--save-conf', action='store_true', help='if provided, save confidences in --save-txt labels')
+    parser.add_argument('--save-crop', action='store_true', help='if provided, save cropped prediction boxes')
+    parser.add_argument('--nosave', action='store_true', help='if provided, do not save images/videos')
+    parser.add_argument('--augment', action='store_true', help='if provided, augmented inference')
+    parser.add_argument('--visualize', action='store_true', help='if provided, visualize features')
+    parser.add_argument('--project', default=ROOT / 'detect', help='save results to project/name')
+    parser.add_argument('--name', default='exp', help='save results to project/name')
+    parser.add_argument('--exist-ok', action='store_true', help='if provided, existing project/name ok, do not increment')
+    parser.add_argument('--line-thickness', default=1, type=int, help='bounding box thickness (pixels)')
+    parser.add_argument('--hide-labels', default=False, action='store_true', help='if provided, hide labels')
+    parser.add_argument('--hide-conf', default=False, action='store_true', help='if provided, hide confidences')
+>
+After setting all the parameters for classifier(this step can also be replaced by executing data base automatically in the future), the program will creat a classifier class named ogree, then go on each defined classifier. Use ogree.clxxxx to detect component xxxx. It doesn't need any input at this step.
 
 # Description of standard server (components): 
 ## standard image/components
