@@ -25,22 +25,24 @@ There are other parameters that the user can choose, to control algorithm's perf
     --weights, type:str, model path or triton URL, if not want to change the yolov model, don't use it!
     --conf-thres, type:float, default=0.5, confidence threshold, yolov will filter the result less than it.
     --iou-thres, type=float, default=0.45, 'NMS IoU threshold'
-    parser.add_argument('--device', default='', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
-    parser.add_argument('--view-img', action='store_true', help='if provided, show results')
-    parser.add_argument('--save-txt', action='store_true', help='if provided, save results to *.txt')
-    parser.add_argument('--save-conf', action='store_true', help='if provided, save confidences in --save-txt labels')
-    parser.add_argument('--save-crop', action='store_true', help='if provided, save cropped prediction boxes')
-    parser.add_argument('--nosave', action='store_true', help='if provided, do not save images/videos')
-    parser.add_argument('--augment', action='store_true', help='if provided, augmented inference')
-    parser.add_argument('--visualize', action='store_true', help='if provided, visualize features')
-    parser.add_argument('--project', default=ROOT / 'detect', help='save results to project/name')
-    parser.add_argument('--name', default='exp', help='save results to project/name')
-    parser.add_argument('--exist-ok', action='store_true', help='if provided, existing project/name ok, do not increment')
-    parser.add_argument('--line-thickness', default=1, type=int, help='bounding box thickness (pixels)')
-    parser.add_argument('--hide-labels', default=False, action='store_true', help='if provided, hide labels')
-    parser.add_argument('--hide-conf', default=False, action='store_true', help='if provided, hide confidences')
+    --device', default='cuda device, i.e. 0 or 0,1,2,3 or cpu'
+    --view-img', if provided, show results on screen. 
+    --save-txt', if provided, save results to *.txt'.
+    --save-conf', if provided, save confidences in --save-txt labels'
+    --save-crop', if provided, save cropped prediction boxes.
+    --nosave', if provided, do not save images/videos'
+    --augment', if provided, augmented inference'.
+    --visualize', if provided, visualize features.
+    --project', default=ROOT / 'detect', help='save results to project/name'
+    --name', default='exp', Save results to "project/name"
+    --exist-ok', If provided, existing project/name ok, do not increment, like exp1, exp2...
+    --line-thickness', default=1, type=int, Bounding box thickness (pixels)
+    --hide-labels', default=False, If provided, hide labels
+    --hide-conf', default=False, action='store_true', help='if provided, hide confidences
 >
 After setting all the parameters for classifier(this step can also be replaced by executing data base automatically in the future), the program will creat a classifier class named ogree, then go on each defined classifier. Use ogree.clxxxx to detect component xxxx. It doesn't need any input at this step.
+
+### Step
 
 # Description of standard server (components): 
 ## standard image/components
