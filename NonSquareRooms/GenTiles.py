@@ -218,18 +218,21 @@ def Draw(room: Polygon, tiles: list[Polygon], tileCoords: list[str]) -> None:
     fig.tight_layout()
     plot_polygon(ax, room, facecolor="white", edgecolor="black")
 
-    first_tile = tiles.pop(0)
-    first_coord = tileCoords.pop(0)
-    plot_polygon(ax, first_tile, facecolor="red", edgecolor="gray")
-    texts = [
-        plt.text(
-            first_tile.centroid.x,
-            first_tile.centroid.y,
-            first_coord,
-            ha="center",
-            size=4,
-        )
-    ]
+    if len(tiles) > 0:
+        first_tile = tiles.pop(0)
+        first_coord = tileCoords.pop(0)
+        plot_polygon(ax, first_tile, facecolor="red", edgecolor="gray")
+        texts = [
+            plt.text(
+                first_tile.centroid.x,
+                first_tile.centroid.y,
+                first_coord,
+                ha="center",
+                size=4,
+            )
+        ]
+    else :
+        texts = []
     for i in range(len(tiles)):
         plot_polygon(ax, tiles[i], facecolor="lightgreen", edgecolor="gray")
         texts.append(
@@ -293,7 +296,7 @@ def processJSON(
 
     room["area"] = round(roomPoly.area, 2)
     room["center"] = [round(roomPoly.centroid.x, 2), round(roomPoly.centroid.y, 2)]
-    room["tilesArea"] = round(tiles[0].area * len(tiles),2)
+    room["tilesArea"] = round(tiles[0].area * len(tiles), 2)
     room["tileAngle"] = angle
     room["tiles"] = new_tiles
     if outname is None:
