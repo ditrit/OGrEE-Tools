@@ -1,7 +1,6 @@
 import argparse
 import json
 import os
-import turtle
 
 import matplotlib.pyplot as plt
 import numpy
@@ -169,13 +168,6 @@ def GetBestTiling(room: Polygon, tileSize: float) -> tuple[list[Polygon], float]
             # check 10 different offsetX
             offsetX += tileSize / 10
     return (bestTiling, bestangle)
-
-
-# Move the pen without tracing
-def Move(pos: tuple[float, float], t: turtle.Turtle) -> None:
-    t.penup()
-    t.setposition(pos)
-    t.pendown()
 
 
 # https://stackoverflow.com/a/70533052
