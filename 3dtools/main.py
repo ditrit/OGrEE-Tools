@@ -1,10 +1,10 @@
 import tools
 from classifiers import Classifiers
-import torch.multiprocessing
 import argparse
 from pathlib import Path
 import api.yoloapi
 from skimage.io import imsave
+from os import remove
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]
@@ -17,8 +17,9 @@ if str(ROOT) not in sys.path:
 ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 '''
 def run(slotname ="serveur/dell-poweredge-r720xd.rear.png",
-        height=86.8,
-        length=482.4,
+        height=87.38,
+        length=443.99,
+        face='face',
         weights=ROOT/'api/best.pt',  # model path or triton URL
         data=ROOT / 'yolov5/data/serveur72.yaml',  # dataset.yaml path
         imgsz=(192, 768),  # inference size (height, width)
@@ -45,11 +46,10 @@ def run(slotname ="serveur/dell-poweredge-r720xd.rear.png",
         dnn=False,  # use OpenCV DNN for ONNX inference
         vid_stride=1,# video frame-rate stride
 ):
-    #torch.multiprocessing.freeze_support()
-    image = tools.imageload(slotname, "grey")
     #image = tools.impreprocess(image)
-    ogreeTools = Classifiers(image, height, length)
-    imsave('api/tmp.png', tools.scaleim(slotname, height, 2.0))
+    ogreeTools = Classifiers(slotname, height, length, face)
+    path = 'api/tmp' + slotname.split('/')[-1]
+    imsave(path, tools.scaleim(slotname, height, 2.0))
     # filter by class: --class 0, or --class 0 2 3
     class_dic = {'all': None, 'slot_normal': 0, 'slot_lp': 1, 'slot': [0, 1],
                  'disk_sff': 2, 'disk_lff': 3, 'disk': [2, 3], 'source': 4}
@@ -58,35 +58,42 @@ def run(slotname ="serveur/dell-poweredge-r720xd.rear.png",
         command = input()
         if command == "finish":
             break
-        elif command == "vga&rs232":
+        elif command == "d-sub":
             print("start detecting ", command)
             ogreeTools.clvga_rs232()
-        elif command == "rj45":
+        elif command == "idrac":
             print("start detecting ", command)
-            ogreeTools.clrj45()
+            ogreeTools.clidrac()
         elif command == "usb":
             print("start detecting ", command)
             ogreeTools.clusb()
         elif command in class_dic.keys():
             print("start detecting ", command)
-            pred = api.yoloapi.run(weights, 'api/tmp.png', data, imgsz, conf_thres, iou_thres, max_det, device, view_img,
+            pred = api.yoloapi.run(weights, path, data, imgsz, conf_thres, iou_thres, max_det, device, view_img,
                             save_txt, save_conf, save_crop, nosave, class_dic[command], agnostic_nms, augment, visualize, update,
                             project, name, exist_ok, line_thickness, hide_labels, hide_conf, half, dnn, vid_stride,)
             # pred: a list of tensor, each tensor represent a picture
-            ogreeTools.addComponents(pred.cpu())
-
+            ogreeTools.dl_addComponents(pred.cpu())
     ogreeTools.describe()
+    ogreeTools.writejson()
+    remove(path)
 
 
 def parse_opt():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--slotname', type=str, default="serveur/dell-poweredge-r720xd.rear.png", help='model path or triton URL')
-    parser.add_argument('--height', type=float, default=86.8, help="Server's height/vertical size" )
-    parser.add_argument('--length', type=float, default=482.4, help="Server's length/horizon size")
+    parser.add_argument('--slotname', type=str, default="YOLO_serveur/raw/ibm-x3650m5.rear.png", help='model path or triton URL')
+    parser.add_argument('--height', type=float, default=87.0, help="Server's height/vertical size" )
+    parser.add_argument('--length', type=float, default=434.0, help="Server's length/horizon size")
+    parser.add_argument('--face', default='rear', choices=['front', 'rear'],help='the picture is front bord or rear bord')
+
+    #parser.add_argument('--slotname', type=str, default="serveur/dell-poweredge-r720xd.rear.png", help='model path or triton URL')
+    #parser.add_argument('--height', type=float, default=87.38, help="Server's height/vertical size" )
+    #parser.add_argument('--length', type=float, default=443.99, help="Server's length/horizon size")
+    #parser.add_argument('--face', default='rear', choices=['front', 'rear'], help='the picture is front bord or rear bord')
     #yolov5 hyparameter
     parser.add_argument('--weights', nargs='+', type=str, default=ROOT/'api/best.pt', help='model path or triton URL')
-    parser.add_argument('--conf-thres', type=float, default=0.5, help='confidence threshold')
-    parser.add_argument('--iou-thres', type=float, default=0.45, help='NMS IoU threshold')
+    parser.add_argument('--conf-thres', type=float, default=0.50, help='confidence threshold')
+    parser.add_argument('--iou-thres', type=float, default=0.50, help='NMS IoU threshold')
     parser.add_argument('--device', default='', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
     parser.add_argument('--view-img', action='store_true', help='if provided, show results')
     parser.add_argument('--save-txt', action='store_true', help='if provided, save results to *.txt')
@@ -102,7 +109,6 @@ def parse_opt():
     parser.add_argument('--hide-labels', default=False, action='store_true', help='if provided, hide labels')
     parser.add_argument('--hide-conf', default=False, action='store_true', help='if provided, hide confidences')
     opt = parser.parse_args()
-
     return opt
 
 

@@ -10,11 +10,19 @@ from skimage import exposure
 from skimage.transform import rescale, rotate
 from skimage.transform import probabilistic_hough_line
 from itertools import combinations
-import json
 import torch
+import json
+# Functions for hierarchical clustering
+from scipy.cluster.hierarchy import linkage
+from scipy.cluster.hierarchy import fcluster
+import multiprocessing
+import sys
 
 # special constant for all the function
 RATIO = 781/85.4  # pixel/mm = 9.145
+SIZETABLE = {'idrac':[14.0,11.0,11.0],'usb':[13.0,14.0,5.5], 'vga':[16.0,11.0,8.0],'rs232':[16.0,11.0,8.0],
+             'slot_normal':[107.0,312.0,18.0],'slot_lp':[65.0,175.0,18.0],
+             'disk_lff':[101.0,146.0,26.0],'disk_sff':[70.0,101.0,10.0],'PSU':[90.0,100.0,40.0]}
 
 def imageload(f, flag="color"):
     """
@@ -37,11 +45,12 @@ def imageload(f, flag="color"):
     fn = "image/" + f
     if flag == 1:
         img = imread(fn, 1)  # (H x W), [0, 255]
+        print("3 channels RGB picture   ", f)
     else:
         img = imread(fn)    # (H x W x C), [0, 255], RGB
         if img.shape[-1] == 4:
             img = rgba2rgb(img)
-            print("4 channels picture  ", f)
+            print("4 channels RGBS picture  ", f)
         else:
             pass
     return img
@@ -61,11 +70,14 @@ def preprocess(image: np.ndarray):
     image[:, :, 1] = exposure.equalize_hist(image[:, :, 1])
     image[:, :, 2] = exposure.equalize_hist(image[:, :, 2])
     return image
+
+
 def scaleim(slotname,height,ratio):
     image = imageload(slotname, flag="color")
     image_s = rescale(image, height * ratio / image.shape[0],channel_axis=2)
     image_s = (image_s * 255.0).astype('uint8')
     return image_s
+
 
 def rgbview(image: np.ndarray):
     """
@@ -172,7 +184,6 @@ def imfeature(image, mask, detector):
                 idx.append(k)
         return np.delete(feature, idx, 0)
     image = image * mask
-    #image = torch.mm(image, mask)
     img_vag = filters.gaussian(image, sigma=1)
     img_inv = -img_vag + 1
     detector.detect(img_vag)
@@ -225,7 +236,7 @@ class Pins:
         """
         return self.z
 
-    def gaussian_2d(self,x, y, mu):
+    def gaussian_2d(self, width):
         """
         Compute the value of a 2D Gaussian distribution at given x, y coordinates.
 
@@ -238,21 +249,78 @@ class Pins:
         Returns:
             Value(s) of the 2D Gaussian distribution at the given coordinates.
         """
+        x = np.linspace(0, width-1, width)
+        y = np.linspace(0, width-1, width)
         X, Y = np.meshgrid(x, y)
         pos = np.dstack((X, Y))
-        inv_sigma = np.linalg.inv(self.SIGMA)
-        exponent = np.exp(-0.5 * np.einsum('...k,kl,...l->...', pos - mu, inv_sigma, pos - mu))
+        inv_sigma = np.linalg.inv(self.MAT_SIGMA)
+        exponent = np.exp(-0.5 * np.einsum('...k,kl,...l->...', pos - width//2, inv_sigma, pos - width//2))
         return 1/self.num * exponent
 
-    def __init__(self, idxs):
-        x = np.linspace(0, 289, 290)
-        y = np.linspace(0, 104, 105)
-        self.SIGMA = np.array([[50, 0], [0, 50]])
-        peaks = [{'mu': np.array([i[1], i[0]])} for i in idxs]   #################### warning index inversed
-        self.z = np.zeros((len(y), len(x)))
-        self.num = len(idxs)
-        for peak in peaks:
-            self.z += self.gaussian_2d(x, y, peak['mu'])
+    def __init__(self, idxs,mode,shape=np.array([95,180]),width=41):
+
+        if mode == 'vga':
+            self.num = 15
+            self.sigma = 55
+        elif mode == 'rs232':
+            self.num = 9
+            self.sigma = 70
+        self.MAT_SIGMA = np.array([[self.sigma, 0], [0, self.sigma]])
+        #peaks = [{'mu': np.array([i[1], i[0]])} for i in idxs]   #################### warning index inversed
+        self.z = np.zeros(shape+width-1)
+        self._pin = self.gaussian_2d(width)
+        for h,w in idxs:
+            self.z[h:h+width,w:w+width] += self._pin
+        bias = width // 2
+        self.z = self.z[bias:shape[0]+bias, bias:shape[1] + bias]
+        #self.z = np.clip(self.z, 0, 1/self.num)
+
+
+def paramatch(ACCURACY,imdark_des,imbright_des,angle,fvga_des,frs232_des,mask):
+    def gen_patch():
+        for i in range(mx):
+            print("\r", end="")
+            print("%d° searching progress:"%angle, " {}%: ".format(int(i/mx*100)), "▋" * int(i * 50 / mx), end="")
+            sys.stdout.flush()
+            for j in range(my):
+                # Take a patch
+                p_dark = imdark_des[i*ACCURACY:i*ACCURACY+connect_h , j*ACCURACY:j*ACCURACY+connect_w]*mask
+                p_bright = imbright_des[i*ACCURACY:i*ACCURACY+connect_h , j*ACCURACY:j*ACCURACY+connect_w]*mask
+                yield (p_dark, p_bright, fvga_des,frs232_des)
+        print("\r", end="")
+        print("%d° searching progress:"%angle, " {}%: ".format(100), "▋" * 50, end="")
+    connect_h = fvga_des.shape[0]
+    connect_w = fvga_des.shape[1]
+    mx = (imdark_des.shape[0]-connect_h+1)//ACCURACY
+    my = (imdark_des.shape[1]-connect_w+1)//ACCURACY
+    num_processes = multiprocessing.cpu_count()
+    pool = multiprocessing.Pool(processes=num_processes)
+    result = []
+    gen = gen_patch()
+    while True:
+        task_data = []
+        try:
+            for _ in range(num_processes):
+                task_data.append(next(gen))
+        except StopIteration:
+            result.extend(pool.map(calculate_feature, task_data))
+            break
+        result.extend(pool.map(calculate_feature, task_data))
+    pool.close()
+    pool.join()
+
+    print('\n')
+    tmp = np.array(result)
+    matrix_vga = tmp[:, 0].reshape(mx, my)
+    matrix_rs232 = tmp[:, 1].reshape(mx, my)
+    vga_list = peak_local_max((matrix_vga-np.min(matrix_vga))/(np.max(matrix_vga)-np.min(matrix_vga)),
+                              threshold_abs=0.97, min_distance=1)
+    rs232_list = peak_local_max((matrix_rs232-np.min(matrix_rs232))/(np.max(matrix_rs232)-np.min(matrix_rs232)),
+                                threshold_rel=0.97, min_distance=1)
+    vga_list = [(h*ACCURACY, w*ACCURACY, angle, matrix_vga[h, w]) for h, w in vga_list if matrix_vga[h, w]>0.40]
+    rs232_list = [(h*ACCURACY, w*ACCURACY, angle, matrix_rs232[h, w]) for h, w in rs232_list if matrix_rs232[h, w]>0.40]
+    return vga_list, rs232_list
+
 
 
 def modsimilarity(x, y):
@@ -266,16 +334,13 @@ def modsimilarity(x, y):
     Returns:
         Return pfeatures value of similarity (>0, but not strictly <1) .
     """
-    if np.any(x == 0):
+    if np.all(x == 0):
         return 0.0
     else:
-        # Flatten the input arrays
-        x = np.ravel(x)
-        y = np.ravel(y)
-
+        '''
         # Compute the FFT
-        fft_x = np.fft.fft(x)
-        fft_y = np.fft.fft(y)
+        fft_x = np.fft.fft2(x)
+        fft_y = np.fft.fft2(y)
 
         # Compute the correlation coefficient in the frequency domain
         cross_power_spectrum = np.real(np.conj(fft_x) * fft_y)
@@ -283,10 +348,56 @@ def modsimilarity(x, y):
         auto_power_spectrum_y = np.real(np.conj(fft_y) * fft_y)
 
         correlation_coefficient = np.sum(cross_power_spectrum) / np.sqrt(
-            np.sum(auto_power_spectrum_x) * np.sum(auto_power_spectrum_y)
-        )
+            np.sum(auto_power_spectrum_x) * np.sum(auto_power_spectrum_y))
+        '''
+        dx = x - np.mean(x)
+        dy = y - np.mean(y)
 
+        correlation_coefficient = np.multiply(dx, dy).sum() / np.sqrt(np.multiply(dx,dx).sum() * np.multiply(dy,dy).sum())
     return correlation_coefficient
+
+
+def composantfilter(compos, hw):
+    if len(compos) <= 1:
+        return compos
+    #compos: list of [x, y, angle, sim]
+    compos_matrix = np.unique(np.array(compos), axis=0)
+    sim = compos_matrix[:, 3]
+    tmp = []
+    for i in range(sim.size):
+        if sim[i]<0.07:
+            tmp.append(i)
+    compos_matrix = np.delete(compos_matrix, tmp, 0)
+    if compos_matrix.shape[0] <= 1:
+        return compos_matrix.tolist()
+    sim = compos_matrix[:, 3]
+    mse = np.sqrt(np.var(sim))  #Mean squared error
+    tmp = []
+    for i in range(sim.size):
+        if sim[i]<max(sim)-np.clip(0.12-mse,0,0.1):
+            tmp.append(i)
+    compos_matrix = np.delete(compos_matrix, tmp, 0)
+    if compos_matrix.shape[0] <= 1:
+        return compos_matrix.tolist()
+    Z = linkage(compos_matrix[:, :2],'ward')
+    cluster_assignments = fcluster(Z, hw*0.1, criterion='distance')
+    cluster_centers = [compos_matrix[cluster_assignments == cluster].mean(axis=0) for cluster in
+                       range(1, max(cluster_assignments) + 1)]
+    result = [[int(i[0]), int(i[1]), int(i[2]), i[3]]for i in cluster_centers]
+    '''
+    destribution = np.zeros([int(np.max(compos_matrix[:,0])-np.min(compos_matrix[:,0])+1),
+                             int(np.max(compos_matrix[:,1])-np.min(compos_matrix[:,1])+1)],dtype=bool)
+    compos_pos = np.zeros(destribution.shape,dtype=int)
+    for idx in compos_matrix[:, :2]:
+        destribution[int(idx[0]-np.min(compos_matrix[:,0])), int(idx[1]-np.min(compos_matrix[:,1]))] = True
+    filter = (int((0.1 * h) // 2 * 2 + 1), int((0.1 * w) // 2 * 2 + 1))
+    destribution = np.pad(destribution, (filter[0]//2,filter[1]//2), mode='constant', constant_values=(False, False))
+    for i in range(compos_pos.shape[0]):
+        for j in range(compos_pos.shape[1]):
+            compos_pos[i,j] = np.count_nonzero(destribution[i:i+filter[0],j:j+filter[1]])
+    print(compos_pos)
+    '''
+    return result
 
 
 def imedge(image):
@@ -299,7 +410,8 @@ def imedge(image):
     Returns:
         image edge nd.array in the same size
     """
-    return filters.sobel(image) > 0.05
+    edge = filters.sobel(image)
+    return (edge - np.min(edge))/(np.max(edge)-np.min(edge))
     #return canny(image, 1)
 
 
@@ -341,17 +453,17 @@ def find_rectangle1(image_g, height, length, line_gap=10):
     # find straight vertical lines that in the image
     angle = np.array([0.0])
     # probabilistic_hough_line(image, threshold=10, line_length=50, line_gap=10, theta=None, seed=None)
-    lines = {a for a in probabilistic_hough_line(edge, threshold=10, line_length=int(height * 0.94), line_gap=line_gap,
-                                                 theta=angle) if abs(a[0][1] - a[1][1]) < int(height * 1.06)}
+    lines = {a for a in probabilistic_hough_line(edge, threshold=10, line_length=int(height * 0.9), line_gap=line_gap,
+                                                 theta=angle) if abs(a[0][1] - a[1][1]) < int(height * 1.1)}
     # N.B.: It is strange that the order of (height,width) changed to (width, height) after probabilistic_hough_line,
     # but matplot lib can give the true output.
 
-    linedisplay(image_g, lines)
+    linedisplay(edge, lines)
     # compare each pairs to find out rectangle
     lines_ = {a for a in probabilistic_hough_line(edge, threshold=10, line_length=int(length * 0.8),
                                                  line_gap=line_gap, theta=np.array([0.5*np.pi])) if
              abs(a[0][0] - a[1][0]) < int(length * 1.2)}
-    linedisplay(image_g, lines_)
+    linedisplay(edge, lines_)
     DEVIATION = 14  # Unit measured in pixel. i.e.3mm
     for (p2, p1), (p3, p4) in combinations(lines, 2):
         # p2--------p4  x
@@ -401,19 +513,19 @@ def find_rectangle_(image_g, length, height, line_gap=10):
     # find straight vertical lines that in the image
     angle = np.array([0.5*np.pi])
     # probabilistic_hough_line(image, threshold=10, line_length=50, line_gap=10, theta=None, seed=None)
-    lines = {a for a in probabilistic_hough_line(edge, threshold=10, line_length=int(length * 0.9), line_gap=line_gap,
+    lines = {a for a in probabilistic_hough_line(edge, threshold=5, line_length=int(length * 0.9), line_gap=line_gap,
                                                  theta=angle) if abs(a[0][0] - a[1][0]) < int(length * 1.1)}
     # N.B.: It is strange that the order of (height,width) changed to (width, height) after probabilistic_hough_line,
     # but matplot lib can give the true output.
 
-    linedisplay(image_g, lines)
+    linedisplay(edge, lines)
     # compare each pairs to find out rectangle
-    lines1 = {a for a in probabilistic_hough_line(edge, threshold=10, line_length=int(height * 0.8),
+    lines1 = {a for a in probabilistic_hough_line(edge, threshold=5, line_length=int(height * 0.8),
                                                   line_gap=line_gap, theta=np.array([0.0]))
               if abs(a[0][1] - a[1][1]) < int(height * 1.2)}
-    linedisplay(image_g, lines1)
+    linedisplay(edge, lines1)
     # Parallelogram
-    DEVIATION = 14  # Unit measured in pixel. i.e.1.8mm
+    DEVIATION = 18.28  # Unit measured in pixel. i.e.2.0mm
     for (p1, p2), (p3, p4) in combinations(lines, 2):
         # p1--------p2  x
         # |          |
@@ -522,8 +634,22 @@ def linedisplay(image, lines):
         a.set_axis_off()
 
     plt.tight_layout()
+    plt.savefig('api/tmpline.png')
     plt.show()
 
+def calculate_feature(input):
+    '''
+    p, mask, detector, vga_des, rs232_des = input
+    feature_dark, feature_light = imfeature(p, mask, detector)
+    pin_dark = Pins(feature_dark)
+    pin_light = Pins(feature_light)
+    sim_vga = modsimilarity(pin_dark.destribution(), vga_des)
+    sim_rs232 = modsimilarity(pin_light.destribution(), rs232_des)
+    '''
+    pd, pb,  vga_des, rs232_des = input
+    sim_vga = modsimilarity(pd, vga_des)
+    sim_rs232 = modsimilarity(pb, rs232_des)
+    return (sim_vga,sim_rs232)
 
 def template_match(image, template, threshold, mindis):
     """
@@ -543,12 +669,12 @@ def template_match(image, template, threshold, mindis):
     positions = []
     template_height, template_weight = template.shape
     for _ in range(4):
-        template = rotate(template, 90, resize=True)
+        template = rotate(template, 180, resize=True)
         sample_mt = match_template(image, template)
         tmp = peak_local_max(np.squeeze(sample_mt), threshold_abs=threshold, min_distance=mindis).tolist()
         if tmp:
             positions += [(x, y, 270-90*_,sample_mt[x,y]) for x, y in tmp]   # (height, width, angle, similarity)
-    drawcomponents(image, positions, template_weight, template_height)
+    #drawcomponents(image, positions, template_weight, template_height)
     return positions
 
 
@@ -578,7 +704,7 @@ def drawcomponents(image, positions, template_width, template_height, sample_mt=
             rect = plt.Rectangle((y, x), w, h, color='r', fc='none')
             ax.add_patch(rect)
         ax.set_title('Grayscale', fontsize=15)
-        fig.savefig("D:/Work/OGREE/detect/exp2/gif.png")
+        plt.savefig('api/tmpcompo.png')
         plt.show()
     else:
         fig, ax = plt.subplots(2, 1, figsize=(10, 8))
@@ -593,52 +719,13 @@ def drawcomponents(image, positions, template_width, template_height, sample_mt=
         ax[0].set_title('Grayscale', fontsize=15)
         ax[1].imshow(sample_mt, cmap='magma')
         ax[1].set_title('Template Matching', fontsize=15)
-        fig.savefig("D:/Work/OGREE/detect/exp2/gif.png")
+        plt.savefig('api/tmpcompo.png')
         plt.show()
-
-def calibrateear(components, shapepix, shapemm):
-    """
-        Determing is there a pair of ears in the image.
-        If so, the components' position will be recalculated if they are posed in a non-ear server.
-
-    Args:
-        components: x-coordinate(s) as a numpy array or scalar.
-        shapepix: image's shape in pixel.
-        shapemm: server's shape in reality(without ears) in mm.
-
-    Returns:
-        The coordinates without ears.
-    """
-    ear = 0.5*(shapepix[1]-shapepix[0]*shapemm[1]/shapemm[0])
-    if ear < 0:
-        return components
-    else:
-        newpos = dict()
-        for i in components:
-            value = components[i]
-            key = (i[0], int(i[1]-ear))
-            newpos[key] = value
-        return newpos
+def jsondump(file_path, jsonraw):
+    with open(file_path, "w") as json_file:
+        json.dump(jsonraw, json_file)
 
 def imagesave(image,path):
     imsave(image,path)
 
-def jsonwrite(coordinate, path):
-    """
-    Generate the JSON text about one component.
 
-    Args:
-        coordinate: Coordinate of a component.
-        path: path of the model component json file
-
-    Returns:
-        json text
-    """
-    with open(path, 'r+') as file:
-        depth = 0  # en pixel
-        p = json.load(file)
-        posWDH = [int(coordinate[1]/RATIO), int(depth/RATIO), int(coordinate[0]/RATIO)]
-        p.update({"elemPos": posWDH})
-        file.close()
-        print(p)
-        return p
