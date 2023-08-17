@@ -19,7 +19,6 @@ QUANTITY = 13
 detector = CENSURE(min_scale=1, max_scale=7, mode='DoB', non_max_threshold=0.15, line_threshold=10)
 #(min_scale=1, max_scale=7, mode='DoB', non_max_threshold=0.15, line_threshold=10)
 std = tools.imageload("standard/standard-vga.png",'grey')
-detector.detect(std)
 stdfeature = detector.keypoints
 for i in range(1,QUANTITY+1):
     path = FILEHANDEL + '{}'.format(str(i).zfill(3)) + '.png'

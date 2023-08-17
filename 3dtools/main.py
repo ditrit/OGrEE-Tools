@@ -54,36 +54,42 @@ def run(slotname ="serveur/dell-poweredge-r720xd.rear.png",
     class_dic = {'all': None, 'slot_normal': 0, 'slot_lp': 1, 'slot': [0, 1],
                  'disk_sff': 2, 'disk_lff': 3, 'disk': [2, 3], 'source': 4}
     while True:
-        print("Enter componant name:")
+        print('\n', {'d-sub female': '11', 'd-sub male': '12', 'idrac': '13', 'usb': '14', 'all':'15'},
+              "\nor enter the name 'slot', 'disk', 'source'(without '')")
+        print("Enter componant name or number:")
         command = input()
         if command == "finish":
             break
-        elif command == "d-sub":
-            print("start detecting ", command)
-            ogreeTools.clvga_rs232()
-        elif command == "idrac":
-            print("start detecting ", command)
+        elif command == "d-sub female" or command == '11':
+            print("start detecting d-sub female")
+            ogreeTools.clvga_rs232('female')
+        elif command == "d-sub male" or command == '12':
+            print("start detecting d-sub male")
+            ogreeTools.clvga_rs232('male')
+        elif command == "idrac" or command == '13':
+            print("start detecting idrac")
             ogreeTools.clidrac()
-        elif command == "usb":
-            print("start detecting ", command)
+        elif command == "usb" or command == '14':
+            print("start detecting usb")
             ogreeTools.clusb()
-        elif command in class_dic.keys():
-            print("start detecting ", command)
+        elif command in class_dic.keys() or command == '15':
+            print("start detecting slot&disk")
+            command = 'all'
             pred = api.yoloapi.run(weights, path, data, imgsz, conf_thres, iou_thres, max_det, device, view_img,
                             save_txt, save_conf, save_crop, nosave, class_dic[command], agnostic_nms, augment, visualize, update,
                             project, name, exist_ok, line_thickness, hide_labels, hide_conf, half, dnn, vid_stride,)
             # pred: a list of tensor, each tensor represent a picture
             ogreeTools.dl_addComponents(pred.cpu())
-    ogreeTools.describe()
+    ogreeTools.cutears()
     ogreeTools.writejson()
     remove(path)
 
 
 def parse_opt():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--slotname', type=str, default="YOLO_serveur/raw/ibm-x3650m5.rear.png", help='model path or triton URL')
-    parser.add_argument('--height', type=float, default=87.0, help="Server's height/vertical size" )
-    parser.add_argument('--length', type=float, default=434.0, help="Server's length/horizon size")
+    parser.add_argument('--slotname', type=str, default="YOLO_serveur/raw/cisco-c240-m6-lff.rear.png", help='model path or triton URL')
+    parser.add_argument('--height', type=float, default=87.6, help="Server's height/vertical size" )
+    parser.add_argument('--length', type=float, default=429.0, help="Server's length/horizon size")
     parser.add_argument('--face', default='rear', choices=['front', 'rear'],help='the picture is front bord or rear bord')
 
     #parser.add_argument('--slotname', type=str, default="serveur/dell-poweredge-r720xd.rear.png", help='model path or triton URL')

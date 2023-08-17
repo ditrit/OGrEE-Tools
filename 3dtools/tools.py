@@ -2,7 +2,7 @@ from skimage.color.colorconv import rgba2rgb, rgb2hsv, rgb2gray, hsv2rgb
 import matplotlib.pyplot as plt
 from matplotlib import cm
 import numpy as np
-from skimage.io import imshow, imread, imsave
+from skimage.io import imread, imsave
 from skimage.feature import match_template, peak_local_max
 from skimage.feature import canny
 from skimage import filters
@@ -20,13 +20,14 @@ import sys
 
 # special constant for all the function
 RATIO = 781/85.4  # pixel/mm = 9.145
-SIZETABLE = {'idrac':[14.0,11.0,11.0],'usb':[13.0,14.0,5.5], 'vga':[16.0,11.0,8.0],'rs232':[16.0,11.0,8.0],
-             'slot_normal':[107.0,312.0,18.0],'slot_lp':[65.0,175.0,18.0],
-             'disk_lff':[101.0,146.0,26.0],'disk_sff':[70.0,101.0,10.0],'PSU':[90.0,100.0,40.0]}
+SIZETABLE = {'idrac': [14.0, 11.0, 11.0], 'usb': [13.0, 14.0, 5.5], 'vga': [16.0, 11.0, 8.0],
+             'rs232': [16.0, 11.0, 8.0], 'slot_normal': [107.0, 312.0, 18.0], 'slot_lp': [65.0, 175.0, 18.0],
+             'disk_lff': [101.0, 146.0, 26.0], 'disk_sff': [70.0, 101.0, 10.0], 'PSU': [90.0, 100.0, 40.0]}
+
 
 def imageload(f, flag="color"):
     """
-    Compute the value of a 2D Gaussian distribution at given x, y coordinates.
+    Load image from file
 
     Args:
         f: file path under file "image"
@@ -58,13 +59,14 @@ def imageload(f, flag="color"):
 
 def preprocess(image: np.ndarray):
     """
-    Compute the value of a 2D Gaussian distribution at given x, y coordinates.
+    Adjust color balance. Will improve picture too bright or too dark
+    No use now
 
     Args:
         image: x-coordinate(s) as a numpy array or scalar.
 
     Returns:
-        Value(s) of the 2D Gaussian distribution at the given coordinates.
+        ndarray type 3 channels image.
     """
     image[:, :, 0] = exposure.equalize_hist(image[:, :, 0])
     image[:, :, 1] = exposure.equalize_hist(image[:, :, 1])
@@ -72,9 +74,20 @@ def preprocess(image: np.ndarray):
     return image
 
 
-def scaleim(slotname,height,ratio):
+def scaleim(slotname, height, ratio):
+    """
+    Scale image to the sample ratio in pixels
+
+    Args:
+        slotname: File handle of server
+        height: slot height in mm
+        ratio: number of pixels per mm
+
+    Returns:
+        ndarray type 3 channels image.
+    """
     image = imageload(slotname, flag="color")
-    image_s = rescale(image, height * ratio / image.shape[0],channel_axis=2)
+    image_s = rescale(image, height * ratio / image.shape[0], channel_axis=2)
     image_s = (image_s * 255.0).astype('uint8')
     return image_s
 
@@ -101,7 +114,7 @@ def rgbview(image: np.ndarray):
         ax[1].set_title('Grayscale Image', fontsize=15)
         ax[2].set_title('Sobel edge', fontsize=15)
         plt.show()
-    elif len(image.shape)==2:
+    elif len(image.shape) == 2:
         image_e = filters.sobel(image)
         fig, ax = plt.subplots(2, 1, figsize=(20, 8))
         ax[0].imshow(image, cmap='gray')
@@ -153,7 +166,7 @@ def normaliseimage(image, shapemm):
         shapemm: the shape of the server in realty. Unit is measured in mm
 
     Returns:
-        grey image in ndarray(x',y') with new and standard shape
+        grey image in ndarray(x',y') with new and standard sample
     """
     # ------------  y
     # |          |
@@ -166,7 +179,7 @@ def normaliseimage(image, shapemm):
 
 def imfeature(image, mask, detector):
     """
-    Compute the value of a 2D Gaussian distribution at given x, y coordinates.
+    Compute the feature point of image.
 
     Args:
         image: image of the server, back or face.
@@ -177,7 +190,7 @@ def imfeature(image, mask, detector):
         [n,2] ndarray of features' coordinates
     """
     def deloutfeature(feature, m):
-        # delete features appeared in mask
+        # delete features outside the mask
         idx = []
         for k in range(feature.shape[0]):
             if not m[feature[k, 0], feature[k, 1]]:
@@ -187,7 +200,7 @@ def imfeature(image, mask, detector):
     img_vag = filters.gaussian(image, sigma=1)
     img_inv = -img_vag + 1
     detector.detect(img_vag)
-    f_dark = detector.keypoints if len(detector.keypoints) > 0 else np.array([[0, 0]])  # à améliorer
+    f_dark = detector.keypoints if len(detector.keypoints) > 0 else np.array([[0, 0]])
     f_dark = deloutfeature(f_dark, mask)
     detector.detect(img_inv)
     f_light = detector.keypoints if len(detector.keypoints) > 0 else np.array([[0, 0]])
@@ -197,7 +210,7 @@ def imfeature(image, mask, detector):
 
 def patchsimilarity(pfeatures, std):
     """
-    Compare the similarity between patch and standard model by their features.
+    Compare the similarity between patch's feature and standard model by their features.
 
     Args:
         pfeatures: features of the patch.
@@ -225,14 +238,10 @@ def patchsimilarity(pfeatures, std):
 class Pins:
     def destribution(self):
         """
-        Compute the value of a 2D Gaussian distribution at given x, y coordinates.
-
-        Args:
-            x: coordinate on x axis.
-            y: coordinate on y axis.
+        return the value of a 2D Gaussian distribution for outside execution.
 
         Returns:
-            a float similarity value, the bigger, the more similar
+            ndarray matrix of pins distribution
         """
         return self.z
 
@@ -241,13 +250,11 @@ class Pins:
         Compute the value of a 2D Gaussian distribution at given x, y coordinates.
 
         Args:
-            x: x-coordinate(s) as a numpy array or scalar.
-            y: y-coordinate(s) as a numpy array or scalar.
-            mu: Mean of the Gaussian distribution as a 2-element numpy array [mu_x, mu_y].
-            sigma: Covariance matrix of the Gaussian distribution as a 2x2 numpy array.
+            width: Maximum range of normal distribution, for limit the calculation.
+                   avoids computing the normal distribution of individual pins over the entire space
 
         Returns:
-            Value(s) of the 2D Gaussian distribution at the given coordinates.
+            ndarray of the 2D Gaussian distribution at the given coordinates.
         """
         x = np.linspace(0, width-1, width)
         y = np.linspace(0, width-1, width)
@@ -257,8 +264,7 @@ class Pins:
         exponent = np.exp(-0.5 * np.einsum('...k,kl,...l->...', pos - width//2, inv_sigma, pos - width//2))
         return 1/self.num * exponent
 
-    def __init__(self, idxs,mode,shape=np.array([95,180]),width=41):
-
+    def __init__(self, idxs, mode, shape=np.array([95, 180]), width=41):
         if mode == 'vga':
             self.num = 15
             self.sigma = 55
@@ -266,17 +272,20 @@ class Pins:
             self.num = 9
             self.sigma = 70
         self.MAT_SIGMA = np.array([[self.sigma, 0], [0, self.sigma]])
-        #peaks = [{'mu': np.array([i[1], i[0]])} for i in idxs]   #################### warning index inversed
         self.z = np.zeros(shape+width-1)
         self._pin = self.gaussian_2d(width)
-        for h,w in idxs:
-            self.z[h:h+width,w:w+width] += self._pin
+        for h, w in idxs:
+            self.z[h:h+width, w:w+width] += self._pin
         bias = width // 2
         self.z = self.z[bias:shape[0]+bias, bias:shape[1] + bias]
-        #self.z = np.clip(self.z, 0, 1/self.num)
 
 
-def paramatch(ACCURACY,imdark_des,imbright_des,angle,fvga_des,frs232_des,mask):
+def p_modsimilarity(ls):
+    # A sub function used for para calculation
+    return modsimilarity(ls[0], ls[1])
+
+
+def paramatch(ACCURACY, im_des, angle, fdes, mask):
     def gen_patch():
         for i in range(mx):
             print("\r", end="")
@@ -284,15 +293,15 @@ def paramatch(ACCURACY,imdark_des,imbright_des,angle,fvga_des,frs232_des,mask):
             sys.stdout.flush()
             for j in range(my):
                 # Take a patch
-                p_dark = imdark_des[i*ACCURACY:i*ACCURACY+connect_h , j*ACCURACY:j*ACCURACY+connect_w]*mask
-                p_bright = imbright_des[i*ACCURACY:i*ACCURACY+connect_h , j*ACCURACY:j*ACCURACY+connect_w]*mask
-                yield (p_dark, p_bright, fvga_des,frs232_des)
+                p = im_des[i*ACCURACY:i*ACCURACY+connect_h, j*ACCURACY:j*ACCURACY+connect_w]*mask
+                yield [p, fdes]
         print("\r", end="")
         print("%d° searching progress:"%angle, " {}%: ".format(100), "▋" * 50, end="")
-    connect_h = fvga_des.shape[0]
-    connect_w = fvga_des.shape[1]
-    mx = (imdark_des.shape[0]-connect_h+1)//ACCURACY
-    my = (imdark_des.shape[1]-connect_w+1)//ACCURACY
+
+    connect_h = fdes.shape[0]
+    connect_w = fdes.shape[1]
+    mx = (im_des.shape[0]-connect_h+1)//ACCURACY
+    my = (im_des.shape[1]-connect_w+1)//ACCURACY
     num_processes = multiprocessing.cpu_count()
     pool = multiprocessing.Pool(processes=num_processes)
     result = []
@@ -303,24 +312,19 @@ def paramatch(ACCURACY,imdark_des,imbright_des,angle,fvga_des,frs232_des,mask):
             for _ in range(num_processes):
                 task_data.append(next(gen))
         except StopIteration:
-            result.extend(pool.map(calculate_feature, task_data))
+            result.extend(pool.map(p_modsimilarity, task_data))
             break
-        result.extend(pool.map(calculate_feature, task_data))
+        result.extend(pool.map(p_modsimilarity, task_data))
     pool.close()
     pool.join()
 
     print('\n')
     tmp = np.array(result)
-    matrix_vga = tmp[:, 0].reshape(mx, my)
-    matrix_rs232 = tmp[:, 1].reshape(mx, my)
-    vga_list = peak_local_max((matrix_vga-np.min(matrix_vga))/(np.max(matrix_vga)-np.min(matrix_vga)),
-                              threshold_abs=0.97, min_distance=1)
-    rs232_list = peak_local_max((matrix_rs232-np.min(matrix_rs232))/(np.max(matrix_rs232)-np.min(matrix_rs232)),
-                                threshold_rel=0.97, min_distance=1)
-    vga_list = [(h*ACCURACY, w*ACCURACY, angle, matrix_vga[h, w]) for h, w in vga_list if matrix_vga[h, w]>0.40]
-    rs232_list = [(h*ACCURACY, w*ACCURACY, angle, matrix_rs232[h, w]) for h, w in rs232_list if matrix_rs232[h, w]>0.40]
-    return vga_list, rs232_list
-
+    sim_matrix = tmp.reshape(mx, my)
+    d_list = peak_local_max((sim_matrix-np.min(sim_matrix))/(np.max(sim_matrix)-np.min(sim_matrix)),
+                            threshold_abs=0.97, min_distance=1)
+    d_result = [(h*ACCURACY, w*ACCURACY, angle, sim_matrix[h, w]) for h, w in d_list if sim_matrix[h, w] > 0.40]
+    return d_result
 
 
 def modsimilarity(x, y):
@@ -328,13 +332,13 @@ def modsimilarity(x, y):
     Compare the similarity between patch and standard model by their features using 2D Gaussian pins model.
 
     Args:
-        pfeatures: features of the patch.
-        std: features of the standard patch model.
+        x: features of the patch.
+        y: features of the standard patch model.
 
     Returns:
         Return pfeatures value of similarity (>0, but not strictly <1) .
     """
-    if np.all(x == 0):
+    if np.all(x == 0.0):
         return 0.0
     else:
         '''
@@ -352,34 +356,44 @@ def modsimilarity(x, y):
         '''
         dx = x - np.mean(x)
         dy = y - np.mean(y)
+        correlation_coefficient = np.multiply(dx, dy).sum() / np.sqrt(np.multiply(dx, dx).sum() * np.multiply(dy, dy).sum())
 
-        correlation_coefficient = np.multiply(dx, dy).sum() / np.sqrt(np.multiply(dx,dx).sum() * np.multiply(dy,dy).sum())
     return correlation_coefficient
 
 
 def composantfilter(compos, hw):
+    """
+    Input the list of one type components, filter the components who have lower similarity.
+    Merge parts that overlap in adjacent regions
+
+    Args:
+        compos: list of one type components, list of [x, y, angle, sim].
+        hw: size pixels of height + width.
+
+    Returns:
+        Return list of components filtered.
+    """
     if len(compos) <= 1:
         return compos
-    #compos: list of [x, y, angle, sim]
     compos_matrix = np.unique(np.array(compos), axis=0)
     sim = compos_matrix[:, 3]
     tmp = []
     for i in range(sim.size):
-        if sim[i]<0.07:
+        if sim[i] < 0.07:
             tmp.append(i)
     compos_matrix = np.delete(compos_matrix, tmp, 0)
     if compos_matrix.shape[0] <= 1:
         return compos_matrix.tolist()
     sim = compos_matrix[:, 3]
-    mse = np.sqrt(np.var(sim))  #Mean squared error
+    mse = np.sqrt(np.var(sim))  # Mean squared error
     tmp = []
     for i in range(sim.size):
-        if sim[i]<max(sim)-np.clip(0.12-mse,0,0.1):
+        if sim[i] < max(sim)-np.clip(0.12-mse, 0, 0.1):
             tmp.append(i)
     compos_matrix = np.delete(compos_matrix, tmp, 0)
     if compos_matrix.shape[0] <= 1:
         return compos_matrix.tolist()
-    Z = linkage(compos_matrix[:, :2],'ward')
+    Z = linkage(compos_matrix[:, :2], 'ward')
     cluster_assignments = fcluster(Z, hw*0.1, criterion='distance')
     cluster_centers = [compos_matrix[cluster_assignments == cluster].mean(axis=0) for cluster in
                        range(1, max(cluster_assignments) + 1)]
@@ -412,15 +426,11 @@ def imedge(image):
     """
     edge = filters.sobel(image)
     return (edge - np.min(edge))/(np.max(edge)-np.min(edge))
-    #return canny(image, 1)
+    # return canny(image, 1)
 
 
-def test(a):
-    print(a.shape)
-    return torch.max(a)
-
-# K-L entropy
 def klentropy(x, std):
+    # K-L entropy, no use now
     # calcul similarity by l-l entropy
     penalty = 0
     if x.shape[0] < std.shape[0]:
@@ -434,15 +444,14 @@ def klentropy(x, std):
     return -np.sum(px * np.log(px / pstd)) + 0.1 * penalty
 
 
-# for power block
 def find_rectangle1(image_g, height, length, line_gap=10):
     """
-    Compute the value of a 2D Gaussian distribution at given x, y coordinates.
+    Find the rectangle of given shape and the height is longer than width. Represent by 1 in function name.
 
     Args:
-        image_g: 2d grey scale nd.array image.
-        length: length of the power block.
+        image_g: 2d grey scale ndarray image.
         height: height of the power block.
+        length: length of the power block.
         line_gap: parameter in probabilistic_hough_line function. the bigger, the function combine thin lines together
 
     Returns:
@@ -497,12 +506,12 @@ def find_rectangle1(image_g, height, length, line_gap=10):
 # for usb
 def find_rectangle_(image_g, length, height, line_gap=10):
     """
-    Compute the value of a 2D Gaussian distribution at given x, y coordinates.
+    Find the rectangle of given shape and the width is longer than height. Represent by _ in function name.
 
     Args:
-        image_g: 2d grey scale nd.array image.
-        height: length of the power block.
-        length: height of the power block.
+        image_g: 2d grey scale ndarray image.
+        length: length of the power block.
+        height: height of the power block.
         line_gap: parameter in probabilistic_hough_line function. the bigger, the function combine thin lines together
 
     Returns:
@@ -557,12 +566,13 @@ def find_rectangle_(image_g, length, height, line_gap=10):
 
 def hit_inzone(l0, l1, r=7):
     """
-    Compute the value of a 2D Gaussian distribution at given x, y coordinates.
+    Determine whether the two line have one endpoint commune.
+    Both endpoints are considered the same if they are within the agreed neighborhood
 
     Args:
         l0: tuple (a0,b0)
         l1: tuple (a1,b1)
-        r: radius of zone
+        r: radius of zone, unit is pixel.
     Returns:
         1 or 0 whether the p1 is in  zone of p0
     """
@@ -576,19 +586,19 @@ def hit_inzone(l0, l1, r=7):
     return 0
 
 
-def in_rectangle(point, p):
+def in_rectangle(point, rect):
     """
-    Compute the value of a 2D Gaussian distribution at given x, y coordinates.
+    Determine if a point p is in a rectangle
 
     Args:
-        point: the position of C14 interface.
-        p: a tuple of four points of a rectangle.
+        point: the coordinate of the point
+        rect: a tuple of four points of a rectangle.
 
     Returns:
         1 or 0 whether the point is in this rectangle
     """
     point = (point[1], point[0])  # to make the coordinate into (wigth,height)
-    p1, p2, p3, p4 = p[0], p[1], p[2], p[3]
+    p1, p2, p3, p4 = rect[0], rect[1], rect[2], rect[3]
     rectvect = np.array([(p2[0] - p1[0], p2[1] - p1[1]),
                          (p3[0] - p2[0], p3[1] - p2[1]),
                          (p4[0] - p3[0], p4[1] - p3[1]),
@@ -637,19 +647,6 @@ def linedisplay(image, lines):
     plt.savefig('api/tmpline.png')
     plt.show()
 
-def calculate_feature(input):
-    '''
-    p, mask, detector, vga_des, rs232_des = input
-    feature_dark, feature_light = imfeature(p, mask, detector)
-    pin_dark = Pins(feature_dark)
-    pin_light = Pins(feature_light)
-    sim_vga = modsimilarity(pin_dark.destribution(), vga_des)
-    sim_rs232 = modsimilarity(pin_light.destribution(), rs232_des)
-    '''
-    pd, pb,  vga_des, rs232_des = input
-    sim_vga = modsimilarity(pd, vga_des)
-    sim_rs232 = modsimilarity(pb, rs232_des)
-    return (sim_vga,sim_rs232)
 
 def template_match(image, template, threshold, mindis):
     """
@@ -668,20 +665,21 @@ def template_match(image, template, threshold, mindis):
     image = filters.gaussian(image, sigma=1.5)
     positions = []
     template_height, template_weight = template.shape
-    for _ in range(4):
-        template = rotate(template, 180, resize=True)
+    for _ in range(2):
         sample_mt = match_template(image, template)
         tmp = peak_local_max(np.squeeze(sample_mt), threshold_abs=threshold, min_distance=mindis).tolist()
         if tmp:
-            positions += [(x, y, 270-90*_,sample_mt[x,y]) for x, y in tmp]   # (height, width, angle, similarity)
-    #drawcomponents(image, positions, template_weight, template_height)
+            positions += [(x, y, 180*_, sample_mt[x, y]) for x, y in tmp]   # (height, width, angle, similarity)
+        else:
+            positions = [(0, 0, 0, 0)]
+        template = rotate(template, 180, resize=True)
+    # drawcomponents(image, positions, template_weight, template_height)
     return positions
-
 
 
 def drawcomponents(image, positions, template_width, template_height, sample_mt=0):
     """
-    Compute the value of a 2D Gaussian distribution at given x, y coordinates.
+    Draw the component box on the server image.
 
     Args:
         image: 2d nd.array grey scale image.
@@ -697,7 +695,7 @@ def drawcomponents(image, positions, template_width, template_height, sample_mt=
         fig = plt.figure(figsize=(10, 8))
         ax = fig.add_subplot(111)
         ax.imshow(image, cmap='gray')
-        for x, y, n, sim in positions:    #(height, width, angle, similarity)
+        for x, y, n, sim in positions:    # (height, width, angle, similarity)
             w, h = template_width, template_height
             for _ in range(n//90):
                 w, h = h, w
@@ -721,11 +719,14 @@ def drawcomponents(image, positions, template_width, template_height, sample_mt=
         ax[1].set_title('Template Matching', fontsize=15)
         plt.savefig('api/tmpcompo.png')
         plt.show()
+
+
 def jsondump(file_path, jsonraw):
     with open(file_path, "w") as json_file:
         json.dump(jsonraw, json_file)
 
-def imagesave(image,path):
-    imsave(image,path)
+
+def imagesave(image, path):
+    imsave(image, path)
 
 
