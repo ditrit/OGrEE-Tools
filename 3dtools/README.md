@@ -15,7 +15,6 @@ This is a user guide for COMPOS api, a powerful program who can locate the compo
 | power supply unit | YOLOV5 object detection |
 ## Requirement
 YOLOV5 needs to be cloned from [YOLOV5 official page](https://github.com/ultralytics/yolov5#tutorials) under root path.
-
 Infomation in [requirements.txt][PlDb]
 ## Introduction
 ### main.py
@@ -82,5 +81,3 @@ This classifier is designed to find power block in the image. We use the same te
 
 #### Mark:
 The unit dimention of power bloc differs among each producer. An data base is needed to be created to give this infoemation.q
-
-
