@@ -8,9 +8,7 @@ from os import remove
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]
-yROOT = ROOT / 'yolov5' # YOLOv5 root directory
-
-
+yROOT = ROOT / 'yolov5'  # YOLOv5 root directory
 '''
 if str(ROOT) not in sys.path:
     sys.path.append(str(ROOT))  # add ROOT to PATH
@@ -18,7 +16,7 @@ ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 '''
 def run(slotname ="serveur/dell-poweredge-r720xd.rear.png",
         height=87.38,
-        length=443.99,
+        width=443.99,
         face='face',
         weights=ROOT/'api/best.pt',  # model path or triton URL
         data=ROOT / 'yolov5/data/serveur72.yaml',  # dataset.yaml path
@@ -44,19 +42,21 @@ def run(slotname ="serveur/dell-poweredge-r720xd.rear.png",
         hide_conf=False,  # hide confidences
         half=False,  # use FP16 half-precision inference
         dnn=False,  # use OpenCV DNN for ONNX inference
-        vid_stride=1,# video frame-rate stride
-):
+        vid_stride=1,  # video frame-rate stride
+        ):
     #image = tools.impreprocess(image)
-    ogreeTools = Classifiers(slotname, height, length, face)
+    ogreeTools = Classifiers(slotname, height, width, face)
+
     path = 'api/tmp' + slotname.split('/')[-1]
     imsave(path, tools.scaleim(slotname, height, 2.0))
     # filter by class: --class 0, or --class 0 2 3
     class_dic = {'all': None, 'slot_normal': 0, 'slot_lp': 1, 'slot': [0, 1],
                  'disk_sff': 2, 'disk_lff': 3, 'disk': [2, 3], 'source': 4}
     while True:
-        print('\n', {'d-sub female': '11', 'd-sub male': '12', 'idrac': '13', 'usb': '14', 'all':'15'},
-              "\nor enter the name 'slot', 'disk', 'source'(without '')")
-        print("Enter componant name or number:")
+        print('\n', {'d-sub female': '11', 'd-sub male': '12', 'idrac': '13', 'usb': '14', 'all': '15'},
+              "\nor enter the name 'slot', 'disk', 'source'(without '')",
+              "\nPlease input one by one. Enter 'finish' to output the json")
+        print("----Enter component name or number:")
         command = input()
         if command == "finish":
             break
@@ -82,6 +82,7 @@ def run(slotname ="serveur/dell-poweredge-r720xd.rear.png",
             ogreeTools.dl_addComponents(pred.cpu())
     ogreeTools.cutears()
     ogreeTools.writejson()
+    print(slotname.split('/')[-1], ' json file in "/api/"')
     remove(path)
 
 
@@ -89,7 +90,7 @@ def parse_opt():
     parser = argparse.ArgumentParser()
     parser.add_argument('--slotname', type=str, default="serveur/dell-poweredge-r720xd.rear.png", help='model path or triton URL')
     parser.add_argument('--height', type=float, default=87.38, help="Server's height/vertical size" )
-    parser.add_argument('--length', type=float, default=443.99, help="Server's length/horizon size")
+    parser.add_argument('--width', type=float, default=443.99, help="Server's width/horizon size")
     parser.add_argument('--face', default='rear', choices=['front', 'rear'], help='the picture is front bord or rear bord')
     #yolov5 hyparameter
     parser.add_argument('--weights', nargs='+', type=str, default=ROOT/'api/best.pt', help='model path or triton URL')

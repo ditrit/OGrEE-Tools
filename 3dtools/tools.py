@@ -654,7 +654,7 @@ def template_match(image, template, threshold, mindis):
 
     Args:
         image: 2d nd.array image.
-        template: 2d nd.array patch image.
+        template: 2d numpy.ndarray patch image.
         threshold: absolute threshold in peak_localmax that only peaks higher than this can be kept.
         mindis: the distance minimum between peaks. But it not perform like the real distance in pixels,
                 maybe just a parameter.
@@ -670,9 +670,9 @@ def template_match(image, template, threshold, mindis):
         tmp = peak_local_max(np.squeeze(sample_mt), threshold_abs=threshold, min_distance=mindis).tolist()
         if tmp:
             positions += [(x, y, 180*_, sample_mt[x, y]) for x, y in tmp]   # (height, width, angle, similarity)
-        else:
-            positions = [(0, 0, 0, 0)]
         template = rotate(template, 180, resize=True)
+    if not positions:
+        positions = [(0, 0, 0, -1)]
     # drawcomponents(image, positions, template_weight, template_height)
     return positions
 

@@ -65,14 +65,14 @@ class Classifiers:
             threshold: parameter of peaklocalmax
 
         Returns:
-            Coordinates of rj45 in the picture.
+            Coordinates of idrac in the picture.
         """
         min_distance = 45
         threshold = 0.45
         template_e = tools.imedge(self._idrac)
         image_e = tools.imedge(self._image)
         position_sim1 = tools.template_match(image_e, template_e, threshold, min_distance)
-        template_e = tools.imedge(self._idrac_c)
+        template_e = tools.imedge(self._idrac_cisco)
         position_sim2 = tools.template_match(image_e, template_e, threshold, min_distance)
         position_sim = position_sim1 if np.mean(np.array(position_sim1)[:, 3]) > np.mean(np.array(position_sim2)[:, 3]) else position_sim2
         # position_sim = tools.composantfilter(position_sim, 116+89)
@@ -91,7 +91,7 @@ class Classifiers:
             program will consider it as two line
 
         Returns:
-            Coordinates of rj45 in the picture.
+            Coordinates of  usb in the picture.
         """
         def produce_rect(args):
             x, y = args[1], args[0]
@@ -218,7 +218,7 @@ class Classifiers:
         self._vga = tools.imageload('/standard/standard-vga.png', 'grey')
         self._rs232 = tools.imageload('/standard/standard-rs232.png', 'grey')
         self._idrac = tools.imageload('/standard/standard-idrac.png', 'grey')
-        self._idrac_c = tools.imageload('/standard/cisco-idrac.png', 'grey')
+        self._idrac_cisco = tools.imageload('/standard/cisco-idrac.png', 'grey')
         self._usb = tools.imageload('/standard/standard-usb.png', 'grey')
         self.sizetable = tools.SIZETABLE
         self.components = dict()
