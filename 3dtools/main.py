@@ -87,15 +87,10 @@ def run(slotname ="serveur/dell-poweredge-r720xd.rear.png",
 
 def parse_opt():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--slotname', type=str, default="YOLO_serveur/raw/cisco-c240-m6-lff.rear.png", help='model path or triton URL')
-    parser.add_argument('--height', type=float, default=87.6, help="Server's height/vertical size" )
-    parser.add_argument('--length', type=float, default=429.0, help="Server's length/horizon size")
-    parser.add_argument('--face', default='rear', choices=['front', 'rear'],help='the picture is front bord or rear bord')
-
-    #parser.add_argument('--slotname', type=str, default="serveur/dell-poweredge-r720xd.rear.png", help='model path or triton URL')
-    #parser.add_argument('--height', type=float, default=87.38, help="Server's height/vertical size" )
-    #parser.add_argument('--length', type=float, default=443.99, help="Server's length/horizon size")
-    #parser.add_argument('--face', default='rear', choices=['front', 'rear'], help='the picture is front bord or rear bord')
+    parser.add_argument('--slotname', type=str, default="serveur/dell-poweredge-r720xd.rear.png", help='model path or triton URL')
+    parser.add_argument('--height', type=float, default=87.38, help="Server's height/vertical size" )
+    parser.add_argument('--length', type=float, default=443.99, help="Server's length/horizon size")
+    parser.add_argument('--face', default='rear', choices=['front', 'rear'], help='the picture is front bord or rear bord')
     #yolov5 hyparameter
     parser.add_argument('--weights', nargs='+', type=str, default=ROOT/'api/best.pt', help='model path or triton URL')
     parser.add_argument('--conf-thres', type=float, default=0.50, help='confidence threshold')
