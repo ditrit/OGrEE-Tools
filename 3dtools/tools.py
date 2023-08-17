@@ -285,7 +285,7 @@ def p_modsimilarity(ls):
     return modsimilarity(ls[0], ls[1])
 
 
-def paramatch(ACCURACY, im_des, angle, fdes, mask):
+def paramatch(ACCURACY, im_des, angle, fdes):
     def gen_patch():
         for i in range(mx):
             print("\r", end="")
@@ -293,7 +293,7 @@ def paramatch(ACCURACY, im_des, angle, fdes, mask):
             sys.stdout.flush()
             for j in range(my):
                 # Take a patch
-                p = im_des[i*ACCURACY:i*ACCURACY+connect_h, j*ACCURACY:j*ACCURACY+connect_w]*mask
+                p = im_des[i*ACCURACY:i*ACCURACY+connect_h, j*ACCURACY:j*ACCURACY+connect_w]
                 yield [p, fdes]
         print("\r", end="")
         print("%d° searching progress:"%angle, " {}%: ".format(100), "▋" * 50, end="")
@@ -354,8 +354,8 @@ def modsimilarity(x, y):
         correlation_coefficient = np.sum(cross_power_spectrum) / np.sqrt(
             np.sum(auto_power_spectrum_x) * np.sum(auto_power_spectrum_y))
         '''
-        dx = x - np.mean(x)
-        dy = y - np.mean(y)
+        dx = (x - np.mean(x))*256
+        dy = (y - np.mean(y))*256
         correlation_coefficient = np.multiply(dx, dy).sum() / np.sqrt(np.multiply(dx, dx).sum() * np.multiply(dy, dy).sum())
 
     return correlation_coefficient
@@ -397,7 +397,7 @@ def composantfilter(compos, hw):
     cluster_assignments = fcluster(Z, hw*0.1, criterion='distance')
     cluster_centers = [compos_matrix[cluster_assignments == cluster].mean(axis=0) for cluster in
                        range(1, max(cluster_assignments) + 1)]
-    result = [[int(i[0]), int(i[1]), int(i[2]), i[3]]for i in cluster_centers]
+    result = [[int(i[0]), int(i[1]), int(i[2]//90*90), i[3]]for i in cluster_centers]
     '''
     destribution = np.zeros([int(np.max(compos_matrix[:,0])-np.min(compos_matrix[:,0])+1),
                              int(np.max(compos_matrix[:,1])-np.min(compos_matrix[:,1])+1)],dtype=bool)

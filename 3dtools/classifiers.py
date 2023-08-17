@@ -31,9 +31,9 @@ class Classifiers:
             fvga_des = tools.Pins(std_fvga, 'vga').destribution()
             im_dark, _ = tools.imfeature(self._image, np.ones_like(self._image), detector)
             imdark_des = tools.Pins(im_dark, 'vga', np.array(self._image.shape)).destribution()
-            tmpvga = tools.paramatch(ACCURACY, imdark_des, 0, fvga_des, self._mask)
+            tmpvga = tools.paramatch(ACCURACY, imdark_des, 0, fvga_des*self._mask)
             vga_list += tmpvga
-            tmpvga = tools.paramatch(ACCURACY, imdark_des, 90, fvga_des, self._mask)
+            tmpvga = tools.paramatch(ACCURACY, imdark_des, 90, np.rot90(fvga_des*self._mask, 1))
             vga_list += tmpvga
             vga_list = tools.composantfilter(vga_list, 180 + 95)
             # tools.drawcomponents(self._image, vga_list, 180, 95)
