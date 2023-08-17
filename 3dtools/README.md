@@ -15,7 +15,7 @@ This is a user guide for COMPOS api, a powerful program who can locate the compo
 | power supply unit | YOLOV5 object detection |
 ## Requirement
 YOLOV5 needs to be cloned from [YOLOV5 official page](https://github.com/ultralytics/yolov5#tutorials) under root path.  
-Infomation in [requirements.txt][PlDb]
+Infomation in [requirements.txt][PlDb].
 ## Introduction
 ### main.py
 This is the general pilot of all the functions, and also the user interface.  
