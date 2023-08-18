@@ -91,9 +91,10 @@ After detect all the components, type in finish to start the output processing.
 ```sh
 finish
 ```
-The program will generate the json file and saves it under floder api with the server name + '.json'
+The program will generate the json file and saves it under floder api with the server name + '.json', It will show:
 ```sh
-finish
+{(16, 92): ('vga', 0.0, 0.8375591957768449), (16, 59): ('rs232', 0, 0.8667459425301842), ...}
+dell-poweredge-r720xd  json file in "/api/"
 ```
 The json file is written in the form like:
 ```sh
@@ -116,9 +117,6 @@ The standard components usb is captured from *ibm-x3690x5.rear.png* and are save
 explaination:
 In std_vga and std_rs232, the ibm has draw larger holes than other manufacturer in the picture.  
 Interface idrac in cisco has a different shape than other manufacturer. The pins is more short.
-
-
-
 
 
 ## Classifiers in *Classifier* class:
