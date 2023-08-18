@@ -270,7 +270,7 @@ class Pins:
             self.sigma = 55
         elif mode == 'rs232':
             self.num = 9
-            self.sigma = 70
+            self.sigma = 75
         self.MAT_SIGMA = np.array([[self.sigma, 0], [0, self.sigma]])
         self.z = np.zeros(shape+width-1)
         self._pin = self.gaussian_2d(width)
@@ -378,12 +378,14 @@ def composantfilter(compos, hw):
     compos_matrix = np.unique(np.array(compos), axis=0)
     sim = compos_matrix[:, 3]
     tmp = []
+    # delete whose similarity too low
     for i in range(sim.size):
         if sim[i] < 0.07:
             tmp.append(i)
     compos_matrix = np.delete(compos_matrix, tmp, 0)
     if compos_matrix.shape[0] <= 1:
         return compos_matrix.tolist()
+    # hypothetical test
     sim = compos_matrix[:, 3]
     mse = np.sqrt(np.var(sim))  # Mean squared error
     tmp = []
@@ -393,6 +395,7 @@ def composantfilter(compos, hw):
     compos_matrix = np.delete(compos_matrix, tmp, 0)
     if compos_matrix.shape[0] <= 1:
         return compos_matrix.tolist()
+    # clustering the component
     Z = linkage(compos_matrix[:, :2], 'ward')
     cluster_assignments = fcluster(Z, hw*0.1, criterion='distance')
     cluster_centers = [compos_matrix[cluster_assignments == cluster].mean(axis=0) for cluster in
@@ -423,6 +426,9 @@ def imedge(image):
 
     Returns:
         image edge nd.array in the same size
+        filters.sobel(image) returns the result of convolution, no normalisation
+        canny(image, 1) returns the edge in picture, and the edge is normalised in 1 pixel.
+            Parameter 1 is sigma in gussian filter
     """
     edge = filters.sobel(image)
     return (edge - np.min(edge))/(np.max(edge)-np.min(edge))
@@ -461,7 +467,7 @@ def find_rectangle1(image_g, height, length, line_gap=10):
     edge = canny(image_g, 1)
     # find straight vertical lines that in the image
     angle = np.array([0.0])
-    # probabilistic_hough_line(image, threshold=10, line_length=50, line_gap=10, theta=None, seed=None)
+    # probabilistic_hough_line is a useful methode that can find lines of defined length, angle
     lines = {a for a in probabilistic_hough_line(edge, threshold=10, line_length=int(height * 0.9), line_gap=line_gap,
                                                  theta=angle) if abs(a[0][1] - a[1][1]) < int(height * 1.1)}
     # N.B.: It is strange that the order of (height,width) changed to (width, height) after probabilistic_hough_line,
@@ -521,7 +527,7 @@ def find_rectangle_(image_g, length, height, line_gap=10):
     edge = canny(image_g, 1)
     # find straight vertical lines that in the image
     angle = np.array([0.5*np.pi])
-    # probabilistic_hough_line(image, threshold=10, line_length=50, line_gap=10, theta=None, seed=None)
+    # probabilistic_hough_line is a useful methode that can find lines of defined length, angle
     lines = {a for a in probabilistic_hough_line(edge, threshold=5, line_length=int(length * 0.9), line_gap=line_gap,
                                                  theta=angle) if abs(a[0][0] - a[1][0]) < int(length * 1.1)}
     # N.B.: It is strange that the order of (height,width) changed to (width, height) after probabilistic_hough_line,

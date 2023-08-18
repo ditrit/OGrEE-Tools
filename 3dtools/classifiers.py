@@ -46,9 +46,9 @@ class Classifiers:
             frs232_des = tools.Pins(std_frs232, 'rs232').destribution()
             _, im_bright = tools.imfeature(self._image, np.ones_like(self._image), detector)
             imbright_des = tools.Pins(im_bright, 'rs232', np.array(self._image.shape)).destribution()
-            tmprs232 = tools.paramatch(ACCURACY, imbright_des, 0, frs232_des, self._mask)
+            tmprs232 = tools.paramatch(ACCURACY, imbright_des, 0, frs232_des)
             rs232_list += tmprs232
-            tmprs232 = tools.paramatch(ACCURACY, imbright_des, 90, frs232_des, self._mask)
+            tmprs232 = tools.paramatch(ACCURACY, imbright_des, 90, frs232_des)
             rs232_list += tmprs232
             rs232_list = tools.composantfilter(rs232_list, 180 + 95)
             # tools.drawcomponents(self._image, rs232_list, 180, 95)
@@ -76,7 +76,7 @@ class Classifiers:
         position_sim2 = tools.template_match(image_e, template_e, threshold, min_distance)
         position_sim = position_sim1 if np.mean(np.array(position_sim1)[:, 3]) > np.mean(np.array(position_sim2)[:, 3]) else position_sim2
         # position_sim = tools.composantfilter(position_sim, 116+89)
-        print(position_sim)
+        print("idrac in:  ", position_sim)
         for x, y, ang, sim in position_sim:
             self.components[(x, y)] = ("idrac", ang, sim)
 
@@ -209,11 +209,11 @@ class Classifiers:
         # Step 2: Write the dictionary to the JSON file
         tools.jsondump(file_path, jsonraw)
 
-    def __init__(self, slotname, x, y, face):
+    def __init__(self, servername, x, y, face):
         self._shapemm = (x, y)
-        self._name = slotname.split('/')[-1]
+        self._name = servername.split('/')[-1].split('.')[0]
         self._face = face
-        self._image = tools.normaliseimage(tools.imageload(slotname, "grey"), self._shapemm)
+        self._image = tools.normaliseimage(tools.imageload(servername, "grey"), self._shapemm)
         self._mask = tools.imageload('/standard/mask.png', 'grey')
         self._vga = tools.imageload('/standard/standard-vga.png', 'grey')
         self._rs232 = tools.imageload('/standard/standard-rs232.png', 'grey')
