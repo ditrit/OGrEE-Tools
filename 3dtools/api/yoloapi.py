@@ -72,7 +72,7 @@ def run(
         augment=False,  # augmented inference
         visualize=False,  # visualize features
         update=False,  # update all models
-        project=ROOT / 'result/detect',  # save results to project/name
+        project=ROOT / 'detect',  # save results to project/name
         name='sl_dis_pw',  # save results to project/name
         exist_ok=True,  # existing project/name ok, do not increment
         line_thickness=2,  # bounding box thickness (pixels)
@@ -151,8 +151,11 @@ def run(
             annotator = Annotator(im0, line_width=line_thickness, example=str(names))
             if len(det):
                 # Rescale boxes from img_size to im0 size
-                det[:, :4] = scale_boxes(im.shape[2:], det[:, :4], im0.shape).round() / gn
-                pred0[i] = det
+
+                det0 = torch.clone(det)
+                det0[:, :4] = scale_boxes(im.shape[2:], det[:, :4], im0.shape).round() / gn
+                pred0[i] = det0
+                det[:, :4] = scale_boxes(im.shape[2:], det[:, :4], im0.shape).round()
                 # Print results
                 for c in det[:, 5].unique():
                     n = (det[:, 5] == c).sum()  # detections per class
