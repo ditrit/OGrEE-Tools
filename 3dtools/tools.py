@@ -25,7 +25,7 @@ SIZETABLE = {'idrac': [14.0, 11.0, 11.0], 'usb': [13.0, 14.0, 5.5], 'vga': [16.0
              'disk_lff': [101.0, 146.0, 26.0], 'disk_sff': [70.0, 101.0, 10.0], 'PSU': [90.0, 100.0, 40.0]}
 
 
-def imageload(f, flag="color"):
+def imageload(fn, flag="color"):
     """
     Load image from file
 
@@ -43,15 +43,14 @@ def imageload(f, flag="color"):
         flag = 1
     else:
         flag = 0
-    fn = "image/" + f
     if flag == 1:
         img = imread(fn, 1)  # (H x W), [0, 255]
-        print("3 channels RGB picture   ", f)
+        print("3 channels RGB picture   ", fn)
     else:
         img = imread(fn)    # (H x W x C), [0, 255], RGB
         if img.shape[-1] == 4:
             img = rgba2rgb(img)
-            print("4 channels RGBS picture  ", f)
+            print("4 channels RGBS picture  ", fn)
         else:
             pass
     return img

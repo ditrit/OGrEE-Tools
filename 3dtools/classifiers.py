@@ -23,7 +23,7 @@ class Classifiers:
         Returns:
             Coordinates of vga or rs232 in the picture.
         """
-        ACCURACY = 20
+        ACCURACY = 16
         detector = CENSURE(min_scale=1, max_scale=7, mode='DoB', non_max_threshold=0.15, line_threshold=10)
         if type == 'female':
             vga_list = []
@@ -214,12 +214,12 @@ class Classifiers:
         self._name = servername.split('/')[-1].split('.')[0]
         self._face = face
         self._image = tools.normaliseimage(tools.imageload(servername, "grey"), self._shapemm)
-        self._mask = tools.imageload('/standard/mask.png', 'grey')
-        self._vga = tools.imageload('/standard/standard-vga.png', 'grey')
-        self._rs232 = tools.imageload('/standard/standard-rs232.png', 'grey')
-        self._idrac = tools.imageload('/standard/standard-idrac.png', 'grey')
-        self._idrac_cisco = tools.imageload('/standard/cisco-idrac.png', 'grey')
-        self._usb = tools.imageload('/standard/standard-usb.png', 'grey')
+        self._mask = tools.imageload('image/standard/mask.png', 'grey')
+        self._vga = tools.imageload('image/standard/standard-vga.png', 'grey')
+        self._rs232 = tools.imageload('image/standard/standard-rs232.png', 'grey')
+        self._idrac = tools.imageload('image/standard/standard-idrac.png', 'grey')
+        self._idrac_cisco = tools.imageload('image/standard/cisco-idrac.png', 'grey')
+        self._usb = tools.imageload('image/standard/standard-usb.png', 'grey')
         self.sizetable = tools.SIZETABLE
         self.components = dict()
         self.componentsmm = dict()

@@ -14,7 +14,7 @@ if str(ROOT) not in sys.path:
     sys.path.append(str(ROOT))  # add ROOT to PATH
 ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 '''
-def run(servername ="serveur/dell-poweredge-r720xd.rear.png",
+def run(servername ="image/serveur/dell-poweredge-r720xd.rear.png",
         height=87.38,
         width=443.99,
         face='face',
@@ -88,7 +88,7 @@ def run(servername ="serveur/dell-poweredge-r720xd.rear.png",
 
 def parse_opt():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--servername', type=str, default="serveur/dell-poweredge-r720xd.rear.png", help='model path or triton URL')
+    parser.add_argument('--servername', type=str, default="image/serveur/dell-poweredge-r720xd.rear.png", help='model path or triton URL')
     parser.add_argument('--height', type=float, default=87.38, help="Server's height/vertical size" )
     parser.add_argument('--width', type=float, default=443.99, help="Server's width/horizon size")
     parser.add_argument('--face', default='rear', choices=['front', 'rear'], help='the picture is front bord or rear bord')
