@@ -34,23 +34,23 @@ User can also just run the *main.py* in python consoler. In this case, a default
 
 There are other parameters that the user can choose, to control algorithm's performance.  
 > #yolov5 hyparameter
-    --weights, type:str, model path or triton URL, if not want to change the yolov model, don't use it!
-    --conf-thres, type:float, default=0.5, confidence threshold, yolov will filter the result less than it.
-    --iou-thres, type=float, default=0.45, 'NMS IoU threshold'
-    --device', default='cuda device, i.e. 0 or 0,1,2,3 or cpu'
-    --view-img', if provided, show results on screen. 
-    --save-txt', if provided, save results to *.txt'.
-    --save-conf', if provided, save confidences in --save-txt labels'
-    --save-crop', if provided, save cropped prediction boxes.
-    --nosave', if provided, do not save images/videos'
-    --augment', if provided, augmented inference'.
-    --visualize', if provided, visualize features.
-    --project', default=ROOT / 'detect', help='save results to project/name'
-    --name', default='exp', Save results to "project/name"
-    --exist-ok', If provided, existing project/name ok, do not increment, like exp1, exp2...
-    --line-thickness', default=1, type=int, Bounding box thickness (pixels)
-    --hide-labels', default=False, If provided, hide labels
-    --hide-conf', default=False, action='store_true', help='if provided, hide confidences
+    --weights, type:str, model path or triton URL, if not want to change the yolov model, don't use it!  
+    --conf-thres, type:float, default=0.5, confidence threshold, yolov will filter the result less than it.  
+    --iou-thres, type=float, default=0.45, 'NMS IoU threshold'  
+    --device', default='cuda device, i.e. 0 or 0,1,2,3 or cpu'  
+    --view-img', if provided, show results on screen.   
+    --save-txt', if provided, save results to *.txt'.  
+    --save-conf', if provided, save confidences in --save-txt labels'  
+    --save-crop', if provided, save cropped prediction boxes.  
+    --nosave', if provided, do not save images/videos'  
+    --augment', if provided, augmented inference'.  
+    --visualize', if provided, visualize features.  
+    --project', default=ROOT / 'detect', help='save results to project/name'  
+    --name', default='exp', Save results to "project/name"  
+    --exist-ok', If provided, existing project/name ok, do not increment, like exp1, exp2...  
+    --line-thickness', default=1, type=int, Bounding box thickness (pixels)  
+    --hide-labels', default=False, If provided, hide labels  
+    --hide-conf', default=False, action='store_true', help='if provided, hide confidences  
 >
 After setting all the parameters for classifier(this step can also be replaced by executing data base automatically in the future), the program will creat a classifier class named ogree, then go on each defined classifier. Use ogree.clxxxx to detect component xxxx. It doesn't need any input at this step.
 
@@ -120,6 +120,8 @@ The api file of yolov5 is under */api/yoloapi.py*. It is similar with the one un
 | slot_lp | slot lp |
 | source | power supply unit |
 
+
+The dect result of yolov5 will also saves under /detect/exp x/, user can check the output there. But remember to clean the flod regularly for not occupying too many space.
 #### Mark:
 - The unit dimention of power supply unit differs among each producer. An data base is needed to be created to give this information.  
 - An excel about the shape of the server is created under */image/name_list.xlsx*. But not every data is ensured to be correct. 
