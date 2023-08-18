@@ -15,20 +15,20 @@ This is a user guide for COMPOS api, a powerful program who can locate the compo
 | power supply unit | YOLOV5 object detection |
 ## Requirement
 YOLOV5 needs to be cloned from [YOLOV5 official page](https://github.com/ultralytics/yolov5#tutorials) under root path.   
-Infomation in [requirements.txt] [PlDb]
+Package infomation in [requirements.txt](requirements.txt)
 ## Introduction
 ### main.py
 This is the general pilot of all the functions, and also the user interface.  
 Here is a minimum tutorial example. 
 ```sh
 cd Compos path
-python main.py --slotname serveur/dell-poweredge-r720xd.rear.png --height 86.8 --length 482.4
+python main.py --servername image/serveur/dell-poweredge-r720xd.rear.png --height 86.8 --length 482.4
 ```
 Some basic parameters should be told before start the program. 
-> --servername : string, the file name of image. 
- --height : float, horizontal dimension, (unit mm).
- --length : float, vertical dimension, (unit mm).
- --face : string, 'front' or 'rear'
+> --servername : string, the file name of image.   
+ --height : float, horizontal dimension, (unit mm).  
+ --length : float, vertical dimension, (unit mm).  
+ --face : string, 'front' or 'rear'  
 >
 User can also just run the *main.py* in python consoler. In this case, a default server "dell-poweredge-r720xd.rear.png" will be shown.
 
@@ -58,7 +58,7 @@ After setting all the parameters for classifier(this step can also be replaced b
 #### 1. Use the following code to start the program.
 ```sh
 cd COMPOS path
-python main.py --slotname serveur/dell-poweredge-r720xd.rear.png --height 86.8 --length 482.4.
+python main.py --servername image/serveur/dell-poweredge-r720xd.rear.png --height 86.8 --width 482.4 --face rear
 ```
 #### 2. Input the command 
 It will be seen: 
@@ -76,6 +76,15 @@ or
 ```sh
 11
 ```
+The result is printed in the window shows "xxx in [x,y,angle,similarity]"
+```sh
+start detecting d-sub female
+0° searching progress:  100%:  ▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋
+
+90° searching progress:  100%:  ▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋
+
+vga in : [[640.0, 860.0, 0.0, 0.7698690075499673]]
+```
 **Attention:** the type of input code is *string*. If we want transform it into a interface connect with other program, the command should also be *string*, not int.
 #### 3. Finish and output
 After detect all the components, type in finish to start the output processing.
@@ -83,6 +92,22 @@ After detect all the components, type in finish to start the output processing.
 finish
 ```
 The program will generate the json file and saves it under floder api with the server name + '.json'
+```sh
+finish
+```
+The json file is written in the form like:
+```sh
+[{"location": "vga0", "type": "", "elemOrient": "horizontal", "elemPos": [92.0, 0, 9.0], "elemSize": [16.0, 11.0, 8.0], "labelPos": "rear", "color": "", "attributes": {"factor": "", "similarity": 0.7698690075499673}},{...},...]
+```
+## Result of test example
+### json file
+The json file of test example dell-poweredge-r720xd.rear should be same as [test.json](api/test.json) if lanch the command from 11 to 15.
+### 3d model
+origin photo
+![image](image/serveur/dell-poweredge-r720xd.rear.png)
+3d model
+![image](image/serveur/test1.png)
+![image](image/serveur/test2.png)
 # Description of standard server (components): 
 ## standard image/components
 We choose a model ibm-x3690x5.rear like the standard server. this image gives a ratio of 9.14x pixel /mm. and standard components idrac, rs232, vga are captured and are saved at the path /image/standard/. Another idrac template is captured from *cisco-c240-m6-lff.rear.png*, just used for cisco models.
