@@ -1,0 +1,4 @@
+This file is used to config the YOLOV5 model.
+step 1: copy "serveur122.yaml", paste under /yolov5/data. This is the setting of our dataset.
+step 2: Copy "serveur_yolov5s.yaml", paste under /yolov5/models. This is the config of yolov5s model in the case of Ogree.
+Then we can use the YOLOV5 model in our code.
