@@ -123,7 +123,7 @@ python GenTiles.py [-h] --json JSON [--out OUT] [--angle ANGLE] [--offset OFFSET
   `--out OUT`           | name of the returned JSON
   `--angle ANGLE`       | tiling's angle (0 by default) (degree)
   `--offset OFFSET`     | first tile's offset from the first vertex : x,y (m)
-  `--draw`              | if you want python to draw the room with numpy
+  `--draw`              | if you want python to draw the room with matplotlib
   `--opti`              | if you want python iterate through multiple angles and start positions to get the best tiling (SLOW)
   `--tileSize TILESIZE` | size of a tile (60cm by default) (m)
 
