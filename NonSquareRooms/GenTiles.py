@@ -326,7 +326,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--draw",
-        help="""If you want python to draw the room with numpy""",
+        help="""If you want python to draw the room with matplotlib""",
         action="store_true",
     )
     parser.add_argument(
