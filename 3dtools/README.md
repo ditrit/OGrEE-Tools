@@ -14,8 +14,23 @@ This is a user guide for COMPOS api, a powerful program who can locate the compo
 | disk sff | YOLOV5 object detection |
 | power supply unit | YOLOV5 object detection |
 ## Requirement
-YOLOV5 needs to be cloned from [YOLOV5 official page](https://github.com/ultralytics/yolov5#tutorials) under root path.   
+YOLOV5 needs to be cloned from [YOLOV5 official page](https://github.com/ultralytics/yolov5#tutorials) in the `3dtools` directory.
 Package infomation in [requirements.txt](requirements.txt)
+
+## Setup
+
+```sh
+git clone https://github.com/ditrit/OGrEE-Tools.git
+cd OGrEE-Tools/3dtools
+pip install -r ./requirements.txt
+#yolov5 installation
+git clone https://github.com/ultralytics/yolov5
+cd yolov5
+pip install -r ./requirements.txt
+```
+
+_setup script coming soon_
+
 ## Introduction
 ### main.py
 This is the general pilot of all the functions, and also the user interface.  
