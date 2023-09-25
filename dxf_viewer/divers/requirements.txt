@@ -1,3 +1,0 @@
-ezdxf >= 1.0.3
-mixpeek >= 1.7
-rdp >= 0.8

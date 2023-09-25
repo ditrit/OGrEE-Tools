@@ -1,6 +1,7 @@
 import numpy as np
 import time
-from tkinter import *
+import tkinter as tk
+
 
 def transform(vertices, new_center, axis1, axis2):
     mat = np.linalg.inv(np.array([axis1, axis2])) @ np.array([[1, 0], [0, 1]])
@@ -88,7 +89,6 @@ def cap_frequency(max_calls_per_second):
                 last_call_time = current_time
                 return result
         return wrapper
-
     return decorator
 
 
@@ -108,11 +108,11 @@ class ToolTip(object):
         x, y, cx, cy = self.widget.bbox("insert")
         x = x + self.widget.winfo_rootx() + 30
         y = y + cy + self.widget.winfo_rooty() + 30
-        self.tipwindow = tw = Toplevel(self.widget)
+        self.tipwindow = tw = tk.Toplevel(self.widget)
         tw.wm_overrideredirect(1)
         tw.wm_geometry("+%d+%d" % (x, y))
-        label = Label(tw, text=self.text, justify=LEFT,
-                      background="#ffffe0", relief=SOLID, borderwidth=1,
+        label = tk.Label(tw, text=self.text, justify=tk.LEFT,
+                      background="#ffffe0", relief=tk.SOLID, borderwidth=1,
                       font=("tahoma", "8", "normal"))
         label.pack(ipadx=1)
 
@@ -142,3 +142,28 @@ def get_file_name(file_path):
     file_path_components = file_path.split('/')
     file_name_and_extension = file_path_components[-1].rsplit('.', 1)
     return file_name_and_extension[0]
+
+class DragDropListbox(tk.Listbox):
+    """ A Tkinter listbox with drag'n'drop reordering of entries. """
+    def __init__(self, master, **kw):
+        kw['selectmode'] = tk.SINGLE
+        tk.Listbox.__init__(self, master, kw)
+        self.bind('<Button-1>', self.setCurrent)
+        self.bind('<B1-Motion>', self.shiftSelection)
+        self.curIndex = None
+
+    def setCurrent(self, event):
+        self.curIndex = self.nearest(event.y)
+
+    def shiftSelection(self, event):
+        i = self.nearest(event.y)
+        if i < self.curIndex:
+            x = self.get(i)
+            self.delete(i)
+            self.insert(i+1, x)
+            self.curIndex = i
+        elif i > self.curIndex:
+            x = self.get(i)
+            self.delete(i)
+            self.insert(i-1, x)
+            self.curIndex = i
