@@ -1,4 +1,4 @@
-
+#Imports
 import tkinter as tk
 from tkinter import filedialog
 import os
@@ -6,7 +6,6 @@ import ezdxf
 import sys
 import numpy as np
 from rdp import rdp
-import pprint as pp
 from collections import defaultdict
 import matplotlib.pyplot as plt
 import sys
@@ -17,32 +16,19 @@ from matplotlib.patches import Polygon
 from matplotlib.lines import Line2D
 from matplotlib.patches import Rectangle
 from matplotlib.widgets import Cursor
-sys.path.append("./divers")
-from tools import *
 import mplcursors
 from pprint import pprint
 matplotlib.use('TkAgg')
 from tkinter.filedialog import asksaveasfile
+sys.path.append("./divers")
+from tools import *
 
-"""
-In this verson, the lower left btton ( supposed to let u add points manually doesnt work ), its to add
-also, the export to json func is not working properly i think
-The new feature is the lowest box where selected points appaears, 
-you can select a first bunch of points with the area selection and then add points
-one by one with the selector (hand icon)
-In the box you can order the points as you want by drag and drop them
-The polyline button removes all the non selected point and draw a polyline
-between remaining points in the order they are in the box 
-the line appears not to be close atm
-to be fix and can be fix quickly
-"""
-
+# To be done: json export funcion
+# Add a button to select ponint to delete from the drawing
 
 class App(tk.Tk):
-    def __init__(self):
-        
+    def __init__(self):   
         super().__init__() # create CTk window like you do with the Tk window
-        
         self.initial_width = 1600
         self.initial_height = 900
         self.geometry(f"{self.initial_width}x{self.initial_height}")
@@ -82,6 +68,7 @@ class App(tk.Tk):
         self.canvas.get_tk_widget().pack(fill=tk.BOTH)
         self.lines_to_draw = []
         self.point_id = []
+
 
         #Menu
         self.buton_size = 33
@@ -131,15 +118,16 @@ class App(tk.Tk):
         self.are_equals = True
         CreateToolTip(self.json, text = "Export selected points\n" + \
                                         "to Json")
-       
+        
 
         #bouton add_points
         self.add_point_border = tk.Frame(self, bg="#d9d9d9")
         self.add_point_border.place(relx=0.75, rely=0.63, width=self.buton_size+4, height=self.buton_size+4)   
         self.add_point_icone = tk.PhotoImage(file="graphic/plus.png")
-        self.add_point_button = tk.Button(self.add_point_border, image=self.add_point_icone,command=self.add_point,bg="white")
+        self.add_point_button = tk.Button(self.add_point_border, image=self.add_point_icone,command=self.on_click_add,bg="white")
         self.add_point_button.place(x=2,y=2,width=self.buton_size, height=self.buton_size)
         CreateToolTip(self.add_point_button, text = "Add a Point")
+        self.add = False
 
 
         #bouton select_point with area
@@ -163,7 +151,7 @@ class App(tk.Tk):
         self.plus_button.place(x=2,y=2,width=self.buton_size, height=self.buton_size)
         CreateToolTip(self.plus_button, text = "Select points by "+\
                                                 "click")
-        self.adding_points = False
+        self.selecting_points = False
         self.selected_points = {}
 
         
@@ -234,8 +222,6 @@ class App(tk.Tk):
         self.mainloop()
 
 
-    
-    
 ########Fonctions liées au boutons################
 
 #Bouton fichier
@@ -365,7 +351,6 @@ class App(tk.Tk):
     
 #Mesure 
     def on_click_mesure(self,event):
-
         if self.point1 == []:
             if self.close: self.point1 = self.close
             else: self.point1 = [event.xdata, event.ydata]
@@ -411,8 +396,6 @@ class App(tk.Tk):
 
         self.horizontal_line = self.ax.axhline(0, color='red', linestyle='--', visible=False, lw=1)
         self.vertical_line = self.ax.axvline(0, color='red', linestyle='--', visible=False, lw=1)
-        self.fig.canvas.mpl_connect('motion_notify_event', self.cursor_hover)
-        self.fig.canvas.mpl_connect('axes_leave_event', self.cursor_leave)
         self.canvas.draw_idle()
 
 #Bouton séléction de points par aire 
@@ -481,10 +464,9 @@ class App(tk.Tk):
         if x and y :
             for c,i in enumerate(self.lines_to_draw):
                 ids_points = self.point_id[c]
-                if not False in np.equal(i[0,:],i[-1,:]):
+                if not False in np.equal(i[0,:],i[-1,:]) and np.shape(i)[0]>1:
                     i = i[:-1,:]
                     ids_points = self.point_id[c][:-1]
-
                 self.selection += list(i[(i[:,0]>min(x_start,x))*(i[:,0]<max(x_start,x))*\
                               (i[:,1]>min(y_start,y))*(i[:,1]<max(y_start,y)),:])
                 self.id_selected += list(ids_points[(i[:,0]>min(x_start,x))*(i[:,0]<max(x_start,x))*\
@@ -513,14 +495,14 @@ class App(tk.Tk):
     
 #Bouton séléction de points
     def selection_points(self):
-        if not self.adding_points:
+        if not self.selecting_points:
             self.escape(None)
-            self.adding_points = True
+            self.selecting_points = True
             self.config(cursor="hand2")
             self.plus_border["bg"] = 'black'
             self.choose_curs = self.ax.figure.canvas.mpl_connect('button_press_event', self.choose_point)
         else:
-            self.adding_points = False
+            self.selecting_points = False
             self.config(cursor="arrow")
             self.plus_border["bg"] = '#d9d9d9'
             self.ax.figure.canvas.mpl_disconnect(self.choose_curs)
@@ -552,6 +534,7 @@ class App(tk.Tk):
             for i in range(self.box_points.size()):
                 item = self.box_points.get(i)
                 line.append(self.selected_points[item])
+            line.append(line[0])
             self.lines_to_draw = np.array([line])
             self.redefine_origin()
             if self.selected:
@@ -564,8 +547,23 @@ class App(tk.Tk):
             self.id_selected = []
         
 #Add point
-    def add_point(self):
-        pass     
+    def on_click_add(self):
+        if not self.add:
+            self.escape(None)
+            self.add_point_border["bg"] = 'black'
+            self.add_curs = self.ax.figure.canvas.mpl_connect('button_press_event', self.add_point) # evenemnt sélection
+            self.add = True
+        else:
+            self.add_point_border["bg"] = '#d9d9d9'
+            self.ax.figure.canvas.mpl_disconnect(self.add_curs)
+            self.add = False
+    
+    def add_point(self,event):
+        x = event.xdata
+        y = event.ydata
+        if x and y: 
+            self.lines_to_draw.append(np.array([[x,y]]))  
+        self.plot_on_canvas(self.lines_to_draw)
 
 ####################################################
 
@@ -581,8 +579,8 @@ class App(tk.Tk):
             y = event.ydata
 
             # Mettre à jour les positions des lignes
-            self.horizontal_line.set_ydata(y)
-            self.vertical_line.set_xdata(x)
+            self.horizontal_line.set_ydata([y])
+            self.vertical_line.set_xdata([x])
 
             # Afficher les lignes
             self.horizontal_line.set_visible(True)
@@ -744,9 +742,6 @@ class App(tk.Tk):
         self.ax.set_aspect('equal')
         self.horizontal_line = self.ax.axhline(0, color='red', linestyle='--', visible=False, lw=1)
         self.vertical_line = self.ax.axvline(0, color='red', linestyle='--', visible=False, lw=1)
-        self.fig.canvas.mpl_connect('motion_notify_event', self.cursor_hover)
-        self.fig.canvas.mpl_connect('axes_leave_event', self.cursor_leave)
-        self.fig.canvas.mpl_connect('axes_notify_event', self.closest_pt)
         self.canvas.draw()
 
 #Met en surbrillance le point le plus proche
@@ -791,10 +786,11 @@ class App(tk.Tk):
     def highlight_selected(self,list_selected):
         if self.selected:
             self.selected.remove()
-        list_selected = np.array(list_selected)
-        self.selected = None
-        self.selected = self.ax.scatter(list_selected[:,0],list_selected[:,1],c="blue",s=80)
-        self.canvas.draw()
+        if len(list_selected) != 0:
+            list_selected = np.array(list_selected)
+            self.selected = None
+            self.selected = self.ax.scatter(list_selected[:,0],list_selected[:,1],c="blue",s=80)
+            self.canvas.draw()
 
 ####################################################
 
@@ -896,8 +892,8 @@ class App(tk.Tk):
             self.canvas.draw_idle()
             self.axis_bouton.configure(state='normal')
         
-        if self.adding_points:
-            self.adding_points = False
+        if self.selecting_points:
+            self.selecting_points = False
             self.config(cursor="arrow")
             self.plus_border["bg"] = '#d9d9d9'
 
@@ -905,7 +901,11 @@ class App(tk.Tk):
             self.button_border["bg"] = '#d9d9d9'
             self.ax.figure.canvas.mpl_disconnect(self.choose_curs)
             self.choose = False
-            self.ax.figure.canvas.mpl_disconnect(self.choose_curs)
+
+        if self.add:
+            self.add_point_border["bg"] = '#d9d9d9'
+            self.ax.figure.canvas.mpl_disconnect(self.add_curs)
+            self.add = False
 
 #Place the leftest point to 0 and the lower one too
     def redefine_origin(self):
