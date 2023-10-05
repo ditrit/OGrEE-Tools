@@ -129,6 +129,8 @@ class ToolBox():
         label.pack(fill=tk.BOTH, expand=True)
         return frame
 
+    ##/////////////////////////
+
     #changement de la frame en changeant d'item dans la liste
 
     def show_selected_frame(self, event):
