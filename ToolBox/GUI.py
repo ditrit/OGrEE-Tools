@@ -84,6 +84,8 @@ class ToolBox():
 
     ##Mettez vos codes pour chacun des outils dans les frames en-dessous
 
+    ##///////Groupe 1////////
+
     #frame for ACAD2OGrEE
     def create_A2O(self):
         frame = tk.Frame(self.root, width=200, height=100, bg="red")
@@ -100,6 +102,8 @@ class ToolBox():
         label = tk.Label(frame, text="Frame 1 Content", bg="yellow", fg="white")
         label.pack(fill=tk.BOTH, expand=True)
         return frame
+
+    ##///////Groupe2///////
 
     #frame for VSS2PNG
     def create_V2P(self):
