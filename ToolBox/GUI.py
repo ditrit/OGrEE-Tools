@@ -1,4 +1,10 @@
 import tkinter as tk
+from tkinter import filedialog
+from FBX import *
+from VSS2PNG import *
+from NonSquareRooms import *
+from ACAD2OGrEE import *
+from Tools3D import *
 
 class Chargement():
     def __init__(self,root):
@@ -73,63 +79,14 @@ class ToolBox():
         self.listbox.bind("<ButtonRelease-1>", self.show_selected_frame)
 
         self.tool_frames={
-            "ACAD2OGrEE":self.create_A2O,
-            "NonSquareRooms":self.create_NSR,
-            "VSS2PNG":self.create_V2P,
-            "3DTools":self.create_3DT,
-            "FBX Converter":self.create_FBX
+            "ACAD2OGrEE":create_A2O,
+            "NonSquareRooms":create_NSR,
+            "VSS2PNG":create_V2P,
+            "3DTools":create_3DT,
+            "FBX Converter":create_FBX
         }
 
         self.current_frame = None
-
-    ##Mettez vos codes pour chacun des outils dans les frames en-dessous
-
-    ##///////Groupe 1////////
-
-    #frame for ACAD2OGrEE
-    def create_A2O(self):
-        frame = tk.Frame(self.root, width=200, height=100, bg="red")
-        frame.pack_propagate(False)
-        label = tk.Label(frame, text="Frame 1 Content", bg="red", fg="white")
-        label.pack(fill=tk.BOTH, expand=True)
-        return frame
-
-
-    #frame for NonSquareRooms
-    def create_NSR(self):
-        frame = tk.Frame(self.root, width=200, height=100, bg="yellow")
-        frame.pack_propagate(False)
-        label = tk.Label(frame, text="Frame 1 Content", bg="yellow", fg="white")
-        label.pack(fill=tk.BOTH, expand=True)
-        return frame
-
-    ##///////Groupe2///////
-
-    #frame for VSS2PNG
-    def create_V2P(self):
-        frame = tk.Frame(self.root, width=200, height=100, bg="blue")
-        frame.pack_propagate(False)
-        label = tk.Label(frame, text="Frame 1 Content", bg="blue", fg="white")
-        label.pack(fill=tk.BOTH, expand=True)
-        return frame
-
-    #frame for 3DTools
-    def create_3DT(self):
-        frame = tk.Frame(self.root, width=200, height=100, bg="green")
-        frame.pack_propagate(False)
-        label = tk.Label(frame, text="Frame 1 Content", bg="green", fg="white")
-        label.pack(fill=tk.BOTH, expand=True)
-        return frame
-
-    #frame for FBX Converter
-    def create_FBX(self):
-        frame = tk.Frame(self.root, width=200, height=100, bg="pink")
-        frame.pack_propagate(False)
-        label = tk.Label(frame, text="Frame 1 Content", bg="pink", fg="white")
-        label.pack(fill=tk.BOTH, expand=True)
-        return frame
-
-    ##/////////////////////////
 
     #changement de la frame en changeant d'item dans la liste
 
@@ -139,8 +96,29 @@ class ToolBox():
         if self.current_frame:
             self.current_frame.destroy()
         if frame_creator:
-            self.current_frame = frame_creator()
+            self.current_frame = frame_creator(self)
             self.current_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+
+    def choisir_png(self, entry, label):
+        # Ouvre une boîte de dialogue pour choisir un fichier PNG
+        fichier = filedialog.askopenfilename(filetypes=[("Fichiers PNG", "*.png")])
+
+        # Affiche le lien du fichier dans l'Entry
+        entry.delete(0, tk.END)  # Efface le contenu actuel de l'Entry
+        entry.insert(0, fichier)  # Insère le lien du fichier choisi
+
+        if fichier:
+            # Ouvre le fichier en tant qu'image
+            image = tk.PhotoImage(file=fichier)
+            label.config(image=image)
+            label.image = image  # Garde une référence à l'image pour éviter la suppression par le ramasse-miettes
+        else:
+            label.config(image=None)
+
+    def choisir_path(self, enter):
+        file_path = filedialog.askopenfilename()
+        enter.delete(0, tk.END)  # Efface le contenu actuel de l'Entry
+        enter.insert(0, file_path)
 
     
 root = tk.Tk()
