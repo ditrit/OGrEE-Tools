@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog
+import subprocess
 from FBX import *
 from VSS2PNG import *
 from NonSquareRooms import *
@@ -99,24 +100,50 @@ class ToolBox():
             self.current_frame = frame_creator(self)
             self.current_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
-    def choisir_png(self, entry):
+    # Lance la commande dans le terminal et print le résultat et les erreur en sortie
+    def command(self,command):
+        output=subprocess.run(command,shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        print("Sortie de la commande :", output.stdout)
+        print("Erreurs de la commande :", output.stderr)
+
+    ## FBX functions    
+    #Update le bouton pour générer la commande
+    def update_generate_button(self):
+        w=self.w_entry.get()
+        print(w)
+        d=self.d_entry.get()
+        print(d)
+        h=self.h_entry.get()
+        print(h)
+        front=self.front_entry.get()
+        print(front)
+        back=self.back_entry.get()
+        print(back)
+        out=self.enter.get()
+        print(out)
+        if (w!="" and d!="" and h!="" and front!="" and back!="" and out!=""):
+                self.finish_button.config(state=tk.NORMAL)
+
+    #Génere la commande
+    def generate_command(self):
+        w=self.w_entry.get()
+        d=self.d_entry.get()
+        h=self.h_entry.get()
+
+    def choisir_png(self,entry):
         # Ouvre une boîte de dialogue pour choisir un fichier PNG
         fichier = filedialog.askopenfilename(filetypes=[("Fichiers PNG", "*.png")])
 
         # Affiche le lien du fichier dans l'Entry
         entry.delete(0, tk.END)  # Efface le contenu actuel de l'Entry
         entry.insert(0, fichier)  # Insère le lien du fichier choisi
+        self.update_generate_button()
 
-        if fichier:
-            # Ouvre le fichier en tant qu'image
-            image = tk.PhotoImage(file=fichier)
-            
-
-    def choisir_path(self, enter):
-        file_path = filedialog.askopenfilename()
+    def choisir_path(self,enter):
+        file_path = filedialog.askdirectory()
         enter.delete(0, tk.END)  # Efface le contenu actuel de l'Entry
         enter.insert(0, file_path)
-
+        self.update_generate_button()
     
 root = tk.Tk()
 chargement=Chargement(root)
