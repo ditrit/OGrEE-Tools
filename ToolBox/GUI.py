@@ -66,10 +66,10 @@ class ToolBox():
 
         self.bottom=tk.Frame(root, bg="light grey", height=30)
         self.bottom.pack(side=tk.BOTTOM, fill=tk.X)
-        enter_button=tk.Button(self.bottom, text="enter", padx=10, width=25)
+        enter_button=tk.Button(self.bottom, text="enter", padx=10, width=15)
         enter_button.pack(pady=10,padx=10 ,side=tk.RIGHT)
-        enter=tk.Entry(self.bottom, width=100)
-        enter.pack(pady=10,padx=10 , fill=tk.X)
+        self.enter=tk.Entry(self.bottom, width=100)
+        self.enter.pack(pady=10,padx=10 , fill=tk.X)
 
         #création de la liste d'outils
 
@@ -89,8 +89,7 @@ class ToolBox():
 
         self.current_frame = None
 
-    #changement de la frame en changeant d'item dans la liste
-
+    #changement de la frame en changeant d'outil dans la liste
     def show_selected_frame(self, event):
         selected_item = self.listbox.get(self.listbox.curselection())
         frame_creator = self.tool_frames.get(selected_item)
@@ -106,44 +105,10 @@ class ToolBox():
         print("Sortie de la commande :", output.stdout)
         print("Erreurs de la commande :", output.stderr)
 
-    ## FBX functions    
-    #Update le bouton pour générer la commande
-    def update_generate_button(self):
-        w=self.w_entry.get()
-        print(w)
-        d=self.d_entry.get()
-        print(d)
-        h=self.h_entry.get()
-        print(h)
-        front=self.front_entry.get()
-        print(front)
-        back=self.back_entry.get()
-        print(back)
-        out=self.enter.get()
-        print(out)
-        if (w!="" and d!="" and h!="" and front!="" and back!="" and out!=""):
-                self.finish_button.config(state=tk.NORMAL)
-
-    #Génere la commande
-    def generate_command(self):
-        w=self.w_entry.get()
-        d=self.d_entry.get()
-        h=self.h_entry.get()
-
-    def choisir_png(self,entry):
-        # Ouvre une boîte de dialogue pour choisir un fichier PNG
-        fichier = filedialog.askopenfilename(filetypes=[("Fichiers PNG", "*.png")])
-
-        # Affiche le lien du fichier dans l'Entry
-        entry.delete(0, tk.END)  # Efface le contenu actuel de l'Entry
-        entry.insert(0, fichier)  # Insère le lien du fichier choisi
-        self.update_generate_button()
-
-    def choisir_path(self,enter):
-        file_path = filedialog.askdirectory()
-        enter.delete(0, tk.END)  # Efface le contenu actuel de l'Entry
-        enter.insert(0, file_path)
-        self.update_generate_button()
+    #Ecrit la commande dans la barre en bas de l'écran
+    def generate_command(self,command):
+        self.enter.delete(0, tk.END)
+        self.enter.insert(0,command)
     
 root = tk.Tk()
 chargement=Chargement(root)
