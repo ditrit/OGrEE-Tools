@@ -1,7 +1,7 @@
 import numpy as np
 import time
 import tkinter as tk
-
+import json
 
 def transform(vertices, new_center, axis1, axis2):
     mat = np.linalg.inv(np.array([axis1, axis2])) @ np.array([[1, 0], [0, 1]])
@@ -131,12 +131,11 @@ def CreateToolTip(widget, text):
     widget.bind('<Enter>', enter)
     widget.bind('<Leave>', leave)
 
-def generate_json(name,points):
-    points = list(points[0])
+def generate_json(points):
     json_response = {"points":[]}
     for i in points:
         json_response["points"].append(list(i))
-    return str(json_response)
+    return json.dumps(json_response)
 
 def get_file_name(file_path):
     file_path_components = file_path.split('/')
