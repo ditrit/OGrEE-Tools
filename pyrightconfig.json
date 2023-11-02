@@ -1,0 +1,11 @@
+{ 
+    "exclude": [
+        "**/node_modules", 
+        "**/__pycache__",
+        "**/.*",
+        "**/yolov5",
+    ],
+    "ignore":[
+        "**/FbxCommon.py"
+    ]
+}
