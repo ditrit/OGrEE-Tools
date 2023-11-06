@@ -1,7 +1,10 @@
 # Imports
+from logging import warning
+from random import choice
 import tkinter as tk
 from tkinter import filedialog
 import os
+from cv2 import ChiHistogramCostExtractor
 import ezdxf
 import sys
 import numpy as np
@@ -14,6 +17,9 @@ import matplotlib
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from matplotlib.patches import Polygon
 from matplotlib.patches import Rectangle
+from tkinter import simpledialog
+
+from sympy import true
 
 matplotlib.use("TkAgg")
 from tkinter.filedialog import asksaveasfile
@@ -36,7 +42,7 @@ class App(tk.Tk):
         self.x_ratio = self.initial_width / 1280
         self.y_ratio = self.initial_height / 720
         self.cur_file = ""
-        self.protocol("WM_DELETE_WINDOW", lambda: self.on_closing_window())
+        self.protocol("WM_DELETE_WINDOW", self.on_closing_window)
 
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
@@ -478,9 +484,75 @@ class App(tk.Tk):
             return
         extensions = [("Json file", "*.json")]
         default_name = get_file_name(self.cur_file)  # vire le path et l'extension
+
+        ROOT = tk.Toplevel()
+        # ROOT.wait_visibility()
+        ROOT.withdraw()
+        ROOT.grab_set_global()
+
+        def mychoicebox(choicelist, title, prompt):
+            global result
+
+            def buttonfn():
+                global result
+                result = var.get()
+                choicewin.destroy()
+                choicewin.quit()
+
+            def wm_delete_window():
+                print("test")
+                ROOT.destroy()
+                choicewin.destroy()
+                choicewin.quit()
+
+            choicewin = tk.Toplevel(master=ROOT)
+            choicewin.protocol("WM_DELETE_WINDOW", wm_delete_window)
+            choicewin.title(title)
+            tk.Label(choicewin, text=prompt).grid(row=0, column=0, sticky="W")
+
+            var = tk.StringVar(choicewin)
+            var.set(choicelist[0])  # default option
+            popupMenu = tk.OptionMenu(choicewin, var, *choicelist)
+            popupMenu.grid(sticky=tk.N + tk.S + tk.E + tk.W, row=1, column=0)
+
+            tk.Button(choicewin, text="Done", command=buttonfn).grid(row=2, column=0)
+            choicewin.mainloop()
+            return result
+
+        category = mychoicebox(["room", "building"], "Category", "Select a category :")
+        name = simpledialog.askstring(title="Name", prompt=f"Input the {category}'s name :", parent=ROOT)
+        if name is None:
+            return
+        while len(name) == 0:
+            self.warning("The name can not be empty")
+            ROOT.deiconify()
+            ROOT.wait_visibility()
+            ROOT.withdraw()
+            name = simpledialog.askstring(title="Name", prompt=f"Input the {category}'s name :", parent=ROOT)
+            if name is None:
+                return
+
+        ROOT.deiconify()
+        ROOT.wait_visibility()
+        ROOT.tk.eval(f"tk::PlaceWindow {ROOT._w} center")
+        ROOT.withdraw()
+        height = simpledialog.askfloat(title="Height", prompt=f"Input the height of the {category} (m)", parent=ROOT, initialvalue=3, minvalue=0)
+
+        if height is None:
+            return
+
+        preJSON = {"slug": name, "category": category}
+        ROOT.grab_set_global()
+        if category == "room":
+            preJSON["axisOrientation"] = mychoicebox(
+                ["+x+y", "+x-y", "-x+y", "-x-y"], "Axis orientation", "Select an orientation for the axis of the room"
+            )
+            preJSON["floorUnit"] = mychoicebox(["m", "f", "t"], "Floor unit", "Select the measurement unit for the floor of the room")
+
+        ROOT.destroy()
         file = asksaveasfile(filetypes=extensions, defaultextension=extensions, initialfile=f"{default_name}")
         if file:
-            file.write(generate_json(self.selection))
+            file.write(generate_json(preJSON, self.selection, height))
             file.close()
 
     # Bouton séléction de points

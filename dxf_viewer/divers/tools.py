@@ -2,11 +2,14 @@ import numpy as np
 import time
 import tkinter as tk
 import json
+from shapely.geometry import Polygon
+
 
 def transform(vertices, new_center, axis1, axis2):
     mat = np.linalg.inv(np.array([axis1, axis2])) @ np.array([[1, 0], [0, 1]])
     transformed_vertices = (vertices - new_center) @ mat
     return transformed_vertices
+
 
 def transform_single_axis(vertices, new_center, axis1, direct):
     if direct:
@@ -34,9 +37,9 @@ class ZoomPan:
             cur_ylim = ax.get_ylim()
             xdata = event.xdata
             ydata = event.ydata
-            if event.button == 'up':
+            if event.button == "up":
                 scale_factor = 1 / base_scale
-            elif event.button == 'down':
+            elif event.button == "down":
                 scale_factor = base_scale
             else:
                 scale_factor = 1
@@ -48,7 +51,7 @@ class ZoomPan:
                 ax.set_xlim([xdata - new_width * (1 - relx), xdata + new_width * relx])
                 ax.set_ylim([ydata - new_height * (1 - rely), ydata + new_height * rely])
                 ax.figure.canvas.draw()
-            except :
+            except:
                 pass
 
         def pan(event):
@@ -65,14 +68,13 @@ class ZoomPan:
         def release(event):
             if event.button == 2:
                 self.press = None
-                
+
         fig = ax.get_figure()
-        fig.canvas.mpl_connect('scroll_event', zoom)
-        fig.canvas.mpl_connect('button_press_event', pan)
-        fig.canvas.mpl_connect('button_release_event', release)
+        fig.canvas.mpl_connect("scroll_event", zoom)
+        fig.canvas.mpl_connect("button_press_event", pan)
+        fig.canvas.mpl_connect("button_release_event", release)
 
         return zoom, pan, release
-
 
 
 def cap_frequency(max_calls_per_second):
@@ -88,12 +90,13 @@ def cap_frequency(max_calls_per_second):
                 result = func(*args, **kwargs)
                 last_call_time = current_time
                 return result
+
         return wrapper
+
     return decorator
 
 
 class ToolTip(object):
-
     def __init__(self, widget):
         self.widget = widget
         self.tipwindow = None
@@ -111,9 +114,7 @@ class ToolTip(object):
         self.tipwindow = tw = tk.Toplevel(self.widget)
         tw.wm_overrideredirect(1)
         tw.wm_geometry("+%d+%d" % (x, y))
-        label = tk.Label(tw, text=self.text, justify=tk.LEFT,
-                      background="#ffffe0", relief=tk.SOLID, borderwidth=1,
-                      font=("tahoma", "8", "normal"))
+        label = tk.Label(tw, text=self.text, justify=tk.LEFT, background="#ffffe0", relief=tk.SOLID, borderwidth=1, font=("tahoma", "8", "normal"))
         label.pack(ipadx=1)
 
     def hidetip(self):
@@ -122,33 +123,45 @@ class ToolTip(object):
         if tw:
             tw.destroy()
 
+
 def CreateToolTip(widget, text):
     toolTip = ToolTip(widget)
+
     def enter(event):
         toolTip.showtip(text)
+
     def leave(event):
         toolTip.hidetip()
-    widget.bind('<Enter>', enter)
-    widget.bind('<Leave>', leave)
 
-def generate_json(points):
-    json_response = {"points":[]}
+    widget.bind("<Enter>", enter)
+    widget.bind("<Leave>", leave)
+
+
+def generate_json(preJSON, points, height):
+    json_response = preJSON
+    json_response["vertices"] = []
     for i in points:
-        json_response["points"].append(list(i))
-    return json.dumps(json_response)
+        json_response["vertices"].append([round(x,2) for x in i])
+    poly = Polygon(points)
+    json_response["center"] = [round(poly.centroid.x, 2), round(poly.centroid.y, 2)]
+    json_response["sizeWDHm"] = [round(poly.bounds[2] - poly.bounds[0],2), round(poly.bounds[3] - poly.bounds[1],2), height]
+    return json.dumps(json_response, indent=4)
+
 
 def get_file_name(file_path):
-    file_path_components = file_path.split('/')
-    file_name_and_extension = file_path_components[-1].rsplit('.', 1)
+    file_path_components = file_path.split("/")
+    file_name_and_extension = file_path_components[-1].rsplit(".", 1)
     return file_name_and_extension[0]
 
+
 class DragDropListbox(tk.Listbox):
-    """ A Tkinter listbox with drag'n'drop reordering of entries. """
+    """A Tkinter listbox with drag'n'drop reordering of entries."""
+
     def __init__(self, master, **kw):
-        kw['selectmode'] = tk.SINGLE
+        kw["selectmode"] = tk.SINGLE
         tk.Listbox.__init__(self, master, kw)
-        self.bind('<Button-1>', self.setCurrent)
-        self.bind('<B1-Motion>', self.shiftSelection)
+        self.bind("<Button-1>", self.setCurrent)
+        self.bind("<B1-Motion>", self.shiftSelection)
         self.curIndex = None
 
     def setCurrent(self, event):
@@ -159,10 +172,10 @@ class DragDropListbox(tk.Listbox):
         if i < self.curIndex:
             x = self.get(i)
             self.delete(i)
-            self.insert(i+1, x)
+            self.insert(i + 1, x)
             self.curIndex = i
         elif i > self.curIndex:
             x = self.get(i)
             self.delete(i)
-            self.insert(i-1, x)
+            self.insert(i - 1, x)
             self.curIndex = i
