@@ -1,10 +1,8 @@
 # Imports
-from logging import warning
-from random import choice
 import tkinter as tk
+import tkinter.ttk as ttk
 from tkinter import filedialog
 import os
-from cv2 import ChiHistogramCostExtractor
 import ezdxf
 import sys
 import numpy as np
@@ -17,7 +15,6 @@ import matplotlib
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from matplotlib.patches import Polygon
 from matplotlib.patches import Rectangle
-from tkinter import simpledialog
 
 from sympy import true
 
@@ -485,75 +482,142 @@ class App(tk.Tk):
         extensions = [("Json file", "*.json")]
         default_name = get_file_name(self.cur_file)  # vire le path et l'extension
 
-        ROOT = tk.Toplevel()
-        # ROOT.wait_visibility()
-        ROOT.withdraw()
-        ROOT.grab_set_global()
+        JSON_form = tk.Toplevel()
+        JSON_form.title = "JSON export"
+        JSON_form.protocol("WM_DELETE_WINDOW", JSON_form.destroy)
+        JSON_form.attributes("-topmost", 1)
+        JSON_form.grab_set_global()
+        JSON_form.grid_rowconfigure([0,1], weight=1)
+        JSON_form.grid_columnconfigure([0], weight=1)
 
-        def mychoicebox(choicelist, title, prompt):
-            global result
+        def handle_category_change():
+            if category.get() == "room":
+                frame_orient.grid()
+                frame_floor_unit.grid()
+            else:
+                frame_orient.grid_remove()
+                frame_floor_unit.grid_remove()
 
-            def buttonfn():
-                global result
-                result = var.get()
-                choicewin.destroy()
-                choicewin.quit()
+        self.name_valid = False
+        self.height_valid = False
 
-            def wm_delete_window():
-                print("test")
-                ROOT.destroy()
-                choicewin.destroy()
-                choicewin.quit()
+        def check_name(*args):
+            errmsg_name.set("")
+            newval = name.get()
+            self.name_valid = newval is not None and len(newval) > 0
+            button_proceed.state(["!disabled"] if (self.name_valid and self.height_valid) else ["disabled"])
+            if not self.name_valid:
+                errmsg_name.set("Name can not be empty")
 
-            choicewin = tk.Toplevel(master=ROOT)
-            choicewin.protocol("WM_DELETE_WINDOW", wm_delete_window)
-            choicewin.title(title)
-            tk.Label(choicewin, text=prompt).grid(row=0, column=0, sticky="W")
+        def check_height(*args):
+            errmsg_height.set("")
+            newval = height.get()
+            try:
+                float(newval)
+                self.height_valid = True
+                button_proceed.state(["!disabled"] if self.name_valid else ["disabled"])
+            except:
+                errmsg_height.set("Height must be a float")
+                self.height_valid = False
+                button_proceed.state(["disabled"])
 
-            var = tk.StringVar(choicewin)
-            var.set(choicelist[0])  # default option
-            popupMenu = tk.OptionMenu(choicewin, var, *choicelist)
-            popupMenu.grid(sticky=tk.N + tk.S + tk.E + tk.W, row=1, column=0)
+        def proceed():
+            JSON_form.grab_release()
+            JSON_form.lower()
+            preJSON = {"slug": name.get(), "category": category.get()}
+            if preJSON["category"] == "room":
+                preJSON["axisOrientation"] = axis_orientation.get()
+                preJSON["floorUnit"] = floor_unit.get()
+            file = asksaveasfile(filetypes=extensions, defaultextension=extensions, initialfile=f"{default_name}")
+            if file:
+                file.write(generate_json(preJSON, self.selection, float(height.get())))
+                file.close()
+                JSON_form.destroy()
+            else:
+                JSON_form.grab_set_global()
+                JSON_form.attributes("-topmost", 1)
 
-            tk.Button(choicewin, text="Done", command=buttonfn).grid(row=2, column=0)
-            choicewin.mainloop()
-            return result
+        frame_fields = ttk.Frame(JSON_form)
 
-        category = mychoicebox(["room", "building"], "Category", "Select a category :")
-        name = simpledialog.askstring(title="Name", prompt=f"Input the {category}'s name :", parent=ROOT)
-        if name is None:
-            return
-        while len(name) == 0:
-            self.warning("The name can not be empty")
-            ROOT.deiconify()
-            ROOT.wait_visibility()
-            ROOT.withdraw()
-            name = simpledialog.askstring(title="Name", prompt=f"Input the {category}'s name :", parent=ROOT)
-            if name is None:
-                return
+        name = tk.StringVar()
+        label_name = ttk.Label(frame_fields, text="Name")
+        entry_name = ttk.Entry(frame_fields, textvariable=name)
+        name.trace_add("write", check_name)
 
-        ROOT.deiconify()
-        ROOT.wait_visibility()
-        ROOT.tk.eval(f"tk::PlaceWindow {ROOT._w} center")
-        ROOT.withdraw()
-        height = simpledialog.askfloat(title="Height", prompt=f"Input the height of the {category} (m)", parent=ROOT, initialvalue=3, minvalue=0)
+        errmsg_name = tk.StringVar()
+        label_errmsg_name = ttk.Label(frame_fields, font="TkSmallCaptionFont", foreground="red", textvariable=errmsg_name)
 
-        if height is None:
-            return
+        height = tk.StringVar()
+        label_height = ttk.Label(frame_fields, text="Height")
+        entry_height = ttk.Entry(frame_fields, textvariable=height)
+        height.trace_add("write", check_height)
 
-        preJSON = {"slug": name, "category": category}
-        ROOT.grab_set_global()
-        if category == "room":
-            preJSON["axisOrientation"] = mychoicebox(
-                ["+x+y", "+x-y", "-x+y", "-x-y"], "Axis orientation", "Select an orientation for the axis of the room"
-            )
-            preJSON["floorUnit"] = mychoicebox(["m", "f", "t"], "Floor unit", "Select the measurement unit for the floor of the room")
+        errmsg_height = tk.StringVar()
+        label_errmsg_height = ttk.Label(frame_fields, font="TkSmallCaptionFont", foreground="red", textvariable=errmsg_height)
 
-        ROOT.destroy()
-        file = asksaveasfile(filetypes=extensions, defaultextension=extensions, initialfile=f"{default_name}")
-        if file:
-            file.write(generate_json(preJSON, self.selection, height))
-            file.close()
+        category = tk.StringVar()
+        frame_category = ttk.Frame(frame_fields)
+        category_label = ttk.Label(frame_category,text="Category")
+        building_radiobutton = ttk.Radiobutton(frame_category, text="Building", variable=category, value="building", command=handle_category_change)
+        room_radiobutton = ttk.Radiobutton(frame_category, text="Room", variable=category, value="room", command=handle_category_change)
+
+        axis_orientation = tk.StringVar()
+        frame_orient = ttk.Frame(frame_fields)
+        orient_label = ttk.Label(frame_orient,text="Axis Orientation")        
+        orient_default_radiobutton = ttk.Radiobutton(frame_orient, text="+x+y", variable=axis_orientation, value="+x+y")
+        orient_minuxX_radiobutton = ttk.Radiobutton(frame_orient, text="-x+y", variable=axis_orientation, value="-x+y")
+        orient_minusY_radiobutton = ttk.Radiobutton(frame_orient, text="+x-y", variable=axis_orientation, value="+x-y")
+        orient_bothMinus_radiobutton = ttk.Radiobutton(frame_orient, text="-x-y", variable=axis_orientation, value="-x-y")
+
+        floor_unit = tk.StringVar()
+        frame_floor_unit = ttk.Frame(frame_fields)
+        floor_unit_label = ttk.Label(frame_floor_unit,text="Floor unit")
+        meter_radiobutton = ttk.Radiobutton(frame_floor_unit, text="Meter", variable=floor_unit, value="m")
+        tile_radiobutton = ttk.Radiobutton(frame_floor_unit, text="Tile", variable=floor_unit, value="t")
+        foot_radiobutton = ttk.Radiobutton(frame_floor_unit, text="Foot", variable=floor_unit, value="f")
+
+        frame_button = ttk.Frame(JSON_form)
+
+        button_proceed = ttk.Button(frame_button, text="Save", command=proceed, state="disabled")
+
+        button_cancel = ttk.Button(frame_button, text="Cancel", command=JSON_form.destroy)
+
+        label_name.grid(row=0, column=0,sticky="w")
+        entry_name.grid(row=1, column=0,sticky="w")
+        label_errmsg_name.grid(row=2, column=0,sticky="w")
+        label_height.grid(row=3, column=0,sticky="w")
+        entry_height.grid(row=4, column=0,sticky="w")
+        label_errmsg_height.grid(row=5, column=0,sticky="w")
+
+        category.set("building")
+        category_label.grid(row=0,column=0,sticky="w")
+        building_radiobutton.grid(row=1, column=0,sticky="w")
+        room_radiobutton.grid(row=2, column=0,sticky="w")
+        frame_category.grid(row=6, column=0,sticky="w")
+
+        axis_orientation.set("+x+y")
+        orient_label.grid(row=0,column=0,sticky="w")
+        orient_default_radiobutton.grid(row=1, column=0,sticky="w")
+        orient_minuxX_radiobutton.grid(row=2, column=0,sticky="w")
+        orient_minusY_radiobutton.grid(row=3, column=0,sticky="w")
+        orient_bothMinus_radiobutton.grid(row=4, column=0,sticky="w")
+        frame_orient.grid(row=7, column=0,sticky="w")
+
+        floor_unit.set("m")
+        floor_unit_label.grid(row=0,column=0,sticky="w")
+        meter_radiobutton.grid(row=1, column=0,sticky="w")
+        tile_radiobutton.grid(row=2, column=0,sticky="w")
+        foot_radiobutton.grid(row=3, column=0,sticky="w")
+        frame_floor_unit.grid(row=8, column=0,sticky="w")
+
+        frame_fields.grid(row=0, column=0,sticky="w")
+
+        button_cancel.grid(row=0, column=0,sticky="w")
+        button_proceed.grid(row=0, column=1,sticky="e")
+
+        frame_button.grid(row=1, column=0,sticky="w")
+        
+        handle_category_change()
 
     # Bouton séléction de points
     def selection_points(self):
