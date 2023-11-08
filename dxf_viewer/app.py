@@ -15,8 +15,7 @@ import matplotlib
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from matplotlib.patches import Polygon
 from matplotlib.patches import Rectangle
-
-from sympy import true
+import re
 
 matplotlib.use("TkAgg")
 from tkinter.filedialog import asksaveasfile
@@ -498,33 +497,60 @@ class App(tk.Tk):
                 frame_orient.grid_remove()
                 frame_floor_unit.grid_remove()
 
-        self.name_valid = False
+        self.slug_valid = False
         self.height_valid = False
 
-        def check_name(*args):
-            errmsg_name.set("")
-            newval = name.get()
-            self.name_valid = newval is not None and len(newval) > 0
-            button_proceed.state(["!disabled"] if (self.name_valid and self.height_valid) else ["disabled"])
-            if not self.name_valid:
-                errmsg_name.set("Name can not be empty")
+        def check_slug(newval, op):
+            errmsg_slug.set("")
+            self.slug_valid = re.match("^[a-zA-Z0-9-]+$",newval) is not None
+            button_proceed.state(["!disabled"] if (self.slug_valid and self.height_valid) else ["disabled"])
+            if op == "key":
+                ok_so_far = re.match("^(^[a-zA-Z0-9-]+$)?$",newval) is not None
+                if not ok_so_far:
+                    if len(newval) == 0:
+                        errmsg_slug.set("Slug can not be empty")
+                    else:
+                        errmsg_slug.set("Slug must be a single ASCII word")
+                return ok_so_far
+            if op == "focusout" and not self.slug_valid:
+                if len(newval) == 0:
+                    errmsg_slug.set("Slug can not be empty")
+                else:
+                    errmsg_slug.set("Slug must be a single word")
+            return self.slug_valid
 
-        def check_height(*args):
+        check_slug_wrapper = (self.register(check_slug),"%P","%V")
+
+        def check_height(newval, op):
             errmsg_height.set("")
-            newval = height.get()
             try:
-                float(newval)
-                self.height_valid = True
-                button_proceed.state(["!disabled"] if self.name_valid else ["disabled"])
+                test = float(newval)
+                self.height_valid = test >= 0
+                button_proceed.state(["!disabled"] if (self.slug_valid and self.height_valid) else ["disabled"])
             except:
-                errmsg_height.set("Height must be a float")
                 self.height_valid = False
                 button_proceed.state(["disabled"])
+            if op == "key":
+                ok_so_far = self.height_valid or len(newval) == 0
+                if not ok_so_far:
+                    if len(newval) == 0:
+                        errmsg_height.set("Height can not be empty")
+                    else:
+                        errmsg_height.set("Height must be a positive float")
+                return ok_so_far
+            if op == "focusout" and not self.height_valid:
+                if len(newval) == 0:
+                    errmsg_height.set("Height can not be empty")
+                else:
+                    errmsg_height.set("Height must be a positive float")
+            return self.height_valid
+
+        check_height_wrapper = (self.register(check_height),"%P","%V")
 
         def proceed():
             JSON_form.grab_release()
             JSON_form.lower()
-            preJSON = {"slug": name.get(), "category": category.get()}
+            preJSON = {"slug": slug.get(), "category": category.get()}
             if preJSON["category"] == "room":
                 preJSON["axisOrientation"] = axis_orientation.get()
                 preJSON["floorUnit"] = floor_unit.get()
@@ -539,18 +565,16 @@ class App(tk.Tk):
 
         frame_fields = ttk.Frame(JSON_form)
 
-        name = tk.StringVar()
-        label_name = ttk.Label(frame_fields, text="Name")
-        entry_name = ttk.Entry(frame_fields, textvariable=name)
-        name.trace_add("write", check_name)
+        slug = tk.StringVar()
+        label_slug = ttk.Label(frame_fields, text="Slug")
+        entry_slug = ttk.Entry(frame_fields, textvariable=slug,validate="all",validatecommand=check_slug_wrapper)
 
-        errmsg_name = tk.StringVar()
-        label_errmsg_name = ttk.Label(frame_fields, font="TkSmallCaptionFont", foreground="red", textvariable=errmsg_name)
+        errmsg_slug = tk.StringVar()
+        label_errmsg_slug = ttk.Label(frame_fields, font="TkSmallCaptionFont", foreground="red", textvariable=errmsg_slug)
 
         height = tk.StringVar()
         label_height = ttk.Label(frame_fields, text="Height")
-        entry_height = ttk.Entry(frame_fields, textvariable=height)
-        height.trace_add("write", check_height)
+        entry_height = ttk.Entry(frame_fields, textvariable=height,validate="all",validatecommand=check_height_wrapper)
 
         errmsg_height = tk.StringVar()
         label_errmsg_height = ttk.Label(frame_fields, font="TkSmallCaptionFont", foreground="red", textvariable=errmsg_height)
@@ -582,9 +606,9 @@ class App(tk.Tk):
 
         button_cancel = ttk.Button(frame_button, text="Cancel", command=JSON_form.destroy)
 
-        label_name.grid(row=0, column=0,sticky="w")
-        entry_name.grid(row=1, column=0,sticky="w")
-        label_errmsg_name.grid(row=2, column=0,sticky="w")
+        label_slug.grid(row=0, column=0,sticky="w")
+        entry_slug.grid(row=1, column=0,sticky="w")
+        label_errmsg_slug.grid(row=2, column=0,sticky="w")
         label_height.grid(row=3, column=0,sticky="w")
         entry_height.grid(row=4, column=0,sticky="w")
         label_errmsg_height.grid(row=5, column=0,sticky="w")
