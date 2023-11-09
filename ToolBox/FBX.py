@@ -43,9 +43,9 @@ def create_FBX(self):
         h_entry=tk.Entry(dimensions,width=5,)
         h_entry.insert(0,"87")
         h_entry.pack(side=tk.LEFT,pady=10)
-        enter_name=tk.Entry(dimensions,width=75)
+        enter_name=tk.Entry(dimensions,width=50)
         enter_name.pack(side=tk.RIGHT, padx=10)
-        label_name=tk.Label(dimensions,text="Choose the name of your FBX file created :")
+        label_name=tk.Label(dimensions,text="Choose your FBX file name :")
         label_name.pack(side=tk.RIGHT)
 
         path=tk.Frame(self.frame)
@@ -83,7 +83,7 @@ def create_FBX(self):
 
         def choisir_png(entry):
                 # Ouvre une boîte de dialogue pour choisir un fichier PNG
-                fichier = filedialog.askopenfilename(filetypes=[("Fichiers PNG", "*.png")])
+                fichier = filedialog.askopenfilename(filetypes=[("Fichiers PNG", "*.png")], initialdir="./OGrEE-Tools/Converter/output/OGrEE/pictures")
 
                 # Affiche le lien du fichier dans l'Entry
                 entry.delete(0, tk.END)  # Efface le contenu actuel de l'Entry

@@ -64,12 +64,14 @@ class ToolBox():
 
         #création de la barre du bas
 
-        self.bottom=tk.Frame(root, bg="light grey", height=30)
+        self.bottom=tk.Frame(root, bg="light grey")
         self.bottom.pack(side=tk.BOTTOM, fill=tk.X)
-        enter_button=tk.Button(self.bottom, text="enter", padx=10, width=15)
+        enter_button=tk.Button(self.bottom, text="enter", padx=10, width=15, command=lambda: self.launch_command(self.enter.get()))
         enter_button.pack(pady=10,padx=10 ,side=tk.RIGHT)
         self.enter=tk.Entry(self.bottom, width=100)
         self.enter.pack(pady=10,padx=10 , fill=tk.X)
+        self.terminal=tk.Text(self.bottom,height=6)
+        self.terminal.pack(side=tk.BOTTOM, padx=10, pady=10,fill=tk.X)
 
         #création de la liste d'outils
 
@@ -100,10 +102,15 @@ class ToolBox():
             self.current_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
     # Lance la commande dans le terminal et print le résultat et les erreur en sortie
-    def command(self,command):
+    def launch_command(self,command):
         output=subprocess.run(command,shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-        print("Sortie de la commande :", output.stdout)
-        print("Erreurs de la commande :", output.stderr)
+        self.terminal.tag_config('command',foreground="blue")
+        self.terminal.tag_config('error',foreground="red")
+        self.terminal.insert(tk.END,command+"\n",'command')
+        if output.stdout!="":
+            self.terminal.insert(tk.END,output.stdout+"\n")
+        if output.stderr!="":
+            self.terminal.insert(tk.END,output.stderr+"\n",'error')
 
     #Ecrit la commande dans la barre en bas de l'écran
     def generate_command(self,command):
