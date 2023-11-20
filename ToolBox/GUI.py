@@ -3,7 +3,7 @@ from tkinter import filedialog
 import subprocess
 from FBX import *
 from VSS2PNG import *
-from NonSquareRooms import *
+from NonSquareRoomsGUI import *
 from ACAD2OGrEE import *
 from Tools3D import *
 
