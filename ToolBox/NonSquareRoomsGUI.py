@@ -43,7 +43,7 @@ def create_NSR(self):
         nom.pack(side=tk.TOP, fill=tk.X,pady=20)
         enter_name=tk.Entry(nom,width=50)
         enter_name.pack(side=tk.RIGHT, padx=10)
-        label_name=tk.Label(nom,text="Choose your JSON file name (no space between words) :")
+        label_name=tk.Label(nom,text="Choose your JSON file name (no space between words, end it with .json) :")
         label_name.pack(side=tk.RIGHT)
 
         taille=tk.Frame(self.frame)
