@@ -20,7 +20,7 @@ def create_NSR(self):
         self.frame = tk.Frame(self.root, width=200, height=100)
         self.frame.pack_propagate(False)
 
-        label = tk.Label(self.frame, text="NonSquareRoome")
+        label = tk.Label(self.frame, text="NonSquareRooms")
         label.pack(pady=10)
 
         json = tk.Frame(self.frame)
@@ -98,9 +98,11 @@ def create_NSR(self):
 
         def generate_command_NSR():
                 json=json_entry.get()
+                json_f=os.path.basename(json)
                 #path=enter_path.get()
                 #[-h] --json JSON [--out OUT] [--angle ANGLE] [--offset OFFSET] [--draw] [--opti] [--tileSize TILESIZE]
-                command="python .\GenTiles.py --json "+json
+                command="python .\GenTiles.py --json "+json_f
+                
                 if enter_name.get()!="":
                         name=enter_name.get()
                         command+=" --out "+name
