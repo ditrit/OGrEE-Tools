@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog
 import subprocess
+from pathlib import Path
 from FBX import *
 from VSS2PNG import *
 from NonSquareRooms import *
@@ -74,12 +75,24 @@ class ToolBox():
         self.terminal.pack(side=tk.BOTTOM, padx=10, pady=10,fill=tk.X)
 
         #création de la liste d'outils
+        self.side_frame=tk.Frame(root,width=40)
+        self.side_frame.pack(side=tk.LEFT, fill=tk.Y)
 
-        self.listbox = tk.Listbox(root, width=40,  font="20")
+        self.listbox = tk.Listbox(self.side_frame,  font="20", width=40)
         for i in tools:
             self.listbox.insert(tk.END, i)
-        self.listbox.pack(side=tk.LEFT, fill=tk.Y)
+        self.listbox.pack(fill=tk.X)
         self.listbox.bind("<ButtonRelease-1>", self.show_selected_frame)
+
+        self.tree = ttk.Treeview(self.side_frame, show="tree",height=200)
+        self.tree.pack(side=tk.BOTTOM,fill=tk.BOTH,)
+        self.fsobjects = {}
+
+        self.file_image = tk.PhotoImage(file="./ToolBox/Icons/file.png")
+        self.folder_image = tk.PhotoImage(file="./ToolBox/Icons/folder.png")
+        self.tree.tag_bind("fstag", "<<TreeviewOpen>>", self.item_opened)
+        self.load_tree("D:\IMT-A2\Projet entreprise\OGrEE-Tools","")
+        
 
         self.tool_frames={
             "ACAD2OGrEE":create_A2O,
@@ -116,6 +129,64 @@ class ToolBox():
     def generate_command(self,command):
         self.enter.delete(0, tk.END)
         self.enter.insert(0,command)
+
+    def load_tree(self, path, parent):
+        """
+        Load the contents of `path` into the treeview.
+        """
+        for fsobj in self.safe_iterdir(path):
+            fullpath = path / fsobj
+            child = self.insert_item(fsobj.name, fullpath, parent)
+            # Preload the content of each directory within `path`.
+            # This is necessary to make the folder item expandable.
+            if Path(fullpath).is_dir():
+                for sub_fsobj in self.safe_iterdir(fullpath):
+                    self.insert_item(sub_fsobj.name, fullpath / sub_fsobj, child)
+
+    def safe_iterdir(self, path) :
+        """
+        Like `Path.iterdir()`, but do not raise on permission errors.
+        """
+        try:
+            return tuple(Path(path).iterdir())
+        except PermissionError:
+            print("You don't have permission to read", path)
+            return ()
+
+    def insert_item(self, name, path, parent):
+        """
+        Insert a file or folder into the treeview and return the item ID.
+        """
+        iid = self.tree.insert(
+            parent, tk.END, text=name, tags=("fstag",),
+            image=self.get_icon(path))
+        self.fsobjects[iid] = path
+        return iid
+    
+    def load_subitems(self, iid):
+        """
+        Load the content of each folder inside the specified item
+        into the treeview.
+        """
+        for child_iid in self.tree.get_children(iid):
+            if Path(self.fsobjects[child_iid]).is_dir():
+                self.load_tree(self.fsobjects[child_iid],
+                            parent=child_iid)
+
+    def item_opened(self, event):
+        """
+        Handler invoked when a folder item is expanded.
+        """
+        iid = self.tree.selection()[0]
+        # If it is a folder, loads its content.
+        self.load_subitems(iid)
+
+    def get_icon(self, path):
+        """
+        Return a folder icon if `path` is a directory and
+        a file icon otherwise.
+        """
+        return self.folder_image if Path(path).is_dir() else self.file_image
     
 root = tk.Tk()
 chargement=Chargement(root)
