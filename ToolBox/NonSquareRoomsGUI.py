@@ -4,7 +4,18 @@ import subprocess
 import os
 import venv
 
-def create_NSR(self):
+def create_NSR(self,root_Dir):
+        rootDir = root_Dir
+        setupDir = f"{rootDir}\\NonSquareRooms\\setup"
+        envDir = f"{rootDir}\\.venv\\Scripts"
+        #pythonExe = f"{envDir}\\python.exe"
+        #pythonExe = "C:\\Users\\Pako JUSTIN\\AppData\\Roaming\\Local\\Programs\\Python\\python.exe"
+        os.chdir(setupDir)
+        pythonExe = os.environ['APPDATA']+"\\..\\Local\\Programs\\Python\\python.exe"
+        subprocess.run([pythonExe, 'setup.py'])
+        os.chdir(rootDir)
+        subprocess.run([f"{envDir}\\./activate"], shell=True)
+        os.chdir(f"{rootDir}\\NonSquareRooms")
 
 #Création de la fenetre pour NonSquareRooms
         self.frame = tk.Frame(self.root, width=200, height=100)
@@ -28,7 +39,7 @@ def create_NSR(self):
         nom.pack(side=tk.TOP, fill=tk.X,pady=20)
         enter_name=tk.Entry(nom,width=50)
         enter_name.pack(side=tk.RIGHT, padx=10)
-        label_name=tk.Label(nom,text="Choose your JSON file name (no space between words, end it with .json) :")
+        label_name=tk.Label(nom,text="Choose your JSON file name (no space between words) :")
         label_name.pack(side=tk.RIGHT)
 
 
@@ -37,7 +48,7 @@ def create_NSR(self):
         taille.pack(side=tk.TOP, fill=tk.X,pady=20)
         enter_taille=tk.Entry(taille,width=50)
         enter_taille.pack(side=tk.RIGHT, padx=10)
-        label_taille=tk.Label(taille,text="Choose your Tiles Size :")
+        label_taille=tk.Label(taille,text="Choose your Tiles Size (in cm) :")
         label_taille.pack(side=tk.RIGHT)
 
 #création du label angle afin que l'utilisateur renseigne la valeur souhaitée si il en a besoin
@@ -45,7 +56,7 @@ def create_NSR(self):
         angle.pack(side=tk.TOP, fill=tk.X,pady=20)
         enter_angle=tk.Entry(angle,width=50)
         enter_angle.pack(side=tk.RIGHT, padx=10)
-        label_angle=tk.Label(angle,text="Choose your Angle :")
+        label_angle=tk.Label(angle,text="Choose your Angle (in °) :")
         label_angle.pack(side=tk.RIGHT)
 
 #création du label offset afin que l'utilisateur renseigne la valeur souhaitée si il en a besoin
@@ -53,7 +64,7 @@ def create_NSR(self):
         offset.pack(side=tk.TOP, fill=tk.X,pady=20)
         enter_offset=tk.Entry(offset,width=50)
         enter_offset.pack(side=tk.RIGHT, padx=10)
-        label_offset=tk.Label(offset,text="Choose your Offset :")
+        label_offset=tk.Label(offset,text="Choose your Offset (x,y) (in cm) :")
         label_offset.pack(side=tk.RIGHT)
 
 #création de la case à cocher draw pour savoir si l'utilisateuur veut ou non utiliser cette option
@@ -83,10 +94,10 @@ def create_NSR(self):
 
 #fonction permettant d'obtenir le chemin complet menant à GenTiles.py
         def find_gen_tiles():   
-                 target_file = "GenTiles.py"
-                 start_directory = os.getcwd() 
-                 for root, dirs, files in os.walk(start_directory):
-                         if target_file in files:
+                target_file = "GenTiles.py"
+                start_directory = os.getcwd() 
+                for root, dirs, files in os.walk(start_directory):
+                        if target_file in files:
                                 return os.path.join(root, target_file)
 
 
@@ -99,18 +110,16 @@ def create_NSR(self):
 
                 # Utilisez la fonction pour trouver le chemin complet de GenTiles.py
                 gen_tiles_path = find_gen_tiles()
-                       
                 #commande si on exécute la focntion GenTiles avant
                 command="python .\GenTiles.py --json "+json_f
                 
                 #commmande si on veut pouvoir executer directement sans lancer GentTiles au préalable 
                 
                 # command= gen_tiles_path+" --json "+json_f
-               
                 #on ajoute les informations: nom du fichier, angle, offset, taille, optimisation, dessin si l'utilisateur les impose
                 if enter_name.get()!="":
                         name=enter_name.get()
-                        command+=" --out "+name
+                        command+=" --out "+name+".json"
                 if enter_angle.get() != "":
                         angle=enter_angle.get()
                         command+= " --angle " + angle
@@ -130,8 +139,6 @@ def create_NSR(self):
 
         def choisir_json(entry):
                 # Ouvre une boîte de dialogue pour choisir un fichier Json
-               
-              
                 #on recherche directement les fichiers Json présent dans le Répertoire de l'ordinateur
                 desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
                 fichier = filedialog.askopenfilename(filetypes=[("Fichiers JSON", "*.json")], initialdir=desktop_path)
