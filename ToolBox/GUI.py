@@ -8,6 +8,13 @@ from NonSquareRoomsGUI import *
 from ACAD2OGrEE import *
 from Tools3D import *
 
+def ChoixRoot():
+    def choisir_dossier():
+        dossier = filedialog.askdirectory()
+        if dossier:
+            var_dossier.set(dossier)
+            fenetre.destroy()
+
 class Chargement():
     def __init__(self,root):
         self.root = root
@@ -111,7 +118,7 @@ class ToolBox():
         if self.current_frame:
             self.current_frame.destroy()
         if frame_creator:
-            self.current_frame = frame_creator(self)
+            self.current_frame = frame_creator(self,root_Dir)
             self.current_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
     # Lance la commande dans le terminal et print le résultat et les erreur en sortie
@@ -187,7 +194,8 @@ class ToolBox():
         a file icon otherwise.
         """
         return self.folder_image if Path(path).is_dir() else self.file_image
-    
+
+root_Dir = ChoixRoot()
 root = tk.Tk()
-chargement=Chargement(root)
+chargement=Chargement(root,root_Dir)
 root.mainloop()
