@@ -29,8 +29,9 @@ def ChoixRoot():
     return str(var_dossier.get())
 
 class Chargement():
-    def __init__(self,root):
+    def __init__(self,root,root_Dir):
         self.root = root
+        self.root_Dir = root_Dir
         self.root.title("Chargement")
 
         self.tools=["ACAD2OGrEE","NonSquareRooms","VSS2PNG","3DTools","FBX Converter"] #liste de tous les outils
