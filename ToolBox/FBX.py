@@ -401,13 +401,6 @@ def create_FBX(self,root_dir):
         enter_path=ttk.Entry(path, width=100)
         enter_path.pack(pady=5,padx=10 , fill=tk.X)
 
-        bot2=ttk.Frame(self.frame)
-        bot2.pack(side=tk.BOTTOM, fill=tk.X, padx=10, pady=5)
-        label_file=ttk.Label(bot2,text="Here is you generated FBX file : ")
-        label_file.pack(side=tk.TOP, pady=10)
-        file=ttk.Entry(bot2)
-        file.pack(side=tk.LEFT, padx=20, fill=tk.X, expand=True)
-
         bot=ttk.Frame(self.frame)
         bot.pack(side=tk.BOTTOM, fill=tk.X)
         finish_button=ttk.Button(bot, text="generate", padding=(0,10,0,10), width=20, command=lambda: generate_command_FBX())
