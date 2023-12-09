@@ -10,9 +10,9 @@ from ACAD2OGrEE import *
 from Tools3D import *
 
 class Chargement():
-    def __init__(self,root,root_Dir):
+    def __init__(self,root):
         self.root = root
-        self.root_Dir = root_Dir
+        self.root_Dir = ""
         self.root.title("Chargement")
 
         self.tools=["ACAD2OGrEE","NonSquareRooms","VSS2PNG","3DTools","FBX Converter"] #liste de tous les outils
