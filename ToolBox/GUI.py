@@ -9,6 +9,25 @@ from NonSquareRoomsGUI import *
 from ACAD2OGrEE import *
 from Tools3D import *
 
+def ChoixRoot():
+    def choisir_dossier():
+        dossier = filedialog.askdirectory()
+        if dossier:
+            var_dossier.set(dossier)
+            fenetre.destroy()
+    
+    fenetre = tk.Tk()
+    fenetre.title("Choix du dossier racine")
+    fenetre.geometry("400x200")
+    var_dossier = tk.StringVar()
+    bouton = tk.Button(fenetre, text="Choisir le dossier racine OGrEE", command=choisir_dossier)
+    bouton.pack(pady=20)
+
+    label_dossier = tk.Label(fenetre, textvariable=var_dossier)
+    label_dossier.pack(pady=10)
+    fenetre.mainloop()
+    return str(var_dossier.get())
+
 class Chargement():
     def __init__(self,root):
         self.root = root
@@ -202,7 +221,8 @@ class ToolBox():
         a file icon otherwise.
         """
         return self.folder_image if Path(path).is_dir() else self.file_image
-    
+
+root_Dir = ChoixRoot()
 root = tk.Tk()
-chargement=Chargement(root)
+chargement=Chargement(root,root_Dir)
 root.mainloop()
