@@ -8,10 +8,10 @@ def create_NSR(self,root_Dir):
         rootDir = root_Dir
         setupDir = f"{rootDir}\\NonSquareRooms\\setup"
         envDir = f"{rootDir}\\.venv\\Scripts"
-        #pythonExe = f"{envDir}\\python.exe"
+        pythonExe = f"{envDir}\\python.exe"
         #pythonExe = "C:\\Users\\Pako JUSTIN\\AppData\\Roaming\\Local\\Programs\\Python\\python.exe"
         os.chdir(setupDir)
-        pythonExe = os.environ['APPDATA']+"\\..\\Local\\Programs\\Python\\python.exe"
+        #pythonExe = os.environ['APPDATA']+"\\..\\Local\\Programs\\Python\\python.exe"
         subprocess.run([pythonExe, 'setup.py'])
         os.chdir(rootDir)
         subprocess.run([f"{envDir}\\./activate"], shell=True)
