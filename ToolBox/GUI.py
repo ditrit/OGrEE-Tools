@@ -20,6 +20,7 @@ class Chargement():
 
         #set up de la fenêtre de pré chargement
 
+        #Entête
         self.head=ttk.Frame(root)
         self.head.pack(fill="x")
         lb1=ttk.Label(self.head,width=20 , text="Tools")
@@ -27,6 +28,7 @@ class Chargement():
         lb2=ttk.Label(self.head , text="Launch")
         lb2.pack(side=tk.LEFT, padx=40, pady=10)
 
+        #Création des boutons
         for i in self.tools:
             frame = ttk.Frame(root)
             frame.pack(side=tk.TOP)
@@ -38,21 +40,14 @@ class Chargement():
 
             # Stocker les boutons dans le dictionnaire avec le nom comme clé
             self.buttons[i] = var
-        
+
+        #Fonction pour demander le dossier d'origine
         def choisir_dossier():
             dossier = filedialog.askdirectory()
             if dossier:
                 self.root_Dir=str(dossier)
                 self.entry_path.delete(1,tk.END)
                 self.entry_path.insert(tk.END,dossier)
-
-        frame_path=ttk.Frame(root)
-        frame_path.pack(fill=tk.X)
-        self.root_Dir=''
-        bouton_path = ttk.Button(frame_path, text="Choisir le dossier racine OGrEE", command=choisir_dossier)
-        bouton_path.pack(side=tk.TOP,pady=20)
-        self.entry_path=ttk.Entry(frame_path)
-        self.entry_path.pack(side=tk.TOP,padx=15, fill=tk.X)
 
         self.launch_button=ttk.Button(root, text="Launch ToolBox", command=self.launch)
         self.launch_button.pack(side=tk.BOTTOM,pady=10)
@@ -62,11 +57,12 @@ class Chargement():
     #lancement de la fenêtre principal de la toolbox
 
     def launch(self):
+        self.root_Dir = os.path.dirname(os.path.dirname(__file__))
         toLaunch=[]
         for i in self.tools:
             if self.buttons[i].get()==1:
                 toLaunch.append(i)
-        if self.root_Dir!="" and len(toLaunch)>0:
+        if len(toLaunch)>0:
             self.root.destroy()
             principal=tk.Tk()
             self.toolbox=ToolBox(principal, toLaunch, self.root_Dir)
@@ -103,9 +99,7 @@ class ToolBox():
         self.listbox.pack(fill=tk.BOTH, expand=True)
         self.listbox.bind("<ButtonRelease-1>", self.show_selected_frame)
 
-        
-        
-
+        #Liste de toute les fonctions correspondant à chaque outil
         self.tool_frames={
             "ACAD2OGrEE":create_A2O,
             "NonSquareRooms":create_NSR,
@@ -114,16 +108,16 @@ class ToolBox():
             "FBX Converter":create_FBX
         }
 
-        self.current_frame = None
+        self.current_frame = None #Pas de fenêtre affichée au départ
 
     #changement de la frame en changeant d'outil dans la liste
     def show_selected_frame(self, event):
-        selected_item = self.listbox.get(self.listbox.curselection())
-        frame_creator = self.tool_frames.get(selected_item)
+        selected_item = self.listbox.get(self.listbox.curselection()) #Récupère l'item sélectionné dans la liste
+        frame_creator = self.tool_frames.get(selected_item) #Prend la fonction associée
         if self.current_frame:
-            self.current_frame.destroy()
+            self.current_frame.destroy() #Enlève l'ancienne fenêtre
         if frame_creator:
-            self.current_frame = frame_creator(self,self.root_Dir)
+            self.current_frame = frame_creator(self,self.root_Dir) #Crée la nouvelle en appelant la fonction
             self.current_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
     # Lance la commande dans le terminal et print le résultat et les erreur en sortie
@@ -137,15 +131,17 @@ class ToolBox():
         if output.stderr!="":
             self.terminal.insert(tk.END,output.stderr+"\n",'error')
 
+    #Lance une erreur dans le terminal
     def launch_error(self,error):
         self.terminal.tag_config('error',foreground="red")
         self.terminal.insert(tk.END,error+"\n",'error')
 
-    #Ecrit la commande dans la barre en bas de l'écran
+    #Ecrit la commande dans la barre au-dessus du terminal
     def generate_command(self,command):
         self.enter.delete(0, tk.END)
         self.enter.insert(0,command)
 
+    # Permet de créer une arborescence de fichier (treeview)
     def load_tree(self, path, parent):
         """
         Load the contents of `path` into the treeview.
@@ -159,49 +155,37 @@ class ToolBox():
                 for sub_fsobj in self.safe_iterdir(fullpath):
                     self.insert_item(sub_fsobj.name, fullpath / sub_fsobj, child)
 
+    #Vérifie que l'on peut ouvrir les fichier pour les afficher dans le treeview
     def safe_iterdir(self, path) :
-        """
-        Like `Path.iterdir()`, but do not raise on permission errors.
-        """
         try:
             return tuple(Path(path).iterdir())
         except PermissionError:
             print("You don't have permission to read", path)
             return ()
-
+        
+    #Insert un item dans le treeview
     def insert_item(self, name, path, parent):
-        """
-        Insert a file or folder into the treeview and return the item ID.
-        """
         iid = self.tree.insert(
             parent, tk.END, text=name, tags=("fstag",),
             image=self.get_icon(path))
         self.fsobjects[iid] = path
         return iid
     
+    #Affiche le contenu des fichiers déjà affichés dans le treeview
     def load_subitems(self, iid):
-        """
-        Load the content of each folder inside the specified item
-        into the treeview.
-        """
         for child_iid in self.tree.get_children(iid):
             if Path(self.fsobjects[child_iid]).is_dir():
                 self.load_tree(self.fsobjects[child_iid],
                             parent=child_iid)
 
+    #Gère l'ouverture des fichier dans le treeview
     def item_opened(self, event):
-        """
-        Handler invoked when a folder item is expanded.
-        """
         iid = self.tree.selection()[0]
         # If it is a folder, loads its content.
         self.load_subitems(iid)
 
+    #Renvoie l'icone à afficher (file ou folder)
     def get_icon(self, path):
-        """
-        Return a folder icon if `path` is a directory and
-        a file icon otherwise.
-        """
         return self.folder_image if Path(path).is_dir() else self.file_image
 
 root = tk.Tk()
