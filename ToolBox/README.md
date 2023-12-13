@@ -20,3 +20,8 @@ Optional item :
 Once all the mandatory items are provided you will be able to generate to command line.
 
 # NonSquareRooms
+
+To get your Json file completed and giving you a disposition of each tiles adapted to your room, you need to provide the Json file containing the configuration of your room. After that you can select several parameters: the name of your final Json file, the offset that you want for your installation, the size of the tiles and the angle that you want your tiles to have. If you don't fill those informations the program will take the following parameters: name="name_of_your_file-tiles" , Tile Size=60 cm, Offset=(0,0), angle=0°.
+Now, you can choose if you want to draw the room or optimize the tiling of the room by selected those buttons.
+Clicking on the "generate" button will give you the command line that you will execute by clicking on the "enter" button to get your final file.
+
