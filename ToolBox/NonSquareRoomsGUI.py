@@ -42,7 +42,7 @@ def create_NSR(self,root_Dir):
         taille.pack(side=tk.TOP, fill=tk.X,pady=20)
         enter_taille=tk.Entry(taille,width=50)
         enter_taille.pack(side=tk.RIGHT, padx=10)
-        label_taille=tk.Label(taille,text="Choose your Tiles Size (in cm) :")
+        label_taille=tk.Label(taille,text="Choose your Tiles Size (in m) :")
         label_taille.pack(side=tk.RIGHT)
 
 #création du label angle afin que l'utilisateur renseigne la valeur souhaitée si il en a besoin
@@ -58,7 +58,7 @@ def create_NSR(self,root_Dir):
         offset.pack(side=tk.TOP, fill=tk.X,pady=20)
         enter_offset=tk.Entry(offset,width=50)
         enter_offset.pack(side=tk.RIGHT, padx=10)
-        label_offset=tk.Label(offset,text="Choose your Offset (x,y) (in cm) :")
+        label_offset=tk.Label(offset,text="Choose your Offset (x,y) (in m) :")
         label_offset.pack(side=tk.RIGHT)
 
 #création de la case à cocher draw pour savoir si l'utilisateuur veut ou non utiliser cette option
