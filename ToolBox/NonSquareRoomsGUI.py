@@ -6,13 +6,7 @@ import venv
 
 def create_NSR(self,root_Dir):
         rootDir = root_Dir
-        setupDir = f"{rootDir}\\NonSquareRooms\\setup"
         envDir = f"{rootDir}\\.venv\\Scripts"
-        pythonExe = f"{envDir}\\python.exe"
-        #pythonExe = "C:\\Users\\Pako JUSTIN\\AppData\\Roaming\\Local\\Programs\\Python\\python.exe"
-        os.chdir(setupDir)
-        #pythonExe = os.environ['APPDATA']+"\\..\\Local\\Programs\\Python\\python.exe"
-        subprocess.run([pythonExe, 'setup.py'])
         os.chdir(rootDir)
         subprocess.run([f"{envDir}\\./activate"], shell=True)
         os.chdir(f"{rootDir}\\NonSquareRooms")
@@ -92,14 +86,6 @@ def create_NSR(self,root_Dir):
         finish_button.pack(pady=10,padx=10)
 
 
-#fonction permettant d'obtenir le chemin complet menant à GenTiles.py
-        def find_gen_tiles():   
-                target_file = "GenTiles.py"
-                start_directory = os.getcwd() 
-                for root, dirs, files in os.walk(start_directory):
-                        if target_file in files:
-                                return os.path.join(root, target_file)
-
 
 
 
@@ -107,16 +93,9 @@ def create_NSR(self,root_Dir):
         def generate_command_NSR():
                 json=json_entry.get()
                 json_f=os.path.basename(json)
-
-                # Utilisez la fonction pour trouver le chemin complet de GenTiles.py
-                gen_tiles_path = find_gen_tiles()
-                #commande si on exécute la focntion GenTiles avant
                 command="python .\GenTiles.py --json "+json_f
-                
-                #commmande si on veut pouvoir executer directement sans lancer GentTiles au préalable 
-                
-                # command= gen_tiles_path+" --json "+json_f
-                #on ajoute les informations: nom du fichier, angle, offset, taille, optimisation, dessin si l'utilisateur les impose
+                                
+                #on ajoute les informations: nom du fichier, angle, offset, taille, optimisation et dessin si l'utilisateur les impose
                 if enter_name.get()!="":
                         name=enter_name.get()
                         command+=" --out "+name+".json"
@@ -130,7 +109,7 @@ def create_NSR(self,root_Dir):
                         command+= " --draw "
                 if vari.get()==1:
                         command+= " --opti "
-                if enter_taille.get() != "":
+                if enter_taille.get()!="":
                         taille=enter_taille.get()
                         command += " --tileSize " + taille
                 
