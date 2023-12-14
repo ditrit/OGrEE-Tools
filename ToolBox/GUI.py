@@ -41,14 +41,6 @@ class Chargement():
             # Stocker les boutons dans le dictionnaire avec le nom comme clé
             self.buttons[i] = var
 
-        #Fonction pour demander le dossier d'origine
-        def choisir_dossier():
-            dossier = filedialog.askdirectory()
-            if dossier:
-                self.root_Dir=str(dossier)
-                self.entry_path.delete(1,tk.END)
-                self.entry_path.insert(tk.END,dossier)
-
         self.launch_button=ttk.Button(root, text="Launch ToolBox", command=self.launch)
         self.launch_button.pack(side=tk.BOTTOM,pady=10)
 
