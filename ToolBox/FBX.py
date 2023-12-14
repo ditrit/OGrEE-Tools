@@ -24,20 +24,20 @@ def create_FBX(self,root_dir):
                         w,d,h=get_dimensions()
                         avant=self.images_utilisees["Avant"]
                         path=enter_path.get()
-                        command="python "+root_dir+"\Converter\source\\fbx\FbxBuilder.py --WDH "+str(w)+","+str(d)+","+str(h)+" --front '"+avant+"' -o '"+path+"'"
+                        command='''python "'''+root_dir+'''\Converter\source\\fbx\FbxBuilder.py" --WDH '''+str(w)+","+str(d)+","+str(h)+''' --front "'''+avant+'''" -o "'''+path+'''"'''
                         if enter_name.get()!="":
                                 name=enter_name.get()
-                                command+=" --name '"+name+"'"
+                                command+=" --name "+name
                         if self.images_utilisees["Arrière"]!="":
-                                command+=" --back '"+self.images_utilisees["Arrière"]+"'"
+                                command+=''' --back "'''+self.images_utilisees["Arrière"]+'''"'''
                         if self.images_utilisees["Haut"]!="":
-                                command+=" --top '"+self.images_utilisees["Haut"]+"'"
+                                command+=''' --top "'''+self.images_utilisees["Haut"]+'''"'''
                         if self.images_utilisees["Bas"]!="":
-                                command+=" --bottom '"+self.images_utilisees["Bas"]+"'"
+                                command+=''' --bottom "'''+self.images_utilisees["Bas"]+'''"'''
                         if self.images_utilisees["Gauche"]!="":
-                                command+=" --left '"+self.images_utilisees["Gauche"]+"'"
+                                command+=''' --left "'''+self.images_utilisees["Gauche"]+'''"'''
                         if self.images_utilisees["Droite"]!="":
-                                command+=" --right '"+self.images_utilisees["Droite"]+"'"
+                                command+=''' --right "'''+self.images_utilisees["Droite"]+'''"'''
                         self.generate_command(command)
                 else :
                         self.launch_error('Missing arguments') #Si manque des paramètres
