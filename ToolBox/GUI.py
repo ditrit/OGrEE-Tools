@@ -72,7 +72,7 @@ class ToolBox():
 
         #création de la barre du bas
 
-        self.bottom=ttk.Frame(root)
+        self.bottom=ttk.Frame(root, relief="solid", borderwidth=2)
         self.bottom.pack(side=tk.BOTTOM, fill=tk.X)
         enter_button=ttk.Button(self.bottom, text="enter", padding=(0,10,0,10), width=15, command=lambda: self.launch_command(self.enter.get()))
         enter_button.pack(pady=10,padx=10 ,side=tk.RIGHT)

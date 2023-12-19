@@ -168,7 +168,7 @@ def create_FBX(self,root_dir):
 
 
                 #Affiche les images du dossier
-                def afficher_images(liste_images,noms,directory,inner_frame, width=250, height=100):
+                def afficher_images(liste_images,noms,directory,inner_frame, width, height=100):
                         def image_clicked(image_path,label): #Fonction pour sélectionner et surligner une image
                                 self.image_actuelle=image_path
                                 for img_label in self.image_labels:
@@ -238,7 +238,8 @@ def create_FBX(self,root_dir):
                                         # Charger et afficher les nouvelles images avec leurs noms
                                         images = charger_images(selected_directory_path)
                                         noms=lister_images_png(selected_directory_path)
-                                        afficher_images(images,noms,selected_directory_path,inner_frame)
+                                        width=int(right.winfo_width()/3*0.92) #Ajuste la taille des images à l'écran
+                                        afficher_images(images,noms,selected_directory_path,inner_frame,width)
 
                                         canvas_images.update_idletasks()  # Met à jour le canevas avant de configurer la barre de défilement
                                         canvas_images.config(scrollregion=canvas_images.bbox(tk.ALL))
@@ -386,23 +387,23 @@ def create_FBX(self,root_dir):
         label.pack(pady=5)
 
         front = ttk.Frame(self.frame)
-        front.pack(fill=tk.X, pady=5)
+        front.pack(fill=tk.X, pady=20)
         front_label = ttk.Label(front, text="Choose your pictures :", anchor="w")
-        front_label.pack(fill=tk.X,side=tk.TOP, pady=5)
+        front_label.pack(fill=tk.X,side=tk.TOP, pady=20, padx=15)
         
         images=tk.Text(front,height=6)
         images.pack(side=tk.LEFT, padx=20, fill=tk.X, expand=True)
         front_parcourir = ttk.Button(front, text="Browse", command=lambda: choisir_png(images), width=20)
-        front_parcourir.pack(side=tk.RIGHT, padx=20)
+        front_parcourir.pack(side=tk.RIGHT, padx=20,pady=20)
 
         dimensions=ttk.Frame(self.frame)
         dimensions.pack(side=tk.TOP, fill=tk.X,pady=5)
         size_label=ttk.Label(dimensions,text="Choose the dimensions of your component : ")
-        size_label.pack(side=tk.LEFT,pady=5)
+        size_label.pack(side=tk.LEFT,pady=20, padx=15)
         options = ["manually (cm)", "with a JSON"]
         selected_option = tk.StringVar() # Créer une variable pour stocker la valeur sélectionnée
         combo_box = ttk.Combobox(dimensions, textvariable=selected_option, values=options)
-        combo_box.pack(side=tk.LEFT,pady=5)
+        combo_box.pack(side=tk.LEFT,pady=20)
         combo_box.set("manually (cm)") # Définir une option par défaut
         combo_box.bind("<<ComboboxSelected>>", on_select) # Associer une fonction à l'événement de sélection
         enter_name=ttk.Entry(dimensions,width=50)
@@ -416,15 +417,15 @@ def create_FBX(self,root_dir):
 
         path=ttk.Frame(self.frame)
         path.pack(side=tk.TOP, fill=tk.X)
-        enter_button=ttk.Button(path, text="Out path", padding=(0,5,0,5), command=lambda: choisir_path(enter_path))
-        enter_button.pack(pady=5,padx=10 ,side=tk.LEFT)
+        enter_button=ttk.Button(path, text="Out path", command=lambda: choisir_path(enter_path))
+        enter_button.pack(pady=20,padx=10 ,side=tk.LEFT)
         enter_path=ttk.Entry(path, width=100)
-        enter_path.pack(pady=5,padx=10 , fill=tk.X)
+        enter_path.pack(pady=20,padx=10 , fill=tk.X)
 
         bot=ttk.Frame(self.frame)
         bot.pack(side=tk.BOTTOM, fill=tk.X)
         finish_button=ttk.Button(bot, text="Generate", padding=(0,10,0,10), width=20, command=lambda: generate_command_FBX())
-        finish_button.pack(pady=5,padx=10)
+        finish_button.pack(pady=20,padx=10)
 
         return self.frame
 

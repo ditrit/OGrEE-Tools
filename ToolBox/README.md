@@ -1,5 +1,5 @@
 # How to use
-
+Launch the GUI.py file by going into the ToolBox folder and using in your terminal "python Gui.py".
 When you launch the ToolBox choose the tools that you want to use and your own directory of OGrEE-Tools to setup the root directory of the ToolBox.
 
 # Principal window
