@@ -27,7 +27,7 @@ def create_FBX(self,root_dir):
                         command='''python "'''+root_dir+'''\Converter\source\\fbx\FbxBuilder.py" --WDH '''+str(w)+","+str(d)+","+str(h)+''' --front "'''+avant+'''" -o "'''+path+'''"'''
                         if enter_name.get()!="":
                                 name=enter_name.get()
-                                command+=" --name "+name
+                                command+=''' --name "'''+name+'''"'''
                         if self.images_utilisees["Arrière"]!="":
                                 command+=''' --back "'''+self.images_utilisees["Arrière"]+'''"'''
                         if self.images_utilisees["Haut"]!="":
@@ -79,27 +79,27 @@ def create_FBX(self,root_dir):
                                                 img_label.configure(background='SystemButtonFace') #Repasse toute les images en mode "non-sélectionnée"
                                 #Affiche l'entête correspondant à la face choisie avant le nom de l'image
                                 if self.selected_value == "Avant":
-                                        debut='Avant'
+                                        debut='Front'
                                         self.images_utilisees['Avant']=self.image_actuelle
                                         text='Front - '+ get_name(self.image_actuelle) +'\n'
                                 elif self.selected_value == "Arrière":
-                                        debut='Arrière'
+                                        debut='Back'
                                         self.images_utilisees['Arrière']=self.image_actuelle
                                         text='Back - '+ get_name(self.image_actuelle) +'\n'
                                 elif self.selected_value == "Haut":
-                                        debut='Haut'
+                                        debut='Top'
                                         self.images_utilisees['Haut']=self.image_actuelle
                                         text='Top - '+ get_name(self.image_actuelle) +'\n'
                                 elif self.selected_value == "Bas":
-                                        debut='Bas'
+                                        debut='Bottom'
                                         self.images_utilisees['Bas']=self.image_actuelle
                                         text='Bottom - '+ get_name(self.image_actuelle) +'\n'
                                 elif self.selected_value == "Gauche":
-                                        debut='Gauche'
+                                        debut='Left'
                                         self.images_utilisees['Gauche']=self.image_actuelle
                                         text='Left - '+ get_name(self.image_actuelle) +'\n'
                                 elif self.selected_value == "Droite":
-                                        debut='Droite'
+                                        debut='Right'
                                         self.images_utilisees['Droite']=self.image_actuelle
                                         text='Right - '+ get_name(self.image_actuelle) +'\n'
 
