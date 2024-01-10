@@ -26,9 +26,9 @@ Now, you can choose if you want to draw the room or optimize the tiling of the r
 Clicking on the "generate" button will give you the command line that you will execute by clicking on the "enter" button to get your final file.
 
 # 3dtools
-Veuillez lire attentivement les instructions suivantes pour modifier le rectangle AVANT de cliquer sur le bouton « Modifier des rectengles » :
+Veuillez lire attentivement les instructions suivantes pour modifier le rectangle AVANT de cliquer sur le bouton « Modifier des rectangles » :
 
-a. Après avoir cliqué sur le bouton « Modifier des rectengles », une nouvelle fenêtre sera générée et le texte dans le coin supérieur gauche de cette fenêtre indiquera que vous êtes en « create mode ». Ce mode est en cours d'amélioration et certaines opérations peuvent provoquer un crash du programme. Lorsque vous êtes en « create mode », veuillez double-cliquer sur une bordure rectangulaire pour entrer en « modify mode », ou appuyez sur ESC pour quitter, veuillez ne pas effectuer d'autres opérations.
+a. Après avoir cliqué sur le bouton « Modifier des rectangles », une nouvelle fenêtre sera générée et le texte dans le coin supérieur gauche de cette fenêtre indiquera que vous êtes en « create mode ». Ce mode est en cours d'amélioration et certaines opérations peuvent provoquer un crash du programme. Lorsque vous êtes en « create mode », veuillez double-cliquer sur une bordure rectangulaire pour entrer en « modify mode », ou appuyez sur ESC pour quitter, veuillez ne pas effectuer d'autres opérations.
 
 b. Si vous souhaitez ajuster un rectangle, veuillez d'abord double-cliquer sur n'importe quel côté du rectangle que vous souhaitez ajuster, et vous entrerez en « modify mode ». La position et la taille du rectangle ne peuvent être ajustées que si nous passons en « modify mode ».
 
