@@ -143,33 +143,6 @@ def create_3DT(self):
         btn_choisir_json = tk.Button(self.frame, text='Choisir un json', command=choisir_json, width=20)
         btn_choisir_json.grid(row=7, column=1, sticky='w')
 
-# Vous trouverez ci-dessous les instructions pour modifier un rectangle.
-        labelchoisirjson = tk.Label(self.frame, text="Veuillez lire attentivement les instructions suivantes pour modifier le rectangle AVANT de cliquer sur le bouton « Modifier des rectengles » :", bg="light grey", anchor="w")
-        labelchoisirjson.grid(row=8, column=0, columnspan=5, ipady=5, sticky='w')
-        labelinsta = tk.Label(self.frame,
-                              text="a. Après avoir cliqué sur le bouton « Modifier des rectengles », une nouvelle fenêtre sera générée et le texte dans le coin supérieur gauche de cette fenêtre indiquera que vous êtes en « create mode ». Ce mode est en cours d'amélioration et certaines opérations peuvent provoquer un crash du programme. Lorsque vous êtes en « create mode », veuillez double-cliquer sur une bordure rectangulaire pour entrer en « modify mode », ou appuyez sur ESC pour quitter, veuillez ne pas effectuer d'autres opérations.",
-                              fg="red", bg="light grey", anchor="w", wraplength=800, justify="left")
-        labelinsta.grid(row=9, column=0, columnspan=5, ipady=5, sticky='w')
-        labelinstb= tk.Label(self.frame,
-                             text="b. Si vous souhaitez ajuster un rectangle, veuillez d'abord double-cliquer sur n'importe quel côté du rectangle que vous souhaitez ajuster, et vous entrerez en « modify mode ». La position et la taille du rectangle ne peuvent être ajustées que si nous passons en « modify mode ».",
-                             bg="light grey", anchor="w", wraplength=800, justify="left")
-        labelinstb.grid(row=10, column=0, columnspan=5, ipady=5, sticky='w')
-        labelinstc = tk.Label(self.frame,
-                              text="c. Si vous souhaitez ajuster la position d'un certain rectangle, veuillez d'abord entrer dans « modify mode ». Appuyez ensuite et maintenez un côté du rectangle avec le bouton gauche de la souris, puis déplacez la souris pour modifier la position du rectangle.",
-                              bg="light grey", anchor="w", wraplength=800, justify="left")
-        labelinstc.grid(row=11, column=0, columnspan=5, ipady=5, sticky='w')
-        labelinstd = tk.Label(self.frame,
-                              text="d. Si vous souhaitez redimensionner un rectangle, veuillez d'abord entrer dans « modify mode ». Appuyez ensuite et maintenez un coin du rectangle avec le bouton gauche de la souris, puis déplacez la souris pour modifier la taille du rectangle.",
-                              bg="light grey", anchor="w", wraplength=800, justify="left")
-        labelinstd.grid(row=12, column=0, columnspan=5, ipady=5, sticky='w')
-        labelinste = tk.Label(self.frame,
-                              text="e. Lorsque vous pensez avoir terminé d'ajuster un certain rectangle, vous pouvez cliquer avec le bouton droit n'importe où pour quitter « modify mode ».",
-                              bg="light grey", anchor="w", wraplength=800, justify="left")
-        labelinste.grid(row=13, column=0, columnspan=5, ipady=5, sticky='w')
-        labelinstf = tk.Label(self.frame,
-                              text="f. Lorsque vous pensez avoir terminé d'ajuster tous les rectangles, vous pouvez appuyer sur la touche ESC pour enregistrer les modifications apportées au fichier json et fermer la fenêtre d'image. Vous ne pourrez peut-être pas fermer une fenêtre en appuyant sur la croix dans le coin supérieur droit de la fenêtre, et lorsque vous appuyez sur ESC, vos modifications apportées au json seront automatiquement enregistrées.",
-                              bg="light grey", anchor="w", wraplength=800, justify="left")
-        labelinstf.grid(row=14, column=0, columnspan=5, ipady=5, sticky='w')
 
 #Ensuite, un autre script appelé "modifier.py" sera appelé pour générer une nouvelle fenêtre dans laquelle tous les rectangles seront affichés et l'utilisateur pourra ajuster tous les rectangles.
 
