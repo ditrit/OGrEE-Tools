@@ -27,9 +27,15 @@ Clicking on the "generate" button will give you the command line that you will e
 
 # 3dtools
 Veuillez lire attentivement les instructions suivantes pour modifier le rectangle AVANT de cliquer sur le bouton « Modifier des rectengles » :
+
 a. Après avoir cliqué sur le bouton « Modifier des rectengles », une nouvelle fenêtre sera générée et le texte dans le coin supérieur gauche de cette fenêtre indiquera que vous êtes en « create mode ». Ce mode est en cours d'amélioration et certaines opérations peuvent provoquer un crash du programme. Lorsque vous êtes en « create mode », veuillez double-cliquer sur une bordure rectangulaire pour entrer en « modify mode », ou appuyez sur ESC pour quitter, veuillez ne pas effectuer d'autres opérations.
+
 b. Si vous souhaitez ajuster un rectangle, veuillez d'abord double-cliquer sur n'importe quel côté du rectangle que vous souhaitez ajuster, et vous entrerez en « modify mode ». La position et la taille du rectangle ne peuvent être ajustées que si nous passons en « modify mode ».
+
 c. Si vous souhaitez ajuster la position d'un certain rectangle, veuillez d'abord entrer dans « modify mode ». Appuyez ensuite et maintenez un côté du rectangle avec le bouton gauche de la souris, puis déplacez la souris pour modifier la position du rectangle.
+
 d. Si vous souhaitez redimensionner un rectangle, veuillez d'abord entrer dans « modify mode ». Appuyez ensuite et maintenez un coin du rectangle avec le bouton gauche de la souris, puis déplacez la souris pour modifier la taille du rectangle.
+
 e. Lorsque vous pensez avoir terminé d'ajuster un certain rectangle, vous pouvez cliquer avec le bouton droit n'importe où pour quitter « modify mode ».
+
 f. Lorsque vous pensez avoir terminé d'ajuster tous les rectangles, vous pouvez appuyer sur la touche ESC pour enregistrer les modifications apportées au fichier json et fermer la fenêtre d'image. Vous ne pourrez peut-être pas fermer une fenêtre en appuyant sur la croix dans le coin supérieur droit de la fenêtre, et lorsque vous appuyez sur ESC, vos modifications apportées au json seront automatiquement enregistrées.
