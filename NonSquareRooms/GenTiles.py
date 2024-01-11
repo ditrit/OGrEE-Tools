@@ -293,12 +293,12 @@ def processJSON(
     room["tiles"] = new_tiles
     if outname is None:
         with open(
-            f"{os.path.dirname(path)}/{os.path.splitext(os.path.basename(path))[0]}-tiles.json",
+            f"./{os.path.splitext(os.path.basename(path))[0]}-tiles.json",
             "w",
         ) as file:
             file.write(json.dumps(room, indent=4))
     else:
-        with open(f"{os.path.dirname(path)}/{outname}", "w") as file:
+        with open(f"./{outname}", "w") as file:
             file.write(json.dumps(room, indent=4))
 
     if draw:
