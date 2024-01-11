@@ -25,7 +25,7 @@ code = 1
 named = ['']*len(data_set)
 
 
-def create_3DT(self):
+def create_3DT(self,root_Dir):
         self.frame = tk.Frame(self.root, width=200, height=100, bg="light grey")
         self.frame.pack_propagate(False)
 
