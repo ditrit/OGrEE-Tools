@@ -47,6 +47,10 @@ Some basic parameters should be told before start the program.
 >
 User can also just run the *main.py* in python consoler. In this case, a default server "dell-poweredge-r720xd.rear.png" will be shown.
 
+Run `python main.py --gui` to interact with the Graphic User Interface (GUI).
+
+![GUI](image/serveur/gui.png)
+
 There are other parameters that the user can choose, to control algorithm's performance.  
 > #yolov5 hyparameter
     --weights, type:str, model path or triton URL, if not want to change the yolov model, don't use it!  
