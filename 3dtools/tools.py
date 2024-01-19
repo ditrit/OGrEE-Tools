@@ -18,6 +18,8 @@ from scipy.cluster.hierarchy import fcluster
 import multiprocessing
 import sys
 
+import cv2
+
 # special constant for all the function
 RATIO = 781/85.4  # pixel/mm = 9.145
 SIZETABLE = {'idrac': [14.0, 11.0, 11.0], 'usb': [13.0, 14.0, 5.5], 'vga': [16.0, 11.0, 8.0],
@@ -682,6 +684,58 @@ def template_match(image, template, threshold, mindis):
     return positions
 
 
+def draw_tmp_rectangle(tmp_file, pt1, pt2, color, label=None):
+    image = cv2.imread(tmp_file)
+    image = cv2.rectangle(image, pt1, pt2, color, 8, cv2.LINE_AA)
+
+    if label is not None:
+        w, h = cv2.getTextSize(label, 0, 2, 3)[0]
+        outside = pt1[1] - h >= 3
+        pt2 = (int(pt1[0] + w + 8), int(pt1[1] - h - 8) if outside else int(pt1[1] + h + 8))
+        image = cv2.rectangle(image, pt1, pt2, color, -1, cv2.LINE_AA)
+        image = cv2.putText(image, label, (pt1[0] + 4, pt1[1] - 4 if outside else pt1[1] + h + 4), 0, 2, (255, 255, 255), 3, cv2.LINE_AA)
+        cv2.imwrite(tmp_file, image)
+
+
+def drawcomponents_gui(original_file, tmp_file, components, dont_draw=None):
+    image = cv2.imread(original_file)
+    # num = 0
+    for k in components:
+        if k == dont_draw:
+            continue
+
+        name, angle, similarity = components[k]
+        composhape = SIZETABLE[name] if angle == 0 else [SIZETABLE[name][2], SIZETABLE[name][1], SIZETABLE[name][0]]
+        label = name #+ str(num)
+        pt1 = (int(k[1]), int(k[0]))
+        pt2 = (int(pt1[0] + composhape[0] * RATIO), int(pt1[1] + composhape[2] * RATIO))
+
+        if similarity < 0.2:
+            color = (56, 56, 255)  # Bright red   -> 0 <= similarity < 0.2
+        elif similarity < 0.4:
+            color = (31, 112, 255) # Orange       -> 0.2 <= similarity < 0.4
+        elif similarity < 0.6:
+            color = (49, 210, 207) # Chartreuse   -> 0.4 <= similarity < 0.6
+        elif similarity < 0.8:
+            color = (23, 204, 146) # Lime green   -> 0.6 <= similarity < 0.8
+        elif similarity < 1.0:
+            color = (52, 147, 26)  # Forest green -> 0.8 <= similarity < 1.0
+        else:
+            color = (147, 69, 52)  # Dark blue    -> User defined component
+
+        image = cv2.rectangle(image, pt1, pt2, color, 8, cv2.LINE_AA)
+        w, h = cv2.getTextSize(label, 0, 2, 3)[0]
+        outside = pt1[1] - h >= 3
+        pt2 = (int(pt1[0] + w + 8), int(pt1[1] - h - 8) if outside else int(pt1[1] + h + 8))
+        image = cv2.rectangle(image, pt1, pt2, color, -1, cv2.LINE_AA)
+        image = cv2.putText(image, label, (pt1[0] + 4, pt1[1] - 4 if outside else pt1[1] + h + 4), 0, 2, (255, 255, 255), 3, cv2.LINE_AA)
+
+    # cv2.imshow("image", image)
+    cv2.imwrite(tmp_file, image)
+
+        # num +=1
+
+
 def drawcomponents(image, positions, template_width, template_height, sample_mt=0):
     """
     Draw the component box on the server image.
@@ -696,13 +750,13 @@ def drawcomponents(image, positions, template_width, template_height, sample_mt=
     Returns:
         matplot UI on the screen.
     """
-    if sample_mt is 0:
+    if sample_mt == 0:
         fig = plt.figure(figsize=(10, 8))
         ax = fig.add_subplot(111)
         ax.imshow(image, cmap='gray')
         for x, y, n, sim in positions:    # (height, width, angle, similarity)
             w, h = template_width, template_height
-            for _ in range(n//90):
+            for _ in range(int(n)//90):
                 w, h = h, w
             rect = plt.Rectangle((y, x), w, h, color='r', fc='none')
             ax.add_patch(rect)
