@@ -704,9 +704,9 @@ def drawcomponents_gui(original_file, tmp_file, components, dont_draw=None):
         if k == dont_draw:
             continue
 
-        name, angle, similarity = components[k]
-        composhape = SIZETABLE[name] if angle == 0 else [SIZETABLE[name][2], SIZETABLE[name][1], SIZETABLE[name][0]]
-        label = name #+ str(num)
+        name, compotype, angle, similarity = components[k]
+        composhape = SIZETABLE[compotype] if angle == 0 else [SIZETABLE[compotype][2], SIZETABLE[compotype][1], SIZETABLE[compotype][0]]
+        label = compotype #+ str(num)
         pt1 = (int(k[1]), int(k[0]))
         pt2 = (int(pt1[0] + composhape[0] * RATIO), int(pt1[1] + composhape[2] * RATIO))
 
