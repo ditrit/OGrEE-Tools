@@ -22,9 +22,9 @@ import cv2
 
 # special constant for all the function
 RATIO = 781/85.4  # pixel/mm = 9.145
-SIZETABLE = {'idrac': [14.0, 11.0, 11.0], 'usb': [13.0, 14.0, 5.5], 'vga': [16.0, 11.0, 8.0],
-             'rs232': [16.0, 11.0, 8.0], 'slot_normal': [107.0, 312.0, 18.0], 'slot_lp': [65.0, 175.0, 18.0],
-             'disk_lff': [101.0, 146.0, 26.0], 'disk_sff': [70.0, 101.0, 10.0], 'PSU': [90.0, 100.0, 40.0]}
+SIZETABLE = {'BMC': [20, 11.0, 12.5], 'USB': [15.0, 14.0, 5.5], 'VGA': [35.0, 11.0, 17.5],
+             'Serial': [35.0, 11.0, 17.5], 'Slot_normal': [100.0, 312.0, 15], 'Slot_lp': [65.0, 175.0, 15],
+             'Disk_lff': [107.5, 146.0, 25], 'Disk_sff': [80, 101.0, 15], 'PSU': [90.0, 100.0, 40.0]}
 
 
 def imageload(fn, flag="color"):
