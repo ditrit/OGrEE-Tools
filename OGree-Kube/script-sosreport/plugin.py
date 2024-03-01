@@ -13,7 +13,6 @@ from sos.report.plugins import (Plugin, RedHatPlugin, DebianPlugin,
                                 UbuntuPlugin, PluginOpt)
 from fnmatch import translate
 import re
-import json
 
 
 class Kubernetes(Plugin):
