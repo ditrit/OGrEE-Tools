@@ -5,6 +5,7 @@ from pathlib import Path
 import api.yoloapi
 from skimage.io import imsave
 from os import remove
+from gui import run_gui
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]
@@ -50,7 +51,7 @@ def run(servername ="image/serveur/dell-poweredge-r720xd.rear.png",
     path = 'api/tmp' + servername.split('/')[-1]
     imsave(path, tools.scaleim(servername, height, 2.0))
     # filter by class: --class 0, or --class 0 2 3
-    class_dic = {'all': None, 'slot_normal': 0, 'slot_lp': 1, 'slot': [0, 1],
+    class_dic = {'all': None, '15': None, 'slot_normal': 0, 'slot_lp': 1, 'slot': [0, 1],
                  'disk_sff': 2, 'disk_lff': 3, 'disk': [2, 3], 'source': 4}
     while True:
         print('\nclass list: ', {'d-sub female': '11', 'd-sub male': '12', 'idrac': '13', 'usb': '14', 'all': '15'},
@@ -74,7 +75,7 @@ def run(servername ="image/serveur/dell-poweredge-r720xd.rear.png",
             ogreeTools.clusb()
         elif command in class_dic.keys() or command == '15':
             print("start detecting slot&disk")
-            command = 'all'
+            # command = 'all'
             pred = api.yoloapi.run(weights, path, data, imgsz, conf_thres, iou_thres, max_det, device, view_img,
                             save_txt, save_conf, save_crop, nosave, class_dic[command], agnostic_nms, augment, visualize, update,
                             project, name, exist_ok, line_thickness, hide_labels, hide_conf, half, dnn, vid_stride,)
@@ -82,12 +83,14 @@ def run(servername ="image/serveur/dell-poweredge-r720xd.rear.png",
             ogreeTools.dl_addComponents(pred.cpu())
     ogreeTools.cutears()
     ogreeTools.writejson()
+    ogreeTools.savejson()
     print(servername.split('/')[-1].split('.')[0], ' json file in "/api/"')
     remove(path)
 
 
 def parse_opt():
     parser = argparse.ArgumentParser()
+    parser.add_argument('--gui', default=False, action='store_true', help='if provided, open GUI')
     parser.add_argument('--servername', type=str, default="image/serveur/dell-poweredge-r720xd.rear.png", help='model path or triton URL')
     parser.add_argument('--height', type=float, default=87.38, help="Server's height/vertical size" )
     parser.add_argument('--width', type=float, default=443.99, help="Server's width/horizon size")
@@ -114,10 +117,11 @@ def parse_opt():
     return opt
 
 
-def main(opt):
-    run(**vars(opt))
-
-
 if __name__ == '__main__':
     opt = parse_opt()
-    main(opt)
+    gui = vars(opt).pop('gui', False)
+
+    if gui:
+        run_gui(opt)
+    else:
+        run(**vars(opt))
