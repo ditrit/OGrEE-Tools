@@ -32,7 +32,7 @@ class Kubernetes(Plugin):
         PluginOpt('podlogs-filter', default='', val_type=str,
                   desc='only collect logs from pods matching this pattern'),
         PluginOpt('resume', default=False, val_type=str,
-                  desc='only collect logs from pods matching this pattern')
+                  desc='only collect logs from pods in one json file')
     ]
 
     kube_cmd = "kubectl"
