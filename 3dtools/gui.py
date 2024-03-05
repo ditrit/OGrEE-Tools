@@ -1,8 +1,9 @@
 import sys
+
+import numpy as np
 import tools
 from classifiers import Classifiers
 from pathlib import Path
-import api.yoloapi
 from skimage.io import imsave
 from os import remove
 
@@ -10,6 +11,7 @@ from tkinter import *
 from tkinter.filedialog import askopenfilename
 from tkinter import messagebox, scrolledtext, ttk
 from PIL import Image, ImageTk
+from ultralytics import YOLO
 
 
 class Stdout_to_window(object):
@@ -29,33 +31,164 @@ class Stdout_to_window(object):
         self.widget.update_idletasks()
 
 
-class Gui():
+class Open_images_window(Toplevel):
+    def __init__(self, master):
+        # Open a new window
+        super().__init__(master)
+        self.title("OGrEE-Tools/3dtools - open images")
+        self.geometry("640x420")
+        self.resizable(False, False)
+
+        # Black header with white text
+        self.header = Frame(self, width=640, height=40, bg="black")
+        self.header.grid(columnspan=4, rowspan=3, row=0, column=0)
+
+        self.header_text = Label(self, text="OGrEE-Tools/3dtools - open images", bg="black", fg="white", font=("Helvetica, 20"), justify="center")
+        self.header_text.grid(columnspan=4, row=1)
+
+        # Main content
+        self.main_content = Frame(self, width=640, height=380, bg="white")
+        self.main_content.grid(columnspan=4, rowspan=4, row=3, column=0)
+
+        # Buttons on leftmost column
+        self.select_rear_image_button = Button(self, text="Select REAR\nface image", command=self.select_rear_image, bg="white", fg="black", height=4, width=10)
+        self.select_rear_image_button.grid(columnspan=1, column=0, row=3)
+
+        self.select_front_image_button = Button(self, text="Select FRONT\nface image", command=self.select_front_image, bg="white", fg="black", height=4, width=10)
+        self.select_front_image_button.grid(columnspan=1, column=0, row=4)
+
+        # Text on central columns
+        self.rear_image_var = StringVar(self)
+        self.rear_image_var.set("No rear face image selected")
+        self.rear_image_file = ""
+        self.rear_image_label = Label(self, textvariable=self.rear_image_var, bg="white", fg="black", height=4)
+        self.rear_image_label.grid(columnspan=2, column=1, row=3)
+
+        self.front_image_var = StringVar(self)
+        self.front_image_var.set("No front face image selected")
+        self.front_image_file = ""
+        self.front_image_label = Label(self, textvariable=self.front_image_var, bg="white", fg="black", height=4)
+        self.front_image_label.grid(columnspan=2, column=1, row=4)
+
+        # Buttons on rightmost column
+        self.unselect_rear_image_button = Button(self, text="X", font=("Helvetica, 20"), command=self.unselect_rear_image, fg="red", height=1, width=1)
+        self.unselect_rear_image_button.grid(column=3, row=3, padx=(76, 0))
+
+        self.unselect_front_image_button = Button(self, text="X", font=("Helvetica, 20"), command=self.unselect_front_image, fg="red", height=1, width=1)
+        self.unselect_front_image_button.grid(column=3, row=4, padx=(76, 0))
+
+        # Entries on second-to-bottom row
+        self.server_height_label = Label(self, text="Server height (mm):", bg="white", fg="black", height=4)
+        self.server_height_label.grid(column=0, row=5)
+
+        self.server_height_var = StringVar(self)
+        self.server_height_entry = Entry(self, textvariable=self.server_height_var, bg="white", fg="black", width=14)
+        self.server_height_entry.grid(column=1, row=5)
+
+        self.server_width_label = Label(self, text="Server width (mm):", bg="white", fg="black", height=4)
+        self.server_width_label.grid(column=2, row=5)
+
+        self.server_width_var = StringVar(self)
+        self.server_width_entry = Entry(self, textvariable=self.server_width_var, bg="white", fg="black", width=14)
+        self.server_width_entry.grid(column=3, row=5)
+
+        # Buttons on bottom row
+        self.cancel_button = Button(self, text="Cancel", command=self.destroy, bg="white", fg="red", height=4, width=10)
+        self.cancel_button.grid(column=1, row=6)
+        self.bind("<Escape>", lambda e: self.destroy())
+
+        self.done_button = Button(self, text="Done", command=self.done, bg="white", fg="blue", height=4, width=10)
+        self.done_button.grid(column=2, row=6)
+        self.bind("<Return>", lambda e: self.done())
+
+
+    def select_rear_image(self):
+        file = askopenfilename(initialdir="", filetypes=[("PNG image", "*.png"), ("JPEG image", "*.jpg"), ("All files", "*")])
+        if file:
+            self.rear_image_file = file
+            self.rear_image_var.set(file.split('/')[-1])
+
+
+    def select_front_image(self):
+        file = askopenfilename(initialdir="", filetypes=[("PNG image", "*.png"), ("JPEG image", "*.jpg"), ("All files", "*")])
+        if file:
+            self.front_image_file = file
+            self.front_image_var.set(file.split('/')[-1])
+
+
+    def unselect_rear_image(self):
+        self.rear_image_file = ""
+        self.rear_image_var.set("No rear face image selected")
+
+
+    def unselect_front_image(self):
+        self.front_image_file = ""
+        self.front_image_var.set("No front face image selected")
+
+
+    def done(self):
+        if self.rear_image_file == "" and self.front_image_file == "":
+            messagebox.showwarning("No images selected", "Please, select at least one image before continuing.")
+        elif self.server_height_entry.get() == "" or not self.server_height_entry.get().replace(".", "").isnumeric():
+            messagebox.showwarning("Invalid server height", "Server height should be a float.\n\nPlease, enter a valid server height before continuing.")
+        elif self.server_width_entry.get() == "" or not self.server_width_entry.get().replace(".", "").isnumeric():
+            messagebox.showwarning("Invalid server width", "Server width should be a float.\n\nPlease, enter a valid server width before continuing.")
+        else:
+            if self.front_image_file == "":
+                ok = self.master.open_images({"rear": self.rear_image_file}, self.server_height_entry.get(), self.server_width_entry.get())
+            elif self.rear_image_file == "":
+                ok = self.master.open_images({"front": self.front_image_file}, self.server_height_entry.get(), self.server_width_entry.get())
+            else:
+                ok = self.master.open_images({"rear": self.rear_image_file, "front": self.front_image_file}, self.server_height_entry.get(), self.server_width_entry.get())
+
+            if ok:
+                self.destroy()
+
+
+class Gui(Tk):
     # Resizes the image so it fits the space on screen
     def resize_image(self, image):
         if image.height > image.width:
-            image = image.rotate(90)
+            image = image.rotate(90, expand=True)
 
-        if image.width > 760:
-            w = 760
-            self.image_ratio = w / image.width
-            h = int(self.image_ratio * image.height)
-            return image.resize((w, h))
+        w = 760
+        self.image_ratio = w / image.width
+        h = int(self.image_ratio * image.height)
 
-        else:
-            self.image_ratio = 1
-            return image
+        if h > 152:
+            h = 152
+            self.image_ratio = h / image.height
+            w = int(self.image_ratio * image.width)
+
+        return image.resize((w, h))
 
 
-    # Opens a single image (front OR back face)
-    def open_one_image(self):
-        try:
-            file = askopenfilename(initialdir="", filetypes=[("PNG image", "*.png"), ("JPEG image", "*.jpg"), ("All files", "*")])
-            if file:
+    # Open one or two images (rear and/or front)
+    def open_images(self, images, height, width):
+        if len(images) == 1:
+            try:
+                remove(self.options["path"])
+                remove(self.options["path640"])
+            except FileNotFoundError:
+                pass
+            if len(self.classifiers) == 2:
+                try:
+                    remove(self.options["path_2"])
+                    remove(self.options["path640_2"])
+                except FileNotFoundError:
+                    pass
+            try:
                 print("\n" + 94 * "=" + "\n")
 
+                face, file = images.popitem()
                 self.options["servername"] = file
-                self.options["path"] = 'api/tmp' + self.options["servername"].split('/')[-1]
-                imsave(self.options["path"], tools.scaleim(self.options["servername"], self.options["height"], 2.0))
+                self.options["height"] = float(height)
+                self.options["width"] = float(width)
+                self.options["face"] = face
+                self.options["path"] = "api/tmp" + file.split('/')[-1]
+                imsave(self.options["path"], np.asarray(Image.open(file).resize((int(tools.RATIO * self.options["width"]), int(tools.RATIO * self.options["height"])))))
+                self.options["path640"] = "api/s-tmp" + file.split('/')[-1]
+                imsave(self.options["path640"], np.asarray(Image.open(file).resize((640, 640))))
 
                 image = Image.open(self.options["path"])
                 image = self.resize_image(image)
@@ -65,47 +198,45 @@ class Gui():
                 self.image_labels[0].grid(columnspan=3, rowspan=2, column=2, row=4, padx=(20, 20), pady=(20, 20))
                 self.image_labels[1].grid_remove()
 
-                is_rear = messagebox.askyesno("Server face", "Is this image of the REAR face of the device?", icon="question")
-                self.options["face"] = "rear" if is_rear else "front"
-
-                self.classifiers = [Classifiers(self.options["servername"], self.options["height"], self.options["width"], self.options["face"])]
+                self.classifiers = [Classifiers(file, float(height), float(width), face)]
 
                 print(f"\nNew image opened: {file.split('/')[-1]}.")
+                return True
+            except FileNotFoundError:
+                messagebox.showwarning("File not found", f"The file '{file}' could not be found.")
+                return False
+        else:
+            ok = self.open_images({"rear": images["rear"]}, float(height), float(width))
+            if ok:
+                try:
+                    print("\n" + 94 * "=" + "\n")
 
-        except FileNotFoundError:
-            messagebox.showerror("File not found", f"The file '{file}' could not be found.")
+                    file = images["front"]
+                    self.options["servername_2"] = file
+                    self.options["height_2"] = float(height)
+                    self.options["width_2"] = float(width)
+                    self.options["face_2"] = "front"
+                    self.options["path_2"] = "api/tmp" + file.split('/')[-1]
+                    imsave(self.options["path_2"], np.asarray(Image.open(file).resize((int(tools.RATIO * self.options["width"]), int(tools.RATIO * self.options["height"])))))
+                    self.options["path640_2"] = "api/s-tmp" + file.split('/')[-1]
+                    imsave(self.options["path640_2"], np.asarray(Image.open(file).resize((640, 640))))
 
+                    image = Image.open(self.options["path_2"])
+                    image = self.resize_image(image)
+                    photo = ImageTk.PhotoImage(image)
+                    self.image_labels[1].config(image=photo)
+                    self.image_labels[1].image = photo
+                    self.image_labels[1].grid(columnspan=3, rowspan=2, column=2, row=5, padx=(20, 20), pady=(20, 20))
+                    self.image_labels[0].grid(columnspan=3, rowspan=2, column=2, row=3, padx=(20, 20), pady=(20, 20))
 
-    # Opens two images (front AND back face)
-    def open_two_images(self):
-        self.open_one_image()
+                    self.classifiers.append(Classifiers(file, float(height), float(width), "front"))
 
-        try:
-            file = askopenfilename(initialdir="", filetypes=[("PNG image", "*.png"), ("JPEG image", "*.jpg"), ("All files", "*")])
-            if file:
-                print("\n" + 94 * "=" + "\n")
+                    print(f"\nNew image opened: {file.split('/')[-1]}.")
+                except FileNotFoundError:
+                    messagebox.showwarning("File not found", f"The file '{file}' could not be found.")
+                    ok = False
 
-                self.options["height_2"], self.options["width_2"] = self.options["height"], self.options["width"]
-
-                self.options["servername_2"] = file
-                self.options["path_2"] = 'api/tmp' + self.options["servername_2"].split('/')[-1]
-                imsave(self.options["path_2"], tools.scaleim(self.options["servername_2"], self.options["height_2"], 2.0))
-
-                image = Image.open(self.options["path_2"])
-                image = self.resize_image(image)
-                photo = ImageTk.PhotoImage(image)
-                self.image_labels[1].config(image=photo)
-                self.image_labels[1].image = photo
-                self.image_labels[1].grid(columnspan=3, rowspan=2, column=2, row=5, padx=(20, 20), pady=(20, 20))
-                self.image_labels[0].grid(columnspan=3, rowspan=2, column=2, row=3, padx=(20, 20), pady=(20, 20))
-
-                self.options["face_2"] = "front" if self.options["face"] == "rear" else "rear"
-                self.classifiers.append(Classifiers(self.options["servername_2"], self.options["height_2"], self.options["width_2"], self.options["face_2"]))
-
-                print(f"\nNew image opened: {file.split('/')[-1]}.")
-
-        except FileNotFoundError:
-            messagebox.showerror("File not found", f"The file '{file}' could not be found.")
+            return ok
 
 
     # Reloads the images so new updates are shown
@@ -142,26 +273,26 @@ class Gui():
 
     # Detects slots, disks and PSUs
     def detect_all(self):
-        def detect(classifier, face, servername, path):
+        def detect(classifier, face, path640, path, servername):
             print(f"\n{face.title()} face:")
-            if any([compotype == "slot_normal" or compotype == "slot_lp" or compotype == "disk_lff" or compotype == "disk_sff" or compotype == "PSU" for (_, compotype, *_) in classifier.components.values()]):
+            if classifier.components != {}:
                 print(f"  - Some components have already been detected. Try detecting each component individually.")
             else:
                 self.options["classes"] = None
-                pred = api.yoloapi.run(self.options["weights"], path, self.options["data"], self.options["imgsz"], self.options["conf_thres"], self.options["iou_thres"], self.options["max_det"], self.options["device"], self.options["view_img"],
-                        self.options["save_txt"], self.options["save_conf"], self.options["save_crop"], self.options["nosave"], self.options["classes"], self.options["agnostic_nms"], self.options["augment"], self.options["visualize"], self.options["update"],
-                        self.options["project"], self.options["name"], self.options["exist_ok"], self.options["line_thickness"], self.options["hide_labels"], self.options["hide_conf"], self.options["half"], self.options["dnn"], self.options["vid_stride"])
-                # pred: a list of tensor, each tensor represent a picture
-                classifier.dl_addComponents(pred.cpu())
+                pred = self.model.predict(path640, conf=self.options["conf"], iou=self.options["iou"], imgsz=self.options["imgsz"], half=self.options["half"], device=self.options["device"], max_det=self.options["max_det"], visualize=self.options["visualize"], 
+                                          augment=self.options["augment"], agnostic_nms=self.options["agnostic_nms"], classes=self.options["classes"], show=self.options["show"], save=self.options["save"], save_txt=self.options["save_txt"], save_conf=self.options["save_conf"], 
+                                          save_crop=self.options["save_crop"], show_labels=self.options["show_labels"], show_conf=self.options["show_conf"], show_boxes=self.options["show_boxes"], line_width=self.options["line_width"])
+                # pred: a list of tensor, each tensor represents a picture
+                classifier.dl_addComponents(pred)
                 tools.drawcomponents_gui(servername, path, classifier.components)
 
         print("\n" + 94 * "=" + "\n")
-        print("Detecting slots, disks and power...")
+        print("Detecting all components...")
         sys.stdout.flush()
 
-        detect(self.classifiers[0], self.options["face"], self.options["servername"], self.options["path"])
+        detect(self.classifiers[0], self.options["face"], self.options["path640"], self.options["path"], self.options["servername"])
         if len(self.classifiers) == 2:
-            detect(self.classifiers[1], self.options["face_2"], self.options["servername_2"], self.options["path_2"])
+            detect(self.classifiers[1], self.options["face_2"], self.options["path640_2"], self.options["path_2"], self.options["servername_2"])
 
         self.update_images()
         self.calculate_hitboxes()
@@ -169,26 +300,26 @@ class Gui():
 
     # Detects slots
     def detect_slot(self):
-        def detect(classifier, face, servername, path):
+        def detect(classifier, face, path640, path, servername):
             print(f"\n{face.title()} face:")
-            self.options["classes"] = [0, 1]
-            if any([compotype == "slot_normal" or compotype == "slot_lp" for (_, compotype, *_) in classifier.components.values()]):
+            self.options["classes"] = [5, 6]
+            if any([compotype == "Slot_normal" or compotype == "Slot_lp" for (_, compotype, *_) in classifier.components.values()]):
                 print(f"  - Slots have already been detected.")
             else:
-                pred = api.yoloapi.run(self.options["weights"], path, self.options["data"], self.options["imgsz"], self.options["conf_thres"], self.options["iou_thres"], self.options["max_det"], self.options["device"], self.options["view_img"],
-                        self.options["save_txt"], self.options["save_conf"], self.options["save_crop"], self.options["nosave"], self.options["classes"], self.options["agnostic_nms"], self.options["augment"], self.options["visualize"], self.options["update"],
-                        self.options["project"], self.options["name"], self.options["exist_ok"], self.options["line_thickness"], self.options["hide_labels"], self.options["hide_conf"], self.options["half"], self.options["dnn"], self.options["vid_stride"])
-                # pred: a list of tensor, each tensor represent a picture
-                classifier.dl_addComponents(pred.cpu())
+                pred = self.model.predict(path640, conf=self.options["conf"], iou=self.options["iou"], imgsz=self.options["imgsz"], half=self.options["half"], device=self.options["device"], max_det=self.options["max_det"], visualize=self.options["visualize"], 
+                                          augment=self.options["augment"], agnostic_nms=self.options["agnostic_nms"], classes=self.options["classes"], show=self.options["show"], save=self.options["save"], save_txt=self.options["save_txt"], save_conf=self.options["save_conf"], 
+                                          save_crop=self.options["save_crop"], show_labels=self.options["show_labels"], show_conf=self.options["show_conf"], show_boxes=self.options["show_boxes"], line_width=self.options["line_width"])
+                # pred: a list of tensor, each tensor represents a picture
+                classifier.dl_addComponents(pred)
                 tools.drawcomponents_gui(servername, path, classifier.components)
 
         print("\n" + 94 * "=" + "\n")
         print("Detecting slots...")
         sys.stdout.flush()
 
-        detect(self.classifiers[0], self.options["face"], self.options["servername"], self.options["path"])
+        detect(self.classifiers[0], self.options["face"], self.options["path640"], self.options["path"], self.options["servername"])
         if len(self.classifiers) == 2:
-            detect(self.classifiers[1], self.options["face_2"], self.options["servername_2"], self.options["path_2"])
+            detect(self.classifiers[1], self.options["face_2"], self.options["path640_2"], self.options["path_2"], self.options["servername_2"])
 
         self.update_images()
         self.calculate_hitboxes()
@@ -196,26 +327,26 @@ class Gui():
 
     # Detects disks
     def detect_disk(self):
-        def detect(classifier, face, servername, path):
+        def detect(classifier, face, path640, path, servername):
             print(f"\n{face.title()} face:")
-            if any([compotype == "disk_lff" or compotype == "disk_sff" for (_, compotype, *_) in classifier.components.values()]):
+            if any([compotype == "Disk_lff" or compotype == "Disk_sff" for (_, compotype, *_) in classifier.components.values()]):
                 print(f"  - Disks have already been detected.")
             else:
-                self.options["classes"] = [2, 3]
-                pred = api.yoloapi.run(self.options["weights"], path, self.options["data"], self.options["imgsz"], self.options["conf_thres"], self.options["iou_thres"], self.options["max_det"], self.options["device"], self.options["view_img"],
-                        self.options["save_txt"], self.options["save_conf"], self.options["save_crop"], self.options["nosave"], self.options["classes"], self.options["agnostic_nms"], self.options["augment"], self.options["visualize"], self.options["update"],
-                        self.options["project"], self.options["name"], self.options["exist_ok"], self.options["line_thickness"], self.options["hide_labels"], self.options["hide_conf"], self.options["half"], self.options["dnn"], self.options["vid_stride"])
-                # pred: a list of tensor, each tensor represent a picture
-                classifier.dl_addComponents(pred.cpu())
+                self.options["classes"] = [1, 2]
+                pred = self.model.predict(path640, conf=self.options["conf"], iou=self.options["iou"], imgsz=self.options["imgsz"], half=self.options["half"], device=self.options["device"], max_det=self.options["max_det"], visualize=self.options["visualize"], 
+                                          augment=self.options["augment"], agnostic_nms=self.options["agnostic_nms"], classes=self.options["classes"], show=self.options["show"], save=self.options["save"], save_txt=self.options["save_txt"], save_conf=self.options["save_conf"], 
+                                          save_crop=self.options["save_crop"], show_labels=self.options["show_labels"], show_conf=self.options["show_conf"], show_boxes=self.options["show_boxes"], line_width=self.options["line_width"])
+                # pred: a list of tensor, each tensor represents a picture
+                classifier.dl_addComponents(pred)
                 tools.drawcomponents_gui(servername, path, classifier.components)
 
         print("\n" + 94 * "=" + "\n")
         print("Detecting disks...")
         sys.stdout.flush()
 
-        detect(self.classifiers[0], self.options["face"], self.options["servername"], self.options["path"])
+        detect(self.classifiers[0], self.options["face"], self.options["path640"], self.options["path"], self.options["servername"])
         if len(self.classifiers) == 2:
-            detect(self.classifiers[1], self.options["face_2"], self.options["servername_2"], self.options["path_2"])
+            detect(self.classifiers[1], self.options["face_2"], self.options["path640_2"], self.options["path_2"], self.options["servername_2"])
 
         self.update_images()
         self.calculate_hitboxes()
@@ -223,26 +354,26 @@ class Gui():
 
     # Detects PSUs
     def detect_psu(self):
-        def detect(classifier, face, servername, path):
+        def detect(classifier, face, path640, path, servername):
             print(f"\n{face.title()} face:")
             if any([compotype == "PSU" for (_, compotype, *_) in classifier.components.values()]):
                 print(f"  - PSUs have already been detected.")
             else:
-                self.options["classes"] = 4
-                pred = api.yoloapi.run(self.options["weights"], path, self.options["data"], self.options["imgsz"], self.options["conf_thres"], self.options["iou_thres"], self.options["max_det"], self.options["device"], self.options["view_img"],
-                        self.options["save_txt"], self.options["save_conf"], self.options["save_crop"], self.options["nosave"], self.options["classes"], self.options["agnostic_nms"], self.options["augment"], self.options["visualize"], self.options["update"],
-                        self.options["project"], self.options["name"], self.options["exist_ok"], self.options["line_thickness"], self.options["hide_labels"], self.options["hide_conf"], self.options["half"], self.options["dnn"], self.options["vid_stride"])
-                # pred: a list of tensor, each tensor represent a picture
-                classifier.dl_addComponents(pred.cpu())
+                self.options["classes"] = 3
+                pred = self.model.predict(path640, conf=self.options["conf"], iou=self.options["iou"], imgsz=self.options["imgsz"], half=self.options["half"], device=self.options["device"], max_det=self.options["max_det"], visualize=self.options["visualize"], 
+                                          augment=self.options["augment"], agnostic_nms=self.options["agnostic_nms"], classes=self.options["classes"], show=self.options["show"], save=self.options["save"], save_txt=self.options["save_txt"], save_conf=self.options["save_conf"], 
+                                          save_crop=self.options["save_crop"], show_labels=self.options["show_labels"], show_conf=self.options["show_conf"], show_boxes=self.options["show_boxes"], line_width=self.options["line_width"])
+                # pred: a list of tensor, each tensor represents a picture
+                classifier.dl_addComponents(pred)
                 tools.drawcomponents_gui(servername, path, classifier.components)
 
         print("\n" + 94 * "=" + "\n")
         print("Detecting PSU...")
         sys.stdout.flush()
 
-        detect(self.classifiers[0], self.options["face"], self.options["servername"], self.options["path"])
+        detect(self.classifiers[0], self.options["face"], self.options["path640"], self.options["path"], self.options["servername"])
         if len(self.classifiers) == 2:
-            detect(self.classifiers[1], self.options["face_2"], self.options["servername_2"], self.options["path_2"])
+            detect(self.classifiers[1], self.options["face_2"], self.options["path640_2"], self.options["path_2"], self.options["servername_2"])
 
         self.update_images()
         self.calculate_hitboxes()
@@ -250,21 +381,26 @@ class Gui():
 
     # Detects serial ports
     def detect_serial(self):
-        def detect(classifier, face, servername, path):
+        def detect(classifier, face, path640, path, servername):
             print(f"\n{face.title()} face:")
-            if any([compotype == "rs232" for (_, compotype, *_) in classifier.components.values()]):
+            if any([compotype == "Serial" for (_, compotype, *_) in classifier.components.values()]):
                 print(f"  - Serial ports have already been detected.")
             else:
-                classifier.clvga_rs232('male')
+                self.options["classes"] = 4
+                pred = self.model.predict(path640, conf=self.options["conf"], iou=self.options["iou"], imgsz=self.options["imgsz"], half=self.options["half"], device=self.options["device"], max_det=self.options["max_det"], visualize=self.options["visualize"], 
+                                          augment=self.options["augment"], agnostic_nms=self.options["agnostic_nms"], classes=self.options["classes"], show=self.options["show"], save=self.options["save"], save_txt=self.options["save_txt"], save_conf=self.options["save_conf"], 
+                                          save_crop=self.options["save_crop"], show_labels=self.options["show_labels"], show_conf=self.options["show_conf"], show_boxes=self.options["show_boxes"], line_width=self.options["line_width"])
+                # pred: a list of tensor, each tensor represents a picture
+                classifier.dl_addComponents(pred)
                 tools.drawcomponents_gui(servername, path, classifier.components)
 
         print("\n" + 94 * "=" + "\n")
         print("Detecting serial ports...")
         sys.stdout.flush()
 
-        detect(self.classifiers[0], self.options["face"], self.options["servername"], self.options["path"])
+        detect(self.classifiers[0], self.options["face"], self.options["path640"], self.options["path"], self.options["servername"])
         if len(self.classifiers) == 2:
-            detect(self.classifiers[1], self.options["face_2"], self.options["servername_2"], self.options["path_2"])
+            detect(self.classifiers[1], self.options["face_2"], self.options["path640_2"], self.options["path_2"], self.options["servername_2"])
 
         self.update_images()
         self.calculate_hitboxes()
@@ -272,21 +408,26 @@ class Gui():
 
     # Detects VGA ports
     def detect_vga(self):
-        def detect(classifier, face, servername, path):
+        def detect(classifier, face, path640, path, servername):
             print(f"\n{face.title()} face:")
-            if any([compotype == "vga" for (_, compotype, *_) in classifier.components.values()]):
+            if any([compotype == "VGA" for (_, compotype, *_) in classifier.components.values()]):
                 print(f"  - VGA ports have already been detected.")
             else:
-                classifier.clvga_rs232('female')
+                self.options["classes"] = 8
+                pred = self.model.predict(path640, conf=self.options["conf"], iou=self.options["iou"], imgsz=self.options["imgsz"], half=self.options["half"], device=self.options["device"], max_det=self.options["max_det"], visualize=self.options["visualize"], 
+                                          augment=self.options["augment"], agnostic_nms=self.options["agnostic_nms"], classes=self.options["classes"], show=self.options["show"], save=self.options["save"], save_txt=self.options["save_txt"], save_conf=self.options["save_conf"], 
+                                          save_crop=self.options["save_crop"], show_labels=self.options["show_labels"], show_conf=self.options["show_conf"], show_boxes=self.options["show_boxes"], line_width=self.options["line_width"])
+                # pred: a list of tensor, each tensor represents a picture
+                classifier.dl_addComponents(pred)
                 tools.drawcomponents_gui(servername, path, classifier.components)
 
         print("\n" + 94 * "=" + "\n")
         print("Detecting VGA ports...")
         sys.stdout.flush()
 
-        detect(self.classifiers[0], self.options["face"], self.options["servername"], self.options["path"])
+        detect(self.classifiers[0], self.options["face"], self.options["path640"], self.options["path"], self.options["servername"])
         if len(self.classifiers) == 2:
-            detect(self.classifiers[1], self.options["face_2"], self.options["servername_2"], self.options["path_2"])
+            detect(self.classifiers[1], self.options["face_2"], self.options["path640_2"], self.options["path_2"], self.options["servername_2"])
 
         self.update_images()
         self.calculate_hitboxes()
@@ -294,21 +435,26 @@ class Gui():
 
     # Detects BMC ports
     def detect_bmc(self):
-        def detect(classifier, face, servername, path):
+        def detect(classifier, face, path640, path, servername):
             print(f"\n{face.title()} face:")
-            if any([compotype == "idrac" for (_, compotype, *_) in classifier.components.values()]):
+            if any([compotype == "BMC" for (_, compotype, *_) in classifier.components.values()]):
                 print("  - BMC interfaces have already been detected.")
             else:
-                classifier.clidrac()
+                self.options["classes"] = 0
+                pred = self.model.predict(path640, conf=self.options["conf"], iou=self.options["iou"], imgsz=self.options["imgsz"], half=self.options["half"], device=self.options["device"], max_det=self.options["max_det"], visualize=self.options["visualize"], 
+                                          augment=self.options["augment"], agnostic_nms=self.options["agnostic_nms"], classes=self.options["classes"], show=self.options["show"], save=self.options["save"], save_txt=self.options["save_txt"], save_conf=self.options["save_conf"], 
+                                          save_crop=self.options["save_crop"], show_labels=self.options["show_labels"], show_conf=self.options["show_conf"], show_boxes=self.options["show_boxes"], line_width=self.options["line_width"])
+                # pred: a list of tensor, each tensor represents a picture
+                classifier.dl_addComponents(pred)
                 tools.drawcomponents_gui(servername, path, classifier.components)
 
         print("\n" + 94 * "=" + "\n")
         print("Detecting BMC interfaces...")
         sys.stdout.flush()
 
-        detect(self.classifiers[0], self.options["face"], self.options["servername"], self.options["path"])
+        detect(self.classifiers[0], self.options["face"], self.options["path640"], self.options["path"], self.options["servername"])
         if len(self.classifiers) == 2:
-            detect(self.classifiers[1], self.options["face_2"], self.options["servername_2"], self.options["path_2"])
+            detect(self.classifiers[1], self.options["face_2"], self.options["path640_2"], self.options["path_2"], self.options["servername_2"])
 
         self.update_images()
         self.calculate_hitboxes()
@@ -316,21 +462,26 @@ class Gui():
 
     # Detects USB ports
     def detect_usb(self):
-        def detect(classifier, face, servername, path):
+        def detect(classifier, face, path640, path, servername):
             print(f"\n{face.title()} face:")
-            if any([compotype == "usb" for (_, compotype, *_) in classifier.components.values()]):
+            if any([compotype == "USB" for (_, compotype, *_) in classifier.components.values()]):
                 print("  - USB ports have already been detected.")
             else:
-                classifier.clusb()
+                self.options["classes"] = 7
+                pred = self.model.predict(path640, conf=self.options["conf"], iou=self.options["iou"], imgsz=self.options["imgsz"], half=self.options["half"], device=self.options["device"], max_det=self.options["max_det"], visualize=self.options["visualize"], 
+                                          augment=self.options["augment"], agnostic_nms=self.options["agnostic_nms"], classes=self.options["classes"], show=self.options["show"], save=self.options["save"], save_txt=self.options["save_txt"], save_conf=self.options["save_conf"], 
+                                          save_crop=self.options["save_crop"], show_labels=self.options["show_labels"], show_conf=self.options["show_conf"], show_boxes=self.options["show_boxes"], line_width=self.options["line_width"])
+                # pred: a list of tensor, each tensor represents a picture
+                classifier.dl_addComponents(pred)
                 tools.drawcomponents_gui(servername, path, classifier.components)
 
         print("\n" + 94 * "=" + "\n")
         print("Detecting USB ports...")
         sys.stdout.flush()
 
-        detect(self.classifiers[0], self.options["face"], self.options["servername"], self.options["path"])
+        detect(self.classifiers[0], self.options["face"], self.options["path640"], self.options["path"], self.options["servername"])
         if len(self.classifiers) == 2:
-            detect(self.classifiers[1], self.options["face_2"], self.options["servername_2"], self.options["path_2"])
+            detect(self.classifiers[1], self.options["face_2"], self.options["path640_2"], self.options["path_2"], self.options["servername_2"])
 
         self.update_images()
         self.calculate_hitboxes()
@@ -374,7 +525,7 @@ class Gui():
         elif self.component_type_var.get() == "":
             print("\n" + 94 * "=" + "\n")
             print("ERROR: invalid component type.")
-        elif self.component_depth_var.get() == "":
+        elif self.component_depth_var.get() == "" or not self.component_depth_var.get().replace(".", "").isnumeric():
             print("\n" + 94 * "=" + "\n")
             print("ERROR: invalid component depth.")
         elif self.image_label_selected == "top":
@@ -528,9 +679,11 @@ class Gui():
     def component_selected(self, event=None):
         if self.component_type_var.get() in tools.SIZETABLE:
             composhape = tools.SIZETABLE[self.component_type_var.get()]
+            if self.component_name_var.get() == "":
+                self.component_name_var.set(self.component_type_var.get())
             self.component_depth_var.set(composhape[1])
             self.component_wh_var.set(f"W = {composhape[0]}, H = {composhape[2]}")
-            self.root.update_idletasks()
+            self.update_idletasks()
 
 
     # Draws blue rectangle following the cursor
@@ -670,8 +823,8 @@ class Gui():
             label.bind("<ButtonRelease-1>", lambda event: self.release(event, str(event.widget).split(".")[-1]))
             label.bind("<BackSpace>", self.delete_component)
             label.bind("<Delete>", self.delete_component)
-            label.bind("<Escape>", self.reset)
 
+        self.bind("<Escape>", self.reset)
         self.reset()
         self.calculate_hitboxes()
 
@@ -701,13 +854,13 @@ class Gui():
             label.unbind("<ButtonRelease-1>")
             label.unbind("<BackSpace>")
             label.unbind("<Delete>")
-            label.unbind("<Escape>")
 
+        self.unbind("<Escape>")
         self.reset()
         self.calculate_hitboxes()
 
         print("\n" + 94 * "=" + "\n")
-        print("Click 'Open one image' or 'Open two images' to choose new images.")
+        print("Click 'Open images' to choose new images (rear AND/OR front).")
         print("Click one of the 'Detect ...' buttons to start detecting components.")
         print("When you're done, click 'Finish detection' to proceed.\n")
 
@@ -716,9 +869,11 @@ class Gui():
     def close_window(self):
         if messagebox.askokcancel("Quit", "Are you sure you want to quit?\nAll progress will be lost."):
             remove(self.options["path"])
+            remove(self.options["path640"])
             if len(self.classifiers) == 2:
                 remove(self.options["path_2"])
-            self.root.destroy()
+                remove(self.options["path640_2"])
+            self.destroy()
             sys.stdout = self.prev_stdout
 
 
@@ -732,14 +887,16 @@ class Gui():
                 self.classifiers[0].savejson()
                 self.classifiers[1].savejson()
                 remove(self.options["path"])
+                remove(self.options["path640"])
                 remove(self.options["path_2"])
-                self.root.destroy()
+                remove(self.options["path640_2"])
+                self.destroy()
                 sys.stdout = self.prev_stdout
         else:
             if messagebox.askokcancel("File saved", f"{file_1}.json file saved in '/api/'\n\nThank you for using OGrEE-Tools/3dtools!"):
                 self.classifiers[0].savejson()
                 remove(self.options["path"])
-                self.root.destroy()
+                self.destroy()
                 sys.stdout = self.prev_stdout
 
 
@@ -754,17 +911,18 @@ class Gui():
             label.unbind("<ButtonRelease-1>")
             label.unbind("<BackSpace>")
             label.unbind("<Delete>")
-            label.unbind("<Escape>")
+
+        self.unbind("<Escape>")
 
         # JSON text on top leftmost columns
-        self.json_text = scrolledtext.ScrolledText(self.root, bg="black", fg="white", font=("Courier", 14), width=47, height=31)
+        self.json_text = scrolledtext.ScrolledText(self, bg="black", fg="white", font=("Courier", 14), width=47, height=31)
         self.json_text.grid(columnspan=2, rowspan=5, column=0, row=3, pady=(20, 20))
 
         # Buttons on bottom leftmost columns
-        self.return_to_editing_button = Button(self.root, text="Return to editing", command=self.return_to_editing, fg="black", height=4, width=40)
+        self.return_to_editing_button = Button(self, text="Return to editing", command=self.return_to_editing, fg="black", height=4, width=40)
         self.return_to_editing_button.grid(columnspan=2, column=0, row=8)
 
-        self.save_and_exit_button = Button(self.root, text="Save and exit", command=self.save_and_exit, fg="black", height=4, width=40)
+        self.save_and_exit_button = Button(self, text="Save and exit", command=self.save_and_exit, fg="black", height=4, width=40)
         self.save_and_exit_button.grid(columnspan=2, column=0, row=9)
 
         self.json_widgets = [self.return_to_editing_button, self.save_and_exit_button, self.json_text]
@@ -797,43 +955,43 @@ class Gui():
             widget.grid_remove()
 
         # Component variables on top leftmost columns
-        self.component_name_label = Label(self.root, text="Component name:", bg="white", fg="black", height=4)
+        self.component_name_label = Label(self, text="Component name:", bg="white", fg="black", height=4)
         self.component_name_label.grid(column=0, row=3)
 
-        self.component_name_entry = Entry(self.root, textvariable=self.component_name_var, bg="white", fg="black", width=14)
+        self.component_name_entry = Entry(self, textvariable=self.component_name_var, bg="white", fg="black", width=14)
         self.component_name_entry.grid(column=1, row=3)
 
-        self.component_type_label = Label(self.root, text="Component type:", bg="white", fg="black", height=4)
+        self.component_type_label = Label(self, text="Component type:", bg="white", fg="black", height=4)
         self.component_type_label.grid(column=0, row=4)
 
         self.values = list(tools.SIZETABLE.keys())
-        self.component_type_entry = ttk.Combobox(self.root, textvariable=self.component_type_var, values=self.values, background="white", foreground="black", width=13)
+        self.component_type_entry = ttk.Combobox(self, textvariable=self.component_type_var, values=self.values, background="white", foreground="black", width=13)
         self.component_type_entry.grid(column=1, row=4)
         self.component_type_entry.bind("<<ComboboxSelected>>", self.component_selected)
 
-        self.component_depth_label = Label(self.root, text="Component depth (mm):", bg="white", fg="black", height=4)
+        self.component_depth_label = Label(self, text="Component depth (mm):", bg="white", fg="black", height=4)
         self.component_depth_label.grid(column=0, row=5)
 
-        self.component_depth_entry = Entry(self.root, textvariable=self.component_depth_var, bg="white", fg="black", width=14)
+        self.component_depth_entry = Entry(self, textvariable=self.component_depth_var, bg="white", fg="black", width=14)
         self.component_depth_entry.grid(column=1, row=5)
 
-        self.component_wh_label_l = Label(self.root, text="Component width, height (mm):", bg="white", fg="black", height=4)
+        self.component_wh_label_l = Label(self, text="Component width, height (mm):", bg="white", fg="black", height=4)
         self.component_wh_label_l.grid(column=0, row=6)
 
-        self.component_wh_label_r = Label(self.root, textvariable=self.component_wh_var, anchor="w", bg="white", fg="black", height=4, width=14)
+        self.component_wh_label_r = Label(self, textvariable=self.component_wh_var, anchor="w", bg="white", fg="black", height=4, width=14)
         self.component_wh_label_r.grid(column=1, row=6)
 
         # Buttons on bottom leftmost columns
-        self.save_component_button = Button(self.root, text="Save component", command=self.save_component, fg="black", height=4, width=14)
+        self.save_component_button = Button(self, text="Save component", command=self.save_component, fg="black", height=4, width=14)
         self.save_component_button.grid(column=0, row=7)
 
-        self.delete_component_button = Button(self.root, text="Delete component", command=self.delete_component, fg="black", height=4, width=14)
+        self.delete_component_button = Button(self, text="Delete component", command=self.delete_component, fg="black", height=4, width=14)
         self.delete_component_button.grid(column=1, row=7)
 
-        self.return_to_detection_button = Button(self.root, text="Return to detection", command=self.return_to_detection, fg="black", height=4, width=40)
+        self.return_to_detection_button = Button(self, text="Return to detection", command=self.return_to_detection, fg="black", height=4, width=40)
         self.return_to_detection_button.grid(columnspan=2, column=0, row=8)
 
-        self.finish_editing = Button(self.root, text="Finish editing", command=self.create_json_window, fg="black", height=4, width=40)
+        self.finish_editing = Button(self, text="Finish editing", command=self.create_json_window, fg="black", height=4, width=40)
         self.finish_editing.grid(columnspan=2, column=0, row=9)
 
         self.editing_widgets = [self.component_name_label, self.component_name_entry, self.component_type_label, self.component_type_entry, self.component_depth_label, self.component_depth_entry, self.component_wh_label_l, self.component_wh_label_r, self.save_component_button, self.delete_component_button, self.return_to_detection_button, self.finish_editing]
@@ -843,8 +1001,8 @@ class Gui():
             label.bind("<ButtonRelease-1>", lambda event: self.release(event, str(event.widget).split(".")[-1]))
             label.bind("<BackSpace>", self.delete_component)
             label.bind("<Delete>", self.delete_component)
-            label.bind("<Escape>", self.reset)
 
+        self.bind("<Escape>", self.reset)
         self.reset()
         self.image_label_selected = "top"
 
@@ -862,63 +1020,61 @@ class Gui():
     # Creates the detection window
     def create_detection_window(self):
         # Window
-        self.root = Tk()
-        self.root.title("OGrEE-Tools/3dtools")
-        self.root.geometry("1280x720")
-        self.root.resizable(False, False)
-        self.root.protocol("WM_DELETE_WINDOW", self.close_window)
-        self.root.createcommand("::tk::mac::Quit", self.close_window)
-        self.root.bind('<Control-x>', self.close_window)
+        self.title("OGrEE-Tools/3dtools")
+        self.geometry("1280x720")
+        self.resizable(False, False)
+        self.protocol("WM_DELETE_WINDOW", self.close_window)
+        self.createcommand("::tk::mac::Quit", self.close_window)
 
-        # black header with white text
-        self.header = Frame(self.root, width=1280, height=40, bg="black")
+        # Black header with white text
+        self.header = Frame(self, width=1280, height=40, bg="black")
         self.header.grid(columnspan=5, rowspan=3, row=0, column=0)
 
-        self.header_text = Label(self.root, text="OGrEE-Tools/3dtools", bg="black", fg="white", font=("Helvetica, 20"), justify="center")
+        self.header_text = Label(self, text="OGrEE-Tools/3dtools", bg="black", fg="white", font=("Helvetica, 20"), justify="center")
         self.header_text.grid(columnspan=5, row=1)
 
         # Main content
-        self.main_content = Frame(self.root, width=1280, height=680, bg="white")
+        self.main_content = Frame(self, width=1280, height=680, bg="white")
         self.main_content.grid(columnspan=5, rowspan=7, row=3, column=0)
 
         # Buttons on two leftmost columns
-        self.open_one_image_button = Button(self.root, text="Open one image\n(rear OR front)", command=self.open_one_image, fg="black", height=4, width=40)
-        self.open_one_image_button.grid(columnspan=2, column=0, row=3)
+        self.open_images_label = Label(self, text="Welcome to OGrEE-Tools/3dtools!", bg="white", fg="black", font=("Helvetica, 16"), justify="center", height=4)
+        self.open_images_label.grid(columnspan=2, column=0, row=3)
 
-        self.open_two_images_button = Button(self.root, text="Open two images\n(rear AND front)", command=self.open_two_images, fg="black", height=4, width=40)
-        self.open_two_images_button.grid(columnspan=2, column=0, row=4)
+        self.open_images_button = Button(self, text="Open images\n(rear AND/OR front)", command=lambda: Open_images_window(self), fg="black", height=4, width=40)
+        self.open_images_button.grid(columnspan=2, column=0, row=4)
 
-        self.detect_all_button = Button(self.root, text="Detect all\n(slots + disks + PSU)", command=self.detect_all, fg="black", height=4, width=14)
+        self.detect_all_button = Button(self, text="Detect all components", command=self.detect_all, fg="black", height=4, width=14)
         self.detect_all_button.grid(column=0, row=5)
 
-        self.detect_slot_button = Button(self.root, text="Detect slots", command=self.detect_slot, fg="black", height=4, width=14)
+        self.detect_slot_button = Button(self, text="Detect slots", command=self.detect_slot, fg="black", height=4, width=14)
         self.detect_slot_button.grid(column=1, row=5)
 
-        self.detect_disk_button = Button(self.root, text="Detect disks", command=self.detect_disk, fg="black", height=4, width=14)
+        self.detect_disk_button = Button(self, text="Detect disks", command=self.detect_disk, fg="black", height=4, width=14)
         self.detect_disk_button.grid(column=0, row=6)
 
-        self.detect_psu_button = Button(self.root, text="Detect PSU", command=self.detect_psu, fg="black", height=4, width=14)
+        self.detect_psu_button = Button(self, text="Detect PSU", command=self.detect_psu, fg="black", height=4, width=14)
         self.detect_psu_button.grid(column=1, row=6)
 
-        self.detect_serial_button = Button(self.root, text="Detect serial ports\n(DB9 connector)", command=self.detect_serial, fg="black", height=4, width=14)
+        self.detect_serial_button = Button(self, text="Detect serial ports\n(DB9 connector)", command=self.detect_serial, fg="black", height=4, width=14)
         self.detect_serial_button.grid(column=0, row=7)
 
-        self.detect_vga_button = Button(self.root, text="Detect VGA ports\n(DB15 connector)", command=self.detect_vga, fg="black", height=4, width=14)
+        self.detect_vga_button = Button(self, text="Detect VGA ports\n(DB15 connector)", command=self.detect_vga, fg="black", height=4, width=14)
         self.detect_vga_button.grid(column=1, row=7)
 
-        self.detect_bmc_button = Button(self.root, text="Detect BMC", command=self.detect_bmc, fg="black", height=4, width=14)
+        self.detect_bmc_button = Button(self, text="Detect BMC", command=self.detect_bmc, fg="black", height=4, width=14)
         self.detect_bmc_button.grid(column=0, row=8)
 
-        self.detect_usb_button = Button(self.root, text="Detect USB ports", command=self.detect_usb, fg="black", height=4, width=14)
+        self.detect_usb_button = Button(self, text="Detect USB ports", command=self.detect_usb, fg="black", height=4, width=14)
         self.detect_usb_button.grid(column=1, row=8)
 
-        self.create_editing_window_button = Button(self.root, text="Finish detection", command=self.create_editing_window, fg="black", height=4, width=40)
+        self.create_editing_window_button = Button(self, text="Finish detection", command=self.create_editing_window, fg="black", height=4, width=40)
         self.create_editing_window_button.grid(columnspan=2, column=0, row=9)
 
-        self.detection_widgets = [self.open_one_image_button, self.open_two_images_button, self.detect_all_button, self.detect_slot_button, self.detect_disk_button, self.detect_psu_button, self.detect_serial_button, self.detect_vga_button, self.detect_bmc_button, self.detect_usb_button, self.create_editing_window_button]
+        self.detection_widgets = [self.open_images_label, self.open_images_button, self.detect_all_button, self.detect_slot_button, self.detect_disk_button, self.detect_psu_button, self.detect_serial_button, self.detect_vga_button, self.detect_bmc_button, self.detect_usb_button, self.create_editing_window_button]
 
         # Output text on bottom rightmost columns
-        self.output = scrolledtext.ScrolledText(self.root, bg="black", fg="white", font=("Courier", 14), width=94, height=19)
+        self.output = scrolledtext.ScrolledText(self, bg="black", fg="white", font=("Courier", 14), width=94, height=19)
         self.output.grid(columnspan=3, rowspan=3, column=2, row=7)
 
         self.prev_stdout = sys.stdout
@@ -926,59 +1082,55 @@ class Gui():
 
         print("\n" + 94 * "=" + "\n")
         print("Welcome to OGrEE-Tools/3dtools!")
-        print("Click 'Open one image' or 'Open two images' to choose new images.")
+        print("Click 'Open images' to choose new images (rear AND/OR front).")
         print("Click one of the 'Detect ...' buttons to start detecting components.")
         print("When you're done, click 'Finish detection' to proceed.\n")
         print(94 * "=" + "\n")
 
         # Images on top rightmost columns
-        self.top_image_label = Label(self.root, name="top")
+        self.top_image_label = Label(self, name="top")
         self.top_image_label.grid(columnspan=3, rowspan=2, column=2, row=4, padx=(20, 20), pady=(20, 20))
 
-        self.bot_image_label = Label(self.root, name="bot")
+        self.bot_image_label = Label(self, name="bot")
         # bot_image_label.grid(columnspan=3, rowspan=2, column=2, row=5, padx=(20, 20), pady=(20, 20))
 
         self.image_labels = [self.top_image_label, self.bot_image_label]
         self.image_label_selected = "top"
 
-        imsave(self.options["path"], tools.scaleim(self.options["servername"], self.options["height"], 2.0))
+        imsave(self.options["path"], np.asarray(Image.open(self.options["servername"]).resize((int(tools.RATIO * self.options["width"]), int(tools.RATIO * self.options["height"])))))
+        self.options["path640"] = "api/s-tmp" + self.options["servername"].split('/')[-1]
+        imsave(self.options["path640"], np.asarray(Image.open(self.options["servername"]).resize((640, 640))))
+    
         self.update_images()
 
-        self.component_name_var = StringVar(self.root)
-        self.component_type_var = StringVar(self.root)
-        self.component_depth_var = StringVar(self.root)
-        self.component_wh_var = StringVar(self.root)
+        self.component_name_var = StringVar(self)
+        self.component_type_var = StringVar(self)
+        self.component_depth_var = StringVar(self)
+        self.component_wh_var = StringVar(self)
         self.click_pt1 = None
         self.selected_component = None
         self.hitboxes = [{}, {}]
 
-        self.root.after(100, lambda:print(f"\nNew image opened: {self.options['servername'].split('/')[-1]}."))
+        self.after(100, lambda:print(f"\nNew image opened: {self.options['servername'].split('/')[-1]}."))
 
 
     # Starts the GUI
     def __init__(self, options):
+        super().__init__()
         self.FILE = Path(__file__).resolve()
         self.ROOT = self.FILE.parents[0]
-        self.yROOT = self.ROOT / 'yolov5'  # YOLOv5 root directory
-        # '''
-        # if str(self.ROOT) not in sys.path:
-        #     sys.path.append(str(self.ROOT))  # add ROOT to PATH
-        # self.ROOT = Path(os.path.relpath(self.ROOT, Path.cwd()))  # relative
-        # '''
 
         self.options = options
         self.options["path"] = 'api/tmp' + self.options["servername"].split('/')[-1]
-        self.options["data"] =self.ROOT / 'yolov5/data/serveur122.yaml'
-        self.options["imgsz"] = (192, 768)
+        self.options["imgsz"] = 640
         self.options["max_det"] = 400
+        self.options["visualize"] = False
         self.options["agnostic_nms"] = False
-        self.options["update"] = False
         self.options["half"] = False
-        self.options["dnn"] = False
-        self.options["vid_stride"] = 1
 
         self.create_detection_window()
         self.classifiers = [Classifiers(self.options["servername"], self.options["height"], self.options["width"], self.options["face"])]
+        self.model = YOLO(self.options["model"], task="detect")
 
 
 # Creates and runs the GUI

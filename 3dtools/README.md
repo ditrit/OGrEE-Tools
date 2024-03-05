@@ -6,32 +6,30 @@ This is a user guide for 'OGrEE-Tools/3dtools', a powerful program that can auto
 
 | Name | method |
 | ------ | ------ |
-| idrac | template matching |
-| usb | rectangle detect |
-| d-sub female/vga | image's feature points |
-| d-sub male/rs232 | image's feature points |
-| slot normal | YOLOV5 object detection |
-| slot lp | YOLOV5 object detection |
-| disk lff | YOLOV5 object detection |
-| disk sff | YOLOV5 object detection |
-| power supply unit | YOLOV5 object detection |
+| BMC interface | YOLOv8 object detection |
+| USB port | YOLOv8 object detection |
+| VGA port | YOLOv8 object detection |
+| Serial port | YOLOv8 object detection |
+| Slot normal | YOLOv8 object detection |
+| Slot lp | YOLOv8 object detection |
+| Disk lff | YOLOv8 object detection |
+| Disk sff | YOLOv8 object detection |
+| PSU | YOLOv8 object detection |
 
 ## Requirements
 
-The minimum Python version required to use 3dtools is Python version 3.7.
-
-YOLOV5 needs to be cloned from [YOLOV5 official page](https://github.com/ultralytics/yolov5#tutorials) in the `3dtools` directory.
+The minimum Python version required to use 3dtools is Python version 3.6.
 
 Package infomation in [requirements.txt](requirements.txt)
 
 ## Setup
 
-A setup script for 3dtools is provided under `/.../OGrEE-Tools/3dtools/setup.sh`. To use it, run:
+To use `OGrEE-Tools/3dtools`, run the following commands to clone the repository and install the dependencies:
 
 ```sh
 git clone https://github.com/ditrit/OGrEE-Tools.git
 cd OGrEE-Tools/3dtools
-./setup.sh
+pip3 install -r ./requirements.txt
 ```
 
 ## Introduction
@@ -68,24 +66,21 @@ Run `python3 main.py --gui` to interact with the Graphic User Interface (GUI).
 You can also set aditional parameters to control the algorithm's performance.
 
 > 
-    # YOLOV5 hyparameters
-    --weights : string, model path or triton URL, if you don't want to change the YOLOV5 model, don't use it;
-    --conf-thres : float, default=0.5, confidence threshold, YOLOV5 will filter the results below it;
-    --iou-thres : float, default=0.45, 'NMS IoU threshold';
+    # YOLOv8 hyparameters
+    --model : string, model path or triton URL, if you don't want to change the YOLOv8 model, don't use it;
+    --conf : float, default=0.5, confidence threshold, YOLOv8 will filter the results below it;
+    --iou : float, default=0.45, 'NMS IoU threshold';
     --device : default=cuda device, i.e. 0 or 0,1,2,3 or cpu;
-    --view-img : if provided, show results on screen;
+    --augment : if provided, augmented inference;
+    --show : if provided, show results on screen;
+    --save : if provided, save detection results;
     --save-txt : if provided, save results to *.txt;
     --save-conf : if provided, save confidences in --save-txt labels;
     --save-crop : if provided, save cropped prediction boxes;
-    --nosave : if provided, won't save images';
-    --augment : if provided, augmented inference;
-    --visualize : if provided, visualize features;
-    --project : default='ROOT/detect', save results to project/name;
-    --name : default='exp', save results to 'project/name';
-    --exist-ok : if provided, an existing project/name will be overwritten;
-    --line-thickness : int, default=1, bounding box thickness (pixels);
-    --hide-labels : default=False, if provided, hide labels;
-    --hide-conf : default=False, if provided, hide confidences.
+    --show-labels : if provided, show labels;
+    --show-conf : if provided, show confidences;
+    --show-boxes : if provided, show bounding boxes;
+    --line-width : bounding box line width (pixels).
 >
 
 ### Running the CLI
@@ -102,32 +97,28 @@ python3 main.py --servername image/serveur/dell-poweredge-r720xd.rear.png --heig
 The user will be prompted with the following message:
 
 ```sh
-class list: {'d-sub female': '11', 'd-sub male': '12', 'idrac': '13', 'usb': '14', 'all': '15'} 
-or enter the name 'slot', 'disk', 'source'(without '') 
-Please input one by one. Enter 'finish' to output the json
-----Enter component name or code:
+Choose a component to detect.
+Available commands: 'All', 'BMC', 'Disk_lff', 'Disk_sff', 'Disks', 'PSU', 'Serial', 'Slot_lp', 'Slot_normal', 'Slots', 'USB', 'VGA'
+Enter 'finish' to output the JSON.
+
+Command = ...
 ```
 
-Enter the wished name or code to start the detection.
+Enter the wished component name to start detecting.
 
 Examples:
 
 ```sh
-> d-sub female
-> idrac
-> 14
-> 15
-> slot
+> BMC
+> VGA
+> Serial
+> Slots
 ```
 Results are printed, showing all detected components in the format `xxx in [x, y, angle, similarity]`.
 
 ```sh
-start detecting d-sub female
-0° searching progress:  100%:  ▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋
-
-90° searching progress:  100%:  ▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋
-
-vga in : [[640.0, 860.0, 0.0, 0.7698690075499673]]
+Detecting VGA...
+  - VGA in : [[640.0, 860.0, 0.0, 0.7698690075499673]]
 ```
 
 **Attention:** the type of input code is *string*. If we want transform it into a interface connect with other program, the command should also be *string*, not int.
@@ -210,44 +201,32 @@ Another idrac template was captured from model *cisco-c240-m6-lff.rear.png*, and
 
 ## Classifiers in *Classifier* class:
 
-### clidrac:
-
-Based on template matching, the program will use the standard image of an idrac component to compare each slice of image, and calculate the similarity. Then, a local_peak function is applied to find out the best position to pass the threshold, set as 0.45.
-
-### clvgars232:
-
-This classifier is designed to find vga or rs232 at the same time, since they have the same shape. The method applied is the 'CENSURE algorithm', that processes out desired image features, which are pin positions in our case.
-
-### clusb:
-
-This classifier is designed to find usb components in the image. We use the same template matching method to find out where the components are, giving out possible points in the image. Usb components have a rectangle edge; a straight line detection function to find suspected rectangles of the same dimension in the image. Lastly, an vector geometric calculation will decide whether the points are in this rectangle, i.e. if the points belong to the usb components we are searching for.
-
 ### dl_addComponents:
 
-This classifier is designed to find slots, disks and PSUs, and use the foreign YOLOV5 method for detection.
+This classifier is designed to find all components using the foreign YOLOv8 method for detection.
 
-The `api` file of YOLOV5 is under `/.../OGrEE-Tools/3dtools/api/yoloapi.py`. It is similar to the one under `/.../OGrEE-Tools/3dtools/yolov5/detect.py`, but a bit simpler and with different coordinates treatment. Some unnecessary parameters and pieces of code have been moved. 
-
-The user can detct all the slots, disks and PSUs with command `all` or with code `15`. These components can also be detected individually.
+The user can detct all components at once by typing command `All`. These components can also be detected individually.
 
 | Command | Components detected |
 | ------ | ------ |
-| all | slot normal, slot lp, disk sff, disk lff, psu |
-| disk |  disk lff, disk sff |
-| slot | slot normal, slot lp |
-| disk_sff | disk sff |
-| disk_lff | disk lff |
-| slot_normal | slot normal |
-| slot_lp | slot lp |
-| source | power supply unit |
-
-The detection results of YOLOV5 will be saved under `/.../OGrEE-Tools/3dtools/detect/exp x/`; the user can check the output there. Remember to clean the `detect` folder regularly, so it doesn't take up much memory.
+| All | Slot normal, Slot lp, Disk sff, Disk lff, psu |
+| BMC | BMC |
+| Disks |  Disk lff, Disk sff |
+| Disk_sff | Disk sff |
+| Disk_lff | Disk lff |
+| Slots | Slot normal, Slot lp |
+| Slot_lp | Slot lp |
+| Slot_normal | Slot normal |
+| PSU | PSU |
+| Serial | Serial |
+| USB | USB |
+| VGA | VGA |
 
 #### Notes:
 
 - The unit dimension of power supply units differ among manufacturers. A data base has to be created to account for this information;
 
-- A spreadsheet with the shape of the server is stored under `/.../OGrEE-Tools/3dtools/image/name_list.xlsx`. Use with caution, as some data might be incorrect;
+- A spreadsheet with the shapes of servers is stored under `/.../OGrEE-Tools/3dtools/image/name_list.xlsx`. Use with caution, as some data might be incorrect;
 
 - A very common error is to inverse the x and y axis, because the indexes in different libraries are not the same; some use (vertical, horizontal), while others use (horizontal, vertical). For the further programming, check the axis order when the classifier finds a component at the wrong position but with high similarity, or when the component position is out of the picture. The user can trust that the present version works properly.
 
