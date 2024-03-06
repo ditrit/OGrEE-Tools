@@ -13,7 +13,6 @@ from tkinter import messagebox, scrolledtext, ttk
 from PIL import Image, ImageTk
 from ultralytics import YOLO
 
-
 class Stdout_to_window(object):
     def __init__(self, widget):
         self.widget = widget
@@ -915,7 +914,7 @@ class Gui(Tk):
         self.unbind("<Escape>")
 
         # JSON text on top leftmost columns
-        self.json_text = scrolledtext.ScrolledText(self, bg="black", fg="white", font=("Courier", 14), width=47, height=31)
+        self.json_text = scrolledtext.ScrolledText(self, bg="black", fg="white", font=("Courier", 10), width=47, height=31)
         self.json_text.grid(columnspan=2, rowspan=5, column=0, row=3, pady=(20, 20))
 
         # Buttons on bottom leftmost columns
@@ -1021,8 +1020,8 @@ class Gui(Tk):
     def create_detection_window(self):
         # Window
         self.title("OGrEE-Tools/3dtools")
-        self.geometry("1280x720")
-        self.resizable(False, False)
+        self.geometry("1280x740")
+        # self.resizable(False, False)
         self.protocol("WM_DELETE_WINDOW", self.close_window)
         self.createcommand("::tk::mac::Quit", self.close_window)
 
@@ -1044,7 +1043,7 @@ class Gui(Tk):
         self.open_images_button = Button(self, text="Open images\n(rear AND/OR front)", command=lambda: Open_images_window(self), fg="black", height=4, width=40)
         self.open_images_button.grid(columnspan=2, column=0, row=4)
 
-        self.detect_all_button = Button(self, text="Detect all components", command=self.detect_all, fg="black", height=4, width=14)
+        self.detect_all_button = Button(self, text="Detect all\ncomponents", command=self.detect_all, fg="black", height=4, width=14)
         self.detect_all_button.grid(column=0, row=5)
 
         self.detect_slot_button = Button(self, text="Detect slots", command=self.detect_slot, fg="black", height=4, width=14)
@@ -1074,7 +1073,7 @@ class Gui(Tk):
         self.detection_widgets = [self.open_images_label, self.open_images_button, self.detect_all_button, self.detect_slot_button, self.detect_disk_button, self.detect_psu_button, self.detect_serial_button, self.detect_vga_button, self.detect_bmc_button, self.detect_usb_button, self.create_editing_window_button]
 
         # Output text on bottom rightmost columns
-        self.output = scrolledtext.ScrolledText(self, bg="black", fg="white", font=("Courier", 14), width=94, height=19)
+        self.output = scrolledtext.ScrolledText(self, bg="black", fg="white", font=("Courier", 11), width=94, height=19)
         self.output.grid(columnspan=3, rowspan=3, column=2, row=7)
 
         self.prev_stdout = sys.stdout
@@ -1136,4 +1135,5 @@ class Gui(Tk):
 # Creates and runs the GUI
 def run_gui(opt):
     gui = Gui(vars(opt))
+    gui.configure(bg='white')
     mainloop()
