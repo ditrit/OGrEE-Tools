@@ -13,6 +13,13 @@ from tkinter import messagebox, scrolledtext, ttk
 from PIL import Image, ImageTk
 from ultralytics import YOLO
 
+if sys.platform == "darwin":
+    FontSizeJSON = 14
+    FontSizeOutput = 14
+else:
+    FontSizeJSON = 10
+    FontSizeOutput = 11
+
 class Stdout_to_window(object):
     def __init__(self, widget):
         self.widget = widget
@@ -914,7 +921,7 @@ class Gui(Tk):
         self.unbind("<Escape>")
 
         # JSON text on top leftmost columns
-        self.json_text = scrolledtext.ScrolledText(self, bg="black", fg="white", font=("Courier", 10), width=47, height=31)
+        self.json_text = scrolledtext.ScrolledText(self, bg="black", fg="white", font=("Courier", FontSizeJSON), width=47, height=31)
         self.json_text.grid(columnspan=2, rowspan=5, column=0, row=3, pady=(20, 20))
 
         # Buttons on bottom leftmost columns
@@ -1073,7 +1080,7 @@ class Gui(Tk):
         self.detection_widgets = [self.open_images_label, self.open_images_button, self.detect_all_button, self.detect_slot_button, self.detect_disk_button, self.detect_psu_button, self.detect_serial_button, self.detect_vga_button, self.detect_bmc_button, self.detect_usb_button, self.create_editing_window_button]
 
         # Output text on bottom rightmost columns
-        self.output = scrolledtext.ScrolledText(self, bg="black", fg="white", font=("Courier", 11), width=94, height=19)
+        self.output = scrolledtext.ScrolledText(self, bg="black", fg="white", font=("Courier", FontSizeOutput), width=94, height=19)
         self.output.grid(columnspan=3, rowspan=3, column=2, row=7)
 
         self.prev_stdout = sys.stdout
