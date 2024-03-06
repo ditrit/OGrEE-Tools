@@ -1033,7 +1033,6 @@ class Gui(Tk):
         # Window
         self.title("OGrEE-Tools/3dtools")
         self.geometry("1280x740")
-        # self.resizable(False, False)
         self.protocol("WM_DELETE_WINDOW", self.close_window)
         self.createcommand("::tk::mac::Quit", self.close_window)
 
