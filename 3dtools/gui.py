@@ -13,12 +13,17 @@ from tkinter import messagebox, scrolledtext, ttk
 from PIL import Image, ImageTk
 from ultralytics import YOLO
 
+# OS specific UI adaptations
 if sys.platform == "darwin":
     FontSizeJSON = 14
     FontSizeOutput = 14
+    OutputHeight = 19
+    BigBtnWidth = 40
 else:
     FontSizeJSON = 10
     FontSizeOutput = 11
+    OutputHeight = 17
+    BigBtnWidth = 44
 
 class Stdout_to_window(object):
     def __init__(self, widget):
@@ -1047,7 +1052,7 @@ class Gui(Tk):
         self.open_images_label = Label(self, text="Welcome to OGrEE-Tools/3dtools!", bg="white", fg="black", font=("Helvetica, 16"), justify="center", height=4)
         self.open_images_label.grid(columnspan=2, column=0, row=3)
 
-        self.open_images_button = Button(self, text="Open images\n(rear AND/OR front)", command=lambda: Open_images_window(self), fg="black", height=4, width=44)
+        self.open_images_button = Button(self, text="Open images\n(rear AND/OR front)", command=lambda: Open_images_window(self), fg="black", height=4, width=BigBtnWidth)
         self.open_images_button.grid(columnspan=2, column=0, row=4)
 
         self.detect_all_button = Button(self, text="Detect all\ncomponents", command=self.detect_all, fg="black", height=4, width=14)
@@ -1074,13 +1079,13 @@ class Gui(Tk):
         self.detect_usb_button = Button(self, text="Detect USB ports", command=self.detect_usb, fg="black", height=4, width=14)
         self.detect_usb_button.grid(column=1, row=8)
 
-        self.create_editing_window_button = Button(self, text="Finish detection", command=self.create_editing_window, fg="black", height=4, width=44)
+        self.create_editing_window_button = Button(self, text="Finish detection", command=self.create_editing_window, fg="black", height=4, width=BigBtnWidth)
         self.create_editing_window_button.grid(columnspan=2, column=0, row=9)
 
         self.detection_widgets = [self.open_images_label, self.open_images_button, self.detect_all_button, self.detect_slot_button, self.detect_disk_button, self.detect_psu_button, self.detect_serial_button, self.detect_vga_button, self.detect_bmc_button, self.detect_usb_button, self.create_editing_window_button]
 
         # Output text on bottom rightmost columns
-        self.output = scrolledtext.ScrolledText(self, bg="black", fg="white", font=("Courier", FontSizeOutput), width=94, height=17)
+        self.output = scrolledtext.ScrolledText(self, bg="black", fg="white", font=("Courier", FontSizeOutput), width=94, height=OutputHeight)
         self.output.grid(columnspan=3, rowspan=3, column=2, row=7)
 
         self.prev_stdout = sys.stdout
