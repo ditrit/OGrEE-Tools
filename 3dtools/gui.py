@@ -1,3 +1,4 @@
+import json
 import sys
 
 import numpy as np
@@ -52,14 +53,14 @@ class Open_images_window(Toplevel):
 
         # Black header with white text
         self.header = Frame(self, width=640, height=40, bg="black")
-        self.header.grid(columnspan=4, rowspan=3, row=0, column=0)
+        self.header.grid(columnspan=5, rowspan=3, row=0, column=0)
 
         self.header_text = Label(self, text="OGrEE-Tools/3dtools - open images", bg="black", fg="white", font=("Helvetica, 20"), justify="center")
-        self.header_text.grid(columnspan=4, row=1)
+        self.header_text.grid(columnspan=5, row=1)
 
         # Main content
         self.main_content = Frame(self, width=640, height=380, bg="white")
-        self.main_content.grid(columnspan=4, rowspan=4, row=3, column=0)
+        self.main_content.grid(columnspan=5, rowspan=4, row=3, column=0)
 
         # Buttons on leftmost column
         self.select_rear_image_button = Button(self, text="Select REAR\nface image", command=self.select_rear_image, bg="white", fg="black", height=4, width=10)
@@ -73,35 +74,39 @@ class Open_images_window(Toplevel):
         self.rear_image_var.set("No rear face image selected")
         self.rear_image_file = ""
         self.rear_image_label = Label(self, textvariable=self.rear_image_var, bg="white", fg="black", height=4)
-        self.rear_image_label.grid(columnspan=2, column=1, row=3)
+        self.rear_image_label.grid(columnspan=3, column=1, row=3)
 
         self.front_image_var = StringVar(self)
         self.front_image_var.set("No front face image selected")
         self.front_image_file = ""
         self.front_image_label = Label(self, textvariable=self.front_image_var, bg="white", fg="black", height=4)
-        self.front_image_label.grid(columnspan=2, column=1, row=4)
+        self.front_image_label.grid(columnspan=3, column=1, row=4)
 
         # Buttons on rightmost column
         self.unselect_rear_image_button = Button(self, text="X", font=("Helvetica, 20"), command=self.unselect_rear_image, fg="red", height=1, width=1)
-        self.unselect_rear_image_button.grid(column=3, row=3, padx=(76, 0))
+        self.unselect_rear_image_button.grid(column=4, row=3, padx=(76, 0))
 
         self.unselect_front_image_button = Button(self, text="X", font=("Helvetica, 20"), command=self.unselect_front_image, fg="red", height=1, width=1)
-        self.unselect_front_image_button.grid(column=3, row=4, padx=(76, 0))
+        self.unselect_front_image_button.grid(column=4, row=4, padx=(76, 0))
 
         # Entries on second-to-bottom row
+        self.json_template_file = ""
+        self.select_json_template_button = Button(self, text="Select JSON\ntemplate", command=self.select_json_template, bg="white", fg="black", height=4, width=10)
+        self.select_json_template_button.grid(columnspan=1, column=0, row=5)
+
         self.server_height_label = Label(self, text="Server height (mm):", bg="white", fg="black", height=4)
-        self.server_height_label.grid(column=0, row=5)
+        self.server_height_label.grid(column=1, row=5)
 
         self.server_height_var = StringVar(self)
         self.server_height_entry = Entry(self, textvariable=self.server_height_var, bg="white", fg="black", width=14)
-        self.server_height_entry.grid(column=1, row=5)
+        self.server_height_entry.grid(column=2, row=5)
 
         self.server_width_label = Label(self, text="Server width (mm):", bg="white", fg="black", height=4)
-        self.server_width_label.grid(column=2, row=5)
+        self.server_width_label.grid(column=3, row=5)
 
         self.server_width_var = StringVar(self)
         self.server_width_entry = Entry(self, textvariable=self.server_width_var, bg="white", fg="black", width=14)
-        self.server_width_entry.grid(column=3, row=5)
+        self.server_width_entry.grid(column=4, row=5)
 
         # Buttons on bottom row
         self.cancel_button = Button(self, text="Cancel", command=self.destroy, bg="white", fg="red", height=4, width=10)
@@ -126,6 +131,17 @@ class Open_images_window(Toplevel):
             self.front_image_file = file
             self.front_image_var.set(file.split('/')[-1])
 
+    def select_json_template(self):
+        file = askopenfilename(initialdir="", filetypes=[("JSON file", "*.json")])
+        if file:
+            f = open(file)
+            data = json.load(f)
+            if "sizeWDHmm" in data and isinstance(data["sizeWDHmm"], list) and len(data["sizeWDHmm"]) == 3:
+                self.server_height_var.set(data["sizeWDHmm"][2])
+                self.server_width_var.set(data["sizeWDHmm"][0])
+                self.json_template_file = file
+            else:
+                messagebox.showwarning("Invalid JSON template", "Template file format is not valid")
 
     def unselect_rear_image(self):
         self.rear_image_file = ""
@@ -146,11 +162,11 @@ class Open_images_window(Toplevel):
             messagebox.showwarning("Invalid server width", "Server width should be a float.\n\nPlease, enter a valid server width before continuing.")
         else:
             if self.front_image_file == "":
-                ok = self.master.open_images({"rear": self.rear_image_file}, self.server_height_entry.get(), self.server_width_entry.get())
+                ok = self.master.open_images({"rear": self.rear_image_file}, self.server_height_entry.get(), self.server_width_entry.get(), self.json_template_file)
             elif self.rear_image_file == "":
-                ok = self.master.open_images({"front": self.front_image_file}, self.server_height_entry.get(), self.server_width_entry.get())
+                ok = self.master.open_images({"front": self.front_image_file}, self.server_height_entry.get(), self.server_width_entry.get(), self.json_template_file)
             else:
-                ok = self.master.open_images({"rear": self.rear_image_file, "front": self.front_image_file}, self.server_height_entry.get(), self.server_width_entry.get())
+                ok = self.master.open_images({"rear": self.rear_image_file, "front": self.front_image_file}, self.server_height_entry.get(), self.server_width_entry.get(), self.json_template_file)
 
             if ok:
                 self.destroy()
@@ -175,7 +191,8 @@ class Gui(Tk):
 
 
     # Open one or two images (rear and/or front)
-    def open_images(self, images, height, width):
+    def open_images(self, images, height, width, json_file):
+        self.json_template_file = json_file
         if len(images) == 1:
             try:
                 remove(self.options["path"])
@@ -197,7 +214,10 @@ class Gui(Tk):
                 self.options["width"] = float(width)
                 self.options["face"] = face
                 self.options["path"] = "api/tmp" + file.split('/')[-1]
-                imsave(self.options["path"], np.asarray(Image.open(file).resize((int(tools.RATIO * self.options["width"]), int(tools.RATIO * self.options["height"])))))
+                im = Image.open(file)
+                w, h = im.size
+                tools.RATIO = h/float(height) # pixel/mm
+                imsave(self.options["path"], np.asarray(im.resize((int(tools.RATIO * self.options["width"]), int(tools.RATIO * self.options["height"])))))
                 self.options["path640"] = "api/s-tmp" + file.split('/')[-1]
                 imsave(self.options["path640"], np.asarray(Image.open(file).resize((640, 640))))
 
@@ -217,7 +237,7 @@ class Gui(Tk):
                 messagebox.showwarning("File not found", f"The file '{file}' could not be found.")
                 return False
         else:
-            ok = self.open_images({"rear": images["rear"]}, float(height), float(width))
+            ok = self.open_images({"rear": images["rear"]}, float(height), float(width), json_file)
             if ok:
                 try:
                     print("\n" + 94 * "=" + "\n")
@@ -274,10 +294,11 @@ class Gui(Tk):
             sizetable = self.classifiers[i].sizetable
             num = 0
             for k in self.classifiers[i].components:
-                name, compotype, angle, _ = self.classifiers[i].components[k]
+                name, compotype, angle, _, dimensions = self.classifiers[i].components[k]
                 composhape = sizetable[compotype] if angle == 0 else sizetable[compotype][::-1]
                 pt1 = (int(k[0]), int(k[1]))
-                pt2 = (int(pt1[0] + composhape[2] * tools.RATIO), int(pt1[1] + composhape[0] * tools.RATIO))
+                h, w = dimensions
+                pt2 = (int(pt1[0] + h), int(pt1[1] + w))
                 self.hitboxes[i][name + str(num)] = {"pt1": pt1, "pt2": pt2}
                 num += 1
 
@@ -889,14 +910,21 @@ class Gui(Tk):
 
 
     # Saves the JSON file(s) and closes the window
-    def save_and_exit(self):
-        file_1 = self.options["servername"].split('/')[-1].split('.')[0] + ("_rear" if self.options["face"] == "rear" else "_front")
-
+    def  save_and_exit(self):
+        msg = f"{self.json_template_file} has been modified\n\nThank you for using OGrEE-Tools/3dtools!"
         if len(self.classifiers) == 2:
-            file_2 = self.options["servername_2"].split('/')[-1].split('.')[0] + ("_front" if self.options["face_2"] == "front" else "_rear")
-            if messagebox.askokcancel("Files saved", f"{file_1}.json and {file_2}.json files saved in '/api/'\n\nThank you for using OGrEE-Tools/3dtools!"):
-                self.classifiers[0].savejson()
-                self.classifiers[1].savejson()
+            if self.json_template_file == "":
+                file_2 = self.options["servername_2"].split('/')[-1].split('.')[0] + ("_front" if self.options["face_2"] == "front" else "_rear")
+                msg = f"{file_1}.json and {file_2}.json files saved in '/api/'\n\nThank you for using OGrEE-Tools/3dtools!"
+            if messagebox.askokcancel("Files saved", msg):
+                if self.json_template_file != "":
+                    f = open(self.json_template_file)
+                    data = json.load(f)
+                    data["components"] = self.classifiers[0].getjson() + self.classifiers[1].getjson()
+                    tools.jsondump(self.json_template_file, data)
+                else:
+                    self.classifiers[0].savejson()
+                    self.classifiers[1].savejson()
                 remove(self.options["path"])
                 remove(self.options["path640"])
                 remove(self.options["path_2"])
@@ -904,8 +932,17 @@ class Gui(Tk):
                 self.destroy()
                 sys.stdout = self.prev_stdout
         else:
-            if messagebox.askokcancel("File saved", f"{file_1}.json file saved in '/api/'\n\nThank you for using OGrEE-Tools/3dtools!"):
-                self.classifiers[0].savejson()
+            if self.json_template_file == "":
+                file_1 = self.options["servername"].split('/')[-1].split('.')[0] + ("_rear" if self.options["face"] == "rear" else "_front")
+                msg = f"{file_1}.json file saved in '/api/'\n\nThank you for using OGrEE-Tools/3dtools!"
+            if messagebox.askokcancel("File saved", msg):
+                if self.json_template_file != "":
+                    f = open(self.json_template_file)
+                    data = json.load(f)
+                    data["components"] = self.classifiers[0].getjson()
+                    tools.jsondump(self.json_template_file, data)
+                else:
+                    self.classifiers[0].savejson()
                 remove(self.options["path"])
                 self.destroy()
                 sys.stdout = self.prev_stdout
@@ -1120,6 +1157,7 @@ class Gui(Tk):
         self.click_pt1 = None
         self.selected_component = None
         self.hitboxes = [{}, {}]
+        self.json_template_file = ""
 
         self.after(100, lambda:print(f"\nNew image opened: {self.options['servername'].split('/')[-1]}."))
 

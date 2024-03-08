@@ -1,4 +1,4 @@
-# 3dtools user guide
+# 3dtools User Guide
 
 This is a user guide for 'OGrEE-Tools/3dtools', a powerful program that can automatically locate components on an image of a server and output a JSON with their coordinates in mm. This output can be used to generate a bidimensional model of the face of the server. These bidimensional models of the back and front faces of a server can be combined to form a tridimensional model.
 
@@ -231,3 +231,33 @@ The user can detct all components at once by typing command `All`. These compone
 - A very common error is to inverse the x and y axis, because the indexes in different libraries are not the same; some use (vertical, horizontal), while others use (horizontal, vertical). For the further programming, check the axis order when the classifier finds a component at the wrong position but with high similarity, or when the component position is out of the picture. The user can trust that the present version works properly.
 
 - In 3dtools code, the origin point is situated on the top left corner of the picture; in the JSON file, the 3D origin point is situated on the back bottom right corner of the model.
+
+## How to train the model
+
+We are using YOLOv8 for detecting components. We follow the procedure described in their [documentation](https://docs.ultralytics.com/modes/train/). To sum up the steps:
+- Create a dataset of server images with labels for its components. The dataset should be divided in 3 sets: train, valid, test.
+- Train and validate the model using one of the pretrained YOLOv8 models.
+- Test and export the model. Pass the exported `.pt` model to this Python tool as an argument or by replacing the defaut one `api/yolov8-best.pt`.
+
+We have used Roboflow to create the dataset by adding server images, creating a label for each component type and identifying it in each image. The dataset undergoes a prepocessing that resizes the images to 640x640, as expected by the pretrained model. You can access the Roboflow project [here](https://universe.roboflow.com/my-workspace-5xudm/server-components). An exported version of the annotaded dataset is also avaiable in our [Nextcloud](https://nextcloud.ditrit.io/index.php/s/ZsMFJSgTqwWN283).
+
+YOLO has a colab notebook that explains very well how to code each step, you can check it out [here](https://colab.research.google.com/github/roboflow-ai/notebooks/blob/main/notebooks/train-yolov8-object-detection-on-custom-dataset.ipynb). For a quick start, here are the main steps:
+```python
+# Install YOLO
+%pip install ultralytics
+import ultralytics
+ultralytics.checks()
+
+# Get Roboflow Dataset
+!pip install roboflow
+from roboflow import Roboflow
+rf = Roboflow(api_key="APIKEY")
+project = rf.workspace("my-workspace").project("server-components")
+dataset = project.version(1).download("yolov8")
+
+# Training
+!yolo train model=yolov8m.pt data=/content/Server-components-1/data.yaml epochs=100 imgsz=640
+
+# Testing
+!yolo predict model=/content/runs/detect/train3/weights/best.pt source=/content/Server-components-1/test/images
+```

@@ -26,12 +26,13 @@ class Classifiers:
             x, y, _, _ = component.xyxy[0]
             _, _, w, h = component.xywh[0]
             position = (int(y * tools.RATIO * self._shapemm[0] / 640), int(x * tools.RATIO * self._shapemm[1] / 640))
+            dimensions = (int(h * tools.RATIO * self._shapemm[0] / 640), int(w * tools.RATIO * self._shapemm[1] / 640))
             angle = 0
             if h * tools.RATIO * self._shapemm[0] / 640 > w * tools.RATIO * self._shapemm[1] / 640:
                 angle = 90
             sim = component.conf[0]
             
-            self.components[position] = (compotype, compotype, angle, sim)
+            self.components[position] = (compotype, compotype, angle, sim, dimensions)
             print(f"  - {compotype} in : " + str([position, angle, sim]))
 
         if len(boxes) == 0:
@@ -74,7 +75,7 @@ class Classifiers:
         num = 0
         if self._face == 'rear':
             for k in self.componentsmm:
-                name, compotype, angle, similarity = self.componentsmm[k]
+                name, compotype, angle, similarity, _ = self.componentsmm[k]
                 composhape = self.sizetable[compotype] if angle == 0 else self.sizetable[compotype][::-1]
                 jsonraw.append({"location": name+str(num), "type": compotype, "elemOrient": 'horizontal' if angle == 0 else 'vertical',
                                 'elemPos': [round(float(k[1]), 1), 0, round(float(k[0] - composhape[2]), 1)],
@@ -83,7 +84,7 @@ class Classifiers:
                 num += 1
         else:
             for k in self.componentsmm:
-                name, compotype, angle, similarity = self.componentsmm[k]
+                name, compotype, angle, similarity, _ = self.componentsmm[k]
                 composhape = self.sizetable[compotype] if angle == 0 else self.sizetable[compotype][::-1]
                 jsonraw.append({"location": str(num) + name, "type": compotype, "elemOrient": 'horizontal' if angle == 0 else 'vertical',
                                 'elemPos': [round(float(k[1]) - composhape[0], 1), round(756.67 - composhape[1], 1), round(float(k[0] - composhape[2]), 1)],
@@ -91,6 +92,7 @@ class Classifiers:
                                 "color": "", "attributes": {"factor": "", 'similarity': str(similarity)}})
                 num += 1
         self.jsonraw = json.dumps(jsonraw, indent=4)
+        self.formatjson = jsonraw
         return self.jsonraw
 
     def savejson(self):
@@ -99,6 +101,9 @@ class Classifiers:
         # Step 2: Write the dictionary to the JSON file
         tools.jsondump(file_path, self.jsonraw)
         print(self.jsonraw)
+
+    def getjson(self):
+        return self.formatjson
 
     def __init__(self, servername, x, y, face):
         self._shapemm = (x, y)

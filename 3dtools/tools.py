@@ -689,11 +689,11 @@ def draw_tmp_rectangle(tmp_file, pt1, pt2, color, label=None):
     image = cv2.rectangle(image, pt1, pt2, color, 8, cv2.LINE_AA)
 
     if label is not None:
-        w, h = cv2.getTextSize(label, 0, 2, 3)[0]
-        outside = pt1[1] - h >= 3
+        w, h = cv2.getTextSize(label, 0, 2* (RATIO/10), 2)[0]
+        outside = pt1[1] - h >= 2
         pt2 = (int(pt1[0] + w + 8), int(pt1[1] - h - 8) if outside else int(pt1[1] + h + 8))
         image = cv2.rectangle(image, pt1, pt2, color, -1, cv2.LINE_AA)
-        image = cv2.putText(image, label, (pt1[0] + 4, pt1[1] - 4 if outside else pt1[1] + h + 4), 0, 2, (255, 255, 255), 3, cv2.LINE_AA)
+        image = cv2.putText(image, label, (pt1[0] + 4, pt1[1] - 4 if outside else pt1[1] + h + 4), 0, 2* (RATIO/10), (255, 255, 255), 2, cv2.LINE_AA)
         cv2.imwrite(tmp_file, image)
 
 
@@ -704,11 +704,12 @@ def drawcomponents_gui(original_file, tmp_file, components, dont_draw=None):
         if k == dont_draw:
             continue
 
-        name, compotype, angle, similarity = components[k]
+        name, compotype, angle, similarity, dimensions = components[k]
         composhape = SIZETABLE[compotype] if angle == 0 else [SIZETABLE[compotype][2], SIZETABLE[compotype][1], SIZETABLE[compotype][0]]
         label = compotype #+ str(num)
         pt1 = (int(k[1]), int(k[0]))
-        pt2 = (int(pt1[0] + composhape[0] * RATIO), int(pt1[1] + composhape[2] * RATIO))
+        h, w = dimensions
+        pt2 = (int(pt1[0] + w), int(pt1[1] + h))
 
         if similarity < 0.2:
             color = (56, 56, 255)  # Bright red   -> 0 <= similarity < 0.2
@@ -724,11 +725,11 @@ def drawcomponents_gui(original_file, tmp_file, components, dont_draw=None):
             color = (147, 69, 52)  # Dark blue    -> User defined component
 
         image = cv2.rectangle(image, pt1, pt2, color, 8, cv2.LINE_AA)
-        w, h = cv2.getTextSize(label, 0, 2, 3)[0]
-        outside = pt1[1] - h >= 3
+        w, h = cv2.getTextSize(label, 0, 2 * (RATIO/10), 2)[0]
+        outside = pt1[1] - h >= 2
         pt2 = (int(pt1[0] + w + 8), int(pt1[1] - h - 8) if outside else int(pt1[1] + h + 8))
         image = cv2.rectangle(image, pt1, pt2, color, -1, cv2.LINE_AA)
-        image = cv2.putText(image, label, (pt1[0] + 4, pt1[1] - 4 if outside else pt1[1] + h + 4), 0, 2, (255, 255, 255), 3, cv2.LINE_AA)
+        image = cv2.putText(image, label, (pt1[0] + 4, pt1[1] - 4 if outside else pt1[1] + h + 4), 0, 2 * (RATIO/10), (255, 255, 255), 2, cv2.LINE_AA)
 
     # cv2.imshow("image", image)
     cv2.imwrite(tmp_file, image)
