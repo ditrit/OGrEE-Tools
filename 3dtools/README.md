@@ -232,7 +232,7 @@ The user can detct all components at once by typing command `All`. These compone
 
 - In 3dtools code, the origin point is situated on the top left corner of the picture; in the JSON file, the 3D origin point is situated on the back bottom right corner of the model.
 
-## How to train the model
+# How to train the model
 
 We are using YOLOv8 for detecting components. We follow the procedure described in their [documentation](https://docs.ultralytics.com/modes/train/). To sum up the steps:
 - Create a dataset of server images with labels for its components. The dataset should be divided in 3 sets: train, valid, test.
