@@ -2,6 +2,9 @@ import json
 import sys
 import re
 import subprocess
+import tarfile
+import tempfile
+from pathlib import Path
 
 
 def get_cluster_name():
@@ -116,11 +119,32 @@ def format_json(input_file, output_file):
         json.dump(formatted_data, f, indent=4)
 
 
+def extract_sos_archive(archive_path):
+    tmp_dir = tempfile.mkdtemp()
+
+    with tarfile.open(archive_path, 'r:xz') as tar:
+        members = []
+        for member in tar.getmembers():
+            p = Path(member.path)
+            member.path = p.relative_to(*p.parts[:1])
+            members.append(member)
+
+        print(members)
+        tar.extractall(path=tmp_dir, members=members)
+
+    return tmp_dir
+
+
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
+    if len(sys.argv) < 2:
         print("Usage: python script.py <input_file.json> <output_file.json>")
         sys.exit(1)
 
     input_file = sys.argv[1]
-    output_file = sys.argv[2]
-    format_json(input_file, output_file)
+    tmp_dir = extract_sos_archive(input_file)
+
+    print("Extracted sosreport archive to:", tmp_dir)
+
+    output_file = sys.argv[2] if (len(sys.argv) > 2) else "output.json"
+
+    format_json(tmp_dir, output_file)
