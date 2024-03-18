@@ -2,6 +2,7 @@ import json
 import sys
 
 import numpy as np
+from Converter.source.fbx.FbxBuilder import CreateFBX
 import tools
 from classifiers import Classifiers
 from pathlib import Path
@@ -108,6 +109,8 @@ class Open_images_window(Toplevel):
         self.server_width_entry = Entry(self, textvariable=self.server_width_var, bg="white", fg="black", width=14)
         self.server_width_entry.grid(column=4, row=5)
 
+        self.server_depth = 607
+
         # Buttons on bottom row
         self.cancel_button = Button(self, text="Cancel", command=self.destroy, bg="white", fg="red", height=4, width=10)
         self.cancel_button.grid(column=1, row=6)
@@ -138,6 +141,7 @@ class Open_images_window(Toplevel):
             data = json.load(f)
             if "sizeWDHmm" in data and isinstance(data["sizeWDHmm"], list) and len(data["sizeWDHmm"]) == 3:
                 self.server_height_var.set(data["sizeWDHmm"][2])
+                self.server_depth = data["sizeWDHmm"][1]
                 self.server_width_var.set(data["sizeWDHmm"][0])
                 self.json_template_file = file
             else:
@@ -162,11 +166,11 @@ class Open_images_window(Toplevel):
             messagebox.showwarning("Invalid server width", "Server width should be a float.\n\nPlease, enter a valid server width before continuing.")
         else:
             if self.front_image_file == "":
-                ok = self.master.open_images({"rear": self.rear_image_file}, self.server_height_entry.get(), self.server_width_entry.get(), self.json_template_file)
+                ok = self.master.open_images({"rear": self.rear_image_file}, self.server_height_entry.get(), self.server_width_entry.get(), self.server_depth, self.json_template_file)
             elif self.rear_image_file == "":
-                ok = self.master.open_images({"front": self.front_image_file}, self.server_height_entry.get(), self.server_width_entry.get(), self.json_template_file)
+                ok = self.master.open_images({"front": self.front_image_file}, self.server_height_entry.get(), self.server_width_entry.get(), self.server_depth, self.json_template_file)
             else:
-                ok = self.master.open_images({"rear": self.rear_image_file, "front": self.front_image_file}, self.server_height_entry.get(), self.server_width_entry.get(), self.json_template_file)
+                ok = self.master.open_images({"rear": self.rear_image_file, "front": self.front_image_file}, self.server_height_entry.get(), self.server_width_entry.get(), self.server_depth, self.json_template_file)
 
             if ok:
                 self.destroy()
@@ -191,7 +195,7 @@ class Gui(Tk):
 
 
     # Open one or two images (rear and/or front)
-    def open_images(self, images, height, width, json_file):
+    def open_images(self, images, height, width, depth, json_file):
         self.json_template_file = json_file
         if len(images) == 1:
             try:
@@ -212,6 +216,7 @@ class Gui(Tk):
                 self.options["servername"] = file
                 self.options["height"] = float(height)
                 self.options["width"] = float(width)
+                self.options["depth"] = float(depth)
                 self.options["face"] = face
                 self.options["path"] = "api/tmp" + file.split('/')[-1]
                 im = Image.open(file)
@@ -237,7 +242,7 @@ class Gui(Tk):
                 messagebox.showwarning("File not found", f"The file '{file}' could not be found.")
                 return False
         else:
-            ok = self.open_images({"rear": images["rear"]}, float(height), float(width), json_file)
+            ok = self.open_images({"rear": images["rear"]}, float(height), float(width), float(depth), json_file)
             if ok:
                 try:
                     print("\n" + 94 * "=" + "\n")
@@ -294,11 +299,14 @@ class Gui(Tk):
             sizetable = self.classifiers[i].sizetable
             num = 0
             for k in self.classifiers[i].components:
-                name, compotype, angle, _, dimensions = self.classifiers[i].components[k]
+                name, compotype, _, angle, _, dimensions = self.classifiers[i].components[k]
                 composhape = sizetable[compotype] if angle == 0 else sizetable[compotype][::-1]
                 pt1 = (int(k[0]), int(k[1]))
-                h, w = dimensions
-                pt2 = (int(pt1[0] + h), int(pt1[1] + w))
+                if compotype == "PSU":
+                    h, w = dimensions
+                    pt2 = (int(pt1[0] + h), int(pt1[1] + w))
+                else:
+                    pt2 = (int(pt1[0] + composhape[2] * tools.RATIO), int(pt1[1] + composhape[0] * tools.RATIO))
                 self.hitboxes[i][name + str(num)] = {"pt1": pt1, "pt2": pt2}
                 num += 1
 
@@ -469,7 +477,7 @@ class Gui(Tk):
     def detect_bmc(self):
         def detect(classifier, face, path640, path, servername):
             print(f"\n{face.title()} face:")
-            if any([compotype == "BMC" for (_, compotype, *_) in classifier.components.values()]):
+            if any([compotype == "RJ45" for (_, compotype, *_) in classifier.components.values()]):
                 print("  - BMC interfaces have already been detected.")
             else:
                 self.options["classes"] = 0
@@ -523,6 +531,7 @@ class Gui(Tk):
     def reset(self, event=None):
         self.component_name_var.set("")
         self.component_type_var.set("")
+        self.component_category_var.set("components")
         self.component_depth_var.set("")
         self.component_wh_var.set("")
         self.click_pt1 = None
@@ -557,13 +566,16 @@ class Gui(Tk):
         elif self.component_type_var.get() == "":
             print("\n" + 94 * "=" + "\n")
             print("ERROR: invalid component type.")
+        elif self.component_category_var.get() == "":
+            print("\n" + 94 * "=" + "\n")
+            print("ERROR: invalid component category.")
         elif self.component_depth_var.get() == "" or not self.component_depth_var.get().replace(".", "").isnumeric():
             print("\n" + 94 * "=" + "\n")
             print("ERROR: invalid component depth.")
         elif self.image_label_selected == "top":
             if self.click_pt1 in self.classifiers[0].components:
                 prev_component = self.classifiers[0].components[self.click_pt1]
-                component = (self.component_name_var.get(), self.component_type_var.get(), prev_component[2], prev_component[3])
+                component = (self.component_name_var.get(), self.component_type_var.get(), self.component_category_var.get(), prev_component[3], prev_component[4], prev_component[5])
                 self.classifiers[0].components[self.click_pt1] = component
 
                 size = self.classifiers[0].sizetable[prev_component[1]]
@@ -583,7 +595,7 @@ class Gui(Tk):
                     angle = 90
                 else:
                     angle = 0
-                component = (self.component_name_var.get(), self.component_type_var.get(), angle, prev_component[3])
+                component = (self.component_name_var.get(), self.component_type_var.get(), self.component_category_var.get(), angle, prev_component[4], prev_component[5])
                 self.classifiers[0].components[self.click_pt1] = component
 
                 size = [round((self.click_pt2[1] - self.click_pt1[1]) / tools.RATIO, 1), round(float(self.component_depth_var.get()), 1), round((self.click_pt2[0] - self.click_pt1[0]) / tools.RATIO, 1)]
@@ -603,7 +615,7 @@ class Gui(Tk):
                     angle = 90
                 else:
                     angle = 0
-                component = (self.component_name_var.get(), self.component_type_var.get(), angle, 1)
+                component = (self.component_name_var.get(), self.component_type_var.get(),  self.component_category_var.get(), angle, 1)
                 self.classifiers[0].components[self.click_pt1] = component
 
                 size = [round((self.click_pt2[1] - self.click_pt1[1]) / tools.RATIO, 1), round(float(self.component_depth_var.get()), 1), round((self.click_pt2[0] - self.click_pt1[0]) / tools.RATIO, 1)]
@@ -617,13 +629,14 @@ class Gui(Tk):
                 self.calculate_hitboxes()
 
                 self.component_type_entry.config(values=list(tools.SIZETABLE.keys()))
+                self.component_category_entry.config(values=["components", "slots"])
 
                 print("\n" + 94 * "=" + "\n")
                 print(f"Created new component {component[0]} of type {component[1]}.")
         else:
             if self.click_pt1 in self.classifiers[1].components:
                 prev_component = self.classifiers[1].components[self.click_pt1]
-                component = (self.component_name_var.get(), self.component_type_var.get(), prev_component[2], prev_component[3])
+                component = (self.component_name_var.get(), self.component_type_var.get(),  self.component_category_var.get(), prev_component[3], prev_component[4], prev_component[5])
                 self.classifiers[1].components[self.click_pt1] = component
 
                 size = self.classifiers[1].sizetable[prev_component[1]]
@@ -643,7 +656,7 @@ class Gui(Tk):
                     angle = 90
                 else:
                     angle = 0
-                component = (self.component_name_var.get(), self.component_type_var.get(), angle, prev_component[3])
+                component = (self.component_name_var.get(), self.component_type_var.get(),  self.component_category_var.get(), angle, prev_component[4], prev_component[5])
                 self.classifiers[1].components[self.click_pt1] = component
 
                 size = [round((self.click_pt2[1] - self.click_pt1[1]) / tools.RATIO, 1), round(float(self.component_depth_var.get()), 1), round((self.click_pt2[0] - self.click_pt1[0]) / tools.RATIO, 1)]
@@ -663,7 +676,7 @@ class Gui(Tk):
                     angle = 90
                 else:
                     angle = 0
-                component = (self.component_name_var.get(), self.component_type_var.get(), angle, 1)
+                component = (self.component_name_var.get(), self.component_type_var.get(),  self.component_category_var.get(), angle, 1, (round((self.click_pt2[1] - self.click_pt1[1]) / tools.RATIO, 1), round((self.click_pt2[0] - self.click_pt1[0]) / tools.RATIO, 1)))
                 self.classifiers[1].components[self.click_pt1] = component
 
                 size = [round((self.click_pt2[1] - self.click_pt1[1]) / tools.RATIO, 1), round(float(self.component_depth_var.get()), 1), round((self.click_pt2[0] - self.click_pt1[0]) / tools.RATIO, 1)]
@@ -677,6 +690,7 @@ class Gui(Tk):
                 self.calculate_hitboxes()
 
                 self.component_type_entry.config(values=list(tools.SIZETABLE.keys()))
+                self.component_category_entry.config(values=["components", "slots"])
 
                 print("\n" + 94 * "=" + "\n")
                 print(f"Created new component {component[0]} of type {component[1]}.")
@@ -764,6 +778,7 @@ class Gui(Tk):
                         self.selected_component = self.click_pt1
                         self.component_name_var.set(self.classifiers[0].components[self.click_pt1][0])
                         self.component_type_var.set(self.classifiers[0].components[self.click_pt1][1])
+                        self.component_category_var.set(self.classifiers[0].components[self.click_pt1][2])
                         self.component_depth_var.set(self.classifiers[0].sizetable[self.classifiers[0].components[self.click_pt1][1]][1])
                         self.component_selected()
 
@@ -807,6 +822,7 @@ class Gui(Tk):
                         self.selected_component = self.click_pt1
                         self.component_name_var.set(self.classifiers[1].components[self.click_pt1][0])
                         self.component_type_var.set(self.classifiers[1].components[self.click_pt1][1])
+                        self.component_category_var.set(self.classifiers[1].components[self.click_pt1][2])
                         self.component_depth_var.set(self.classifiers[1].sizetable[self.classifiers[1].components[self.click_pt1][1]][1])
                         self.component_selected()
 
@@ -909,8 +925,26 @@ class Gui(Tk):
             sys.stdout = self.prev_stdout
 
 
+    def create_fbx(self):
+        front_image = ""
+        back_image = ""
+        if self.options["face"] == "front":
+            front_image = self.options["servername"]
+        else: 
+            back_image = self.options["servername"]
+            if "servername_2" in self.options:
+                front_image = self.options["servername_2"]
+        CreateFBX(
+            name=self.options["servername"].split('/')[-1].split('.')[0],
+            depth=self.options["depth"],
+            height=self.options["height"],
+            width=self.options["width"],
+            front=front_image,
+            back=back_image,
+        )
+
     # Saves the JSON file(s) and closes the window
-    def  save_and_exit(self):
+    def save_and_exit(self):
         msg = f"{self.json_template_file} has been modified\n\nThank you for using OGrEE-Tools/3dtools!"
         if len(self.classifiers) == 2:
             if self.json_template_file == "":
@@ -920,7 +954,8 @@ class Gui(Tk):
                 if self.json_template_file != "":
                     f = open(self.json_template_file)
                     data = json.load(f)
-                    data["components"] = self.classifiers[0].getjson() + self.classifiers[1].getjson()
+                    data["components"] = self.classifiers[0].getjson()["components"] + self.classifiers[1].getjson()["components"]
+                    data["slots"] = self.classifiers[0].getjson()["slots"] + self.classifiers[1].getjson()["slots"]
                     tools.jsondump(self.json_template_file, data)
                 else:
                     self.classifiers[0].savejson()
@@ -939,7 +974,8 @@ class Gui(Tk):
                 if self.json_template_file != "":
                     f = open(self.json_template_file)
                     data = json.load(f)
-                    data["components"] = self.classifiers[0].getjson()
+                    data["components"] = self.classifiers[0].getjson()["components"]
+                    data["slots"] = self.classifiers[0].getjson()["slots"]
                     tools.jsondump(self.json_template_file, data)
                 else:
                     self.classifiers[0].savejson()
@@ -967,13 +1003,16 @@ class Gui(Tk):
         self.json_text.grid(columnspan=2, rowspan=5, column=0, row=3, pady=(20, 20))
 
         # Buttons on bottom leftmost columns
-        self.return_to_editing_button = Button(self, text="Return to editing", command=self.return_to_editing, fg="black", height=4, width=40)
-        self.return_to_editing_button.grid(columnspan=2, column=0, row=8)
+        self.return_to_editing_button = Button(self, text="Return to editing", command=self.return_to_editing, fg="black", height=3, width=16)
+        self.return_to_editing_button.grid(column=0, row=8, pady=(10, 10))
 
-        self.save_and_exit_button = Button(self, text="Save and exit", command=self.save_and_exit, fg="black", height=4, width=40)
+        self.create_fbx_button = Button(self, text="Create FBX", command=self.create_fbx, fg="black", height=3, width=16)
+        self.create_fbx_button.grid(column=1, row=8, pady=(10, 10))
+
+        self.save_and_exit_button = Button(self, text="Save and exit", command=self.save_and_exit, fg="black", height=3, width=44)
         self.save_and_exit_button.grid(columnspan=2, column=0, row=9)
 
-        self.json_widgets = [self.return_to_editing_button, self.save_and_exit_button, self.json_text]
+        self.json_widgets = [self.return_to_editing_button, self.create_fbx_button, self.save_and_exit_button, self.json_text]
 
         print("\n" + 94 * "=" + "\n")
         print("Click 'Return to editing' if you wish to edit another component.")
@@ -1017,32 +1056,40 @@ class Gui(Tk):
         self.component_type_entry.grid(column=1, row=4)
         self.component_type_entry.bind("<<ComboboxSelected>>", self.component_selected)
 
+        self.component_category_label = Label(self, text="Template category:", bg="white", fg="black", height=4)
+        self.component_category_label.grid(column=0, row=5)
+
+        self.values = list(["components", "slots"])
+        self.component_category_entry = ttk.Combobox(self, textvariable=self.component_category_var, values=self.values, background="white", foreground="black", width=13)
+        self.component_category_entry.grid(column=1, row=5)
+        self.component_category_entry.bind("<<ComboboxSelected>>", self.component_selected)
+
         self.component_depth_label = Label(self, text="Component depth (mm):", bg="white", fg="black", height=4)
-        self.component_depth_label.grid(column=0, row=5)
+        self.component_depth_label.grid(column=0, row=6)
 
         self.component_depth_entry = Entry(self, textvariable=self.component_depth_var, bg="white", fg="black", width=14)
-        self.component_depth_entry.grid(column=1, row=5)
+        self.component_depth_entry.grid(column=1, row=6)
 
         self.component_wh_label_l = Label(self, text="Component width, height (mm):", bg="white", fg="black", height=4)
-        self.component_wh_label_l.grid(column=0, row=6)
+        self.component_wh_label_l.grid(column=0, row=7)
 
-        self.component_wh_label_r = Label(self, textvariable=self.component_wh_var, anchor="w", bg="white", fg="black", height=4, width=14)
-        self.component_wh_label_r.grid(column=1, row=6)
+        self.component_wh_label_r = Label(self, textvariable=self.component_wh_var, anchor="w", bg="white", fg="black", height=4, width=15)
+        self.component_wh_label_r.grid(column=1, row=7)
 
         # Buttons on bottom leftmost columns
-        self.save_component_button = Button(self, text="Save component", command=self.save_component, fg="black", height=4, width=14)
-        self.save_component_button.grid(column=0, row=7)
+        self.save_component_button = Button(self, text="Save component", command=self.save_component, fg="black", height=4, width=16)
+        self.save_component_button.grid(column=0, row=8)
 
-        self.delete_component_button = Button(self, text="Delete component", command=self.delete_component, fg="black", height=4, width=14)
-        self.delete_component_button.grid(column=1, row=7, sticky="w")
+        self.delete_component_button = Button(self, text="Delete component", command=self.delete_component, fg="black", height=4, width=16)
+        self.delete_component_button.grid(column=1, row=8, sticky="w")
 
-        self.return_to_detection_button = Button(self, text="Return to detection", command=self.return_to_detection, fg="black", height=4, width=40)
-        self.return_to_detection_button.grid(columnspan=2, column=0, row=8)
+        self.return_to_detection_button = Button(self, text="Return to\ndetection", command=self.return_to_detection, fg="black", height=4, width=16)
+        self.return_to_detection_button.grid(column=0, row=9)
 
-        self.finish_editing = Button(self, text="Finish editing", command=self.create_json_window, fg="black", height=4, width=40)
-        self.finish_editing.grid(columnspan=2, column=0, row=9)
+        self.finish_editing = Button(self, text="Finish editing", command=self.create_json_window, fg="black", height=4, width=16)
+        self.finish_editing.grid(column=1, row=9, sticky="w")
 
-        self.editing_widgets = [self.component_name_label, self.component_name_entry, self.component_type_label, self.component_type_entry, self.component_depth_label, self.component_depth_entry, self.component_wh_label_l, self.component_wh_label_r, self.save_component_button, self.delete_component_button, self.return_to_detection_button, self.finish_editing]
+        self.editing_widgets = [self.component_name_label, self.component_name_entry, self.component_type_label, self.component_type_entry, self.component_category_label, self.component_category_entry, self.component_depth_label, self.component_depth_entry, self.component_wh_label_l, self.component_wh_label_r, self.save_component_button, self.delete_component_button, self.return_to_detection_button, self.finish_editing]
 
         for label in self.image_labels:
             label.bind("<Button-1>", lambda event: self.click(event, str(event.widget).split(".")[-1]))
@@ -1152,6 +1199,7 @@ class Gui(Tk):
 
         self.component_name_var = StringVar(self)
         self.component_type_var = StringVar(self)
+        self.component_category_var = StringVar(self)
         self.component_depth_var = StringVar(self)
         self.component_wh_var = StringVar(self)
         self.click_pt1 = None

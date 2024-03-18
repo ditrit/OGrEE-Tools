@@ -17,7 +17,7 @@ class Classifiers:
         Add components detected by YOLOv8 model.
         """
 
-        class_dic = {0: 'BMC', 1: 'Disk_lff', 2: 'Disk_sff', 3: 'PSU', 4: 'Serial', 5: 'Slot_lp', 6: 'Slot_normal', 7: 'USB', 8: 'VGA'}
+        class_dic = {0: 'RJ45', 1: 'Disk_lff', 2: 'Disk_sff', 3: 'PSU', 4: 'Serial', 5: 'Slot_lp', 6: 'Slot_normal', 7: 'USB', 8: 'VGA'}
 
         boxes = pred[0].boxes.numpy()
         
@@ -32,7 +32,7 @@ class Classifiers:
                 angle = 90
             sim = component.conf[0]
             
-            self.components[position] = (compotype, compotype, angle, sim, dimensions)
+            self.components[position] = (compotype, compotype, "components", angle, sim, dimensions)
             print(f"  - {compotype} in : " + str([position, angle, sim]))
 
         if len(boxes) == 0:
@@ -71,36 +71,36 @@ class Classifiers:
         Generate JSON text of components in dict self.components
         :return: 'servername.json' stocked in file api
         """
-        jsonraw = []
+        jsonraw = {"components":[], "slots":[]}
         num = 0
         if self._face == 'rear':
             for k in self.componentsmm:
-                name, compotype, angle, similarity, _ = self.componentsmm[k]
+                name, compotype, compocategory, angle, similarity, _ = self.componentsmm[k]
                 composhape = self.sizetable[compotype] if angle == 0 else self.sizetable[compotype][::-1]
-                jsonraw.append({"location": name+str(num), "type": compotype, "elemOrient": 'horizontal' if angle == 0 else 'vertical',
+                jsonraw[compocategory].append({"location": name+str(num), "type": compotype, "elemOrient": 'horizontal' if angle == 0 else 'vertical',
                                 'elemPos': [round(float(k[1]), 1), 0, round(float(k[0] - composhape[2]), 1)],
                                 "elemSize": composhape, "labelPos": 'rear',
                                 "color": "", "attributes": {"factor": "", 'similarity': str(similarity)}})
                 num += 1
         else:
             for k in self.componentsmm:
-                name, compotype, angle, similarity, _ = self.componentsmm[k]
+                name, compotype, compocategory, angle, similarity, _ = self.componentsmm[k]
                 composhape = self.sizetable[compotype] if angle == 0 else self.sizetable[compotype][::-1]
-                jsonraw.append({"location": str(num) + name, "type": compotype, "elemOrient": 'horizontal' if angle == 0 else 'vertical',
+                jsonraw[compocategory].append({"location": str(num) + name, "type": compotype, "elemOrient": 'horizontal' if angle == 0 else 'vertical',
                                 'elemPos': [round(float(k[1]) - composhape[0], 1), round(756.67 - composhape[1], 1), round(float(k[0] - composhape[2]), 1)],
                                 "elemSize": composhape, "labelPos": 'front',
                                 "color": "", "attributes": {"factor": "", 'similarity': str(similarity)}})
                 num += 1
-        self.jsonraw = json.dumps(jsonraw, indent=4)
-        self.formatjson = jsonraw
-        return self.jsonraw
+        self.jsonraw = jsonraw
+        self.formatjson = json.dumps(jsonraw, indent=4)
+        return self.formatjson
 
     def savejson(self):
         # Step 1: Define the file path where you want to save the JSON data
         file_path = 'api/'+self._name+'_'+self._face+'.json'
         # Step 2: Write the dictionary to the JSON file
         tools.jsondump(file_path, self.jsonraw)
-        print(self.jsonraw)
+        print(self.formatjson)
 
     def getjson(self):
         return self.formatjson

@@ -25,11 +25,14 @@ Package infomation in [requirements.txt](requirements.txt)
 ## Setup
 
 To use `OGrEE-Tools/3dtools`, run the following commands to clone the repository and install the dependencies:
+> Python version 3.10 is mandatory for the fbx creation functionality
 
 ```sh
 git clone https://github.com/ditrit/OGrEE-Tools.git
-cd OGrEE-Tools/3dtools
-pip3 install -r ./requirements.txt
+cd OGrEE-Tools/
+python Converter/setup/setup.py
+cd 3dtools
+pip install -r ./requirements.txt
 ```
 
 ## Introduction
@@ -98,7 +101,7 @@ The user will be prompted with the following message:
 
 ```sh
 Choose a component to detect.
-Available commands: 'All', 'BMC', 'Disk_lff', 'Disk_sff', 'Disks', 'PSU', 'Serial', 'Slot_lp', 'Slot_normal', 'Slots', 'USB', 'VGA'
+Available commands: 'All', 'RJ45', 'Disk_lff', 'Disk_sff', 'Disks', 'PSU', 'Serial', 'Slot_lp', 'Slot_normal', 'Slots', 'USB', 'VGA'
 Enter 'finish' to output the JSON.
 
 Command = ...

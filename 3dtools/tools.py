@@ -22,7 +22,7 @@ import cv2
 
 # special constant for all the function
 RATIO = 781/85.4  # pixel/mm = 9.145
-SIZETABLE = {'BMC': [20, 11.0, 12.5], 'USB': [15.0, 14.0, 5.5], 'VGA': [35.0, 11.0, 17.5],
+SIZETABLE = {'RJ45': [20, 11.0, 12.5], 'USB': [15.0, 14.0, 5.5], 'VGA': [35.0, 11.0, 17.5],
              'Serial': [35.0, 11.0, 17.5], 'Slot_normal': [100.0, 312.0, 15], 'Slot_lp': [65.0, 175.0, 15],
              'Disk_lff': [107.5, 146.0, 25], 'Disk_sff': [80, 101.0, 15], 'PSU': [90.0, 100.0, 40.0]}
 
@@ -704,12 +704,15 @@ def drawcomponents_gui(original_file, tmp_file, components, dont_draw=None):
         if k == dont_draw:
             continue
 
-        name, compotype, angle, similarity, dimensions = components[k]
+        _, compotype, _, angle, similarity, dimensions = components[k]
         composhape = SIZETABLE[compotype] if angle == 0 else [SIZETABLE[compotype][2], SIZETABLE[compotype][1], SIZETABLE[compotype][0]]
         label = compotype #+ str(num)
         pt1 = (int(k[1]), int(k[0]))
-        h, w = dimensions
-        pt2 = (int(pt1[0] + w), int(pt1[1] + h))
+        if compotype == "PSU":
+            h, w = dimensions
+            pt2 = (int(pt1[0] + w), int(pt1[1] + h))
+        else:
+            pt2 = (int(pt1[0] + composhape[0] * RATIO), int(pt1[1] + composhape[2] * RATIO))
 
         if similarity < 0.2:
             color = (56, 56, 255)  # Bright red   -> 0 <= similarity < 0.2

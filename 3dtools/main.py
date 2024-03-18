@@ -43,11 +43,11 @@ def run(servername ="image/serveur/dell-poweredge-r720xd.rear.png",
     path = 'api/tmp' + servername.split('/')[-1]
     imsave(path, np.asarray(Image.open(servername).resize((640, 640))))
     # filter by class: --class 0, or --class 0 2 3
-    class_dic = {'All': None, 'BMC': 0, 'Disk_lff': 1, 'Disk_sff': 2, 'Disks': [1, 2], 'PSU': 3, 'Serial': 4, 'Slot_lp': 5, 'Slot_normal': 6, 'Slots': [5, 6], 'USB': 7, 'VGA': 8}
+    class_dic = {'All': None, 'RJ45': 0, 'Disk_lff': 1, 'Disk_sff': 2, 'Disks': [1, 2], 'PSU': 3, 'Serial': 4, 'Slot_lp': 5, 'Slot_normal': 6, 'Slots': [5, 6], 'USB': 7, 'VGA': 8}
 
     while True:
         print("\nChoose a component to detect.")
-        print("Available commands: 'All', 'BMC', 'Disk_lff', 'Disk_sff', 'Disks', 'PSU', 'Serial', 'Slot_lp', 'Slot_normal', 'Slots', 'USB', 'VGA'.")
+        print("Available commands: 'All', 'RJ45', 'Disk_lff', 'Disk_sff', 'Disks', 'PSU', 'Serial', 'Slot_lp', 'Slot_normal', 'Slots', 'USB', 'VGA'.")
         print("Enter 'finish' to output the JSON.")
         print()
         command = input("Command: ")
