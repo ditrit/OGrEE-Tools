@@ -40,6 +40,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         url: str,
         headersGET: dict[str, Any],
         headersPOST: dict[str, Any],
+        buildFbx = True,
         outputPath: str | None = None,
         AROutputPath: str | None = None,
         **kw,
@@ -62,6 +63,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         )
         self.createdFbxPaths = {}
         super().__init__(url, headersGET, headersPOST, outputPath, **kw)
+        self.buildFbx = buildFbx
 
     def GetDomain(self, domainName: str) -> dict[str, Any]:
         """Create a domain for dcTrack
@@ -186,6 +188,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         self,
         roomData: dict[str, Any],
         rackName: str,
+        children : bool = True
     ) -> tuple[dict[str, Any], list[dict[str, Any]], dict[str, str]]:
         """Get rack informations from dcTrack
 
@@ -231,7 +234,10 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         rackModel = self.GetJSON(f"api/v2/models/{rackDataJson['modelId']}")
         rackModel["category"] = "rack"
         rackTemplate = self.BuildTemplate(rackModel)
-        rackFBX = self.MakeFBX(rackModel)
+        if (self.buildFbx):
+            rackFBX = self.MakeFBX(rackModel)
+        else:
+            rackFBX = ""
         rackTemplate["fbxModel"] = "true" if rackFBX != "" else ""
         rackDataJson["sizeWDHmm"] = rackTemplate["sizeWDHmm"]
         rackDataJson["parentId"] = roomData["id"]
@@ -241,12 +247,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
 
         position = GetPosition(rackName=rackDataJson["tiName"])
         if position is not None:
-            rackData["attributes"]["posXY"] = json.dumps(
-                {
-                    "x": position[0] / 1000,
-                    "y": position[1] / 1000,
-                }
-            )
+            rackData["attributes"]["posXYZ"] = f"[{position[0] / 1000},{position[1] / 1000},0]"
             rackData["attributes"]["posXYUnit"] = "m"
             if (
                 position[2] == "East"
@@ -262,10 +263,11 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
         rackDataJson["id"] = rackData["id"]
         templates = [rackTemplate]
         fbxPaths = [rackFBX] if rackFBX != "" else []
-        templatesChildren, children, fbxChildren = self.GetChildren(rackDataJson)
-        templates += templatesChildren
-        fbxPaths += fbxChildren
-        rackData["children"] = children
+        if children:
+            templatesChildren, children, fbxChildren = self.GetChildren(rackDataJson)
+            templates += templatesChildren
+            fbxPaths += fbxChildren
+            rackData["children"] = children
         fbx = {}
 
         for path in set(fbxPaths):  # remove duplicates
@@ -338,7 +340,10 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
                 continue
 
             childModel = self.GetJSON(f"api/v2/models/{childJson['modelId']}")
-            childfbx = self.MakeFBX(childModel)
+            if (self.buildFbx):
+                childfbx = self.MakeFBX(childModel)
+            else:
+                childfbx = ""
             childModel["category"] = "device"
             childTemplate = self.BuildTemplate(childModel)
             childTemplate["fbxModel"] = "true" if childfbx != "" else ""
