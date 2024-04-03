@@ -1,0 +1,884 @@
+{
+    "slug": "ibm-600-x-1200-42u",
+    "description": "IBM",
+    "category": "rack",
+    "sizeWDHmm": [
+        599.95,
+        1199.9,
+        1876.81
+    ],
+    "fbxModel": "",
+    "attributes": {
+        "vendor": "IBM",
+        "model": "IBM 600 x 1200 42U",
+        "type": ""
+    },
+    "colors": [],
+    "components": [],
+    "slots": [
+        {
+            "location": "u1",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                0.0
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u2",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                44.45
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u3",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                88.9
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u4",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                133.35000000000002
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u5",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                177.8
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u6",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                222.25
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u7",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                266.70000000000005
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u8",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                311.15000000000003
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u9",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                355.6
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u10",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                400.05
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u11",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                444.5
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u12",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                488.95000000000005
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u13",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                533.4000000000001
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u14",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                577.85
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u15",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                622.3000000000001
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u16",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                666.75
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u17",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                711.2
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u18",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                755.6500000000001
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u19",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                800.1
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u20",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                844.5500000000001
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u21",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                889.0
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u22",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                933.45
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u23",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                977.9000000000001
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u24",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                1022.35
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u25",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                1066.8000000000002
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u26",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                1111.25
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u27",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                1155.7
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u28",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                1200.15
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u29",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                1244.6000000000001
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u30",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                1289.0500000000002
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u31",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                1333.5
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u32",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                1377.95
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u33",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                1422.4
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u34",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                1466.8500000000001
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u35",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                1511.3000000000002
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u36",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                1555.75
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u37",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                1600.2
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u38",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                1644.65
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u39",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                1689.1000000000001
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u40",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                1733.5500000000002
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u41",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                1778.0
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "u42",
+            "type": "u",
+            "elemOrient": "horizontal",
+            "elemPos": [
+                59.995000000000005,
+                119.99000000000001,
+                1822.45
+            ],
+            "elemSize": [
+                479.96000000000004,
+                959.9200000000001,
+                44.45
+            ],
+            "mandatory": "no",
+            "labelPos": "frontrear",
+            "color": "b0e0e6"
+        },
+        {
+            "location": "pduRightFront",
+            "type": "pdu",
+            "elemOrient": "vertical",
+            "elemPos": [
+                539.95,
+                160,
+                0
+            ],
+            "elemSize": [
+                1331,
+                80,
+                60
+            ],
+            "mandatory": "no",
+            "labelPos": "bottom",
+            "color": "ffff00"
+        },
+        {
+            "location": "pduRightRear",
+            "type": "pdu",
+            "elemOrient": "vertical",
+            "elemPos": [
+                539.95,
+                0,
+                0
+            ],
+            "elemSize": [
+                1331,
+                80,
+                60
+            ],
+            "mandatory": "no",
+            "labelPos": "bottom",
+            "color": "ffff00"
+        },
+        {
+            "location": "pduRightCenter",
+            "type": "pdu",
+            "elemOrient": "vertical",
+            "elemPos": [
+                539.95,
+                80,
+                0
+            ],
+            "elemSize": [
+                1331,
+                80,
+                60
+            ],
+            "mandatory": "no",
+            "labelPos": "bottom",
+            "color": "ffff00"
+        },
+        {
+            "location": "pduLeftFront",
+            "type": "pdu",
+            "elemOrient": "vertical",
+            "elemPos": [
+                0,
+                160,
+                0
+            ],
+            "elemSize": [
+                1331,
+                80,
+                60
+            ],
+            "mandatory": "no",
+            "labelPos": "top",
+            "color": "ffff00"
+        },
+        {
+            "location": "pduLeftRear",
+            "type": "pdu",
+            "elemOrient": "vertical",
+            "elemPos": [
+                0,
+                0,
+                0
+            ],
+            "elemSize": [
+                1331,
+                80,
+                60
+            ],
+            "mandatory": "no",
+            "labelPos": "top",
+            "color": "ffff00"
+        },
+        {
+            "location": "pduLeftCenter",
+            "type": "pdu",
+            "elemOrient": "vertical",
+            "elemPos": [
+                0,
+                80,
+                0
+            ],
+            "elemSize": [
+                1331,
+                80,
+                60
+            ],
+            "mandatory": "no",
+            "labelPos": "top",
+            "color": "ffff00"
+        }
+    ]
+}

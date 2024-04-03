@@ -1,0 +1,120 @@
+{
+    "slug": "asa-5520",
+    "description": "Cisco Systems",
+    "category": "device",
+    "sizeWDHmm": [
+        444.5,
+        361.95,
+        44.45
+    ],
+    "fbxModel": "",
+    "attributes": {
+        "vendor": "Cisco Systems",
+        "model": "ASA 5520",
+        "type": ""
+    },
+    "colors": [],
+    "components": [
+        {
+            "location": "PS1",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                0,
+                343.95,
+                0
+            ],
+            "elemSize": [
+                24,
+                17,
+                16
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "IEC-320-C14"
+            }
+        },
+        {
+            "location": "P01",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                24,
+                349.95,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P02",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                38,
+                349.95,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P03",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                52,
+                349.95,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P04",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                66,
+                349.95,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        }
+    ],
+    "slots": []
+}

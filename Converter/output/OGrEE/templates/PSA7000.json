@@ -1,0 +1,180 @@
+{
+    "slug": "psa7000",
+    "description": "Pulse Secure",
+    "category": "device",
+    "sizeWDHmm": [
+        444.5,
+        449.58,
+        88.9
+    ],
+    "fbxModel": "",
+    "attributes": {
+        "vendor": "Pulse Secure",
+        "model": "PSA7000",
+        "type": ""
+    },
+    "colors": [],
+    "components": [
+        {
+            "location": "PS1",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                0,
+                431.58,
+                0
+            ],
+            "elemSize": [
+                24,
+                17,
+                16
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "IEC-320-C14"
+            }
+        },
+        {
+            "location": "PS2",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                24,
+                431.58,
+                0
+            ],
+            "elemSize": [
+                24,
+                17,
+                16
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "IEC-320-C14"
+            }
+        },
+        {
+            "location": "Console",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                48,
+                437.58,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "EXT1",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                62,
+                437.58,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "EXT2",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                76,
+                437.58,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "INT1",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                90,
+                437.58,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "INT2",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                104,
+                437.58,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "MGMT",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                118,
+                437.58,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        }
+    ],
+    "slots": []
+}

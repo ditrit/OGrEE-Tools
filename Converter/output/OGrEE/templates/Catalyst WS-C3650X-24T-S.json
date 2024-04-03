@@ -1,0 +1,580 @@
+{
+    "slug": "catalyst-ws-c3650x-24t-s",
+    "description": "Cisco Systems",
+    "category": "device",
+    "sizeWDHmm": [
+        444.5,
+        447.04,
+        44.45
+    ],
+    "fbxModel": "",
+    "attributes": {
+        "vendor": "Cisco Systems",
+        "model": "Catalyst WS-C3650X-24T-S",
+        "type": ""
+    },
+    "colors": [],
+    "components": [
+        {
+            "location": "PS1",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                0,
+                429.04,
+                0
+            ],
+            "elemSize": [
+                24,
+                17,
+                16
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "IEC-320-C14"
+            }
+        },
+        {
+            "location": "PS2",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                24,
+                429.04,
+                0
+            ],
+            "elemSize": [
+                24,
+                17,
+                16
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "IEC-320-C14"
+            }
+        },
+        {
+            "location": "Console01",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                48,
+                435.04,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Mngmt01",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                62,
+                435.04,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P01",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                76,
+                435.04,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P02",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                90,
+                435.04,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P03",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                104,
+                435.04,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P04",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                118,
+                435.04,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P05",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                132,
+                435.04,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P06",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                146,
+                435.04,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P07",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                160,
+                435.04,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P08",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                174,
+                435.04,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P09",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                188,
+                435.04,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P10",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                202,
+                435.04,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P11",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                216,
+                435.04,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P12",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                230,
+                435.04,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P13",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                244,
+                435.04,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P14",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                258,
+                435.04,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P15",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                272,
+                435.04,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P16",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                286,
+                435.04,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P17",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                300,
+                435.04,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P18",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                314,
+                435.04,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P19",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                328,
+                435.04,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P20",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                342,
+                435.04,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P21",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                356,
+                435.04,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P22",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                370,
+                435.04,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P23",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                384,
+                435.04,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P24",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                398,
+                435.04,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        }
+    ],
+    "slots": []
+}

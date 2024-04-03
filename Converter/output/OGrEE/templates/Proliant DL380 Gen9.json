@@ -1,0 +1,240 @@
+{
+    "slug": "proliant-dl380-gen9",
+    "description": "HP",
+    "category": "device",
+    "sizeWDHmm": [
+        445.52,
+        730.25,
+        87.38
+    ],
+    "fbxModel": "",
+    "attributes": {
+        "vendor": "HP",
+        "model": "Proliant DL380 Gen9",
+        "type": ""
+    },
+    "colors": [],
+    "components": [
+        {
+            "location": "PS1",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                0,
+                712.25,
+                0
+            ],
+            "elemSize": [
+                24,
+                17,
+                16
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "IEC-320-C14"
+            }
+        },
+        {
+            "location": "PS2",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                24,
+                712.25,
+                0
+            ],
+            "elemSize": [
+                24,
+                17,
+                16
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "IEC-320-C14"
+            }
+        },
+        {
+            "location": "Eth01",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                48,
+                718.25,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Eth02",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                62,
+                718.25,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Eth03",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                76,
+                718.25,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Eth04",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                90,
+                718.25,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Eth05",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                104,
+                718.25,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Eth06",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                118,
+                718.25,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Eth07",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                132,
+                718.25,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Eth08",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                146,
+                718.25,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Mngmt01",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                160,
+                718.25,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        }
+    ],
+    "slots": []
+}

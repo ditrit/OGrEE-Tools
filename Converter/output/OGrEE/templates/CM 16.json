@@ -1,0 +1,380 @@
+{
+    "slug": "cm-16",
+    "description": "DIGI",
+    "category": "device",
+    "sizeWDHmm": [
+        444.5,
+        215.9,
+        44.45
+    ],
+    "fbxModel": "",
+    "attributes": {
+        "vendor": "DIGI",
+        "model": "CM 16",
+        "type": ""
+    },
+    "colors": [],
+    "components": [
+        {
+            "location": "PS1",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                0,
+                197.9,
+                0
+            ],
+            "elemSize": [
+                24,
+                17,
+                16
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "IEC-320-C14"
+            }
+        },
+        {
+            "location": "P01",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                24,
+                203.9,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Serial01",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                38,
+                203.9,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Serial02",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                52,
+                203.9,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Serial03",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                66,
+                203.9,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Serial04",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                80,
+                203.9,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Serial05",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                94,
+                203.9,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Serial06",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                108,
+                203.9,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Serial07",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                122,
+                203.9,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Serial08",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                136,
+                203.9,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Serial09",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                150,
+                203.9,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Serial10",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                164,
+                203.9,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Serial11",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                178,
+                203.9,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Serial12",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                192,
+                203.9,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Serial13",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                206,
+                203.9,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Serial14",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                220,
+                203.9,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Serial15",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                234,
+                203.9,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Serial16",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                248,
+                203.9,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        }
+    ],
+    "slots": []
+}

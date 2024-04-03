@@ -1,0 +1,160 @@
+{
+    "slug": "fortiwifi-50e",
+    "description": "Fortinet",
+    "category": "device",
+    "sizeWDHmm": [
+        210.06,
+        133.1,
+        40.89
+    ],
+    "fbxModel": "",
+    "attributes": {
+        "vendor": "Fortinet",
+        "model": "FortiWiFi 50E",
+        "type": ""
+    },
+    "colors": [],
+    "components": [
+        {
+            "location": "PS1",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                0,
+                122.1,
+                0
+            ],
+            "elemSize": [
+                10,
+                10,
+                40
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "Cord"
+            }
+        },
+        {
+            "location": "Console01",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                10,
+                121.1,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P01",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                24,
+                121.1,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P02",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                38,
+                121.1,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P03",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                52,
+                121.1,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P04",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                66,
+                121.1,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P05",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                80,
+                121.1,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        }
+    ],
+    "slots": []
+}

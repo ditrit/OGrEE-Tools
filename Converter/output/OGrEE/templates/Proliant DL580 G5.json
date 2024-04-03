@@ -1,0 +1,180 @@
+{
+    "slug": "proliant-dl580-g5",
+    "description": "HP",
+    "category": "device",
+    "sizeWDHmm": [
+        447.04,
+        673.1,
+        177.8
+    ],
+    "fbxModel": "",
+    "attributes": {
+        "vendor": "HP",
+        "model": "Proliant DL580 G5",
+        "type": ""
+    },
+    "colors": [],
+    "components": [
+        {
+            "location": "PS1",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                0,
+                655.1,
+                0
+            ],
+            "elemSize": [
+                24,
+                17,
+                16
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "IEC-320-C14"
+            }
+        },
+        {
+            "location": "PS2",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                24,
+                655.1,
+                0
+            ],
+            "elemSize": [
+                24,
+                17,
+                16
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "IEC-320-C14"
+            }
+        },
+        {
+            "location": "PS3",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                48,
+                655.1,
+                0
+            ],
+            "elemSize": [
+                24,
+                17,
+                16
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "IEC-320-C14"
+            }
+        },
+        {
+            "location": "PS4",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                72,
+                655.1,
+                0
+            ],
+            "elemSize": [
+                24,
+                17,
+                16
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "IEC-320-C14"
+            }
+        },
+        {
+            "location": "Eth01",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                96,
+                661.1,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Eth02",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                110,
+                661.1,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Eth03",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                124,
+                661.1,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Serial01",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                138.0,
+                654.8000000000001,
+                0
+            ],
+            "elemSize": [
+                30.8,
+                17.3,
+                12.6
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "DB9 Male"
+            }
+        }
+    ],
+    "slots": []
+}

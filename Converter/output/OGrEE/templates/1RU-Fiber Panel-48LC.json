@@ -1,0 +1,19 @@
+{
+    "slug": "1ru-fiber-panel-48lc",
+    "description": "Generic",
+    "category": "device",
+    "sizeWDHmm": [
+        0.0,
+        100.08,
+        44.45
+    ],
+    "fbxModel": "",
+    "attributes": {
+        "vendor": "Generic",
+        "model": "1RU-Fiber Panel-48LC",
+        "type": ""
+    },
+    "colors": [],
+    "components": [],
+    "slots": []
+}

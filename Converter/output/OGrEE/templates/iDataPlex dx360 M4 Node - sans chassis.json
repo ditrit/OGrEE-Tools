@@ -1,0 +1,100 @@
+{
+    "slug": "idataplex-dx360-m4-node---sans-chassis",
+    "description": "IBM",
+    "category": "device",
+    "sizeWDHmm": [
+        441.96,
+        304.8,
+        44.45
+    ],
+    "fbxModel": "",
+    "attributes": {
+        "vendor": "IBM",
+        "model": "iDataPlex dx360 M4 Node - sans chassis",
+        "type": ""
+    },
+    "colors": [],
+    "components": [
+        {
+            "location": "P01",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                0,
+                292.8,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P02",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                14,
+                292.8,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "P03",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                28,
+                292.8,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Serial01",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                42.0,
+                286.5,
+                0
+            ],
+            "elemSize": [
+                30.8,
+                17.3,
+                12.6
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "DB9 Male"
+            }
+        }
+    ],
+    "slots": []
+}

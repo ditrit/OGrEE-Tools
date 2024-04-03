@@ -1,0 +1,120 @@
+{
+    "slug": "ucs-c210-m2",
+    "description": "Cisco Systems",
+    "category": "device",
+    "sizeWDHmm": [
+        441.71,
+        720.09,
+        87.63
+    ],
+    "fbxModel": "",
+    "attributes": {
+        "vendor": "Cisco Systems",
+        "model": "UCS C210 M2",
+        "type": ""
+    },
+    "colors": [],
+    "components": [
+        {
+            "location": "PS1",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                0,
+                702.09,
+                0
+            ],
+            "elemSize": [
+                24,
+                17,
+                16
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "IEC-320-C14"
+            }
+        },
+        {
+            "location": "PS2",
+            "type": "Power (AC)",
+            "elemOrient": "",
+            "elemPos": [
+                24,
+                702.09,
+                0
+            ],
+            "elemSize": [
+                24,
+                17,
+                16
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "IEC-320-C14"
+            }
+        },
+        {
+            "location": "Eth01",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                48,
+                708.09,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Eth02",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                62,
+                708.09,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        },
+        {
+            "location": "Serial01",
+            "type": "Data",
+            "elemOrient": "",
+            "elemPos": [
+                76,
+                708.09,
+                0
+            ],
+            "elemSize": [
+                14,
+                11,
+                11
+            ],
+            "labelPos": "front",
+            "color": "000000",
+            "attributes": {
+                "factor": "RJ45"
+            }
+        }
+    ],
+    "slots": []
+}
