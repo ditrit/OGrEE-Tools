@@ -189,17 +189,13 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
             "domain": data["domain"] if "domain" in data else "",
             "attributes": {
                 "orientation": "front",  # ???
-                "posXY": json.dumps({"x": 0.0, "y": 0.0}),  # ???
+                "posXYZ": "[0,0,0]",  # ???
                 "posXYUnit": "t",
-                "size": json.dumps(
-                    {
-                        "x": float(data["sizeWDHmm"][0]) / 10,
-                        "y": float(data["sizeWDHmm"][1]) / 10,
-                    }
-                ),
+                "size":  f'[{float(data["sizeWDHmm"][0]) / 10},{float(data["sizeWDHmm"][1]) / 10}]',
                 "sizeUnit": "cm",
                 "height": str(float(data["sizeWDHmm"][2]) / 10),
                 "heightUnit": "cm",
+                "rotation" : "[0,0,0]",
                 "template": data["template"] if "template" in data else "",
             },
             "children": data["children"] if "children" in data else [],
@@ -330,7 +326,7 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
             offsetY = template["sizeWDHmm"][1] - 1
             offsetZ = 0
             for component in ports:
-                if component["connector"] in components:
+                if "connector" in component and component["connector"] in components:
                     componentOgree = deepcopy(components[component["connector"]])
                     componentOgree["location"] = component["portName"]
                 else:
@@ -345,7 +341,7 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
                         "elemSize": [15, 15, 15],
                         "labelPos": "front",
                         "color": "000000",
-                        "attributes": {"factor": component["connector"]},
+                        "attributes": {"factor": component["connector"] if "connector" in component else ""},
                     }
 
                 size = componentOgree["elemSize"]
