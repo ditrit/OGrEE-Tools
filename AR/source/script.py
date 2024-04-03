@@ -36,7 +36,7 @@ def main(roomName : str, devices: bool, fbx:bool):
             if rackData['attributes']['template'] not in loadedTemplates:
                 file.write(f".template:{converter.templatePath}/{rackData['attributes']['template']}.json\n")
                 loadedTemplates.append(rackData['attributes']['template'])
-            file.write(f'+rk:/P/NOE/BI2/{roomName}/{rackData["name"]}@{rackData["attributes"]["posXYZ"]}@m@[0,0,0]@{rackData["attributes"]["template"]}\n')
+            file.write(f'+rk:/P/NOE/BI2/{roomName}/{rackData["name"]}@{rackData["attributes"]["posXYZ"]}@m@{rackData["attributes"]["rotation"]}@{rackData["attributes"]["template"]}\n')
             loadedTemplates = WriteChildren(loadedTemplates, file,converter,roomName,rackData)
 
 

@@ -191,7 +191,7 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
                 "orientation": "front",  # ???
                 "posXYZ": "[0,0,0]",  # ???
                 "posXYUnit": "t",
-                "size":  f'[{float(data["sizeWDHmm"][0]) / 10},{float(data["sizeWDHmm"][1]) / 10}]',
+                "size":  f'[{round(float(data["sizeWDHmm"][0]) / 10,2)},{round(float(data["sizeWDHmm"][1]) / 10,2)}]',
                 "sizeUnit": "cm",
                 "height": str(float(data["sizeWDHmm"][2]) / 10),
                 "heightUnit": "cm",
@@ -223,12 +223,7 @@ class dcTrackToOGrEE(IToOGrEE, BaseConverter):
             "domain": data["domain"] if "domain" in data else "",
             "attributes": {
                 "orientation": "front",  # Needs more precision
-                "size": json.dumps(
-                    {
-                        "x": data["sizeWDHmm"][0],
-                        "y": data["sizeWDHmm"][1],
-                    }
-                ),
+                "size": f'[{round(float(data["sizeWDHmm"][0]) / 10,2)},{round(float(data["sizeWDHmm"][1]) / 10,2)}]',
                 "sizeUnit": "mm",
                 "height": data["sizeWDHmm"][2],
                 "heightUnit": "mm",
