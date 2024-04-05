@@ -247,7 +247,7 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
 
         position = GetPosition(rackName=rackDataJson["tiName"])
         if position is not None:
-            rackData["attributes"]["posXYZ"] = f"[{position[0] / 1000},{position[1] / 1000},0]"
+            rackData["attributes"]["posXYZ"] = f"[{round(position[0] / 1000,2)},{round(position[1] / 1000,2)},0]"
             rackData["attributes"]["posXYUnit"] = "m"
             if (
                 position[2] == "East"
@@ -256,9 +256,9 @@ class ARdcTrackToOGrEE(dcTrackToOGrEE, IARConverter):
                 position[2] == "West"
                 and roomData["attributes"]["axisOrientation"] == "+x+y"
             ):
-                rackData["attributes"]["orientation"] = "rear"
+                rackData["attributes"]["rotation"] = "rear"
             else:
-                rackData["attributes"]["orientation"] = "front"
+                rackData["attributes"]["rotation"] = "front"
 
         rackDataJson["id"] = rackData["id"]
         templates = [rackTemplate]
