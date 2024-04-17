@@ -7,6 +7,9 @@ import tempfile
 from pathlib import Path
 
 
+def find_files(directory, pattern):
+    return list(directory.rglob(pattern))
+
 def get_cluster_name():
     try:
         # Run kubectl command to get the cluster name
@@ -21,29 +24,33 @@ def get_pod_pvs(namespace, pod_name):
     try:
         # Run the kubectl command to get the pods in the specified namespace
         result = subprocess.run(["kubectl", "get", "pods", "-n", namespace], capture_output=True, text=True, check=True)
-        
+
         # Filter the output using grep based on the pod name pattern
-        filtered_pods = subprocess.run(["grep", f'^{pod_name}.*'], input=result.stdout, capture_output=True, text=True, check=True)
-        
+        filtered_pods = subprocess.run(["grep", f'^{pod_name}.*'], input=result.stdout, capture_output=True, text=True,
+                                       check=True)
+
         # Split the output into lines and get the first line (assuming there's only one matching pod)
         matched_pod_line = filtered_pods.stdout.strip().split('\n')[0]
-        
+
         # Extract the pod name from the matched line
         matched_pod_name = matched_pod_line.split()[0]
-        
+
         # Run kubectl command to get the pod details in JSON format
-        result = subprocess.run(["kubectl", "-n", namespace, "get", "pod", matched_pod_name, "-o", "json"], capture_output=True, text=True, check=True)
+        result = subprocess.run(["kubectl", "-n", namespace, "get", "pod", matched_pod_name, "-o", "json"],
+                                capture_output=True, text=True, check=True)
         pod_info = json.loads(result.stdout)
-        
+
         volumes = pod_info["spec"].get("volumes", [])
         pvs = []
         for volume in volumes:
             if volume.get("persistentVolumeClaim"):
                 pvc_name = volume["persistentVolumeClaim"]["claimName"]
-                pv_info = subprocess.run(["kubectl", "-n", namespace, "get", "pvc", pvc_name, "-o", "json"], capture_output=True, text=True, check=True)
+                pv_info = subprocess.run(["kubectl", "-n", namespace, "get", "pvc", pvc_name, "-o", "json"],
+                                         capture_output=True, text=True, check=True)
                 pvc_info = json.loads(pv_info.stdout)
                 pv_name = pvc_info["spec"]["volumeName"]
-                pv_details = subprocess.run(["kubectl", "get", "pv", pv_name, "-o", "json"], capture_output=True, text=True, check=True)
+                pv_details = subprocess.run(["kubectl", "get", "pv", pv_name, "-o", "json"], capture_output=True,
+                                            text=True, check=True)
                 pv = json.loads(pv_details.stdout)
                 pv_type = pv.get("spec", {}).get("storageClassName", "Unknown")
                 pv_path = ""
@@ -60,7 +67,7 @@ def get_pod_pvs(namespace, pod_name):
                     pv_ip = "None"
                 elif pv_type == "csi-s3":
                     pv_path = pv["spec"]["csi"]["volumeHandle"]
-                    pv_ip = "None"                
+                    pv_ip = "None"
                 else:
                     pv_type = "Unknown"
                     pv_path = "None"
@@ -81,11 +88,43 @@ def get_pod_pvs(namespace, pod_name):
         return None
 
 
-def format_json(input_file, output_file):
-    with open(input_file, 'r') as f:
-        data = json.load(f)
+def get_nodes(input_path):
+    names = []
+    nodes_file = find_files(Path(f'{input_path}/sos_commands/kubernetes/cluster-info/'), '*get_-o_json_nodes')[0]
+    print(nodes_file)
+    with open(nodes_file,
+              'r') as f:
+        data = json.loads(f.read())
 
-    node_names = [node["metadata"]["name"] for node in data.get("items", []) if node["kind"] == "Node"]
+    for node in data["items"]:
+        names.append(node["metadata"]["name"])
+
+    print(names)
+    return names
+
+
+def get_namespaces(input_path):
+    names = []
+    namespaces_file = find_files(Path(f'{input_path}/sos_commands/kubernetes/cluster-info/'), '*get_namespaces')[0]
+
+    with open(namespaces_file,
+                'r') as f:
+        data = f.read().splitlines()
+
+    for namespace in data[1:]:
+        names.append(namespace.split()[0])
+
+    print(names)
+    return names
+
+def format_json(input_file, output_file):
+    data = {}
+    # with open(input_file, 'r') as f:
+    #   data = json.load(f)
+
+    # node_names = [node["metadata"]["name"] for node in data.get("items", []) if node["kind"] == "Node"]
+    node_names = get_nodes(input_file)
+    namespace_names = get_namespaces(input_file)
 
     formatted_data = {
         "nodes": node_names,
@@ -129,7 +168,6 @@ def extract_sos_archive(archive_path):
             member.path = p.relative_to(*p.parts[:1])
             members.append(member)
 
-        print(members)
         tar.extractall(path=tmp_dir, members=members)
 
     return tmp_dir
