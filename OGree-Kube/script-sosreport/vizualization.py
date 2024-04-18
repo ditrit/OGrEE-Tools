@@ -1,4 +1,5 @@
 import json
+import yaml
 import sys
 import re
 import subprocess
@@ -8,17 +9,14 @@ from pathlib import Path
 
 
 def find_files(directory, pattern):
-    return list(directory.rglob(pattern))
+    return list(directory.glob(pattern))
 
-def get_cluster_name():
-    try:
-        # Run kubectl command to get the cluster name
-        result = subprocess.run(["kubectl", "config", "current-context"], capture_output=True, text=True, check=True)
-        return result.stdout.strip()
-    except subprocess.CalledProcessError as e:
-        print("Error:", e)
-        return None
+def get_cluster_name(input_path):
+    config_file = find_files(Path(f'{input_path}/sos_commands/kubernetes/cluster-info/'), '*config_view')[0]
+    with open(config_file, 'r') as f:
+        data = yaml.load(f, Loader=yaml.FullLoader)
 
+    return data["clusters"][0]["name"]
 
 def get_pod_pvs(namespace, pod_name):
     try:
@@ -96,8 +94,9 @@ def get_nodes(input_path):
               'r') as f:
         data = json.loads(f.read())
 
-    for node in data["items"]:
-        names.append(node["metadata"]["name"])
+    names = [node["metadata"]["name"] for node in data.get("items", []) if node["kind"] == "Node"]
+    #for node in data["items"]:
+    #    names.append(node["metadata"]["name"])
 
     print(names)
     return names
@@ -108,7 +107,7 @@ def get_namespaces(input_path):
     namespaces_file = find_files(Path(f'{input_path}/sos_commands/kubernetes/cluster-info/'), '*get_namespaces')[0]
 
     with open(namespaces_file,
-                'r') as f:
+              'r') as f:
         data = f.read().splitlines()
 
     for namespace in data[1:]:
@@ -117,42 +116,121 @@ def get_namespaces(input_path):
     print(names)
     return names
 
-def format_json(input_file, output_file):
+
+def get_deployments(input_path, namespace):
+    deployments = []
+    deployments_file = find_files(
+        Path(
+            f'{input_path}/sos_commands/kubernetes/cluster-info/{namespace}'),
+        f'*get_-o_json_*_deployments'
+    )[0]
+
+
+    with open(deployments_file,
+              'r') as f:
+        data = json.loads(f.read())
+
+    for item in data.get("items", []):
+        if item["kind"] == "Deployment":
+            deployment_info = {
+                "uid": item["metadata"]["uid"],
+                "namespace": item["metadata"]["namespace"],
+                "type": "deployment",
+                "name": item["metadata"]["name"],
+                "children": get_deployment_pods(input_path, item["metadata"]["uid"], item["metadata"]["namespace"])
+            }
+
+            deployments.append(deployment_info)
+
+    print(deployments)
+    return deployments
+
+def get_deployment_pods(input_path, deployment_uid, namespace):
+    pods = []
+
+    replicasets_file = find_files(
+        Path(
+            f'{input_path}/sos_commands/kubernetes/cluster-info/{namespace}'),
+        f'*get_-o_json_*_replicasets'
+    )[0]
+
+    with open(replicasets_file,
+                'r') as f:
+        replicaset_data = json.loads(f.read())
+
+
+
+    pods_file = find_files(
+        Path(
+            f'{input_path}/sos_commands/kubernetes/cluster-info/{namespace}'),
+        f'*get_-o_json_*_pods'
+    )[0]
+
+    with open(pods_file,
+              'r') as f:
+        data = json.loads(f.read())
+
+    deployment_replicasets = []
+    for item in replicaset_data.get("items", []):
+        if item["metadata"]["ownerReferences"][0]["uid"] == deployment_uid:
+            deployment_replicasets.append(item["metadata"]["uid"])
+
+    for item in data.get("items", []):
+        print(item)
+        if item["kind"] == "Pod" and 'ownerReferences' in  item['metadata']:
+            if item["metadata"]["ownerReferences"][0]["uid"] in deployment_replicasets:
+                pod_info = {
+                    'uid': item["metadata"]["uid"],
+                    "type": "pod",
+                    "name": item["metadata"]["name"],
+                  #  "pv_name": get_pod_pvs(namespace, item["metadata"]["name"])
+                }
+                pods.append(pod_info)
+
+    print(pods)
+    return pods
+
+
+def format_json(input_path, output_file):
     data = {}
     # with open(input_file, 'r') as f:
     #   data = json.load(f)
 
     # node_names = [node["metadata"]["name"] for node in data.get("items", []) if node["kind"] == "Node"]
-    node_names = get_nodes(input_file)
-    namespace_names = get_namespaces(input_file)
+    node_names = get_nodes(input_path)
+    namespaces = get_namespaces(input_path)
 
     formatted_data = {
         "nodes": node_names,
-        "namecluster": get_cluster_name(),
+        "namecluster": get_cluster_name(input_path),
         "children": []
     }
 
-    for item in data.get("items", []):
-        if item["kind"] == "Deployment":
-            deployment_info = {
-                "namespace": item["metadata"]["namespace"],
-                "type": "deployment",
-                "name": item["metadata"]["name"],
-                "children": []
-            }
-            for pod_status in item.get("status", {}).get("conditions", []):
-                if pod_status["type"] == "Progressing":
-                    message = pod_status.get("message", "")
-                    match = re.search(r'ReplicaSet "([^"]+)" has successfully progressed.', message)
-                    if match:
-                        pod_name = match.group(1)
-                        pod_info = {
-                            "type": "pod",
-                            "name": pod_name,
-                            "pv_name": get_pod_pvs(item["metadata"]["namespace"], pod_name)
-                        }
-                        deployment_info["children"].append(pod_info)
-            formatted_data["children"].append(deployment_info)
+    for namespace in namespaces:
+        deployments = get_deployments(input_path, namespace)
+        formatted_data["children"].extend(deployments)
+
+    #for item in data.get("items", []):
+    #    if item["kind"] == "Deployment":
+    # #       deployment_info = {
+    #            "namespace": item["metadata"]["namespace"],
+    #            "type": "deployment",
+    #            "name": item["metadata"]["name"],
+    #            "children": []
+    #        }
+    #        for pod_status in item.get("status", {}).get("conditions", []):
+    #            if pod_status["type"] == "Progressing":
+    #                message = pod_status.get("message", "")
+    #                match = re.search(r'ReplicaSet "([^"]+)" has successfully progressed.', message)
+    #                if match:
+    #                    pod_name = match.group(1)
+    #                    pod_info = {
+    #                        "type": "pod",
+    #                        "name": pod_name,
+    #                        "pv_name": get_pod_pvs(item["metadata"]["namespace"], pod_name)
+    #                    }
+    #                    deployment_info["children"].append(pod_info)
+    #        formatted_data["children"].append(deployment_info)
 
     with open(output_file, 'w') as f:
         json.dump(formatted_data, f, indent=4)
