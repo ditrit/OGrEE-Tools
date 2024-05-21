@@ -1,3 +1,4 @@
+import os
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
@@ -37,13 +38,14 @@ class MainApp(tk.Tk):
 
         try:
             config = ConfigHandler()
-            config.LoadConfig("./config.toml")
+            config.LoadConfig(f"{os.path.dirname(__file__)}/../../config.toml")
         except ConfigHandler.DCIMNotLoaded as e:
             messagebox.showwarning(
                 "Config file error",
                 f"One or more DCIMs config were not loaded :{e.wrongDCIMS}",
             )
         except Exception:
+            traceback.print_exc()
             messagebox.showerror(
                 "Config file error",
                 'An error occured while loading configuration. The config file needs to be a toml file called "config.toml" in the same directory as the executable.',
@@ -74,7 +76,7 @@ class MainApp(tk.Tk):
                         )
                         if config.dcims[dcim_config].default_items != "":
                             try:
-                                self.dcims[-1].import_from_json(open(config.dcims[dcim_config].default_items), False)
+                                self.dcims[-1].import_from_json(open(f"{os.path.dirname(__file__)}/../../{config.dcims[dcim_config].default_items}"), False)
                             except:
                                 messagebox.showwarning(
                                     "Config file error",
@@ -83,7 +85,7 @@ class MainApp(tk.Tk):
                                 traceback.print_exc()
                         if config.dcims[dcim_config].default_models != "":
                             try:
-                                self.dcims[-1].import_from_json(open(config.dcims[dcim_config].default_models), True)
+                                self.dcims[-1].import_from_json(open(f"{os.path.dirname(__file__)}/../../{config.dcims[dcim_config].default_models}"), True)
                             except:
                                 messagebox.showwarning(
                                     "Config file error",

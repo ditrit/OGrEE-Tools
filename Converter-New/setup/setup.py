@@ -35,7 +35,7 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 import distutils.sysconfig
 
 setupDir = os.path.dirname(__file__)
-rootDir = os.path.realpath(f"{setupDir}/../")
+rootDir = os.path.realpath(f"{setupDir}/../../")
 envDir = os.path.realpath(f"{rootDir}/.venv")
 
 if sys.platform.startswith('win'):  # Windows
@@ -46,8 +46,9 @@ else:  # Unix/Linux/Mac
     pythonExe = f"{envDir}/bin/python"
     venvActivationCommand = f". .venv/bin/activate"
 
-Print(f"Creating virtual environment at {envDir}...")
-venv.create(envDir, with_pip=True)
+if not os.path.exists(envDir):
+    Print(f"Creating virtual environment at {envDir}...")
+    venv.create(envDir, with_pip=True)
 
 # Install the modules in the virtual environment
 Print("Installing required packages...")
