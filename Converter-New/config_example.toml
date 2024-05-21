@@ -1,0 +1,15 @@
+#Copy this file to "config.toml" (and change the placeholder values)
+[DCIM]
+headers = { Content-Type = "application/json" } #If you're working with JSON, you're gonna need this
+
+[DCIM.NetBox]
+url = "NetBox URL"
+token = "NetBox token"
+default_items=""
+default_models=""
+
+[DCIM.dcTrack]
+url = "dcTrack URL"
+token = "dcTrack token"
+default_items=""
+default_models=""
