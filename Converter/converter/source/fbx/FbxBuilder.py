@@ -1,16 +1,18 @@
 """
 **Build FBX files**
 """
+
 import argparse
 import glob
-from pathlib import Path
 from os.path import dirname, realpath
-import fbx
-import FbxCommon
+from pathlib import Path
 
+import fbx
+import converter.FbxCommon as FbxCommon
 
 outputPathDefault = realpath(f"{dirname(realpath(__file__))}/../../output/OGrEE/fbx/")
 defaultPicture = f"{dirname(realpath(__file__))}/white.png"
+
 
 def makeCube(manager: fbx.FbxManager) -> fbx.FbxMesh:
     """Make a simple cube
@@ -245,6 +247,7 @@ def CreateMaterial(
     material.Diffuse.ConnectSrcObject(texture)
     return material
 
+
 def CreateFBX(
     width: float,
     height: float,
@@ -301,7 +304,9 @@ def CreateFBX(
     cubeNode.AddMaterial(CreateMaterial(manager, "", top))
     cubeNode.AddMaterial(CreateMaterial(manager, "", bottom))
 
-    FbxCommon.SaveScene(manager, scene, f"{realpath(outputPath)}/{name}.fbx", pEmbedMedia=True)
+    FbxCommon.SaveScene(
+        manager, scene, f"{realpath(outputPath)}/{name}.fbx", pEmbedMedia=True
+    )
     print(f"FBX saved at {realpath(outputPath)}/{name}.fbx")
     return f"{realpath(outputPath)}/{name}.fbx"
 
@@ -353,9 +358,9 @@ if __name__ == "__main__":
                 args["right"] = file
     CreateFBX(
         name=args["name"],
-        width=wdh[0]/10,
-        depth=wdh[1]/10,
-        height=wdh[2]/10,
+        width=wdh[0] / 10,
+        depth=wdh[1] / 10,
+        height=wdh[2] / 10,
         front=args["front"],
         back=args["back"],
         left=args["left"],

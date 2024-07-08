@@ -10,6 +10,9 @@ from matplotlib.path import Path
 from shapely import affinity
 from shapely.geometry import Point, Polygon, box
 
+FILE = os.path.realpath(__file__)
+ROOT_NON_SQUARE_ROOMS = os.path.dirname(FILE)
+
 
 # Generates the coordinates of the squares rotated by angle that can fit into the room. Starts From the first corner in the room's corner list
 def GenTilesFromFirstCorner(
@@ -223,7 +226,7 @@ def Draw(room: Polygon, tiles: list[Polygon], tileCoords: list[str]) -> None:
                 size=4,
             )
         ]
-    else :
+    else:
         texts = []
     for i in range(len(tiles)):
         plot_polygon(ax, tiles[i], facecolor="lightgreen", edgecolor="gray")
@@ -247,7 +250,7 @@ def processJSON(
     angle: str | float | None,
     offset: str | tuple[float, float] | None,
     draw: bool = False,
-    outname: str|None = None,
+    outname: str | None = None,
     opti: bool = False,
 ) -> None:
     # Convert parameters to correct types
@@ -292,13 +295,18 @@ def processJSON(
     room["tileAngle"] = angle
     room["tiles"] = new_tiles
     if outname is None:
+        out_json_path = os.path.join(
+            ROOT_NON_SQUARE_ROOMS,
+            os.path.splitext(os.path.basename(path))[0] + "-tiles.json",
+        )
         with open(
-            f"{os.path.dirname(path)}/{os.path.splitext(os.path.basename(path))[0]}-tiles.json",
+            out_json_path,
             "w",
         ) as file:
             file.write(json.dumps(room, indent=4))
     else:
-        with open(f"{os.path.dirname(path)}/{outname}", "w") as file:
+        out_json_path = os.path.join(ROOT_NON_SQUARE_ROOMS, outname)
+        with open(out_json_path, "w") as file:
             file.write(json.dumps(room, indent=4))
 
     if draw:

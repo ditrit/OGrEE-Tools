@@ -1,0 +1,19 @@
+
+
+[tool.poetry]
+name = "converter"
+version = "0.1.0"
+description = ""
+authors = ["None"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fbx = { path = "setup/fbx-2020.3.4-cp310-none-win_amd64.whl" }
+requests = ">= 2.25.0"
+Flask = ">= 2.0.3"
+gevent = ">= 21.12.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

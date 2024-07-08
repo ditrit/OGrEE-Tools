@@ -1,14 +1,13 @@
-from os.path import dirname,realpath
+from os.path import dirname, realpath
 from typing import Any
 
-from Converter.source.classes.BaseConverter import BaseConverter
-from Converter.source.interfaces.IToOGrEE import IToOGrEE
+from converter.source.classes.BaseConverter import BaseConverter
+from converter.source.interfaces.IToOGrEE import IToOGrEE
 
 defaultOutputPath = realpath(f"{dirname(realpath(__file__))}/../../output/OGrEE")
 
 
 class OGrEEToOGrEE(IToOGrEE, BaseConverter):
-
     def __init__(
         self,
         url: str,
