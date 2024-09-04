@@ -16,3 +16,11 @@ Tools *Converter* and *NonSquareRooms* are installed as packages by poetry. Both
 ## The GUI
 
 There are two tabs in the GUI for now, one for 3dtools and one for NonSquareRooms. By default 3dtools is loaded with default parameters.
+
+### 3dtools tab
+
+![alt text](https://github.com/ditrit/OGrEE-Tools/blob/all-tools-gui/3dtools/doc/tools_3dtools.png)
+
+### NonSquareRooms tab
+
+![alt_text](https://github.com/ditrit/OGrEE-Tools/blob/all-tools-gui/3dtools/doc/tools_nsr.png)
