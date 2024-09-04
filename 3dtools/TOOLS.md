@@ -2,6 +2,8 @@
 
 Now it's possible to use multiple tools on the same GUI.
 
+Supported tools are 3dtools, NonSquareRooms and FBX.
+
 ## Setup
 
 In 3dtools repository:
@@ -11,11 +13,11 @@ poetry shell
 python main.py --gui
 ```
 
-Tools *Converter* and *NonSquareRooms* are installed as packages by poetry. Both projects have specific *pyproject.toml* in their repositories. For now *Converter* in installed for windows. For Linux, change the wheel path in *Converter/pyproject.toml*.
+Tools *Converter*, *NonSquareRooms* and *FBX* are installed as packages by poetry. All these subprojects have specific *pyproject.toml* in their repositories. For now *Converter* in installed for windows. For Linux, change the wheel path in *Converter/pyproject.toml*.
 
 ## The GUI
 
-There are two tabs in the GUI for now, one for 3dtools and one for NonSquareRooms. By default 3dtools is loaded with default parameters.
+There are three tabs in the GUI for now, one for 3dtools, one for NonSquareRooms and one for FBX. By default 3dtools is loaded with default parameters.
 
 ### 3dtools tab
 
@@ -24,3 +26,9 @@ There are two tabs in the GUI for now, one for 3dtools and one for NonSquareRoom
 ### NonSquareRooms tab
 
 ![alt_text](https://github.com/ditrit/OGrEE-Tools/blob/all-tools-gui/3dtools/doc/tools_nsr.png)
+
+### FBX tab
+
+![alt_text](https://github.com/ditrit/OGrEE-Tools/blob/all-tools-gui/3dtools/doc/tools_fbx.png)
+
+
