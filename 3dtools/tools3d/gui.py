@@ -9,6 +9,7 @@ from tkinter import (
     Checkbutton,
     Entry,
     Frame,
+    IntVar,
     Label,
     StringVar,
     Text,
@@ -24,6 +25,7 @@ from tkinter.filedialog import askopenfilename
 
 import numpy as np
 import tools3d.tools as tools
+from non_square_rooms.GenTiles import processJSON
 from PIL import Image, ImageTk
 from skimage.io import imsave
 from tools3d.classifiers import Classifiers
@@ -45,8 +47,6 @@ else:
     FontSizeOutput = 11
     OutputHeight = 17
     BigBtnWidth = 44
-
-from non_square_rooms.GenTiles import processJSON
 
 
 class Stdout_to_window(object):
@@ -2056,8 +2056,251 @@ class Gui(Tk):
         )
         print("When you're done, click 'Finish editing' to proceed.")
 
+    def load_image(self, label, path):
+        front_image = Image.open(path)
+        w = 100
+        self.image_ratio = w / front_image.width
+        h = int(self.image_ratio * front_image.height)
+
+        if h > 80:
+            h = 80
+            self.image_ratio = h / front_image.height
+            w = int(self.image_ratio * front_image.width)
+        front_image = front_image.resize((w, h))
+        photo = ImageTk.PhotoImage(front_image)
+
+        label.config(image=photo)
+        label.image = photo
+        label.grid()
+
+    def load_fbx_tab(self):
+        self.fbx_title = Label(
+            self.tab_fbx,
+            text="Welcome to OGrEE-Tools/Converter FBX!",
+            bg="white",
+            fg="black",
+            font=("Helvetica, 16"),
+            justify="center",
+            height=2,
+        )
+        self.fbx_title.grid(columnspan=2, column=0, row=2)
+
+        self.label_fbx_name = Label(
+            self.tab_fbx,
+            text="Name of the FBX",
+            bg="white",
+            font=("Helvetica, 12"),
+        )
+        self.label_fbx_name.grid(row=3, column=0, padx=10, pady=5)
+        self.text_fbx_name = Text(
+            self.tab_fbx, width=26, height=1, font=("Helvetica, 12")
+        )
+        self.text_fbx_name.grid(row=3, column=1, padx=10, pady=5)
+
+        self.label_fbx_wdh = Label(
+            self.tab_fbx,
+            text="Width,depth,height (mm)",
+            bg="white",
+            font=("Helvetica, 12"),
+        )
+        self.label_fbx_wdh.grid(row=4, column=0, padx=10, pady=5)
+        self.text_fbx_wdh = Text(
+            self.tab_fbx, width=26, height=1, font=("Helvetica, 12")
+        )
+        self.text_fbx_wdh.grid(row=4, column=1, padx=10, pady=5)
+
+        self.label_front = Label(
+            self.tab_fbx,
+            text="Path to the front picture (optional):",
+            bg="white",
+            font=("Helvetica, 12"),
+        )
+        self.label_front.grid(row=5, column=0, padx=10, pady=5)
+        self.text_front = Text(self.tab_fbx, width=26, height=1, font=("Helvetica, 12"))
+        self.text_front.grid(row=5, column=1, padx=10, pady=5)
+        self.image_front_label = Label(self.tab_fbx)
+        self.image_front_label.grid(row=5, column=3, padx=10, pady=5)
+        self.image_front_label.grid_remove()
+        self.button_front = Button(
+            self.tab_fbx,
+            text="Browse",
+            command=lambda: self.browse(self.text_front, self.image_front_label),
+            font=("Helvetica, 12"),
+        )
+        self.button_front.grid(row=5, column=2, padx=10, pady=5)
+
+        self.label_back = Label(
+            self.tab_fbx,
+            text="Path to the back picture (optional):",
+            bg="white",
+            font=("Helvetica, 12"),
+        )
+        self.label_back.grid(row=6, column=0, padx=10, pady=5)
+        self.text_back = Text(self.tab_fbx, width=26, height=1, font=("Helvetica, 12"))
+        self.text_back.grid(row=6, column=1, padx=10, pady=5)
+        self.image_back_label = Label(self.tab_fbx)
+        self.image_back_label.grid(row=6, column=3, padx=10, pady=5)
+        self.image_back_label.grid_remove()
+        self.button_back = Button(
+            self.tab_fbx,
+            text="Browse",
+            command=lambda: self.browse(self.text_back, self.image_back_label),
+            font=("Helvetica, 12"),
+        )
+        self.button_back.grid(row=6, column=2, padx=10, pady=5)
+
+        self.label_left = Label(
+            self.tab_fbx,
+            text="Path to the left picture (optional):",
+            bg="white",
+            font=("Helvetica, 12"),
+        )
+        self.label_left.grid(row=7, column=0, padx=10, pady=5)
+        self.text_left = Text(self.tab_fbx, width=26, height=1, font=("Helvetica, 12"))
+        self.text_left.grid(row=7, column=1, padx=10, pady=5)
+        self.image_left_label = Label(self.tab_fbx)
+        self.image_left_label.grid(row=7, column=3, padx=10, pady=5)
+        self.image_left_label.grid_remove()
+        self.button_left = Button(
+            self.tab_fbx,
+            text="Browse",
+            command=lambda: self.browse(self.text_left, self.image_left_label),
+            font=("Helvetica, 12"),
+        )
+        self.button_left.grid(row=7, column=2, padx=10, pady=5)
+
+        self.label_right = Label(
+            self.tab_fbx,
+            text="Path to the right picture (optional):",
+            bg="white",
+            font=("Helvetica, 12"),
+        )
+        self.label_right.grid(row=8, column=0, padx=10, pady=5)
+        self.text_right = Text(self.tab_fbx, width=26, height=1, font=("Helvetica, 12"))
+        self.text_right.grid(row=8, column=1, padx=10, pady=5)
+        self.image_right_label = Label(self.tab_fbx)
+        self.image_right_label.grid(row=8, column=3, padx=10, pady=5)
+        self.image_right_label.grid_remove()
+        self.button_right = Button(
+            self.tab_fbx,
+            text="Browse",
+            command=lambda: self.browse(self.text_right, self.image_right_label),
+            font=("Helvetica, 12"),
+        )
+        self.button_right.grid(row=8, column=2, padx=10, pady=5)
+
+        self.label_top = Label(
+            self.tab_fbx,
+            text="Path to the top picture (optional):",
+            bg="white",
+            font=("Helvetica, 12"),
+        )
+        self.label_top.grid(row=9, column=0, padx=10, pady=5)
+        self.text_top = Text(self.tab_fbx, width=26, height=1, font=("Helvetica, 12"))
+        self.text_top.grid(row=9, column=1, padx=10, pady=5)
+        self.image_top_label = Label(self.tab_fbx)
+        self.image_top_label.grid(row=9, column=3, padx=10, pady=5)
+        self.image_top_label.grid_remove()
+        self.button_top = Button(
+            self.tab_fbx,
+            text="Browse",
+            command=lambda: self.browse(self.text_top, self.image_top_label),
+            font=("Helvetica, 12"),
+        )
+        self.button_top.grid(row=9, column=2, padx=10, pady=5)
+
+        self.label_bottom = Label(
+            self.tab_fbx,
+            text="Path to the bottom picture (optional):",
+            bg="white",
+            font=("Helvetica, 12"),
+        )
+        self.label_bottom.grid(row=10, column=0, padx=10, pady=5)
+        self.text_bottom = Text(
+            self.tab_fbx, width=26, height=1, font=("Helvetica, 12")
+        )
+        self.text_bottom.grid(row=10, column=1, padx=10, pady=5)
+        self.image_bottom_label = Label(self.tab_fbx)
+        self.image_bottom_label.grid(row=10, column=3, padx=10, pady=5)
+        self.image_bottom_label.grid_remove()
+        self.button_bottom = Button(
+            self.tab_fbx,
+            text="Browse",
+            command=lambda: self.browse(self.text_bottom, self.image_bottom_label),
+            font=("Helvetica, 12"),
+        )
+        self.button_bottom.grid(row=10, column=2, padx=10, pady=5)
+
+        self.label_pic_folder = Label(
+            self.tab_fbx,
+            text="Path to folder containing pictures ending in -front, -back,... (optional):",
+            bg="white",
+            font=("Helvetica, 12"),
+        )
+        self.label_pic_folder.grid(row=11, column=0, padx=10, pady=5)
+        self.text_pic_folder = Text(
+            self.tab_fbx, width=26, height=1, font=("Helvetica, 12")
+        )
+        self.text_pic_folder.grid(row=11, column=1, padx=10, pady=5)
+        self.button_pic_folder = Button(
+            self.tab_fbx,
+            text="Browse",
+            command=lambda: self.browse(self.text_pic_folder),
+            font=("Helvetica, 12"),
+        )
+        self.button_pic_folder.grid(row=11, column=2, padx=10, pady=5)
+
+        self.label_fbx_output_path = Label(
+            self.tab_fbx,
+            text="Output path (optional):",
+            bg="white",
+            font=("Helvetica, 12"),
+        )
+        self.label_fbx_output_path.grid(row=12, column=0, padx=10, pady=5)
+        self.text_fbx_output_path = Text(
+            self.tab_fbx, width=26, height=1, font=("Helvetica, 12")
+        )
+        self.text_fbx_output_path.grid(row=12, column=1, padx=10, pady=5)
+        self.button_fbx_output_path = Button(
+            self.tab_fbx,
+            text="Browse",
+            command=lambda: self.browse_folder(self.text_fbx_output_path),
+            font=("Helvetica, 12"),
+        )
+        self.button_fbx_output_path.grid(row=12, column=2, padx=10, pady=5)
+
+        self.create_fbx_button = Button(
+            self.tab_fbx,
+            text="Create FBX",
+            command=lambda: self.check_fbx_form(),
+            fg="black",
+            height=3,
+            width=15,
+            font=("Helvetica, 12"),
+        )
+        self.create_fbx_button.grid(row=13, column=2, padx=10, pady=5)
+
+        self.fbx_error_message = Label(
+            self.tab_fbx,
+            text="Error during the FBX creation: ",
+            bg="white",
+            foreground="red",
+            font=("Helvetica, 12"),
+        )
+        self.fbx_error_message.grid(row=13, column=0, padx=10, pady=5)
+        self.fbx_error_message.grid_remove()
+
+        self.fbx_success_message = Label(
+            self.tab_fbx,
+            text="FBX successfully created.",
+            bg="white",
+            foreground="green",
+            font=("Helvetica, 12"),
+        )
+        self.fbx_success_message.grid(row=13, column=0, padx=10, pady=5)
+        self.fbx_success_message.grid_remove()
+
     def load_square_tab(self):
-        # Buttons on two leftmost columns
         self.nsr_title = Label(
             self.tab_square,
             text="Welcome to OGrEE-Tools/NonSquareRooms!",
@@ -2083,7 +2326,7 @@ class Gui(Tk):
         self.button_source = Button(
             self.tab_square,
             text="Browse",
-            command=self.browse_source,
+            command=lambda: self.browse(self.text_source),
             font=("Helvetica, 12"),
         )
         self.button_source.grid(row=3, column=2, padx=10, pady=5)
@@ -2136,11 +2379,13 @@ class Gui(Tk):
         )
         self.text_tilesize.grid(row=7, column=1, padx=10, pady=5)
 
+        self.opti_result = IntVar()
         self.check_button_opti = Checkbutton(
             self.tab_square,
             text="Optimize (SLOW)",
             bg="white",
             font=("Helvetica, 12"),
+            variable=self.opti_result,
         )
         self.check_button_opti.grid(row=8, column=0, padx=10, pady=5)
 
@@ -2161,8 +2406,51 @@ class Gui(Tk):
             fg="black",
             height=3,
             width=12,
+            font=("Helvetica, 12"),
         )
         self.draw_button.grid(row=10, column=2, padx=10, pady=5)
+
+    def check_fbx_form(self):
+        self.fbx_error_message.grid_remove()
+        self.fbx_success_message.grid_remove()
+
+        if not self.text_fbx_name.get("1.0", "end-1c"):
+            self.fbx_error_message.config(text="Name of the FBX is required.")
+            self.fbx_error_message.grid()
+            return
+        elif not self.text_fbx_wdh.get("1.0", "end-1c"):
+            self.fbx_error_message.config(text="WDH field is required.")
+            self.fbx_error_message.grid()
+            return
+
+        try:
+            wdh = [float(s) for s in self.text_fbx_wdh.get("1.0", "end-1c").split(",")]
+        except Exception:
+            self.fbx_error_message.config(
+                text="Wrong WDH format: it should be width,depth,height (mm)"
+            )
+            self.fbx_error_message.grid()
+            return
+
+        try:
+            CreateFBX(
+                name=self.text_fbx_name.get("1.0", "end-1c"),
+                width=wdh[0] / 10,
+                depth=wdh[1] / 10,
+                height=wdh[2] / 10,
+                front=self.text_front.get("1.0", "end-1c"),
+                back=self.text_back.get("1.0", "end-1c"),
+                left=self.text_left.get("1.0", "end-1c"),
+                right=self.text_right.get("1.0", "end-1c"),
+                top=self.text_top.get("1.0", "end-1c"),
+                bottom=self.text_bottom.get("1.0", "end-1c"),
+                outputPath=self.text_fbx_output_path.get("1.0", "end-1c"),
+            )
+            self.fbx_success_message.grid()
+        except Exception as e:
+            self.fbx_error_message.config(text=f"Error while creating FBX: {str(e)}")
+            self.fbx_error_message.grid()
+            return
 
     def check_form(self):
         self.error_message.grid_remove()
@@ -2184,14 +2472,22 @@ class Gui(Tk):
                 outname=self.text_dest.get("1.0", "end-1c")
                 if self.text_dest.get("1.0", "end-1c")
                 else None,
-                opti=False,
+                opti=self.opti_result.get(),
             )
 
-    def browse_source(self):
+    def browse(self, input, label=None):
         path = filedialog.askopenfilename()
         if path:
-            self.text_source.delete("1.0", END)
-            self.text_source.insert("1.0", path)
+            input.delete("1.0", END)
+            input.insert("1.0", path)
+            if label is not None:
+                self.load_image(label, path)
+
+    def browse_folder(self, input):
+        path = filedialog.askdirectory()
+        if path:
+            input.delete("1.0", END)
+            input.insert("1.0", path)
 
     def load_tools3d_tab(self):
         # Buttons on two leftmost columns
@@ -2433,11 +2729,16 @@ class Gui(Tk):
         self.tab_square = ttk.Frame(tabControl, style="TFrame")
         self.tab_square.grid(columnspan=5, rowspan=7, row=3, column=0)
 
+        self.tab_fbx = ttk.Frame(tabControl, style="TFrame")
+        self.tab_fbx.grid(columnspan=5, rowspan=7, row=3, column=0)
+
         tabControl.add(self.tab_3dtools, text="3dtools")
         tabControl.add(self.tab_square, text="Non Square Rooms")
+        tabControl.add(self.tab_fbx, text="FBX")
         tabControl.grid(columnspan=5, rowspan=7, row=3, column=0)
 
         self.main_content = tabControl
+        self.load_fbx_tab()
         self.load_square_tab()
         self.load_tools3d_tab()
 

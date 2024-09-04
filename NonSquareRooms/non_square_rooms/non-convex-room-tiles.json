@@ -1,0 +1,7063 @@
+{
+    "slug": "non-convex-room2",
+    "category": "room",
+    "axisOrientation": "+x+y",
+    "sizeWDHm": [
+        21,
+        39,
+        3
+    ],
+    "floorUnit": "m",
+    "vertices": [
+        [
+            20.4,
+            0
+        ],
+        [
+            0,
+            9.56
+        ],
+        [
+            0,
+            23.2
+        ],
+        [
+            15.6,
+            23.2
+        ],
+        [
+            15.6,
+            19.7
+        ],
+        [
+            20.7,
+            13.2
+        ],
+        [
+            19.4,
+            11.7
+        ],
+        [
+            22.2,
+            9.1
+        ],
+        [
+            23.6,
+            10.68
+        ],
+        [
+            25.8,
+            8.6
+        ],
+        [
+            26.52,
+            6.12
+        ]
+    ],
+    "technicalArea": [
+        0,
+        0,
+        5,
+        5
+    ],
+    "reservedArea": [
+        3,
+        5,
+        2,
+        3
+    ],
+    "separators": [],
+    "colors": [
+        {
+            "name": "reserved",
+            "value": "ffffff"
+        },
+        {
+            "name": "plain",
+            "value": "5BDCFF"
+        },
+        {
+            "name": "hot",
+            "value": "ff0000"
+        },
+        {
+            "name": "perf22",
+            "value": "6495ed"
+        },
+        {
+            "name": "perf29",
+            "value": "0000cd"
+        },
+        {
+            "name": "perf88",
+            "value": "0000ff"
+        }
+    ],
+    "tiles": [
+        {
+            "location": "20.7/0.9",
+            "name": "",
+            "label": "0/0",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.7/1.5",
+            "name": "",
+            "label": "0/1",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.7/2.1",
+            "name": "",
+            "label": "0/2",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.7/2.7",
+            "name": "",
+            "label": "0/3",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.7/3.3",
+            "name": "",
+            "label": "0/4",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.7/3.9",
+            "name": "",
+            "label": "0/5",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.7/4.5",
+            "name": "",
+            "label": "0/6",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.7/5.1",
+            "name": "",
+            "label": "0/7",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.7/5.7",
+            "name": "",
+            "label": "0/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.7/6.3",
+            "name": "",
+            "label": "0/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.7/6.9",
+            "name": "",
+            "label": "0/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.7/7.5",
+            "name": "",
+            "label": "0/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.7/8.1",
+            "name": "",
+            "label": "0/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.7/8.7",
+            "name": "",
+            "label": "0/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.7/9.3",
+            "name": "",
+            "label": "0/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.7/9.9",
+            "name": "",
+            "label": "0/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "21.3/1.5",
+            "name": "",
+            "label": "1/1",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "21.3/2.1",
+            "name": "",
+            "label": "1/2",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "21.3/2.7",
+            "name": "",
+            "label": "1/3",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "21.3/3.3",
+            "name": "",
+            "label": "1/4",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "21.3/3.9",
+            "name": "",
+            "label": "1/5",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "21.3/4.5",
+            "name": "",
+            "label": "1/6",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "21.3/5.1",
+            "name": "",
+            "label": "1/7",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "21.3/5.7",
+            "name": "",
+            "label": "1/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "21.3/6.3",
+            "name": "",
+            "label": "1/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "21.3/6.9",
+            "name": "",
+            "label": "1/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "21.3/7.5",
+            "name": "",
+            "label": "1/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "21.3/8.1",
+            "name": "",
+            "label": "1/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "21.3/8.7",
+            "name": "",
+            "label": "1/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "21.3/9.3",
+            "name": "",
+            "label": "1/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "21.9/2.1",
+            "name": "",
+            "label": "2/2",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "21.9/2.7",
+            "name": "",
+            "label": "2/3",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "21.9/3.3",
+            "name": "",
+            "label": "2/4",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "21.9/3.9",
+            "name": "",
+            "label": "2/5",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "21.9/4.5",
+            "name": "",
+            "label": "2/6",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "21.9/5.1",
+            "name": "",
+            "label": "2/7",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "21.9/5.7",
+            "name": "",
+            "label": "2/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "21.9/6.3",
+            "name": "",
+            "label": "2/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "21.9/6.9",
+            "name": "",
+            "label": "2/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "21.9/7.5",
+            "name": "",
+            "label": "2/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "21.9/8.1",
+            "name": "",
+            "label": "2/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "21.9/8.7",
+            "name": "",
+            "label": "2/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "22.5/2.7",
+            "name": "",
+            "label": "3/3",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "22.5/3.3",
+            "name": "",
+            "label": "3/4",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "22.5/3.9",
+            "name": "",
+            "label": "3/5",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "22.5/4.5",
+            "name": "",
+            "label": "3/6",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "22.5/5.1",
+            "name": "",
+            "label": "3/7",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "22.5/5.7",
+            "name": "",
+            "label": "3/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "22.5/6.3",
+            "name": "",
+            "label": "3/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "22.5/6.9",
+            "name": "",
+            "label": "3/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "22.5/7.5",
+            "name": "",
+            "label": "3/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "22.5/8.1",
+            "name": "",
+            "label": "3/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "22.5/8.7",
+            "name": "",
+            "label": "3/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "23.1/3.3",
+            "name": "",
+            "label": "4/4",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "23.1/3.9",
+            "name": "",
+            "label": "4/5",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "23.1/4.5",
+            "name": "",
+            "label": "4/6",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "23.1/5.1",
+            "name": "",
+            "label": "4/7",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "23.1/5.7",
+            "name": "",
+            "label": "4/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "23.1/6.3",
+            "name": "",
+            "label": "4/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "23.1/6.9",
+            "name": "",
+            "label": "4/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "23.1/7.5",
+            "name": "",
+            "label": "4/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "23.1/8.1",
+            "name": "",
+            "label": "4/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "23.1/8.7",
+            "name": "",
+            "label": "4/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "23.1/9.3",
+            "name": "",
+            "label": "4/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "23.7/3.9",
+            "name": "",
+            "label": "5/5",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "23.7/4.5",
+            "name": "",
+            "label": "5/6",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "23.7/5.1",
+            "name": "",
+            "label": "5/7",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "23.7/5.7",
+            "name": "",
+            "label": "5/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "23.7/6.3",
+            "name": "",
+            "label": "5/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "23.7/6.9",
+            "name": "",
+            "label": "5/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "23.7/7.5",
+            "name": "",
+            "label": "5/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "23.7/8.1",
+            "name": "",
+            "label": "5/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "23.7/8.7",
+            "name": "",
+            "label": "5/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "23.7/9.3",
+            "name": "",
+            "label": "5/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "23.7/9.9",
+            "name": "",
+            "label": "5/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "24.3/4.5",
+            "name": "",
+            "label": "6/6",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "24.3/5.1",
+            "name": "",
+            "label": "6/7",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "24.3/5.7",
+            "name": "",
+            "label": "6/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "24.3/6.3",
+            "name": "",
+            "label": "6/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "24.3/6.9",
+            "name": "",
+            "label": "6/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "24.3/7.5",
+            "name": "",
+            "label": "6/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "24.3/8.1",
+            "name": "",
+            "label": "6/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "24.3/8.7",
+            "name": "",
+            "label": "6/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "24.3/9.3",
+            "name": "",
+            "label": "6/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "24.9/5.1",
+            "name": "",
+            "label": "7/7",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "24.9/5.7",
+            "name": "",
+            "label": "7/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "24.9/6.3",
+            "name": "",
+            "label": "7/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "24.9/6.9",
+            "name": "",
+            "label": "7/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "24.9/7.5",
+            "name": "",
+            "label": "7/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "24.9/8.1",
+            "name": "",
+            "label": "7/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "24.9/8.7",
+            "name": "",
+            "label": "7/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "25.5/5.7",
+            "name": "",
+            "label": "8/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "25.5/6.3",
+            "name": "",
+            "label": "8/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "25.5/6.9",
+            "name": "",
+            "label": "8/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "25.5/7.5",
+            "name": "",
+            "label": "8/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "25.5/8.1",
+            "name": "",
+            "label": "8/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.1/0.9",
+            "name": "",
+            "label": "-1/0",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.1/1.5",
+            "name": "",
+            "label": "-1/1",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.1/2.1",
+            "name": "",
+            "label": "-1/2",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.1/2.7",
+            "name": "",
+            "label": "-1/3",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.1/3.3",
+            "name": "",
+            "label": "-1/4",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.1/3.9",
+            "name": "",
+            "label": "-1/5",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.1/4.5",
+            "name": "",
+            "label": "-1/6",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.1/5.1",
+            "name": "",
+            "label": "-1/7",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.1/5.7",
+            "name": "",
+            "label": "-1/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.1/6.3",
+            "name": "",
+            "label": "-1/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.1/6.9",
+            "name": "",
+            "label": "-1/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.1/7.5",
+            "name": "",
+            "label": "-1/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.1/8.1",
+            "name": "",
+            "label": "-1/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.1/8.7",
+            "name": "",
+            "label": "-1/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.1/9.3",
+            "name": "",
+            "label": "-1/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "20.1/9.9",
+            "name": "",
+            "label": "-1/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "19.5/0.9",
+            "name": "",
+            "label": "-2/0",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "19.5/1.5",
+            "name": "",
+            "label": "-2/1",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "19.5/2.1",
+            "name": "",
+            "label": "-2/2",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "19.5/2.7",
+            "name": "",
+            "label": "-2/3",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "19.5/3.3",
+            "name": "",
+            "label": "-2/4",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "19.5/3.9",
+            "name": "",
+            "label": "-2/5",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "19.5/4.5",
+            "name": "",
+            "label": "-2/6",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "19.5/5.1",
+            "name": "",
+            "label": "-2/7",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "19.5/5.7",
+            "name": "",
+            "label": "-2/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "19.5/6.3",
+            "name": "",
+            "label": "-2/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "19.5/6.9",
+            "name": "",
+            "label": "-2/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "19.5/7.5",
+            "name": "",
+            "label": "-2/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "19.5/8.1",
+            "name": "",
+            "label": "-2/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "19.5/8.7",
+            "name": "",
+            "label": "-2/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "19.5/9.3",
+            "name": "",
+            "label": "-2/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "19.5/9.9",
+            "name": "",
+            "label": "-2/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "19.5/10.5",
+            "name": "",
+            "label": "-2/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "19.5/12.9",
+            "name": "",
+            "label": "-2/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "19.5/13.5",
+            "name": "",
+            "label": "-2/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.9/1.5",
+            "name": "",
+            "label": "-3/1",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.9/2.1",
+            "name": "",
+            "label": "-3/2",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.9/2.7",
+            "name": "",
+            "label": "-3/3",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.9/3.3",
+            "name": "",
+            "label": "-3/4",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.9/3.9",
+            "name": "",
+            "label": "-3/5",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.9/4.5",
+            "name": "",
+            "label": "-3/6",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.9/5.1",
+            "name": "",
+            "label": "-3/7",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.9/5.7",
+            "name": "",
+            "label": "-3/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.9/6.3",
+            "name": "",
+            "label": "-3/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.9/6.9",
+            "name": "",
+            "label": "-3/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.9/7.5",
+            "name": "",
+            "label": "-3/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.9/8.1",
+            "name": "",
+            "label": "-3/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.9/8.7",
+            "name": "",
+            "label": "-3/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.9/9.3",
+            "name": "",
+            "label": "-3/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.9/9.9",
+            "name": "",
+            "label": "-3/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.9/10.5",
+            "name": "",
+            "label": "-3/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.9/11.1",
+            "name": "",
+            "label": "-3/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.9/11.7",
+            "name": "",
+            "label": "-3/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.9/12.3",
+            "name": "",
+            "label": "-3/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.9/12.9",
+            "name": "",
+            "label": "-3/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.9/13.5",
+            "name": "",
+            "label": "-3/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.9/14.1",
+            "name": "",
+            "label": "-3/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.9/14.7",
+            "name": "",
+            "label": "-3/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.3/1.5",
+            "name": "",
+            "label": "-4/1",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.3/2.1",
+            "name": "",
+            "label": "-4/2",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.3/2.7",
+            "name": "",
+            "label": "-4/3",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.3/3.3",
+            "name": "",
+            "label": "-4/4",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.3/3.9",
+            "name": "",
+            "label": "-4/5",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.3/4.5",
+            "name": "",
+            "label": "-4/6",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.3/5.1",
+            "name": "",
+            "label": "-4/7",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.3/5.7",
+            "name": "",
+            "label": "-4/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.3/6.3",
+            "name": "",
+            "label": "-4/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.3/6.9",
+            "name": "",
+            "label": "-4/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.3/7.5",
+            "name": "",
+            "label": "-4/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.3/8.1",
+            "name": "",
+            "label": "-4/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.3/8.7",
+            "name": "",
+            "label": "-4/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.3/9.3",
+            "name": "",
+            "label": "-4/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.3/9.9",
+            "name": "",
+            "label": "-4/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.3/10.5",
+            "name": "",
+            "label": "-4/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.3/11.1",
+            "name": "",
+            "label": "-4/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.3/11.7",
+            "name": "",
+            "label": "-4/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.3/12.3",
+            "name": "",
+            "label": "-4/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.3/12.9",
+            "name": "",
+            "label": "-4/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.3/13.5",
+            "name": "",
+            "label": "-4/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.3/14.1",
+            "name": "",
+            "label": "-4/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.3/14.7",
+            "name": "",
+            "label": "-4/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "18.3/15.3",
+            "name": "",
+            "label": "-4/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.7/2.1",
+            "name": "",
+            "label": "-5/2",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.7/2.7",
+            "name": "",
+            "label": "-5/3",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.7/3.3",
+            "name": "",
+            "label": "-5/4",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.7/3.9",
+            "name": "",
+            "label": "-5/5",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.7/4.5",
+            "name": "",
+            "label": "-5/6",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.7/5.1",
+            "name": "",
+            "label": "-5/7",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.7/5.7",
+            "name": "",
+            "label": "-5/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.7/6.3",
+            "name": "",
+            "label": "-5/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.7/6.9",
+            "name": "",
+            "label": "-5/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.7/7.5",
+            "name": "",
+            "label": "-5/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.7/8.1",
+            "name": "",
+            "label": "-5/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.7/8.7",
+            "name": "",
+            "label": "-5/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.7/9.3",
+            "name": "",
+            "label": "-5/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.7/9.9",
+            "name": "",
+            "label": "-5/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.7/10.5",
+            "name": "",
+            "label": "-5/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.7/11.1",
+            "name": "",
+            "label": "-5/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.7/11.7",
+            "name": "",
+            "label": "-5/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.7/12.3",
+            "name": "",
+            "label": "-5/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.7/12.9",
+            "name": "",
+            "label": "-5/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.7/13.5",
+            "name": "",
+            "label": "-5/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.7/14.1",
+            "name": "",
+            "label": "-5/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.7/14.7",
+            "name": "",
+            "label": "-5/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.7/15.3",
+            "name": "",
+            "label": "-5/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.7/15.9",
+            "name": "",
+            "label": "-5/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.1/2.1",
+            "name": "",
+            "label": "-6/2",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.1/2.7",
+            "name": "",
+            "label": "-6/3",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.1/3.3",
+            "name": "",
+            "label": "-6/4",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.1/3.9",
+            "name": "",
+            "label": "-6/5",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.1/4.5",
+            "name": "",
+            "label": "-6/6",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.1/5.1",
+            "name": "",
+            "label": "-6/7",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.1/5.7",
+            "name": "",
+            "label": "-6/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.1/6.3",
+            "name": "",
+            "label": "-6/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.1/6.9",
+            "name": "",
+            "label": "-6/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.1/7.5",
+            "name": "",
+            "label": "-6/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.1/8.1",
+            "name": "",
+            "label": "-6/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.1/8.7",
+            "name": "",
+            "label": "-6/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.1/9.3",
+            "name": "",
+            "label": "-6/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.1/9.9",
+            "name": "",
+            "label": "-6/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.1/10.5",
+            "name": "",
+            "label": "-6/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.1/11.1",
+            "name": "",
+            "label": "-6/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.1/11.7",
+            "name": "",
+            "label": "-6/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.1/12.3",
+            "name": "",
+            "label": "-6/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.1/12.9",
+            "name": "",
+            "label": "-6/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.1/13.5",
+            "name": "",
+            "label": "-6/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.1/14.1",
+            "name": "",
+            "label": "-6/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.1/14.7",
+            "name": "",
+            "label": "-6/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.1/15.3",
+            "name": "",
+            "label": "-6/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.1/15.9",
+            "name": "",
+            "label": "-6/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.1/16.5",
+            "name": "",
+            "label": "-6/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "17.1/17.1",
+            "name": "",
+            "label": "-6/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "16.5/2.7",
+            "name": "",
+            "label": "-7/3",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "16.5/3.3",
+            "name": "",
+            "label": "-7/4",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "16.5/3.9",
+            "name": "",
+            "label": "-7/5",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "16.5/4.5",
+            "name": "",
+            "label": "-7/6",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "16.5/5.1",
+            "name": "",
+            "label": "-7/7",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "16.5/5.7",
+            "name": "",
+            "label": "-7/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "16.5/6.3",
+            "name": "",
+            "label": "-7/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "16.5/6.9",
+            "name": "",
+            "label": "-7/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "16.5/7.5",
+            "name": "",
+            "label": "-7/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "16.5/8.1",
+            "name": "",
+            "label": "-7/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "16.5/8.7",
+            "name": "",
+            "label": "-7/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "16.5/9.3",
+            "name": "",
+            "label": "-7/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "16.5/9.9",
+            "name": "",
+            "label": "-7/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "16.5/10.5",
+            "name": "",
+            "label": "-7/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "16.5/11.1",
+            "name": "",
+            "label": "-7/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "16.5/11.7",
+            "name": "",
+            "label": "-7/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "16.5/12.3",
+            "name": "",
+            "label": "-7/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "16.5/12.9",
+            "name": "",
+            "label": "-7/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "16.5/13.5",
+            "name": "",
+            "label": "-7/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "16.5/14.1",
+            "name": "",
+            "label": "-7/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "16.5/14.7",
+            "name": "",
+            "label": "-7/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "16.5/15.3",
+            "name": "",
+            "label": "-7/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "16.5/15.9",
+            "name": "",
+            "label": "-7/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "16.5/16.5",
+            "name": "",
+            "label": "-7/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "16.5/17.1",
+            "name": "",
+            "label": "-7/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "16.5/17.7",
+            "name": "",
+            "label": "-7/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/2.7",
+            "name": "",
+            "label": "-8/3",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/3.3",
+            "name": "",
+            "label": "-8/4",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/3.9",
+            "name": "",
+            "label": "-8/5",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/4.5",
+            "name": "",
+            "label": "-8/6",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/5.1",
+            "name": "",
+            "label": "-8/7",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/5.7",
+            "name": "",
+            "label": "-8/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/6.3",
+            "name": "",
+            "label": "-8/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/6.9",
+            "name": "",
+            "label": "-8/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/7.5",
+            "name": "",
+            "label": "-8/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/8.1",
+            "name": "",
+            "label": "-8/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/8.7",
+            "name": "",
+            "label": "-8/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/9.3",
+            "name": "",
+            "label": "-8/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/9.9",
+            "name": "",
+            "label": "-8/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/10.5",
+            "name": "",
+            "label": "-8/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/11.1",
+            "name": "",
+            "label": "-8/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/11.7",
+            "name": "",
+            "label": "-8/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/12.3",
+            "name": "",
+            "label": "-8/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/12.9",
+            "name": "",
+            "label": "-8/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/13.5",
+            "name": "",
+            "label": "-8/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/14.1",
+            "name": "",
+            "label": "-8/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/14.7",
+            "name": "",
+            "label": "-8/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/15.3",
+            "name": "",
+            "label": "-8/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/15.9",
+            "name": "",
+            "label": "-8/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/16.5",
+            "name": "",
+            "label": "-8/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/17.1",
+            "name": "",
+            "label": "-8/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/17.7",
+            "name": "",
+            "label": "-8/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.9/18.3",
+            "name": "",
+            "label": "-8/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/3.3",
+            "name": "",
+            "label": "-9/4",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/3.9",
+            "name": "",
+            "label": "-9/5",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/4.5",
+            "name": "",
+            "label": "-9/6",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/5.1",
+            "name": "",
+            "label": "-9/7",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/5.7",
+            "name": "",
+            "label": "-9/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/6.3",
+            "name": "",
+            "label": "-9/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/6.9",
+            "name": "",
+            "label": "-9/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/7.5",
+            "name": "",
+            "label": "-9/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/8.1",
+            "name": "",
+            "label": "-9/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/8.7",
+            "name": "",
+            "label": "-9/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/9.3",
+            "name": "",
+            "label": "-9/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/9.9",
+            "name": "",
+            "label": "-9/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/10.5",
+            "name": "",
+            "label": "-9/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/11.1",
+            "name": "",
+            "label": "-9/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/11.7",
+            "name": "",
+            "label": "-9/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/12.3",
+            "name": "",
+            "label": "-9/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/12.9",
+            "name": "",
+            "label": "-9/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/13.5",
+            "name": "",
+            "label": "-9/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/14.1",
+            "name": "",
+            "label": "-9/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/14.7",
+            "name": "",
+            "label": "-9/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/15.3",
+            "name": "",
+            "label": "-9/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/15.9",
+            "name": "",
+            "label": "-9/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/16.5",
+            "name": "",
+            "label": "-9/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/17.1",
+            "name": "",
+            "label": "-9/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/17.7",
+            "name": "",
+            "label": "-9/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/18.3",
+            "name": "",
+            "label": "-9/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/18.9",
+            "name": "",
+            "label": "-9/30",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/19.5",
+            "name": "",
+            "label": "-9/31",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/20.1",
+            "name": "",
+            "label": "-9/32",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/20.7",
+            "name": "",
+            "label": "-9/33",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/21.3",
+            "name": "",
+            "label": "-9/34",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/21.9",
+            "name": "",
+            "label": "-9/35",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "15.3/22.5",
+            "name": "",
+            "label": "-9/36",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/3.3",
+            "name": "",
+            "label": "-10/4",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/3.9",
+            "name": "",
+            "label": "-10/5",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/4.5",
+            "name": "",
+            "label": "-10/6",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/5.1",
+            "name": "",
+            "label": "-10/7",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/5.7",
+            "name": "",
+            "label": "-10/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/6.3",
+            "name": "",
+            "label": "-10/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/6.9",
+            "name": "",
+            "label": "-10/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/7.5",
+            "name": "",
+            "label": "-10/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/8.1",
+            "name": "",
+            "label": "-10/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/8.7",
+            "name": "",
+            "label": "-10/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/9.3",
+            "name": "",
+            "label": "-10/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/9.9",
+            "name": "",
+            "label": "-10/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/10.5",
+            "name": "",
+            "label": "-10/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/11.1",
+            "name": "",
+            "label": "-10/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/11.7",
+            "name": "",
+            "label": "-10/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/12.3",
+            "name": "",
+            "label": "-10/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/12.9",
+            "name": "",
+            "label": "-10/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/13.5",
+            "name": "",
+            "label": "-10/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/14.1",
+            "name": "",
+            "label": "-10/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/14.7",
+            "name": "",
+            "label": "-10/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/15.3",
+            "name": "",
+            "label": "-10/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/15.9",
+            "name": "",
+            "label": "-10/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/16.5",
+            "name": "",
+            "label": "-10/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/17.1",
+            "name": "",
+            "label": "-10/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/17.7",
+            "name": "",
+            "label": "-10/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/18.3",
+            "name": "",
+            "label": "-10/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/18.9",
+            "name": "",
+            "label": "-10/30",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/19.5",
+            "name": "",
+            "label": "-10/31",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/20.1",
+            "name": "",
+            "label": "-10/32",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/20.7",
+            "name": "",
+            "label": "-10/33",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/21.3",
+            "name": "",
+            "label": "-10/34",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/21.9",
+            "name": "",
+            "label": "-10/35",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.7/22.5",
+            "name": "",
+            "label": "-10/36",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/3.9",
+            "name": "",
+            "label": "-11/5",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/4.5",
+            "name": "",
+            "label": "-11/6",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/5.1",
+            "name": "",
+            "label": "-11/7",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/5.7",
+            "name": "",
+            "label": "-11/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/6.3",
+            "name": "",
+            "label": "-11/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/6.9",
+            "name": "",
+            "label": "-11/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/7.5",
+            "name": "",
+            "label": "-11/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/8.1",
+            "name": "",
+            "label": "-11/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/8.7",
+            "name": "",
+            "label": "-11/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/9.3",
+            "name": "",
+            "label": "-11/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/9.9",
+            "name": "",
+            "label": "-11/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/10.5",
+            "name": "",
+            "label": "-11/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/11.1",
+            "name": "",
+            "label": "-11/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/11.7",
+            "name": "",
+            "label": "-11/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/12.3",
+            "name": "",
+            "label": "-11/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/12.9",
+            "name": "",
+            "label": "-11/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/13.5",
+            "name": "",
+            "label": "-11/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/14.1",
+            "name": "",
+            "label": "-11/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/14.7",
+            "name": "",
+            "label": "-11/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/15.3",
+            "name": "",
+            "label": "-11/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/15.9",
+            "name": "",
+            "label": "-11/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/16.5",
+            "name": "",
+            "label": "-11/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/17.1",
+            "name": "",
+            "label": "-11/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/17.7",
+            "name": "",
+            "label": "-11/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/18.3",
+            "name": "",
+            "label": "-11/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/18.9",
+            "name": "",
+            "label": "-11/30",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/19.5",
+            "name": "",
+            "label": "-11/31",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/20.1",
+            "name": "",
+            "label": "-11/32",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/20.7",
+            "name": "",
+            "label": "-11/33",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/21.3",
+            "name": "",
+            "label": "-11/34",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/21.9",
+            "name": "",
+            "label": "-11/35",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "14.1/22.5",
+            "name": "",
+            "label": "-11/36",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/3.9",
+            "name": "",
+            "label": "-12/5",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/4.5",
+            "name": "",
+            "label": "-12/6",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/5.1",
+            "name": "",
+            "label": "-12/7",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/5.7",
+            "name": "",
+            "label": "-12/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/6.3",
+            "name": "",
+            "label": "-12/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/6.9",
+            "name": "",
+            "label": "-12/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/7.5",
+            "name": "",
+            "label": "-12/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/8.1",
+            "name": "",
+            "label": "-12/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/8.7",
+            "name": "",
+            "label": "-12/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/9.3",
+            "name": "",
+            "label": "-12/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/9.9",
+            "name": "",
+            "label": "-12/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/10.5",
+            "name": "",
+            "label": "-12/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/11.1",
+            "name": "",
+            "label": "-12/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/11.7",
+            "name": "",
+            "label": "-12/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/12.3",
+            "name": "",
+            "label": "-12/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/12.9",
+            "name": "",
+            "label": "-12/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/13.5",
+            "name": "",
+            "label": "-12/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/14.1",
+            "name": "",
+            "label": "-12/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/14.7",
+            "name": "",
+            "label": "-12/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/15.3",
+            "name": "",
+            "label": "-12/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/15.9",
+            "name": "",
+            "label": "-12/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/16.5",
+            "name": "",
+            "label": "-12/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/17.1",
+            "name": "",
+            "label": "-12/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/17.7",
+            "name": "",
+            "label": "-12/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/18.3",
+            "name": "",
+            "label": "-12/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/18.9",
+            "name": "",
+            "label": "-12/30",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/19.5",
+            "name": "",
+            "label": "-12/31",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/20.1",
+            "name": "",
+            "label": "-12/32",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/20.7",
+            "name": "",
+            "label": "-12/33",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/21.3",
+            "name": "",
+            "label": "-12/34",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/21.9",
+            "name": "",
+            "label": "-12/35",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "13.5/22.5",
+            "name": "",
+            "label": "-12/36",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/4.5",
+            "name": "",
+            "label": "-13/6",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/5.1",
+            "name": "",
+            "label": "-13/7",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/5.7",
+            "name": "",
+            "label": "-13/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/6.3",
+            "name": "",
+            "label": "-13/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/6.9",
+            "name": "",
+            "label": "-13/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/7.5",
+            "name": "",
+            "label": "-13/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/8.1",
+            "name": "",
+            "label": "-13/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/8.7",
+            "name": "",
+            "label": "-13/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/9.3",
+            "name": "",
+            "label": "-13/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/9.9",
+            "name": "",
+            "label": "-13/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/10.5",
+            "name": "",
+            "label": "-13/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/11.1",
+            "name": "",
+            "label": "-13/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/11.7",
+            "name": "",
+            "label": "-13/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/12.3",
+            "name": "",
+            "label": "-13/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/12.9",
+            "name": "",
+            "label": "-13/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/13.5",
+            "name": "",
+            "label": "-13/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/14.1",
+            "name": "",
+            "label": "-13/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/14.7",
+            "name": "",
+            "label": "-13/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/15.3",
+            "name": "",
+            "label": "-13/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/15.9",
+            "name": "",
+            "label": "-13/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/16.5",
+            "name": "",
+            "label": "-13/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/17.1",
+            "name": "",
+            "label": "-13/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/17.7",
+            "name": "",
+            "label": "-13/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/18.3",
+            "name": "",
+            "label": "-13/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/18.9",
+            "name": "",
+            "label": "-13/30",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/19.5",
+            "name": "",
+            "label": "-13/31",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/20.1",
+            "name": "",
+            "label": "-13/32",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/20.7",
+            "name": "",
+            "label": "-13/33",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/21.3",
+            "name": "",
+            "label": "-13/34",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/21.9",
+            "name": "",
+            "label": "-13/35",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.9/22.5",
+            "name": "",
+            "label": "-13/36",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/4.5",
+            "name": "",
+            "label": "-14/6",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/5.1",
+            "name": "",
+            "label": "-14/7",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/5.7",
+            "name": "",
+            "label": "-14/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/6.3",
+            "name": "",
+            "label": "-14/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/6.9",
+            "name": "",
+            "label": "-14/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/7.5",
+            "name": "",
+            "label": "-14/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/8.1",
+            "name": "",
+            "label": "-14/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/8.7",
+            "name": "",
+            "label": "-14/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/9.3",
+            "name": "",
+            "label": "-14/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/9.9",
+            "name": "",
+            "label": "-14/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/10.5",
+            "name": "",
+            "label": "-14/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/11.1",
+            "name": "",
+            "label": "-14/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/11.7",
+            "name": "",
+            "label": "-14/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/12.3",
+            "name": "",
+            "label": "-14/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/12.9",
+            "name": "",
+            "label": "-14/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/13.5",
+            "name": "",
+            "label": "-14/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/14.1",
+            "name": "",
+            "label": "-14/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/14.7",
+            "name": "",
+            "label": "-14/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/15.3",
+            "name": "",
+            "label": "-14/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/15.9",
+            "name": "",
+            "label": "-14/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/16.5",
+            "name": "",
+            "label": "-14/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/17.1",
+            "name": "",
+            "label": "-14/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/17.7",
+            "name": "",
+            "label": "-14/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/18.3",
+            "name": "",
+            "label": "-14/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/18.9",
+            "name": "",
+            "label": "-14/30",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/19.5",
+            "name": "",
+            "label": "-14/31",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/20.1",
+            "name": "",
+            "label": "-14/32",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/20.7",
+            "name": "",
+            "label": "-14/33",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/21.3",
+            "name": "",
+            "label": "-14/34",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/21.9",
+            "name": "",
+            "label": "-14/35",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "12.3/22.5",
+            "name": "",
+            "label": "-14/36",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/5.1",
+            "name": "",
+            "label": "-15/7",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/5.7",
+            "name": "",
+            "label": "-15/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/6.3",
+            "name": "",
+            "label": "-15/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/6.9",
+            "name": "",
+            "label": "-15/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/7.5",
+            "name": "",
+            "label": "-15/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/8.1",
+            "name": "",
+            "label": "-15/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/8.7",
+            "name": "",
+            "label": "-15/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/9.3",
+            "name": "",
+            "label": "-15/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/9.9",
+            "name": "",
+            "label": "-15/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/10.5",
+            "name": "",
+            "label": "-15/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/11.1",
+            "name": "",
+            "label": "-15/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/11.7",
+            "name": "",
+            "label": "-15/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/12.3",
+            "name": "",
+            "label": "-15/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/12.9",
+            "name": "",
+            "label": "-15/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/13.5",
+            "name": "",
+            "label": "-15/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/14.1",
+            "name": "",
+            "label": "-15/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/14.7",
+            "name": "",
+            "label": "-15/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/15.3",
+            "name": "",
+            "label": "-15/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/15.9",
+            "name": "",
+            "label": "-15/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/16.5",
+            "name": "",
+            "label": "-15/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/17.1",
+            "name": "",
+            "label": "-15/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/17.7",
+            "name": "",
+            "label": "-15/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/18.3",
+            "name": "",
+            "label": "-15/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/18.9",
+            "name": "",
+            "label": "-15/30",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/19.5",
+            "name": "",
+            "label": "-15/31",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/20.1",
+            "name": "",
+            "label": "-15/32",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/20.7",
+            "name": "",
+            "label": "-15/33",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/21.3",
+            "name": "",
+            "label": "-15/34",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/21.9",
+            "name": "",
+            "label": "-15/35",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.7/22.5",
+            "name": "",
+            "label": "-15/36",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/5.1",
+            "name": "",
+            "label": "-16/7",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/5.7",
+            "name": "",
+            "label": "-16/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/6.3",
+            "name": "",
+            "label": "-16/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/6.9",
+            "name": "",
+            "label": "-16/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/7.5",
+            "name": "",
+            "label": "-16/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/8.1",
+            "name": "",
+            "label": "-16/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/8.7",
+            "name": "",
+            "label": "-16/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/9.3",
+            "name": "",
+            "label": "-16/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/9.9",
+            "name": "",
+            "label": "-16/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/10.5",
+            "name": "",
+            "label": "-16/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/11.1",
+            "name": "",
+            "label": "-16/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/11.7",
+            "name": "",
+            "label": "-16/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/12.3",
+            "name": "",
+            "label": "-16/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/12.9",
+            "name": "",
+            "label": "-16/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/13.5",
+            "name": "",
+            "label": "-16/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/14.1",
+            "name": "",
+            "label": "-16/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/14.7",
+            "name": "",
+            "label": "-16/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/15.3",
+            "name": "",
+            "label": "-16/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/15.9",
+            "name": "",
+            "label": "-16/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/16.5",
+            "name": "",
+            "label": "-16/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/17.1",
+            "name": "",
+            "label": "-16/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/17.7",
+            "name": "",
+            "label": "-16/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/18.3",
+            "name": "",
+            "label": "-16/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/18.9",
+            "name": "",
+            "label": "-16/30",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/19.5",
+            "name": "",
+            "label": "-16/31",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/20.1",
+            "name": "",
+            "label": "-16/32",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/20.7",
+            "name": "",
+            "label": "-16/33",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/21.3",
+            "name": "",
+            "label": "-16/34",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/21.9",
+            "name": "",
+            "label": "-16/35",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "11.1/22.5",
+            "name": "",
+            "label": "-16/36",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/5.1",
+            "name": "",
+            "label": "-17/7",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/5.7",
+            "name": "",
+            "label": "-17/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/6.3",
+            "name": "",
+            "label": "-17/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/6.9",
+            "name": "",
+            "label": "-17/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/7.5",
+            "name": "",
+            "label": "-17/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/8.1",
+            "name": "",
+            "label": "-17/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/8.7",
+            "name": "",
+            "label": "-17/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/9.3",
+            "name": "",
+            "label": "-17/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/9.9",
+            "name": "",
+            "label": "-17/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/10.5",
+            "name": "",
+            "label": "-17/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/11.1",
+            "name": "",
+            "label": "-17/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/11.7",
+            "name": "",
+            "label": "-17/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/12.3",
+            "name": "",
+            "label": "-17/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/12.9",
+            "name": "",
+            "label": "-17/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/13.5",
+            "name": "",
+            "label": "-17/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/14.1",
+            "name": "",
+            "label": "-17/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/14.7",
+            "name": "",
+            "label": "-17/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/15.3",
+            "name": "",
+            "label": "-17/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/15.9",
+            "name": "",
+            "label": "-17/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/16.5",
+            "name": "",
+            "label": "-17/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/17.1",
+            "name": "",
+            "label": "-17/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/17.7",
+            "name": "",
+            "label": "-17/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/18.3",
+            "name": "",
+            "label": "-17/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/18.9",
+            "name": "",
+            "label": "-17/30",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/19.5",
+            "name": "",
+            "label": "-17/31",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/20.1",
+            "name": "",
+            "label": "-17/32",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/20.7",
+            "name": "",
+            "label": "-17/33",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/21.3",
+            "name": "",
+            "label": "-17/34",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/21.9",
+            "name": "",
+            "label": "-17/35",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "10.5/22.5",
+            "name": "",
+            "label": "-17/36",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/5.7",
+            "name": "",
+            "label": "-18/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/6.3",
+            "name": "",
+            "label": "-18/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/6.9",
+            "name": "",
+            "label": "-18/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/7.5",
+            "name": "",
+            "label": "-18/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/8.1",
+            "name": "",
+            "label": "-18/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/8.7",
+            "name": "",
+            "label": "-18/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/9.3",
+            "name": "",
+            "label": "-18/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/9.9",
+            "name": "",
+            "label": "-18/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/10.5",
+            "name": "",
+            "label": "-18/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/11.1",
+            "name": "",
+            "label": "-18/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/11.7",
+            "name": "",
+            "label": "-18/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/12.3",
+            "name": "",
+            "label": "-18/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/12.9",
+            "name": "",
+            "label": "-18/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/13.5",
+            "name": "",
+            "label": "-18/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/14.1",
+            "name": "",
+            "label": "-18/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/14.7",
+            "name": "",
+            "label": "-18/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/15.3",
+            "name": "",
+            "label": "-18/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/15.9",
+            "name": "",
+            "label": "-18/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/16.5",
+            "name": "",
+            "label": "-18/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/17.1",
+            "name": "",
+            "label": "-18/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/17.7",
+            "name": "",
+            "label": "-18/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/18.3",
+            "name": "",
+            "label": "-18/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/18.9",
+            "name": "",
+            "label": "-18/30",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/19.5",
+            "name": "",
+            "label": "-18/31",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/20.1",
+            "name": "",
+            "label": "-18/32",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/20.7",
+            "name": "",
+            "label": "-18/33",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/21.3",
+            "name": "",
+            "label": "-18/34",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/21.9",
+            "name": "",
+            "label": "-18/35",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.9/22.5",
+            "name": "",
+            "label": "-18/36",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/5.7",
+            "name": "",
+            "label": "-19/8",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/6.3",
+            "name": "",
+            "label": "-19/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/6.9",
+            "name": "",
+            "label": "-19/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/7.5",
+            "name": "",
+            "label": "-19/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/8.1",
+            "name": "",
+            "label": "-19/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/8.7",
+            "name": "",
+            "label": "-19/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/9.3",
+            "name": "",
+            "label": "-19/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/9.9",
+            "name": "",
+            "label": "-19/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/10.5",
+            "name": "",
+            "label": "-19/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/11.1",
+            "name": "",
+            "label": "-19/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/11.7",
+            "name": "",
+            "label": "-19/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/12.3",
+            "name": "",
+            "label": "-19/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/12.9",
+            "name": "",
+            "label": "-19/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/13.5",
+            "name": "",
+            "label": "-19/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/14.1",
+            "name": "",
+            "label": "-19/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/14.7",
+            "name": "",
+            "label": "-19/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/15.3",
+            "name": "",
+            "label": "-19/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/15.9",
+            "name": "",
+            "label": "-19/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/16.5",
+            "name": "",
+            "label": "-19/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/17.1",
+            "name": "",
+            "label": "-19/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/17.7",
+            "name": "",
+            "label": "-19/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/18.3",
+            "name": "",
+            "label": "-19/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/18.9",
+            "name": "",
+            "label": "-19/30",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/19.5",
+            "name": "",
+            "label": "-19/31",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/20.1",
+            "name": "",
+            "label": "-19/32",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/20.7",
+            "name": "",
+            "label": "-19/33",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/21.3",
+            "name": "",
+            "label": "-19/34",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/21.9",
+            "name": "",
+            "label": "-19/35",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "9.3/22.5",
+            "name": "",
+            "label": "-19/36",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/6.3",
+            "name": "",
+            "label": "-20/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/6.9",
+            "name": "",
+            "label": "-20/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/7.5",
+            "name": "",
+            "label": "-20/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/8.1",
+            "name": "",
+            "label": "-20/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/8.7",
+            "name": "",
+            "label": "-20/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/9.3",
+            "name": "",
+            "label": "-20/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/9.9",
+            "name": "",
+            "label": "-20/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/10.5",
+            "name": "",
+            "label": "-20/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/11.1",
+            "name": "",
+            "label": "-20/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/11.7",
+            "name": "",
+            "label": "-20/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/12.3",
+            "name": "",
+            "label": "-20/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/12.9",
+            "name": "",
+            "label": "-20/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/13.5",
+            "name": "",
+            "label": "-20/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/14.1",
+            "name": "",
+            "label": "-20/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/14.7",
+            "name": "",
+            "label": "-20/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/15.3",
+            "name": "",
+            "label": "-20/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/15.9",
+            "name": "",
+            "label": "-20/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/16.5",
+            "name": "",
+            "label": "-20/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/17.1",
+            "name": "",
+            "label": "-20/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/17.7",
+            "name": "",
+            "label": "-20/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/18.3",
+            "name": "",
+            "label": "-20/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/18.9",
+            "name": "",
+            "label": "-20/30",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/19.5",
+            "name": "",
+            "label": "-20/31",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/20.1",
+            "name": "",
+            "label": "-20/32",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/20.7",
+            "name": "",
+            "label": "-20/33",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/21.3",
+            "name": "",
+            "label": "-20/34",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/21.9",
+            "name": "",
+            "label": "-20/35",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.7/22.5",
+            "name": "",
+            "label": "-20/36",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/6.3",
+            "name": "",
+            "label": "-21/9",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/6.9",
+            "name": "",
+            "label": "-21/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/7.5",
+            "name": "",
+            "label": "-21/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/8.1",
+            "name": "",
+            "label": "-21/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/8.7",
+            "name": "",
+            "label": "-21/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/9.3",
+            "name": "",
+            "label": "-21/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/9.9",
+            "name": "",
+            "label": "-21/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/10.5",
+            "name": "",
+            "label": "-21/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/11.1",
+            "name": "",
+            "label": "-21/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/11.7",
+            "name": "",
+            "label": "-21/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/12.3",
+            "name": "",
+            "label": "-21/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/12.9",
+            "name": "",
+            "label": "-21/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/13.5",
+            "name": "",
+            "label": "-21/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/14.1",
+            "name": "",
+            "label": "-21/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/14.7",
+            "name": "",
+            "label": "-21/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/15.3",
+            "name": "",
+            "label": "-21/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/15.9",
+            "name": "",
+            "label": "-21/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/16.5",
+            "name": "",
+            "label": "-21/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/17.1",
+            "name": "",
+            "label": "-21/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/17.7",
+            "name": "",
+            "label": "-21/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/18.3",
+            "name": "",
+            "label": "-21/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/18.9",
+            "name": "",
+            "label": "-21/30",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/19.5",
+            "name": "",
+            "label": "-21/31",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/20.1",
+            "name": "",
+            "label": "-21/32",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/20.7",
+            "name": "",
+            "label": "-21/33",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/21.3",
+            "name": "",
+            "label": "-21/34",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/21.9",
+            "name": "",
+            "label": "-21/35",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "8.1/22.5",
+            "name": "",
+            "label": "-21/36",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/6.9",
+            "name": "",
+            "label": "-22/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/7.5",
+            "name": "",
+            "label": "-22/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/8.1",
+            "name": "",
+            "label": "-22/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/8.7",
+            "name": "",
+            "label": "-22/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/9.3",
+            "name": "",
+            "label": "-22/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/9.9",
+            "name": "",
+            "label": "-22/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/10.5",
+            "name": "",
+            "label": "-22/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/11.1",
+            "name": "",
+            "label": "-22/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/11.7",
+            "name": "",
+            "label": "-22/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/12.3",
+            "name": "",
+            "label": "-22/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/12.9",
+            "name": "",
+            "label": "-22/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/13.5",
+            "name": "",
+            "label": "-22/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/14.1",
+            "name": "",
+            "label": "-22/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/14.7",
+            "name": "",
+            "label": "-22/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/15.3",
+            "name": "",
+            "label": "-22/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/15.9",
+            "name": "",
+            "label": "-22/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/16.5",
+            "name": "",
+            "label": "-22/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/17.1",
+            "name": "",
+            "label": "-22/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/17.7",
+            "name": "",
+            "label": "-22/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/18.3",
+            "name": "",
+            "label": "-22/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/18.9",
+            "name": "",
+            "label": "-22/30",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/19.5",
+            "name": "",
+            "label": "-22/31",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/20.1",
+            "name": "",
+            "label": "-22/32",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/20.7",
+            "name": "",
+            "label": "-22/33",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/21.3",
+            "name": "",
+            "label": "-22/34",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/21.9",
+            "name": "",
+            "label": "-22/35",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "7.5/22.5",
+            "name": "",
+            "label": "-22/36",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/6.9",
+            "name": "",
+            "label": "-23/10",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/7.5",
+            "name": "",
+            "label": "-23/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/8.1",
+            "name": "",
+            "label": "-23/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/8.7",
+            "name": "",
+            "label": "-23/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/9.3",
+            "name": "",
+            "label": "-23/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/9.9",
+            "name": "",
+            "label": "-23/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/10.5",
+            "name": "",
+            "label": "-23/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/11.1",
+            "name": "",
+            "label": "-23/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/11.7",
+            "name": "",
+            "label": "-23/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/12.3",
+            "name": "",
+            "label": "-23/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/12.9",
+            "name": "",
+            "label": "-23/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/13.5",
+            "name": "",
+            "label": "-23/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/14.1",
+            "name": "",
+            "label": "-23/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/14.7",
+            "name": "",
+            "label": "-23/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/15.3",
+            "name": "",
+            "label": "-23/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/15.9",
+            "name": "",
+            "label": "-23/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/16.5",
+            "name": "",
+            "label": "-23/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/17.1",
+            "name": "",
+            "label": "-23/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/17.7",
+            "name": "",
+            "label": "-23/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/18.3",
+            "name": "",
+            "label": "-23/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/18.9",
+            "name": "",
+            "label": "-23/30",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/19.5",
+            "name": "",
+            "label": "-23/31",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/20.1",
+            "name": "",
+            "label": "-23/32",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/20.7",
+            "name": "",
+            "label": "-23/33",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/21.3",
+            "name": "",
+            "label": "-23/34",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/21.9",
+            "name": "",
+            "label": "-23/35",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.9/22.5",
+            "name": "",
+            "label": "-23/36",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.3/7.5",
+            "name": "",
+            "label": "-24/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.3/8.1",
+            "name": "",
+            "label": "-24/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.3/8.7",
+            "name": "",
+            "label": "-24/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.3/9.3",
+            "name": "",
+            "label": "-24/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.3/9.9",
+            "name": "",
+            "label": "-24/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.3/10.5",
+            "name": "",
+            "label": "-24/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.3/11.1",
+            "name": "",
+            "label": "-24/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.3/11.7",
+            "name": "",
+            "label": "-24/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.3/12.3",
+            "name": "",
+            "label": "-24/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.3/12.9",
+            "name": "",
+            "label": "-24/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.3/13.5",
+            "name": "",
+            "label": "-24/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.3/14.1",
+            "name": "",
+            "label": "-24/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.3/14.7",
+            "name": "",
+            "label": "-24/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.3/15.3",
+            "name": "",
+            "label": "-24/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.3/15.9",
+            "name": "",
+            "label": "-24/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.3/16.5",
+            "name": "",
+            "label": "-24/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.3/17.1",
+            "name": "",
+            "label": "-24/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.3/17.7",
+            "name": "",
+            "label": "-24/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.3/18.3",
+            "name": "",
+            "label": "-24/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.3/18.9",
+            "name": "",
+            "label": "-24/30",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.3/19.5",
+            "name": "",
+            "label": "-24/31",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.3/20.1",
+            "name": "",
+            "label": "-24/32",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.3/20.7",
+            "name": "",
+            "label": "-24/33",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.3/21.3",
+            "name": "",
+            "label": "-24/34",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.3/21.9",
+            "name": "",
+            "label": "-24/35",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "6.3/22.5",
+            "name": "",
+            "label": "-24/36",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.7/7.5",
+            "name": "",
+            "label": "-25/11",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.7/8.1",
+            "name": "",
+            "label": "-25/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.7/8.7",
+            "name": "",
+            "label": "-25/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.7/9.3",
+            "name": "",
+            "label": "-25/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.7/9.9",
+            "name": "",
+            "label": "-25/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.7/10.5",
+            "name": "",
+            "label": "-25/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.7/11.1",
+            "name": "",
+            "label": "-25/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.7/11.7",
+            "name": "",
+            "label": "-25/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.7/12.3",
+            "name": "",
+            "label": "-25/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.7/12.9",
+            "name": "",
+            "label": "-25/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.7/13.5",
+            "name": "",
+            "label": "-25/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.7/14.1",
+            "name": "",
+            "label": "-25/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.7/14.7",
+            "name": "",
+            "label": "-25/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.7/15.3",
+            "name": "",
+            "label": "-25/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.7/15.9",
+            "name": "",
+            "label": "-25/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.7/16.5",
+            "name": "",
+            "label": "-25/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.7/17.1",
+            "name": "",
+            "label": "-25/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.7/17.7",
+            "name": "",
+            "label": "-25/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.7/18.3",
+            "name": "",
+            "label": "-25/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.7/18.9",
+            "name": "",
+            "label": "-25/30",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.7/19.5",
+            "name": "",
+            "label": "-25/31",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.7/20.1",
+            "name": "",
+            "label": "-25/32",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.7/20.7",
+            "name": "",
+            "label": "-25/33",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.7/21.3",
+            "name": "",
+            "label": "-25/34",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.7/21.9",
+            "name": "",
+            "label": "-25/35",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.7/22.5",
+            "name": "",
+            "label": "-25/36",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.1/8.1",
+            "name": "",
+            "label": "-26/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.1/8.7",
+            "name": "",
+            "label": "-26/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.1/9.3",
+            "name": "",
+            "label": "-26/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.1/9.9",
+            "name": "",
+            "label": "-26/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.1/10.5",
+            "name": "",
+            "label": "-26/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.1/11.1",
+            "name": "",
+            "label": "-26/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.1/11.7",
+            "name": "",
+            "label": "-26/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.1/12.3",
+            "name": "",
+            "label": "-26/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.1/12.9",
+            "name": "",
+            "label": "-26/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.1/13.5",
+            "name": "",
+            "label": "-26/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.1/14.1",
+            "name": "",
+            "label": "-26/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.1/14.7",
+            "name": "",
+            "label": "-26/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.1/15.3",
+            "name": "",
+            "label": "-26/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.1/15.9",
+            "name": "",
+            "label": "-26/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.1/16.5",
+            "name": "",
+            "label": "-26/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.1/17.1",
+            "name": "",
+            "label": "-26/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.1/17.7",
+            "name": "",
+            "label": "-26/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.1/18.3",
+            "name": "",
+            "label": "-26/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.1/18.9",
+            "name": "",
+            "label": "-26/30",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.1/19.5",
+            "name": "",
+            "label": "-26/31",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.1/20.1",
+            "name": "",
+            "label": "-26/32",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.1/20.7",
+            "name": "",
+            "label": "-26/33",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.1/21.3",
+            "name": "",
+            "label": "-26/34",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.1/21.9",
+            "name": "",
+            "label": "-26/35",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "5.1/22.5",
+            "name": "",
+            "label": "-26/36",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "4.5/8.1",
+            "name": "",
+            "label": "-27/12",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "4.5/8.7",
+            "name": "",
+            "label": "-27/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "4.5/9.3",
+            "name": "",
+            "label": "-27/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "4.5/9.9",
+            "name": "",
+            "label": "-27/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "4.5/10.5",
+            "name": "",
+            "label": "-27/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "4.5/11.1",
+            "name": "",
+            "label": "-27/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "4.5/11.7",
+            "name": "",
+            "label": "-27/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "4.5/12.3",
+            "name": "",
+            "label": "-27/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "4.5/12.9",
+            "name": "",
+            "label": "-27/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "4.5/13.5",
+            "name": "",
+            "label": "-27/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "4.5/14.1",
+            "name": "",
+            "label": "-27/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "4.5/14.7",
+            "name": "",
+            "label": "-27/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "4.5/15.3",
+            "name": "",
+            "label": "-27/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "4.5/15.9",
+            "name": "",
+            "label": "-27/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "4.5/16.5",
+            "name": "",
+            "label": "-27/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "4.5/17.1",
+            "name": "",
+            "label": "-27/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "4.5/17.7",
+            "name": "",
+            "label": "-27/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "4.5/18.3",
+            "name": "",
+            "label": "-27/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "4.5/18.9",
+            "name": "",
+            "label": "-27/30",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "4.5/19.5",
+            "name": "",
+            "label": "-27/31",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "4.5/20.1",
+            "name": "",
+            "label": "-27/32",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "4.5/20.7",
+            "name": "",
+            "label": "-27/33",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "4.5/21.3",
+            "name": "",
+            "label": "-27/34",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "4.5/21.9",
+            "name": "",
+            "label": "-27/35",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "4.5/22.5",
+            "name": "",
+            "label": "-27/36",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.9/8.7",
+            "name": "",
+            "label": "-28/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.9/9.3",
+            "name": "",
+            "label": "-28/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.9/9.9",
+            "name": "",
+            "label": "-28/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.9/10.5",
+            "name": "",
+            "label": "-28/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.9/11.1",
+            "name": "",
+            "label": "-28/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.9/11.7",
+            "name": "",
+            "label": "-28/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.9/12.3",
+            "name": "",
+            "label": "-28/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.9/12.9",
+            "name": "",
+            "label": "-28/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.9/13.5",
+            "name": "",
+            "label": "-28/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.9/14.1",
+            "name": "",
+            "label": "-28/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.9/14.7",
+            "name": "",
+            "label": "-28/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.9/15.3",
+            "name": "",
+            "label": "-28/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.9/15.9",
+            "name": "",
+            "label": "-28/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.9/16.5",
+            "name": "",
+            "label": "-28/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.9/17.1",
+            "name": "",
+            "label": "-28/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.9/17.7",
+            "name": "",
+            "label": "-28/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.9/18.3",
+            "name": "",
+            "label": "-28/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.9/18.9",
+            "name": "",
+            "label": "-28/30",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.9/19.5",
+            "name": "",
+            "label": "-28/31",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.9/20.1",
+            "name": "",
+            "label": "-28/32",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.9/20.7",
+            "name": "",
+            "label": "-28/33",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.9/21.3",
+            "name": "",
+            "label": "-28/34",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.9/21.9",
+            "name": "",
+            "label": "-28/35",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.9/22.5",
+            "name": "",
+            "label": "-28/36",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.3/8.7",
+            "name": "",
+            "label": "-29/13",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.3/9.3",
+            "name": "",
+            "label": "-29/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.3/9.9",
+            "name": "",
+            "label": "-29/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.3/10.5",
+            "name": "",
+            "label": "-29/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.3/11.1",
+            "name": "",
+            "label": "-29/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.3/11.7",
+            "name": "",
+            "label": "-29/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.3/12.3",
+            "name": "",
+            "label": "-29/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.3/12.9",
+            "name": "",
+            "label": "-29/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.3/13.5",
+            "name": "",
+            "label": "-29/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.3/14.1",
+            "name": "",
+            "label": "-29/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.3/14.7",
+            "name": "",
+            "label": "-29/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.3/15.3",
+            "name": "",
+            "label": "-29/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.3/15.9",
+            "name": "",
+            "label": "-29/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.3/16.5",
+            "name": "",
+            "label": "-29/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.3/17.1",
+            "name": "",
+            "label": "-29/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.3/17.7",
+            "name": "",
+            "label": "-29/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.3/18.3",
+            "name": "",
+            "label": "-29/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.3/18.9",
+            "name": "",
+            "label": "-29/30",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.3/19.5",
+            "name": "",
+            "label": "-29/31",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.3/20.1",
+            "name": "",
+            "label": "-29/32",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.3/20.7",
+            "name": "",
+            "label": "-29/33",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.3/21.3",
+            "name": "",
+            "label": "-29/34",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.3/21.9",
+            "name": "",
+            "label": "-29/35",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "3.3/22.5",
+            "name": "",
+            "label": "-29/36",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.7/9.3",
+            "name": "",
+            "label": "-30/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.7/9.9",
+            "name": "",
+            "label": "-30/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.7/10.5",
+            "name": "",
+            "label": "-30/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.7/11.1",
+            "name": "",
+            "label": "-30/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.7/11.7",
+            "name": "",
+            "label": "-30/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.7/12.3",
+            "name": "",
+            "label": "-30/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.7/12.9",
+            "name": "",
+            "label": "-30/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.7/13.5",
+            "name": "",
+            "label": "-30/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.7/14.1",
+            "name": "",
+            "label": "-30/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.7/14.7",
+            "name": "",
+            "label": "-30/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.7/15.3",
+            "name": "",
+            "label": "-30/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.7/15.9",
+            "name": "",
+            "label": "-30/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.7/16.5",
+            "name": "",
+            "label": "-30/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.7/17.1",
+            "name": "",
+            "label": "-30/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.7/17.7",
+            "name": "",
+            "label": "-30/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.7/18.3",
+            "name": "",
+            "label": "-30/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.7/18.9",
+            "name": "",
+            "label": "-30/30",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.7/19.5",
+            "name": "",
+            "label": "-30/31",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.7/20.1",
+            "name": "",
+            "label": "-30/32",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.7/20.7",
+            "name": "",
+            "label": "-30/33",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.7/21.3",
+            "name": "",
+            "label": "-30/34",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.7/21.9",
+            "name": "",
+            "label": "-30/35",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.7/22.5",
+            "name": "",
+            "label": "-30/36",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.1/9.3",
+            "name": "",
+            "label": "-31/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.1/9.9",
+            "name": "",
+            "label": "-31/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.1/10.5",
+            "name": "",
+            "label": "-31/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.1/11.1",
+            "name": "",
+            "label": "-31/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.1/11.7",
+            "name": "",
+            "label": "-31/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.1/12.3",
+            "name": "",
+            "label": "-31/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.1/12.9",
+            "name": "",
+            "label": "-31/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.1/13.5",
+            "name": "",
+            "label": "-31/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.1/14.1",
+            "name": "",
+            "label": "-31/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.1/14.7",
+            "name": "",
+            "label": "-31/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.1/15.3",
+            "name": "",
+            "label": "-31/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.1/15.9",
+            "name": "",
+            "label": "-31/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.1/16.5",
+            "name": "",
+            "label": "-31/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.1/17.1",
+            "name": "",
+            "label": "-31/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.1/17.7",
+            "name": "",
+            "label": "-31/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.1/18.3",
+            "name": "",
+            "label": "-31/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.1/18.9",
+            "name": "",
+            "label": "-31/30",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.1/19.5",
+            "name": "",
+            "label": "-31/31",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.1/20.1",
+            "name": "",
+            "label": "-31/32",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.1/20.7",
+            "name": "",
+            "label": "-31/33",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.1/21.3",
+            "name": "",
+            "label": "-31/34",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.1/21.9",
+            "name": "",
+            "label": "-31/35",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "2.1/22.5",
+            "name": "",
+            "label": "-31/36",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "1.5/9.3",
+            "name": "",
+            "label": "-32/14",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "1.5/9.9",
+            "name": "",
+            "label": "-32/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "1.5/10.5",
+            "name": "",
+            "label": "-32/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "1.5/11.1",
+            "name": "",
+            "label": "-32/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "1.5/11.7",
+            "name": "",
+            "label": "-32/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "1.5/12.3",
+            "name": "",
+            "label": "-32/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "1.5/12.9",
+            "name": "",
+            "label": "-32/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "1.5/13.5",
+            "name": "",
+            "label": "-32/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "1.5/14.1",
+            "name": "",
+            "label": "-32/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "1.5/14.7",
+            "name": "",
+            "label": "-32/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "1.5/15.3",
+            "name": "",
+            "label": "-32/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "1.5/15.9",
+            "name": "",
+            "label": "-32/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "1.5/16.5",
+            "name": "",
+            "label": "-32/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "1.5/17.1",
+            "name": "",
+            "label": "-32/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "1.5/17.7",
+            "name": "",
+            "label": "-32/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "1.5/18.3",
+            "name": "",
+            "label": "-32/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "1.5/18.9",
+            "name": "",
+            "label": "-32/30",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "1.5/19.5",
+            "name": "",
+            "label": "-32/31",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "1.5/20.1",
+            "name": "",
+            "label": "-32/32",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "1.5/20.7",
+            "name": "",
+            "label": "-32/33",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "1.5/21.3",
+            "name": "",
+            "label": "-32/34",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "1.5/21.9",
+            "name": "",
+            "label": "-32/35",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "1.5/22.5",
+            "name": "",
+            "label": "-32/36",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.9/9.9",
+            "name": "",
+            "label": "-33/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.9/10.5",
+            "name": "",
+            "label": "-33/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.9/11.1",
+            "name": "",
+            "label": "-33/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.9/11.7",
+            "name": "",
+            "label": "-33/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.9/12.3",
+            "name": "",
+            "label": "-33/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.9/12.9",
+            "name": "",
+            "label": "-33/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.9/13.5",
+            "name": "",
+            "label": "-33/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.9/14.1",
+            "name": "",
+            "label": "-33/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.9/14.7",
+            "name": "",
+            "label": "-33/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.9/15.3",
+            "name": "",
+            "label": "-33/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.9/15.9",
+            "name": "",
+            "label": "-33/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.9/16.5",
+            "name": "",
+            "label": "-33/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.9/17.1",
+            "name": "",
+            "label": "-33/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.9/17.7",
+            "name": "",
+            "label": "-33/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.9/18.3",
+            "name": "",
+            "label": "-33/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.9/18.9",
+            "name": "",
+            "label": "-33/30",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.9/19.5",
+            "name": "",
+            "label": "-33/31",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.9/20.1",
+            "name": "",
+            "label": "-33/32",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.9/20.7",
+            "name": "",
+            "label": "-33/33",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.9/21.3",
+            "name": "",
+            "label": "-33/34",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.9/21.9",
+            "name": "",
+            "label": "-33/35",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.9/22.5",
+            "name": "",
+            "label": "-33/36",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.3/9.9",
+            "name": "",
+            "label": "-34/15",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.3/10.5",
+            "name": "",
+            "label": "-34/16",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.3/11.1",
+            "name": "",
+            "label": "-34/17",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.3/11.7",
+            "name": "",
+            "label": "-34/18",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.3/12.3",
+            "name": "",
+            "label": "-34/19",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.3/12.9",
+            "name": "",
+            "label": "-34/20",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.3/13.5",
+            "name": "",
+            "label": "-34/21",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.3/14.1",
+            "name": "",
+            "label": "-34/22",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.3/14.7",
+            "name": "",
+            "label": "-34/23",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.3/15.3",
+            "name": "",
+            "label": "-34/24",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.3/15.9",
+            "name": "",
+            "label": "-34/25",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.3/16.5",
+            "name": "",
+            "label": "-34/26",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.3/17.1",
+            "name": "",
+            "label": "-34/27",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.3/17.7",
+            "name": "",
+            "label": "-34/28",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.3/18.3",
+            "name": "",
+            "label": "-34/29",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.3/18.9",
+            "name": "",
+            "label": "-34/30",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.3/19.5",
+            "name": "",
+            "label": "-34/31",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.3/20.1",
+            "name": "",
+            "label": "-34/32",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.3/20.7",
+            "name": "",
+            "label": "-34/33",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.3/21.3",
+            "name": "",
+            "label": "-34/34",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.3/21.9",
+            "name": "",
+            "label": "-34/35",
+            "texture": "",
+            "color": ""
+        },
+        {
+            "location": "0.3/22.5",
+            "name": "",
+            "label": "-34/36",
+            "texture": "",
+            "color": ""
+        }
+    ],
+    "area": 382.86,
+    "center": [
+        11.67,
+        12.51
+    ],
+    "tilesArea": 357.84,
+    "tileAngle": 0
+}

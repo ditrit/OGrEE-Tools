@@ -10,7 +10,6 @@ from skimage import exposure
 from skimage.transform import rescale, rotate
 from skimage.transform import probabilistic_hough_line
 from itertools import combinations
-import torch
 import json
 # Functions for hierarchical clustering
 from scipy.cluster.hierarchy import linkage

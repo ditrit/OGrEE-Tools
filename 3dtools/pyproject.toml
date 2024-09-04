@@ -9,7 +9,7 @@ readme = "README.md"
 python = "^3.10"
 converter = { path = "../Converter" }
 non_square_rooms = { path = "../NonSquareRooms" }
-torch = ">=1.13.1"
+torch = "==1.13.1"
 flask = ">=2.2.5"
 pyyaml = ">=6.0"
 pillow = ">=9.4.0"
