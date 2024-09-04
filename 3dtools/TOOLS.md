@@ -8,7 +8,9 @@ Supported tools are 3dtools, NonSquareRooms and FBX.
 
 In 3dtools repository:
 ```
+pip install poetry  # if you do not have poetry
 poetry install
+poetry env use <PATH_TO_PYTHON_3.10>  # Python 3.10 is mandatory for this project
 poetry shell
 python main.py --gui
 ```
